@@ -1,34 +1,75 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react"
+import { useNavigate,Link } from "react-router-dom";
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import Alert from '@mui/material/Alert';
+
 
 const Main = (props) => {
-
     const { loggedIn, email } = props
-
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!loggedIn) {
+    const onButtonClick = () => {
+        if (loggedIn) {
             localStorage.removeItem("user")
             props.setLoggedIn(false)
-            navigate("/")
+        } else { 
+            navigate("/login")
         }
-    })
+    }
 
-    // const employeeSearchButtonClick = () => {
-    //     navigate("/employeeSearch")
-    // }
+    localStorage.setItem("navMenu", "menu1")
 
-    return <div className={"mainContainer"}>
-        <div className={"titleContainer"}>
-            <div>AS/400 Data</div>
-        </div>
-        <br></br>
-            <div><h2>Login Successful</h2></div>
-        <div><h2>Please use navigation bars to continue.</h2></div>
-        <br />
-        <div>Your email is {email}</div>
-    </div>
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      }));
+
+    return (
+        <Container component="main" maxWidth="xs">
+               <Box sx={{ flexGrow: 1 }}>
+
+  <Grid xs>
+  <Card sx={{ maxWidth: 500 }}>
+      
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          Hello  <Avatar/>
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+         U have reached ur website... <br/>
+         To continue accessing ur website..<br/>
+         click on Employee dashboard below !<br/>
+        </Typography>
+      </CardContent>
+      <CardActions>
+      <Link to="/employeeSearch">
+        <Button size="small">Employee Dashboard</Button>
+        </Link>
+      </CardActions>
+    </Card>
+  </Grid>
+  <Grid item xs>
+  <Alert variant="filled" severity="success">
+  Login Attempt Successfull!!!
+</Alert>
+  </Grid> 
+
+</Box>
+        </Container>
+    )
 }
 
 export default Main
