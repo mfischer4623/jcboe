@@ -23,28 +23,86 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
-function createData(id,name, calories) {
+function 
+createData(id,key, description) {
   return {
     id,
-    name,
-    calories
+    key,
+    description
   };
 }
 
 const rows = [
-  createData(1, 'ADC', 'Arian dek code', 3.7,89,90),
-  createData(2, 'Donut', 452, 25.0),
-  createData(3, 'Eclair', 262, 16.0),
-  createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-  createData(6, 'Honeycomb', 408, 3.2, 87, 6.5),
-  createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
-  createData(9, 'KitKat', 518, 26.0, 65, 7.0),
-  createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
-  createData(11, 'Marshmallow', 318, 0, 81, 2.0),
-  createData(12, 'Nougat', 360, 19.0, 9, 37.0),
-  createData(13, 'Oreo', 437, 18.0, 63, 4.0),
+  createData(1, 'ACC', 'SCHOOL ACCIDENT'),
+  createData(2, 'ACC/NP', 'SCHOOL ACCIDENT-NOT PAID'),
+  createData(3, 'ACCDNT', 'SCHOOL ACCIDENT'),
+  createData(4, 'ADMLVE', 'ADMINISTRATIVE LEAVE'),
+  createData(5, 'BUS', 'PERSONAL BUSINESS'),
+  createData(6, 'COURT', 'COURT DAY'),
+  createData(7, 'COURTP', 'SUBPOENA-PERSONAL MATTERS'),
+  createData(8, 'CREDIT','CREDIT DAYS'),
+  createData(9,'DEATH', 'DEATH IMMEDIATE FAMILY'),
+  createData(10,'EXCUS2', 'EXCUSED ABS UNION BUSINESS'),
+  createData(11,'EXCUSE', 'EXCUSED ABSENCE'),
+  createData(12,'FIELD', 'FIELD TRIP'),
+  createData(13,'FIFTHS', "TEACHER'S FIFTHS"),
+  createData(14,'FLEX', "FLEX CODE FOR SUPERVIORS"),
+  createData(15,'FLOAT', "FLOATING DAYS"),
+  createData(16,'FUNER', "FUNERAL DAY"),
+  createData(17,'ILL', "PERSONAL ILLNESS"),
+  createData(18,'JURY', "JURY DUTY"),
+  createData(19,'LEAVE', "LEAVE - NOT PAID"),
+  createData(20,'LEGAL', "LEGAL ABSENCE"),
+  createData(21,'LUNCH', "LUNCH DUTY"),
+  createData(22,'LVE', "LONG TERM LEAVE"),
+  createData(23,'MLTARY', "MILITARY SERVICE"),
+  createData(24,'PB', "PERSONAL BUSINESS-2262"),
+  createData(25,'PB/ASA', "PERSONAL BUSINESS-ASA"),
+  createData(26,'PB/ESA', "PERSONAL BUSINESS-ESA"),
+  createData(27,'PB/NON', "PERSONAL BUSINESS-NON AF"),
+  createData(28,'PB/NP', "PERSONAL BUSINESS-NOT PAID"),
+  createData(29,'PB/PSA', "PERSONAL BUSINESS-PSA"),
+  createData(30,'PB/SUP', "SUPTS PERSONAL BUSINESS"),
+  createData(31,'PB/TA', "PERSONAL BUSINESS-AIDES"),
+  createData(32,'PB/TAS', "PERSONEL BUS-TEACH ASSIST"),
+  createData(33,'PBJCEA', "PERSONAL BUSINESS-TEACHER"),
+  createData(34,'PBJCEN', "JCEA PB HIRED < 12 MONTHS"),
+  createData(35,'PD40', "40 DAYS AT 1/2 PAY LV PLCY"),
+  createData(36,'PD80', "80 DAYS AT 1/2 PAY LV PLCY"),
+  createData(37,'PERMIS', "PERMISSIVE LEAVE"),
+  createData(38,'PI', "PERSONAL ILLNESS-2262"),
+  createData(39,"PI/ASA", "PERSONAL ILLNESS-ASA"),
+  createData(40,'PB/ESA', "PERSONEL ILLNESS-ESA"),
+  createData(41,'PI/FIF', "SICK DAYS FIFTHS (NO CASH)"),
+  createData(42,"PI/FS", "PERSONAL ILLNESS -FOOD SER"),
+  createData(43,"PI/NON", "PERSONAL ILLNESS- NON AF"),
+  createData(44,"PI/NP", "PERSONAL ILLNESS-NOT PAID"),
+  createData(45,"PI/PSA", "PERSONAL ILLNESS-PSA"),
+  createData(46,"PI/SUP", "SUPTS PERSONAL ILLNESS"),
+  createData(47,"PI/T", "PERSONAL ILLNESS-JCEA"),
+  createData(48,"PI/TA", "PERSONAL ILLNESS-AIDES"),
+  createData(49,"PI/TAS", "PERSONAL ILLNESS-ASSISTANT"),
+  createData(50,"PIPOOL", "PERSONAL ILLNESS-POOL SUB"),
+  createData(51,"PROF", "PROFESSIONAL DAY"),
+  createData(52,"PROF1", "PROF DAY EMPLOYEE PRESENTS"),
+  createData(53,"SABB", "SABBATICAL LEAVE"),
+  createData(54,"STBUS", "SUPT STATE BUSINESS"),
+  createData(55,"STRIKE", "STRIKE"),
+  createData(56,"SUS/NP", "SUSPENDED - WITHOUT PAY"),
+  createData(57,"SUSPEN", "SUSPENDED - WITH PAY"),
+  createData(58,"TARDY", "TARDY"),
+  createData(59,"TESTVA", "TEST VACATION"),
+  createData(60,"VAC", "VACATION"),
+  createData(61,"VAC1", "2262 VAC HIRED AFT 4/19/97"),
+  createData(62,"VAC2", "PSA DIRECTORS VACATION"),
+  createData(63,"VAC3", "NON AFF VACATION"),
+  createData(64,"VAC4", "ESA VACATION"),
+  createData(65,"VAC5", "NCASA VAC HIRE BEFORE FY00"),
+  createData(66,"VAC50", "VACATION OVER 50 BALANCE"),
+  createData(67,"VAC6", "NCASA VAC HIRED AFTER FY00"),
+  createData(68,"VACSUP", "SUPTS VACATION"),
+  createData(69,"WORK", "WORKSHOP DAY"),
+  createData(70,"WORKED", "WORKED STRIKE"),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -81,16 +139,16 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: 'Code',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: 'Code',
   },
   {
-    id: 'calories',
+    id: 'description',
     numeric: true,
     disablePadding: false,
-    label: 'Calories',
+    label: 'Description',
   }
 ];
 
@@ -112,7 +170,7 @@ function EnhancedTableHead(props) {
         </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
-         
+            sx={{ fontWeight: 'bold' }}
             key={headCell.id}
             align={'center'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
@@ -212,6 +270,7 @@ export default function AbsenceLeaveCodes(props) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const[rowData,setRowData] = React.useState(alc)
 
   useEffect(() => {
     if (!loggedIn) {
@@ -268,6 +327,8 @@ export default function AbsenceLeaveCodes(props) {
     }
     setSelected(newSelected);
   };
+
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -346,9 +407,9 @@ if (alc === null) {
                       padding="none"
                       sx={{width:'10%', fontWeight:'bold'}}
                     >
-                      {row.name}
+                      {row.key}
                     </TableCell>
-                    <TableCell align="center"  sx={{ fontWeight:'bold'}}>{row.calories}</TableCell>
+                    <TableCell align="center"  sx={{ fontWeight:'bold'}}>{row.description}</TableCell>
                     {/* <TableCell align="right">{row.fat}</TableCell>
                     <TableCell align="right">{row.carbs}</TableCell>
                     <TableCell align="right">{row.protein}</TableCell> */}

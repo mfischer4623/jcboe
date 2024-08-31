@@ -1,103 +1,108 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Box, Typography, TextField, Button, Paper } from '@mui/material';
 
 const EmployeeSearch = (props) => {
-
-    const { loggedIn, email, employeeNumber, employeeName, setEmployeeNumber, setEmployeeName, setEmployeeNames } = props
-
+    const { loggedIn, email, employeeNumber, employeeName, setEmployeeNumber, setEmployeeName, setEmployeeNames } = props;
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!loggedIn) {
-            localStorage.removeItem("user")
-            props.setLoggedIn(false)
-            navigate("/")
+            localStorage.removeItem("user");
+            props.setLoggedIn(false);
+            navigate("/");
         }
-    })
+    }, [loggedIn, navigate, props]);
 
     const onENButtonClick = async () => {
-        let resData = null
+        let resData = null;
         try {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/${employeeNumber}`);
-            resData = await response.json()
-            if (resData.EMSSAN == employeeNumber) {
-                navigate("/showEmployee")
+            resData = await response.json();
+            if (resData.EMSSAN === employeeNumber) {
+                navigate("/showEmployee");
             } else {
-                window.alert(`Wrong Employee Number ` + employeeNumber)
+                window.alert(`Wrong Employee Number ` + employeeNumber);
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
-            window.alert(`Wrong Employee Number ` + employeeNumber)
+            window.alert(`Wrong Employee Number ` + employeeNumber);
         }
-    }
+    };
 
     const onENameButtonClick = async () => {
-        let resData = null
+        let resData = null;
         try {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/?name=${employeeName}`);
-            resData = await response.json()
-            setEmployeeNames(resData)
-            //console.log(resData)
+            resData = await response.json();
+            setEmployeeNames(resData);
             if (resData.length > 0 && employeeName !== '') {
-                navigate("/employeeName")
+                navigate("/employeeName");
             } else {
-                window.alert(`No employees found with name ` + employeeName)
+                window.alert(`No employees found with name ` + employeeName);
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.log("error", error);
-            navigate("/employeeSearch")
+            navigate("/employeeSearch");
         }
-    }
+    };
 
-    // const mainButtonClick = () => {
-    //     navigate("/main")
-    // }
+    return (
+        <Container maxWidth="sm">
+            <Paper elevation={3} sx={{ padding: 4, marginTop: 4 }}>
+                <Box textAlign="center" mb={2}>
+                    <Typography variant="h5" component="div" gutterBottom>
+                        AS/400 Data
+                    </Typography>
+                    <Typography variant="h6" component="div" gutterBottom>
+                        Employee Search
+                    </Typography>
+                </Box>
 
-    // const logoutButtonClick = () => {
-    //     localStorage.removeItem("user")
-    //     props.setLoggedIn(false)
-    //     navigate("/")
-    // }
+                <Box mb={2}>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Employee Last Name"
+                        value={employeeName}
+                        onChange={ev => setEmployeeName(ev.target.value)}
+                    />
+                    <Button
+                        fullWidth
+                        variant="contained"
+                       // color="primary"
+                        sx={{ marginTop: 2, backgroundColor:  '#1976D2'}}
+                        onClick={onENameButtonClick}
+                    >
+                        Employee Name Search
+                    </Button>
+                </Box>
 
-    return <div className={"mainContainer"}>
-        <div className={"titleContainer"}>
-            <div>AS/400 Data</div>
-        </div>
-        <br />
-        <div className={"titleContainer"}>
-            <div>Employee Search</div>
-        </div>
-        <br />
-        <div className={"inputButtonContainer"}>
-            <input
-                value={employeeName}
-                placeholder="Employee Last Name"
-                onChange={ev => setEmployeeName(ev.target.value)}
-                className={"inputBox"} />
-            <input
-                className={"inputButton"}
-                type="button"
-                onClick={onENameButtonClick}
-                value={"Employee Name Search"} />
-        </div>
-        <br></br>
-        <div className={"inputButtonContainer"}>
-            <input
-                value={employeeNumber}
-                placeholder="Employee Number"
-                onChange={ev => setEmployeeNumber(ev.target.value)}
-                className={"inputBox"} />
-            <input
-                className={"inputButton"}
-                type="button"
-                onClick={onENButtonClick}
-                value={"Choose Employee"} />
-        </div>
-        <br />
-        <div>Your email is {email}</div>
-    </div>
-}
+                <Box mb={2}>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Employee Number"
+                        value={employeeNumber}
+                        onChange={ev => setEmployeeNumber(ev.target.value)}
+                    />
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{ marginTop: 2 }}
+                        onClick={onENButtonClick}
+                    >
+                        Choose Employee
+                    </Button>
+                </Box>
 
-export default EmployeeSearch
+                <Typography variant="body2" color="textSecondary">
+                    Your email is {email}
+                </Typography>
+            </Paper>
+        </Container>
+    );
+};
+
+export default EmployeeSearch;
