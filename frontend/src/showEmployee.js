@@ -73,9 +73,9 @@ const ShowEmployee = (props) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [loggedIn, employeeNumber, navigate, setEmployeeData]);
 
-   
 
-   
+
+
 
     if (!formData) {
         return <h1>Loading...</h1>;
@@ -158,8 +158,10 @@ const ShowEmployee = (props) => {
         scroller.scrollTo(sectionName, {
             duration: 800,
             delay: 0,
-            smooth: "easeInOutQuart",
+            smooth: "easeInOutQuart"
         });
+
+       
     };
 
     return (
@@ -207,7 +209,7 @@ const ShowEmployee = (props) => {
                 <Tab label="Termination Information" />
             </Tabs> */}
 
-            <div className="tab-buttons">
+            <div className="tab-buttons flex-container">
                 <Button
 
                     onClick={() => handleTabClick("personalInfo")}
@@ -274,7 +276,7 @@ const ShowEmployee = (props) => {
             <br></br>
             <br></br>
 
-            <Grid container sx={{ marginLeft: "600px" }} spacing={3}>
+            <Grid container sx={{ marginLeft: "500px" }} spacing={3}>
                 {/* Personal Information */}
 
                 <Grid item xs={12} md={5} sx={{ width: '50%' }}>
@@ -467,20 +469,39 @@ const ShowEmployee = (props) => {
             }
           }
 
-         .tab-button {
-    font-size: 1rem;
-    margin: 5px;
-    margin-left: 250px;
-    padding: 12px 30px;
-    border-radius: 30px;
-    color: #ffffff;
-    background-color: #1976d2; /* Same color as Save button */
-    border: none;
-    transition: background-color 0.3s, transform 0.2s;
-    text-transform: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    font-weight: 600;
-}
+          .flex-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping if necessary */
+            justify-content: center; /* Align buttons to the left */
+            align-items: center;
+            margin-left: 120px;
+            padding-left: 0;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            flex-wrap: nowrap; /* Adjust based on screen width */
+            gap: 10px; /* Space between buttons */
+            overflow-x: auto; /* Allow horizontal scrolling on small screens */
+            white-space: nowrap; /* Prevent wrapping text inside buttons */
+        }
+        
+        .tab-button {
+            font-size: 0.9rem;
+            padding: 10px 20px;
+            margin: 5px 0; /* Adjust spacing for better layout on all screens */
+            flex-shrink: 0; /* Prevent buttons from shrinking on small screens */
+            margin-left: 250px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            color: #ffffff;
+            background-color: #1976d2; /* Same color as Save button */
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+            text-transform: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            font-weight: 600;
+        }
 
 .tab-button:hover {
     background-color: #115293; /* Darker shade for hover effect */
@@ -498,19 +519,7 @@ const ShowEmployee = (props) => {
 }
 
 /* Scroll to Top Button */
-.scrollToTopBtn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #1976d2; /* Match the Save button color */
-    color: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: background-color 0.3s, transform 0.2s;
-    border: none;
-    width: 50px;
-    height: 50px;
-}
+
 
 .scrollToTopBtn:hover {
     background-color: #115293; /* Darker shade for hover */
@@ -623,18 +632,25 @@ const ShowEmployee = (props) => {
 }
 
 /* Scroll to Top Button */
-.scrollToTopBtn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #1976d2;
-    color: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: background-color 0.3s, transform 0.2s;
-    border: none;
-    width: 50px;
-    height: 50px;
+
+
+.scrollToTopBtn:hover {
+    background-color: #115293;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .scrollToTopBtn {
+        bottom: 20px; /* Adjust positioning for smaller screens */
+        right: 370px;
+        z-index: 9999;
+        width: 40px; /* Reduce size slightly to fit smaller screens */
+        height: 40px;
+    }
+
+    .flex-container{
+        margin-left:620px;
+    }
 }
 
 .scrollToTopBtn:hover {
