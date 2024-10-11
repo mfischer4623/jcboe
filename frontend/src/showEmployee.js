@@ -16,6 +16,15 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "./showEmployee.css";
 
+
+const SectionHeader = ({ employeeName, employeeNumber }) => (
+    <div className="section-header">
+        <Typography variant="h5"><b>Employee Name: {employeeName}</b></Typography>
+        <Typography variant="h6"><b>Employee Number: {employeeNumber}</b></Typography>
+    </div>
+);
+
+
 const ShowEmployee = (props) => {
     const {
         loggedIn,
@@ -25,6 +34,8 @@ const ShowEmployee = (props) => {
         setEmployeeData,
         setEmpName,
         setSsn,
+        setShowPrintView,
+        showPrintView
     } = props;
 
     const navigate = useNavigate();
@@ -32,6 +43,8 @@ const ShowEmployee = (props) => {
     const [selectedTab, setSelectedTab] = useState("personalInfo");
     const [tabIndex, setTabIndex] = useState(0); // State for active 
     const [showScrollTop, setShowScrollTop] = useState(false);
+    //const [isPrinting, setIsPrinting] = useState(false);
+    // const [showPrintView, setShowPrintView] = useState(false);
 
     useEffect(() => {
         if (!loggedIn) {
@@ -69,8 +82,13 @@ const ShowEmployee = (props) => {
         };
 
 
+
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
+
+
+
     }, [loggedIn, employeeNumber, navigate, setEmployeeData]);
 
 
@@ -111,6 +129,9 @@ const ShowEmployee = (props) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+
+
+
     const handleSave = async () => {
         try {
             const response = await fetch(
@@ -137,7 +158,13 @@ const ShowEmployee = (props) => {
     };
 
     const handlePrint = () => {
-        window.print();
+        //  window.print();
+
+        setShowPrintView(true); // Show print view before printing
+        setTimeout(() => {
+            window.print();
+            setShowPrintView(false); // Hide print view after printing
+        }, 500);
     };
 
     const renderField = (label, value, fieldName) => (
@@ -161,17 +188,26 @@ const ShowEmployee = (props) => {
             smooth: "easeInOutQuart"
         });
 
-       
+
     };
 
     return (
         <div className="mainContainer">
 
 
+            <div className="print-header">
+                <Typography variant="h4" gutterBottom>
+                    <b> Employee Information </b>
+                </Typography>
 
-            <Typography variant="h4" gutterBottom>
-                AS/400 Data
-            </Typography>
+                <Typography variant="h5" gutterBottom>
+                    <b> Employee Name: {formData.EMLNAM}, {formData.EMFNAM} {formData.EMMNAM} </b>
+                </Typography>
+
+                <Typography variant="h5" gutterBottom>
+                    <b> Employee Number : {formData.EMSSAN} </b>
+                </Typography>
+            </div>
 
             {showScrollTop && (
                 <Button
@@ -256,14 +292,7 @@ const ShowEmployee = (props) => {
             </div>
 
             <div style={{ marginTop: "20px" }}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSave}
-                    style={{ marginRight: "10px" }}
-                >
-                    Save
-                </Button>
+
                 <Button
                     variant="contained"
                     color="primary"
@@ -277,10 +306,12 @@ const ShowEmployee = (props) => {
             <br></br>
 
             <Grid container sx={{ marginLeft: "500px" }} spacing={3}>
+                {/* <div className="print-section"> */}
+                {/* <SectionHeader employeeName={formData.EMLNAM} employeeNumber={formData.EMSSAN} /> */}
                 {/* Personal Information */}
 
                 <Grid item xs={12} md={5} sx={{ width: '50%' }}>
-                    <Element name="personalInfo">
+                    <Element name="personalInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Personal Information</Typography>
@@ -298,11 +329,13 @@ const ShowEmployee = (props) => {
                         </Accordion>
                     </Element>
                 </Grid>
+                {/* <SectionHeader/> */}
+                {/* </div> */}
 
 
                 {/* Contact Information */}
                 <Grid item xs={12} md={5}>
-                    <Element name="contactInfo">
+                    <Element name="contactInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Contact Information</Typography>
@@ -326,7 +359,7 @@ const ShowEmployee = (props) => {
 
                 {/* Employment Information */}
                 <Grid item xs={12} md={5}>
-                    <Element name="employmentInfo">
+                    <Element name="employmentInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Employment Information</Typography>
@@ -344,7 +377,7 @@ const ShowEmployee = (props) => {
 
                 {/* School Information */}
                 <Grid item xs={12} md={5}>
-                    <Element name="schoolInfo">
+                    <Element name="schoolInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Employer School Information</Typography>
@@ -362,7 +395,7 @@ const ShowEmployee = (props) => {
 
                 {/* Service Information */}
                 <Grid item xs={12} md={5}>
-                    <Element name="serviceInfo">
+                    <Element name="serviceInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Service Details</Typography>
@@ -390,7 +423,7 @@ const ShowEmployee = (props) => {
 
                 {/* Retirement Information */}
                 <Grid item xs={12} md={5}>
-                    <Element name="retirementInfo">
+                    <Element name="retirementInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Pension Details</Typography>
@@ -415,7 +448,7 @@ const ShowEmployee = (props) => {
                 {/* Termination Information */}
 
                 <Grid item xs={12} md={5}>
-                    <Element name="terminationInfo">
+                    <Element name="terminationInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Termination Information</Typography>
@@ -453,6 +486,19 @@ const ShowEmployee = (props) => {
                 </Button>
             </div> */}
 
+            <div className="no-print" style={{ marginTop: "20px" }}>
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handlePrint}
+
+                >
+                    Print
+                </Button>
+
+            </div>
+
             <Typography variant="body2" gutterBottom>
                 Your email is {email}
             </Typography>
@@ -467,6 +513,28 @@ const ShowEmployee = (props) => {
             .MuiAccordionDetails-root {
               display: block !important;
             }
+            .page-break {
+                page-break-after: always;
+            }
+
+            /* Ensure there are no page breaks within the accordion details */
+            .MuiAccordionDetails-root {
+                break-inside: avoid;
+            }
+
+             
+    /* Prevent breaking content within accordion details */
+    .MuiAccordionDetails-root {
+        break-inside: avoid;
+    }
+
+    /* Optional: Remove padding/margins in the print view to better center content */
+    .mainContainer {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+           
           }
 
           .flex-container {
@@ -554,16 +622,7 @@ const ShowEmployee = (props) => {
 }
 
 /* Sidebar */
-.sidebar {
-    background-color: #000;
-    color: #fff;
-    padding: 20px;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-}
+
 
 /* Tab Button Styles */
 .tab-button {

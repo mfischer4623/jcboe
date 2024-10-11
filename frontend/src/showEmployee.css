@@ -6,16 +6,7 @@
 }
 
 /* Sidebar */
-.sidebar {
-    background-color: #000;
-    color: #fff;
-    padding: 20px;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-}
+
 
 /* Tab Button Styles */
 .tab-button {
@@ -100,4 +91,57 @@
 .scrollToTopBtn:hover {
     background-color: #115293;
     transform: translateY(-2px);
+}
+
+
+
+
+@media print {
+    .sidebar { 
+        display: none !important; /* Hide sidebar on print */
+    }
+    .tab-buttons { 
+        display: none !important; /* Hide tab buttons on print */
+    }
+    .page-break {
+        page-break-after: always;
+    }
+
+    /* Prevent breaking content within accordion details */
+    .MuiAccordionDetails-root {
+        break-inside: avoid;
+    }
+
+    .print-header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        text-align: center;
+        background-color: white;
+        padding: 10px;
+        box-sizing: border-box;
+        page-break-before: always;
+        border-bottom: 1px solid #ddd;
+        z-index: 1000; /* Ensure it appears on top */
+    }
+
+    /* Offset the content below the fixed header */
+    .page-break {
+        margin-top: 120px; /* Adjust depending on header height */
+        page-break-after: always;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* height: calc(90vh - 220px); Adjust according to header height */
+        height: auto;
+        padding: 20px;
+        box-sizing: border-box;
+        /* width: 100%;
+        text-align: center; */
+    }
+
+    .MuiAccordionDetails-root {
+        break-inside: avoid;
+    }
 }

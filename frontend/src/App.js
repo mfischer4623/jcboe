@@ -78,6 +78,7 @@ function App() {
   const [aphchk, setAphchk] = useState("")
   const [aphven, setAphven] = useState("")
   const [scd, setCheckData] = useState(null)
+  const [showPrintView, setShowPrintView] = useState(false);
 
   useEffect(() => {
     // Fetch the user email and token from local storage
@@ -106,14 +107,14 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Sidebar />
+      <Sidebar showPrintView={showPrintView}/>
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/main" element={<Main loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/employeeSearch" element={<EmployeeSearch loggedIn={loggedIn} email={email} employeeName={employeeName} employeeNumber={employeeNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} ed={ed} setEmployeeNumber={setEmployeeNumber} setEmployeeName={setEmployeeName} setEmployeeData={setEmployeeData} setEmployeeNames={setEmployeeNames} />} />
           <Route path="/employeeName" element={<EmployeeName loggedIn={loggedIn} email={email} employeeNumber={employeeNumber} employeeName={employeeName} setLoggedIn={setLoggedIn} setEmail={setEmail} es={es} setEmployeeNames={setEmployeeNames} setEmployeeNumber={setEmployeeNumber} />} />
-          <Route path="/showEmployee" element={<ShowEmployee loggedIn={loggedIn} email={email} employeeNumber={employeeNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} setEmployeeNumber={setEmployeeNumber} ed={ed} setEmployeeData={setEmployeeData} setEmpName={setEmpName} setSsn={setSsn} />} />
+          <Route path="/showEmployee" element={<ShowEmployee loggedIn={loggedIn} email={email} employeeNumber={employeeNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} setEmployeeNumber={setEmployeeNumber} ed={ed} setEmployeeData={setEmployeeData} setEmpName={setEmpName} setSsn={setSsn} setShowPrintView={setShowPrintView} showPrintView={showPrintView}/>} />
           <Route path="/showAttendance" element={<ShowAttendance loggedIn={loggedIn} email={email} employeeNumber={employeeNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} setEmployeeNumber={setEmployeeNumber} ad={ad} setAttendanceData={setAttendanceData} empName={empName} />} />
           <Route path="/miscData" element={<MiscData loggedIn={loggedIn} email={email} employeeNumber={employeeNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} setEmployeeNumber={setEmployeeNumber} ad={ad} setAttendanceData={setAttendanceData} empName={empName} md={md} setMiscData={setMiscData} />} />
           <Route path="/certificates" element={<Certificates loggedIn={loggedIn} email={email} employeeNumber={employeeNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} setEmployeeNumber={setEmployeeNumber} ad={ad} setAttendanceData={setAttendanceData} empName={empName} cd={cd} setCertificates={setCertificates} />} />

@@ -41,11 +41,12 @@ const SidebarWrap = styled.div`
   width: 100%;
 `;
 
-const Sidebar = () => {
+const Sidebar = ({showPrintView }) => {
   const [sidebar, setSidebar] = useState('true');
 
   const showSidebar = () => setSidebar(!sidebar);
 
+  if (showPrintView) return null; 
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>

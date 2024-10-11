@@ -119,7 +119,7 @@ const EmployeeName = (props) => {
                             <TableCell colSpan={5}>Search Name: {employeeName}</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell style={{ width: "20px" }}>
+                            <TableCell >
                                 <TableSortLabel
                                     active={orderBy === "EMSSAN"}
                                     direction={orderBy === "EMSSAN" ? order : "asc"}
@@ -128,7 +128,7 @@ const EmployeeName = (props) => {
                                     Emp #
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell style={{ width: "20px" }}>
+                            <TableCell>
                                 <TableSortLabel
                                     active={orderBy === "EMLNAM"}
                                     direction={orderBy === "EMLNAM" ? order : "asc"}
@@ -146,8 +146,8 @@ const EmployeeName = (props) => {
                                     First Name
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell style={{ width: "20px" }}>Location</TableCell>
-                            <TableCell style={{ width: "20px" }}>Status</TableCell>
+                            <TableCell>Location</TableCell>
+                            <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
