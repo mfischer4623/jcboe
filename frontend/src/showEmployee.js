@@ -310,11 +310,20 @@ const ShowEmployee = (props) => {
                 {/* <SectionHeader employeeName={formData.EMLNAM} employeeNumber={formData.EMSSAN} /> */}
                 {/* Personal Information */}
 
-                <Grid item xs={12} md={5} sx={{ width: '50%' }}>
+                <Grid item xs={12} md={5} sx={{
+                    width: '50%',
+                    '@media print': {
+                        marginLeft: '-220px',
+                        textAlign: 'center'
+                    }
+                }}>
                     <Element name="personalInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Personal Information</Typography>
+                                <Typography variant="h6" sx={{
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }}> <b>Personal Information</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Employee Number", formData.EMSSAN, "EMSSAN")}
@@ -334,11 +343,20 @@ const ShowEmployee = (props) => {
 
 
                 {/* Contact Information */}
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sx={{
+                    width: '50%',
+                    '@media print': {
+                        marginLeft: '-220px',
+                        textAlign: 'center'
+                    }
+                }} >
                     <Element name="contactInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Contact Information</Typography>
+                                <Typography variant="h6" sx={{
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }}><b>Contact Information</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Office Phone", `${formData.EMOTL0} ${formData.EMEXTN}`, "officePhone")}
@@ -350,7 +368,6 @@ const ShowEmployee = (props) => {
                                 {renderField("Location", `${formData.EMLOC}, ${formData.LCNAME}`, "EMLOC_LCNAME")}
                                 {renderField("District", `${formData.EMHDT}`, "EMHDT")}
                                 {renderField("Sub Location", `${formData.EMLOC2}, ${formData.CLNAME} `, "EMLOC2_CLNAME")}
-
                                 {renderField("City/State/Zip", `${formData.EMCITY}, ${formData.EMST} ${formData.EMZIP1}`, "cityStateZip")}
                             </AccordionDetails>
                         </Accordion>
@@ -358,11 +375,20 @@ const ShowEmployee = (props) => {
                 </Grid>
 
                 {/* Employment Information */}
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sx={{
+                    width: '50%',
+                    '@media print': {
+                        marginLeft: '-220px',
+                        textAlign: 'center'
+                    }
+                }}>
                     <Element name="employmentInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Employment Information</Typography>
+                                <Typography variant="h6" sx={{
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }}><b>Employment Information</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Department", formData.EMDEPT, "EMDEPT")}
@@ -376,11 +402,20 @@ const ShowEmployee = (props) => {
                 </Grid>
 
                 {/* School Information */}
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sx={{
+                    width: '50%',
+                    '@media print': {
+                        marginLeft: '-220px',
+                        textAlign: 'center'
+                    }
+                }}>
                     <Element name="schoolInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Employer School Information</Typography>
+                                <Typography variant="h6" sx={{
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }}><b>Employer School Information</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("School", formData.EMHSC, "EMHSC")}
@@ -394,11 +429,20 @@ const ShowEmployee = (props) => {
                 </Grid>
 
                 {/* Service Information */}
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sx={{
+                    width: '50%',
+                    '@media print': {
+                        marginLeft: '-220px',
+                        textAlign: 'center'
+                    }
+                }}>
                     <Element name="serviceInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Service Details</Typography>
+                                <Typography variant="h6" sx={{
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }}><b>Service Details</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Previous Service Credit", formData.EMPREV, "EMPREV")}
@@ -422,11 +466,20 @@ const ShowEmployee = (props) => {
                 </Grid>
 
                 {/* Retirement Information */}
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sx={{
+                    width: '50%',
+                    '@media print': {
+                        marginLeft: '-220px',
+                        textAlign: 'center'
+                    }
+                }}>
                     <Element name="retirementInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Pension Details</Typography>
+                                <Typography variant="h6" sx={{
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }}><b>Pension Details</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Pension Number", formData.EXPENS, "EXPENS")}
@@ -447,11 +500,20 @@ const ShowEmployee = (props) => {
 
                 {/* Termination Information */}
 
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sx={{
+                    width: '50%',
+                    '@media print': {
+                        marginLeft: '-220px',
+                        textAlign: 'center'
+                    }
+                }}>
                     <Element name="terminationInfo" className="page-break">
                         <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Termination Information</Typography>
+                                <Typography variant="h6" sx={{
+                                    textAlign: 'center',
+                                    width: '100%'
+                                }}><b>Termination Information</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Termination Date", formData.ETMDAT, "ETMDAT")}
@@ -513,13 +575,21 @@ const ShowEmployee = (props) => {
             .MuiAccordionDetails-root {
               display: block !important;
             }
-            .page-break {
-                page-break-after: always;
-            }
 
+            
+           
+            .mainContainer {
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+            
             /* Ensure there are no page breaks within the accordion details */
             .MuiAccordionDetails-root {
                 break-inside: avoid;
+            }
+
+            .page-break:not(:last-child) {
+                page-break-after: always;
             }
 
              

@@ -103,14 +103,24 @@
     .tab-buttons { 
         display: none !important; /* Hide tab buttons on print */
     }
-    .page-break {
-        page-break-after: always;
+
+   
+   
+    .mainContainer {
+        padding-bottom: 0;
+        margin-bottom: 0;
     }
 
     /* Prevent breaking content within accordion details */
     .MuiAccordionDetails-root {
         break-inside: avoid;
     }
+
+    .page-break:not(:last-child) {
+        page-break-after: always;
+    }
+
+   
 
     .print-header {
         position: fixed;
