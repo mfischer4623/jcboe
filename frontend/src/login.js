@@ -108,7 +108,7 @@ const Login = (props) => {
     
 
     return (
-<div className={"mainContainer"} style={{ backgroundColor:'rgb(192, 219, 229)'}}>
+<div className={"mainContainer"} style={{ backgroundColor:'#C6B2A3'}}>
 
 <Container component="main" maxWidth="xs">
 
@@ -137,13 +137,14 @@ const Login = (props) => {
             AS/400 Data
           </Typography>
           
-    <Avatar sx={{ m: 1, bgcolor: 'blue' }}>
+    <Avatar sx={{ m: 1, bgcolor: '#865d36' }}>
       <LockOutlinedIcon />
     </Avatar>
     <Typography component="h1" variant="h5">
       Login
     </Typography>
       <TextField
+      style={{backgroundColor:'#D9CCC4'}}
       error={emailError ?  true: false}
       helperText={emailError}
         margin="normal"
@@ -157,9 +158,22 @@ const Login = (props) => {
             setEmail(event.target.value);
             console.log(email)
           }}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              '&.Mui-focused fieldset': {
+                borderColor: '#3E362E', // Change this to your desired color
+              },
+            },
+            '& label.Mui-focused': {
+              color: '#3E362E', // Change the label color on focus (optional)
+            },
+          }}
+          
+        
         autoFocus
       />
       <TextField
+       style={{backgroundColor:'#D9CCC4'}}
       error={passwordError ?  true: false}
       helperText={passwordError}
         margin="normal"
@@ -173,6 +187,17 @@ const Login = (props) => {
             setPassword(event.target.value);
             console.log(password)
           }}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              '&.Mui-focused fieldset': {
+                borderColor: '#3E362E', // Change this to your desired color
+              },
+            },
+            '& label.Mui-focused': {
+              color: '#3E362E', // Change the label color on focus (optional)
+            },
+          }}
+          
         autoComplete="current-password"
       />
       <FormControlLabel
@@ -185,19 +210,20 @@ const Login = (props) => {
            onButtonClick
           }
         fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
+        // variant="contained"
+        sx={{ mt: 3, mb: 2 , backgroundColor:  '#865d36',  color:'white', '&:hover': {
+          backgroundColor: 'black'}}}
       >
         Sign In
       </Button>
       <Grid container>
         <Grid item xs>
-          <Link href="#" variant="body2">
+          <Link href="#" variant="body2" style={{color:'white'}}>
             Forgot password?
           </Link>
         </Grid>
         <Grid item>
-          <Link href="#" variant="body2">
+          <Link href="#" variant="body2"  style={{color:'white'}}>
             {"Don't have an account? Sign Up"}
           </Link>
         </Grid>

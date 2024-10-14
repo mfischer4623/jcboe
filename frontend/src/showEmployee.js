@@ -43,10 +43,13 @@ const ShowEmployee = (props) => {
     const [selectedTab, setSelectedTab] = useState("personalInfo");
     const [tabIndex, setTabIndex] = useState(0); // State for active 
     const [showScrollTop, setShowScrollTop] = useState(false);
+    const [expanded, setExpanded] = useState(true);
+    const [printMode, setPrintMode] = useState(false);
     //const [isPrinting, setIsPrinting] = useState(false);
     // const [showPrintView, setShowPrintView] = useState(false);
 
     useEffect(() => {
+
         if (!loggedIn) {
             localStorage.removeItem("user");
             props.setLoggedIn(false);
@@ -85,8 +88,11 @@ const ShowEmployee = (props) => {
 
 
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            
+        };
+        
 
 
     }, [loggedIn, employeeNumber, navigate, setEmployeeData]);
@@ -158,12 +164,14 @@ const ShowEmployee = (props) => {
     };
 
     const handlePrint = () => {
+        setExpanded(true);
+       
         //  window.print();
-
         setShowPrintView(true); // Show print view before printing
         setTimeout(() => {
             window.print();
             setShowPrintView(false); // Hide print view after printing
+            setExpanded(false);
         }, 500);
     };
 
@@ -294,11 +302,15 @@ const ShowEmployee = (props) => {
             <div style={{ marginTop: "20px" }}>
 
                 <Button
-                    variant="contained"
-                    color="primary"
+                   // variant="contained"
+                    // color="primary"
+                    //className="print-button"
+                    sx={{backgroundColor:'black', color:'white',   '&:hover': {
+                        backgroundColor: 'black', // Hover color
+                    }}}
                     onClick={handlePrint}
                 >
-                    Print
+                   <b>PRINT INFORMATION</b> 
                 </Button>
             </div>
 
@@ -318,7 +330,7 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="personalInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion  defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -550,13 +562,25 @@ const ShowEmployee = (props) => {
 
             <div className="no-print" style={{ marginTop: "20px" }}>
 
-                <Button
+                {/* <Button
                     variant="contained"
                     color="primary"
                     onClick={handlePrint}
 
                 >
                     Print
+                </Button> */}
+                
+                <Button
+                   // variant="contained"
+                    // color="primary"
+                    //className="print-button"
+                    sx={{backgroundColor:'black', color:'white',   '&:hover': {
+                        backgroundColor: 'black', // Hover color
+                    }}}
+                    onClick={handlePrint}
+                >
+                   <b>PRINT INFORMATION</b> 
                 </Button>
 
             </div>
@@ -571,6 +595,7 @@ const ShowEmployee = (props) => {
           @media print {
             .MuiAccordionSummary-root {
                display: block !important;
+               background-color: #333333 !important;
             }
             .MuiAccordionDetails-root {
               display: block !important;
@@ -633,7 +658,7 @@ const ShowEmployee = (props) => {
             padding: 12px 30px;
             border-radius: 30px;
             color: #ffffff;
-            background-color: #1976d2; /* Same color as Save button */
+            background-color: #865d36; /* Same color as Save button */
             border: none;
             transition: background-color 0.3s, transform 0.2s;
             text-transform: none;
@@ -642,7 +667,7 @@ const ShowEmployee = (props) => {
         }
 
 .tab-button:hover {
-    background-color: #115293; /* Darker shade for hover effect */
+    background-color: #333333; /* Darker shade for hover effect */
     transform: translateY(-2px);
 }
 
@@ -652,8 +677,24 @@ const ShowEmployee = (props) => {
 }
 
 .tab-button.active {
-    background-color: #0d47a1; /* Darker active color */
+    background-color: #333333; /* Darker active color */
     color: #ffffff;
+}
+
+.MuiInputBase-input {
+    font-size: 1.3rem; /* Adjust font size as needed */
+    background-color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+/* Placeholder text inside the input boxes */
+.MuiInputBase-input::placeholder {
+    font-size: 1.3rem; /* Ensure this matches the input text size */
+    font-weight: bold;
+    color: #888; /* Optional: change the color of the placeholder */
+    opacity: 1; /* Optional: make the placeholder fully opaque */
 }
 
 /* Scroll to Top Button */
@@ -663,7 +704,7 @@ const ShowEmployee = (props) => {
     background-color: #115293; /* Darker shade for hover */
 }
     .MuiAccordion-root {
-    background-color: #e3f2fd; /* Light background for accordion */
+    background-color: 'white'; /* Light background for accordion */
     color: #333;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -671,7 +712,7 @@ const ShowEmployee = (props) => {
 }
 
 .MuiAccordionSummary-root {
-    background-color: #1976d2; /* Same color as Save button */
+    background-color: #865d36; /* Same color as Save button */
     border-radius: 8px 8px 0 0;
     color: #ffffff;
 }
@@ -682,11 +723,11 @@ const ShowEmployee = (props) => {
 }
 
 .MuiAccordionDetails-root {
-    background-color: #e0f7fa; /* Subtle background for details */
+    background-color: 'white'; /* Subtle background for details */
 }
 
 .mainContainer {
-    background-color: rgb(192, 219, 229);
+   
     padding: 20px;
     color: #333;
 }
@@ -702,7 +743,7 @@ const ShowEmployee = (props) => {
     
     border-radius: 30px;
     color: #ffffff;
-    background-color: #5aa0f4; /* Save button color */
+    background-color: #5F3F27; /* Save button color */
     border: none;
     transition: background-color 0.3s, transform 0.2s;
     text-transform: none;
@@ -711,7 +752,7 @@ const ShowEmployee = (props) => {
 }
 
 .tab-button:hover {
-    background-color: #115293;
+    background-color: '#333333';
     transform: translateY(-2px);
 }
 
@@ -721,13 +762,13 @@ const ShowEmployee = (props) => {
 }
 
 .tab-button.active {
-    background-color: #0d47a1;
+    background-color: '#333333';
     color: #ffffff;
 }
 
 /* Accordion */
 .MuiAccordion-root {
-    background-color: #e3f2fd;
+    background-color: 'white';
     color: #333;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -735,7 +776,7 @@ const ShowEmployee = (props) => {
 }
 
 .MuiAccordionSummary-root {
-    background-color: #1976d2;
+    background-color: #865d36;
     border-radius: 8px 8px 0 0;
     color: #ffffff;
 }
@@ -746,7 +787,7 @@ const ShowEmployee = (props) => {
 }
 
 .MuiAccordionDetails-root {
-    background-color: #e0f7fa;
+    background-color: 'white';
 }
 
 /* Text Fields */

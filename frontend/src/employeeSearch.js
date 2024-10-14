@@ -71,7 +71,9 @@ const EmployeeSearch = (props) => {
                         fullWidth
                         variant="contained"
                        // color="primary"
-                        sx={{ marginTop: 2, backgroundColor:  '#1976D2'}}
+                        sx={{ marginTop: 2, backgroundColor:  '#865d36', '&:hover': {
+                            backgroundColor: 'black', // Custom hover color
+                        }}}
                         onClick={onENameButtonClick}
                     >
                         Employee Name Search
@@ -90,7 +92,9 @@ const EmployeeSearch = (props) => {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        sx={{ marginTop: 2 }}
+                        sx={{ marginTop: 2, backgroundColor:  '#865d36',  '&:hover': {
+                            backgroundColor: 'black', // Custom hover color
+                        } }}
                         onClick={onENButtonClick}
                     >
                         Choose Employee

@@ -1,6 +1,6 @@
 /* Main Container */
 .mainContainer {
-    background-color: rgb(192, 219, 229);
+     /* background-color: #ADBBDA; */
     padding: 20px;
     color: #333;
 }
@@ -15,7 +15,8 @@
     padding: 12px 30px;
     border-radius: 30px;
     color: #ffffff;
-    background-color: #1976d2; /* Save button color */
+    /* background-color: #1976d2; Save button color */
+    background-color:#865d36;
     border: none;
     transition: background-color 0.3s, transform 0.2s;
     text-transform: none;
@@ -24,7 +25,23 @@
 }
 
 .tab-button:hover {
-    background-color: #115293;
+    background-color: #333333;
+    transform: translateY(-2px);
+}
+
+.print-button {
+    background-color: #5F3F27; /* Complementary shade to the brown and dark gray */
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover state for Print Button */
+.print-button:hover {
+    background-color: #865d36; /* Slightly lighter shade for hover */
     transform: translateY(-2px);
 }
 
@@ -33,14 +50,21 @@
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+
+
+.MuiAccordionSummary-root:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
 .tab-button.active {
-    background-color: #0d47a1;
+    background-color: #333333;
     color: #ffffff;
 }
 
 /* Accordion */
 .MuiAccordion-root {
-    background-color: #e3f2fd;
+    background-color: 'white';
     color: #333;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -59,7 +83,7 @@
 }
 
 .MuiAccordionDetails-root {
-    background-color: #e0f7fa;
+    background-color: 'white';
 }
 
 /* Text Fields */
@@ -89,7 +113,7 @@
 }
 
 .scrollToTopBtn:hover {
-    background-color: #115293;
+    background-color: '#333333';
     transform: translateY(-2px);
 }
 

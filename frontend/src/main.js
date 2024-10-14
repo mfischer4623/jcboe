@@ -30,7 +30,7 @@ const Main = (props) => {
     localStorage.setItem("navMenu", "menu1")
 
     const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
         padding: theme.spacing(1),
         textAlign: 'center',
@@ -48,10 +48,10 @@ const Main = (props) => {
         <Typography gutterBottom variant="h5" component="div">
           Hello  <Avatar/>
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-         U have reached ur website... <br/>
+        <Typography variant="body1" color="text.secondary">
+        <b> You have reached ur website... <br/>
          To continue accessing ur website..<br/>
-         click on Employee dashboard below !<br/>
+         click on Employee dashboard below! </b><br/>
         </Typography>
       </CardContent>
       <CardActions>

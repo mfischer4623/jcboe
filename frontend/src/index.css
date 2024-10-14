@@ -2,7 +2,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: rgb(192, 219, 229);
+  /* background: #ADBBDA */
+  /* background:#A69080; */
+  background: #C6B2A3;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }

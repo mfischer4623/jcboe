@@ -4,6 +4,7 @@ import {
     Table, TableBody, TableCell, TableContainer, TableHead,
     TableRow, TablePagination, TableSortLabel, Paper, TextField, MenuItem, Toolbar
 } from "@mui/material";
+import "./employeeName.css";
 
 const EmployeeName = (props) => {
     const { loggedIn, email, setEmployeeNumber, employeeName, es, setEmployeeNames } = props;
@@ -59,7 +60,7 @@ const EmployeeName = (props) => {
     };
 
     // Filter and sort employees
-    const filteredEmployees = es?.filter((emp) => 
+    const filteredEmployees = es?.filter((emp) =>
         emp.EMLNAM.toLowerCase().includes(filterLastName.toLowerCase()) &&
         emp.EMFNAM.toLowerCase().includes(filterFirstName.toLowerCase()) &&
         (filterStatus ? emp.EMSTAT === filterStatus : true)
@@ -112,24 +113,48 @@ const EmployeeName = (props) => {
                 </TextField>
             </Toolbar>
 
-            <TableContainer style={{width:"60%"}}component={Paper}>
+            <TableContainer style={{ width: "60%" }} component={Paper}>
                 <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell colSpan={5}>Search Name: {employeeName}</TableCell>
+                    <TableHead sx={{
+
+                        backgroundColor: '#865d36',
+                        color: 'white',// Use light blue color for alternative rows,
+
+                    }}>
+                        <TableRow sx={{ color: 'red' }}>
+                            <TableCell colSpan={5} sx={{ color: 'white', fontSize:'23px',textAlign:'center',  '&:hover': { color: '#FFD700' }, }}><b>Search Name: {employeeName}</b></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell >
+                            <TableCell
+                                sx={{
+                                    color: 'white',
+                                    '&:hover': {
+                                        color: '#FFD700', // Change text color on hover
+                                    },
+                                }}
+                            >
                                 <TableSortLabel
+                                    sx={{ '&:hover': { color: '#FFD700' }, fontSize: '20px' }}
                                     active={orderBy === "EMSSAN"}
                                     direction={orderBy === "EMSSAN" ? order : "asc"}
                                     onClick={() => handleRequestSort("EMSSAN")}
                                 >
-                                    Emp #
+                                    <b>Emp #</b>
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell>
+                            <TableCell
+                                sx={{
+                                    color: 'white',
+                                    '&:hover': { color: '#FFD700' },
+                                    fontSize: '20px'
+                                }}
+                            >
                                 <TableSortLabel
+                                    sx={{
+                                        color: 'white',
+                                        '&:hover': { color: '#FFD700' },
+                                        fontSize: '20px'
+                                    }}
                                     active={orderBy === "EMLNAM"}
                                     direction={orderBy === "EMLNAM" ? order : "asc"}
                                     onClick={() => handleRequestSort("EMLNAM")}
@@ -137,8 +162,20 @@ const EmployeeName = (props) => {
                                     Last Name
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell style={{ width: "20px" }}>
+                            <TableCell
+                                sx={{
+                                    color: 'white',
+                                    width: "20px",
+                                    '&:hover': { color: '#FFD700' },
+                                    fontSize: '20px'
+                                }}
+                            >
                                 <TableSortLabel
+                                    sx={{
+                                        color: 'white',
+                                        '&:hover': { color: '#FFD700' },
+                                        fontSize: '20px'
+                                    }}
                                     active={orderBy === "EMFNAM"}
                                     direction={orderBy === "EMFNAM" ? order : "asc"}
                                     onClick={() => handleRequestSort("EMFNAM")}
@@ -146,27 +183,51 @@ const EmployeeName = (props) => {
                                     First Name
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell>Location</TableCell>
-                            <TableCell>Status</TableCell>
+                            <TableCell
+                                sx={{
+                                    color: 'white',
+                                    '&:hover': { color: '#FFD700' },
+                                    fontSize: '20px'
+                                }}
+                            >
+                                Location
+                            </TableCell>
+                            <TableCell
+                                sx={{
+                                    color: 'white',
+                                    '&:hover': { color: '#FFD700' },
+                                    fontSize: '20px'
+                                }}
+                            >
+                                Status
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {sortedEmployees
                             ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((ess) => (
-                                <TableRow key={ess.EMSSAN} hover onClick={() => employeeSelected(ess.EMSSAN)} style={{ cursor: 'pointer' }}>
-                                   <TableCell style={{ width: "100px" }}>
+                            .map((ess, index) => (
+                                <TableRow className="hoverable-row" key={ess.EMSSAN} hover onClick={() => employeeSelected(ess.EMSSAN)} sx={{
+                                    cursor: 'pointer',
+                                    backgroundColor: index % 2 === 0 ? '#AC8968' : 'white',
+                                    transition: 'background-color 0.3s',
+                                    '&:hover':{
+                                        backgroundColor: "#865D36",//this is not working
+                                        cursor: "pointer"
+                                }}}
+                                >
+                                    <TableCell>
                                         <a href="#" onClick={(e) => {
                                             e.preventDefault();
                                             employeeSelected(ess.EMSSAN);
                                         }}>
-                                            {ess.EMSSAN}
+                                            <b>{ess.EMSSAN}</b>
                                         </a>
                                     </TableCell>
-                                    <TableCell >{ess.EMLNAM}</TableCell>
-                                    <TableCell>{ess.EMFNAM}</TableCell>
-                                    <TableCell>{ess.LCNAME}</TableCell>
-                                    <TableCell>{ess.EMSTAT}</TableCell>
+                                    <TableCell sx={{ fontSize: '16px' }} ><b>{ess.EMLNAM}</b></TableCell>
+                                    <TableCell sx={{ fontSize: '16px' }} ><b>{ess.EMFNAM}</b></TableCell>
+                                    <TableCell sx={{ fontSize: '16px' }} ><b>{ess.LCNAME}</b></TableCell>
+                                    <TableCell sx={{ fontSize: '16px' }} ><b>{ess.EMSTAT}</b></TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>

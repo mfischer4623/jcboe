@@ -79,10 +79,17 @@ th {
 }
 
 table tr:nth-child(odd) td{
-  background:#ccc;
+  /* background:#ccc;
+   */
+   background:rgb(240, 248, 252);
 }
 table tr:nth-child(even) td{
-   background:#fff;
+   /* background:#fff; */
+   background:#D3B9A3
+}
+
+table tr:hover td {
+  background: #a77b4a; /* Change to your desired hover color */
 }
 
 td {
