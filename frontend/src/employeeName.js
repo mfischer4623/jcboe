@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     Table, TableBody, TableCell, TableContainer, TableHead,
-    TableRow, TablePagination, TableSortLabel, Paper, TextField, MenuItem, Toolbar
+    TableRow, TablePagination, TableSortLabel, Paper, TextField, MenuItem, Toolbar,
+    Typography
 } from "@mui/material";
 import "./employeeName.css";
 
@@ -16,7 +17,7 @@ const EmployeeName = (props) => {
 
     const [filterLastName, setFilterLastName] = useState("");
     const [filterFirstName, setFilterFirstName] = useState("");
-    const [filterStatus, setFilterStatus] = useState("");
+    const [filterStatus, setFilterStatus] = useState("All");
 
     const navigate = useNavigate();
 
@@ -63,7 +64,8 @@ const EmployeeName = (props) => {
     const filteredEmployees = es?.filter((emp) =>
         emp.EMLNAM.toLowerCase().includes(filterLastName.toLowerCase()) &&
         emp.EMFNAM.toLowerCase().includes(filterFirstName.toLowerCase()) &&
-        (filterStatus ? emp.EMSTAT === filterStatus : true)
+        // (filterStatus ? emp.EMSTAT === filterStatus : true)
+        (filterStatus === "All" || emp.EMSTAT === filterStatus)
     );
 
     const sortedEmployees = filteredEmployees?.sort((a, b) => {
@@ -82,13 +84,18 @@ const EmployeeName = (props) => {
             <br />
 
             <Toolbar>
+            <Typography sx={{fontSize:'20px', marginRight:'20px'}}>
+                  <b>Filter Data : {"   "} </b> 
+                    </Typography>
+                    <br></br>
+                    <br></br>
                 <TextField
                     label="Last Name"
                     variant="outlined"
                     size="small"
                     value={filterLastName}
                     onChange={(e) => setFilterLastName(e.target.value)}
-                    style={{ marginRight: "10px" }}
+                    style={{ marginRight: "10px" , backgroundColor:'#F0E8E2'}}
                 />
                 <TextField
                     label="First Name"
@@ -96,7 +103,7 @@ const EmployeeName = (props) => {
                     size="small"
                     value={filterFirstName}
                     onChange={(e) => setFilterFirstName(e.target.value)}
-                    style={{ marginRight: "10px" }}
+                    style={{ marginRight: "10px",  backgroundColor:'#F0E8E2' }}
                 />
                 <TextField
                     label="Status"
@@ -105,11 +112,11 @@ const EmployeeName = (props) => {
                     select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    style={{ width: "150px" }}
+                    style={{ width: "150px",  backgroundColor:'#F0E8E2' }}
                 >
-                    <MenuItem value="">All</MenuItem>
-                    <MenuItem value="Active">Active</MenuItem>
-                    <MenuItem value="Inactive">Inactive</MenuItem>
+                    <MenuItem value="All">All</MenuItem>
+                    <MenuItem value="Y">Y</MenuItem>
+                    <MenuItem value="N">N</MenuItem>
                 </TextField>
             </Toolbar>
 

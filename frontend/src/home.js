@@ -21,10 +21,10 @@ const Home = (props) => {
     return (
         <Container maxWidth="sm" sx={{ mt: 4 }}>
             <Card sx={{ 
-                bgcolor: 'lightblue',    // Background color
+                bgcolor: '#A69080',    // Background color
                 borderRadius: 3,         // Rounded corners
                 boxShadow: 3,            // Box shadow
-                border: '2px solid #1976d2' // Border
+                border: '2px solid black' // Border
             }}>
                 <CardContent>
                     <Box sx={{ textAlign: "center", mb: 4 }}>
@@ -58,8 +58,10 @@ const Home = (props) => {
                 </CardContent>
                 <CardActions sx={{ justifyContent: "center" }}>
                     <Button
-                        variant="contained"
-                        color={loggedIn ? "secondary" : "primary"}
+                        // variant="contained"
+                        // color={loggedIn ? "secondary" : "primary"}
+                        sx={{backgroundColor:'#865d36',color:'white', border:'black', '&:hover': {
+                            backgroundColor: 'black'}}}
                         onClick= {onButtonClick}
                     >
                         {loggedIn ? "Log out" : "Log in"}
