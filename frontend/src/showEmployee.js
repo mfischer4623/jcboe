@@ -10,20 +10,13 @@ import {
     Grid,
     Button,
     Tabs,
-    Tab
+    Tab,
+    CircularProgress,
+    Box
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "./showEmployee.css";
-
-
-const SectionHeader = ({ employeeName, employeeNumber }) => (
-    <div className="section-header">
-        <Typography variant="h5"><b>Employee Name: {employeeName}</b></Typography>
-        <Typography variant="h6"><b>Employee Number: {employeeNumber}</b></Typography>
-    </div>
-);
-
 
 const ShowEmployee = (props) => {
     const {
@@ -45,6 +38,7 @@ const ShowEmployee = (props) => {
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [expanded, setExpanded] = useState(true);
     const [printMode, setPrintMode] = useState(false);
+    const [isLoading, setIsLoading] = useState(true); 
     //const [isPrinting, setIsPrinting] = useState(false);
     // const [showPrintView, setShowPrintView] = useState(false);
 
@@ -62,19 +56,21 @@ const ShowEmployee = (props) => {
 
         const fetchData = async () => {
             try {
+                setIsLoading(true);
                 const response = await fetch(
                     `https://as400.jcboe.org:8080/api/employees/${employeeNumber}`
                 );
                 const resData = await response.json();
                 setEmployeeData(resData);
                 setFormData(resData); // Initialize local state with fetched data
+                setIsLoading(false);
             } catch (error) {
                 console.log("error", error);
                 navigate("/employeeSearch");
+                setIsLoading(false);
             }
         };
         fetchData();
-
 
         const handleScroll = () => {
             if (window.scrollY > 200) {
@@ -86,20 +82,161 @@ const ShowEmployee = (props) => {
 
 
 
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            
         };
-        
+
 
 
     }, [loggedIn, employeeNumber, navigate, setEmployeeData]);
 
 
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100vh'
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
+    }
 
+    if (ed === null) {
+        return <h1>Loading...</h1>
+    }
 
+    if (ed.EMMNAM == null) {
+        ed.EMMNAM = " "
+    }
+    var empNameX = ed?.EMLNAM + ', ' + ed?.EMFNAM + ' ' + ed?.EMMNAM
+    setEmpName(empNameX)
+    setSsn(ed?.EMPSSN)
+
+    function normalize(phone) {
+        //normalize string and remove all unnecessary characters
+        phone = phone.replace(/[^\d]/g, "");
+
+        //check if number length equals to 10
+        if (phone.length === 7) {
+            //reformat and return phone number
+            return phone.replace(/(\d{3})(\d{4})/, "$1-$2");
+        }
+
+        return "";
+    }
+
+    var phone = ed.EMOTL2.toString();
+    var ophone = normalize(phone);
+
+    phone = ed.EMHTL2.toString();
+    var hphone = normalize(phone);
+
+    var zipCode = ed.EMZIP1.toString();
+    if (zipCode.length !== 5) {
+        zipCode = '0' + zipCode;
+    }
+
+    var zipCodeP = ed.EMPZP1.toString();
+    if (zipCodeP.length !== 5) {
+        zipCodeP = '0' + zipCodeP;
+    }
+
+    if (ed.EMSEX == 'F') {
+        var GENDER = 'FEMALE'
+    } else if (ed.EMSEX == 'M') {
+        GENDER = 'MALE'
+    } else {
+        GENDER = 'OTHER'
+    }
+
+    var EMVETC = null
+    if (ed.EMVETC == 'DSTSTM') {
+        EMVETC = 'DESERT STORM'
+    }
+
+    if (ed.TRD == '00/00/1900' || ed.TRD == '00/00/2000') {
+        ed.TRD = ''
+    }
+
+    if (ed.SCD == '00/00/0000' || ed.SCD == '00/00/1900' || ed.SCD == '00/00/2000') {
+        ed.SCD = ''
+    }
+
+    if (ed.EMADAT !== 0) {
+        var dateString = ed.EMADAT.toString();
+        var year = dateString.substring(0, 2);
+        if (year > '30') {
+            year = '19' + year
+        } else {
+            year = '20' + year
+        }
+        var month = dateString.substring(2, 4);
+        var day = dateString.substring(4, 6);
+        var EMADAT = month + '/' + day + '/' + year
+    } else {
+        EMADAT = ''
+    }
+
+    if (ed.EMSRDT !== 0) {
+        dateString = ed.EMSRDT.toString();
+        year = dateString.substring(0, 2);
+        if (year > '30') {
+            year = '19' + year
+        } else {
+            year = '20' + year
+        }
+        month = dateString.substring(2, 4);
+        day = dateString.substring(4, 6);
+        var EMSRDT = month + '/' + day + '/' + year
+    } else {
+        EMSRDT = ''
+    }
+
+    if (ed.ETMDAT !== 0) {
+        dateString = ed.ETMDAT.toString();
+        if (dateString.length === 5) {
+            year = dateString.substring(3, 5)
+            month = '0' + dateString.substring(0, 1);
+            day = dateString.substring(1, 3);
+        } else {
+            year = dateString.substring(4, 6)
+            month = dateString.substring(0, 2);
+            day = dateString.substring(2, 4);
+        }
+        if (year > '30') {
+            year = '19' + year
+        } else {
+            year = '20' + year
+        }
+        var ETMDAT = month + '/' + day + '/' + year
+    } else {
+        ETMDAT = ''
+    }
+
+    if (ed.ETMDS1 === null) {
+        ed.ETMDS1 = '-'
+    }
+    if (ed.ETMDS2 === null) {
+        ed.ETMDS2 = '-'
+    }
+    if (ed.ETMDS3 === null) {
+        ed.ETMDS3 = '-'
+    }
+    if (ed.ETMDS4 === null) {
+        ed.ETMDS4 = '-'
+    }
+    if (ed.ETMDS5 === null) {
+        ed.ETMDS5 = '-'
+    }
+    if (ed.ETMDS6 === null) {
+        ed.ETMDS6 = '-'
+    }
 
     if (!formData) {
         return <h1>Loading...</h1>;
@@ -110,62 +247,14 @@ const ShowEmployee = (props) => {
     };
 
 
-
-    const handleTabChange = (event, newValue) => {
-        setTabIndex(newValue);
-
-        // Scroll to the selected section
-        const sections = [
-            "personalInfo",
-            "contactInfo",
-            "employmentInfo",
-            "schoolInfo",
-            "serviceInfo",
-            "retirementInfo",
-            "terminationInfo"
-        ];
-        scroller.scrollTo(sections[newValue], {
-            duration: 200,
-            delay: 0,
-            smooth: "easeInOutQuart",
-        });
-    };
-
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
 
-
-
-    const handleSave = async () => {
-        try {
-            const response = await fetch(
-                `https://as400.jcboe.org:8080/api/employees/${employeeNumber}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                }
-            );
-            if (response.ok) {
-                const updatedData = await response.json();
-                setEmployeeData(updatedData);
-                alert("Employee data saved successfully!");
-            } else {
-                alert("Failed to save data.");
-            }
-        } catch (error) {
-            console.error("Error saving data:", error);
-            alert("An error occurred while saving.");
-        }
-    };
-
     const handlePrint = () => {
         setExpanded(true);
-       
+
         //  window.print();
         setShowPrintView(true); // Show print view before printing
         setTimeout(() => {
@@ -179,7 +268,7 @@ const ShowEmployee = (props) => {
         <TextField
             fullWidth
             label={label}
-            value={value || ""}
+            value={ value != null ? value : ""}
             margin="normal"
             InputProps={{ readOnly: true }}
             onChange={(e) => handleFieldChange(fieldName, e.target.value)}
@@ -302,15 +391,17 @@ const ShowEmployee = (props) => {
             <div style={{ marginTop: "20px" }}>
 
                 <Button
-                   // variant="contained"
+                    // variant="contained"
                     // color="primary"
                     //className="print-button"
-                    sx={{backgroundColor:'black', color:'white',   '&:hover': {
-                        backgroundColor: 'black', // Hover color
-                    }}}
+                    sx={{
+                        backgroundColor: 'black', color: 'white', '&:hover': {
+                            backgroundColor: 'black', // Hover color
+                        }
+                    }}
                     onClick={handlePrint}
                 >
-                   <b>PRINT INFORMATION</b> 
+                    <b>PRINT INFORMATION</b>
                 </Button>
             </div>
 
@@ -330,7 +421,7 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="personalInfo" className="page-break">
-                        <Accordion  defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -342,7 +433,7 @@ const ShowEmployee = (props) => {
                                 {renderField("SSN", formData.EMPSSN, "EMPSSN")}
                                 {renderField("Name", `${formData.EMLNAM}, ${formData.EMFNAM} ${formData.EMMNAM}`, "name")}
                                 {renderField("Active", formData.EMSTAT, "EMSTAT")}
-                                {renderField("Gender", formData.EMSEX, "EMSEX")}
+                                {renderField("Gender", `${formData.EMSEX} , ${GENDER}`, "EMSEX")}
                                 {renderField("Ethnic Code", formData.EMETH, "EMETH")}
                                 {renderField("Ethnic Description", formData.ETDESC, "ETDESC")}
                                 {renderField("Birth Date", formData.DOB, "DOB")}
@@ -371,16 +462,16 @@ const ShowEmployee = (props) => {
                                 }}><b>Contact Information</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                {renderField("Office Phone", `${formData.EMOTL0} ${formData.EMEXTN}`, "officePhone")}
-                                {renderField("Home Phone", `${formData.EMHTL0} ${formData.EMHTLS}`, "homePhone")}
+                                {renderField("Office Phone", `(${ed.EMOTL0}) ${ophone} ext. ${ed.EMEXTN ? `${ed.EMEXTN}` : ''} ${ed.EMOTLS ? `${ed.EMOTLS}` : ''} `, "officePhone")}
+                                {renderField("Home Phone", `(${formData.EMHTL0}) ${hphone} ${ed.EMHTLS ? `${ed.EMHTLS}` : ''}`, "homePhone")}
                                 {renderField("Address", formData.EMADD1, "EMADD1")}
                                 {renderField("Address Security", formData.EMADSC, "EMADSC")}
                                 {renderField("Country", formData.EMCTRY, "EMCTRY")}
-                                {renderField("Permanent Address", formData.EMCTRY, "EMCTRY")}
-                                {renderField("Location", `${formData.EMLOC}, ${formData.LCNAME}`, "EMLOC_LCNAME")}
-                                {renderField("District", `${formData.EMHDT}`, "EMHDT")}
+                                {renderField("Permanent Address", "Y", "EMCTRY")}
+                                {renderField("Location", `${formData.EMLOC} ${formData.LCNAME}`, "EMLOC_LCNAME")}
+                                {renderField("District", `${formData.EMHDT || ''}`, "EMHDT")}
                                 {renderField("Sub Location", `${formData.EMLOC2}, ${formData.CLNAME} `, "EMLOC2_CLNAME")}
-                                {renderField("City/State/Zip", `${formData.EMCITY}, ${formData.EMST} ${formData.EMZIP1}`, "cityStateZip")}
+                                {renderField("City/State/Zip", `${formData.EMCITY}, ${formData.EMST} ${zipCode}`, "cityStateZip")}
                             </AccordionDetails>
                         </Accordion>
                     </Element>
@@ -404,7 +495,7 @@ const ShowEmployee = (props) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Department", formData.EMDEPT, "EMDEPT")}
-                                {renderField("Assignment", formData.EMPASN, "EMPASN")}
+                                {renderField("Assignment", `${formData.EMPASN} ${formData.JDTITL}`, "EMPASN")}
                                 {renderField("Pay Location", `${formData.EMLOCP} ${formData.LPNAME}`, "EMLOCP_LPNAME")}
                                 {renderField("Seniority Date", formData.EMSRDT, "EMSRDT")}
                                 {renderField("Termination Date", formData.TRD, "TRD")}
@@ -432,8 +523,10 @@ const ShowEmployee = (props) => {
                             <AccordionDetails>
                                 {renderField("School", formData.EMHSC, "EMHSC")}
                                 {renderField("Room", formData.EMROOM, "EMROOM")}
-                                {renderField("Address", `${formData.EMPAD1} ${formData.EMPAD2}`, "EMPAD1_EMPAD2")}
-                                {renderField("City/State/Zip", `${formData.EMPCTY}, ${formData.EMPST} `, "EMPCTY_EMPST_zipCodeP")}
+                                {renderField("Address", formData.EMPAD1 || formData.EMPAD2
+                                    ? `${formData.EMPAD1 || ''} ${formData.EMPAD2 || ''}`
+                                    : '', "EMPAD1_EMPAD2")}
+                                {renderField("City/State/Zip", `${formData.EMPCTY || ''} ${formData.EMPST || ''}, ${zipCodeP}`, "EMPCTY_EMPST_zipCodeP")}
                                 {renderField("Country", formData.EMPCTR, "EMPCTR")}
                             </AccordionDetails>
                         </Accordion>
@@ -460,7 +553,7 @@ const ShowEmployee = (props) => {
                                 {renderField("Previous Service Credit", formData.EMPREV, "EMPREV")}
                                 {renderField("District", formData.EMSDST, "EMSDST")}
                                 {renderField("State", formData.EMSST, "EMSST")}{renderField("State", formData.EMSST, "EMSST")}
-                                {renderField("Application Date", formData.EMADAT, "EMADAT")}
+                                {renderField("Application Date", `${EMADAT}`, "EMADAT")}
                                 {renderField("Full Time Hire Date", formData.HID, "HID")}
                                 {renderField("Seniority Date", formData.EMSRDT, "EMSRDT")}
                                 {renderField("Original Hire Date", formData.OHD, "OHD")}
@@ -500,7 +593,7 @@ const ShowEmployee = (props) => {
                                 {renderField("TPAF,PERS, CNTY or NOPP", formData.EXTYPE, "EXTYPE")}
                                 {renderField("Job Code for GTL Addenda", formData.EXJOB, "EXJOB")}
                                 {renderField("GTL Salary Override", formData.EXSALO, "EXSALO")}
-                                {renderField("Number of GTL Distributions", formData.EXPAYP, "EXPAYP")}{renderField("Years pf Experience", null, "null")}
+                                {renderField("Number of GTL Distributions", formData.EXPAYP, "EXPAYP")}{renderField("Years of Experience", null, "null")}
                                 {renderField("State", formData.EXSEXP, "EXSEXP")}
                                 {renderField("District", formData.EXDEXP, "EXDEXP")}
                                 {renderField("Out-of-State", formData.EXOEXP, "EXOEXP")}
@@ -528,7 +621,7 @@ const ShowEmployee = (props) => {
                                 }}><b>Termination Information</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                {renderField("Termination Date", formData.ETMDAT, "ETMDAT")}
+                                {renderField("Termination Date", `${ETMDAT}`, "ETMDAT")}
                                 {renderField("Termination Code", `${formData.ETMCDE} ${formData.TRMTTL}`, "ETMCDE")}
                                 {renderField("Employee Detail", formData.ETMDS1, "ETMDS1")}
                                 {renderField("Additional Detail", `${formData.ETMDS2} ${formData.ETMDS3}  ${formData.ETMDS4}  ${formData.ETMDS5}  ${formData.ETMDS6}`, "ETMDS2")}
@@ -562,25 +655,18 @@ const ShowEmployee = (props) => {
 
             <div className="no-print" style={{ marginTop: "20px" }}>
 
-                {/* <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handlePrint}
-
-                >
-                    Print
-                </Button> */}
-                
                 <Button
-                   // variant="contained"
+                    // variant="contained"
                     // color="primary"
                     //className="print-button"
-                    sx={{backgroundColor:'black', color:'white',   '&:hover': {
-                        backgroundColor: 'black', // Hover color
-                    }}}
+                    sx={{
+                        backgroundColor: 'black', color: 'white', '&:hover': {
+                            backgroundColor: 'black', // Hover color
+                        }
+                    }}
                     onClick={handlePrint}
                 >
-                   <b>PRINT INFORMATION</b> 
+                    <b>PRINT INFORMATION</b>
                 </Button>
 
             </div>

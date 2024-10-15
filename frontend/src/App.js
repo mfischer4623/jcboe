@@ -81,6 +81,7 @@ function App() {
   const [showPrintView, setShowPrintView] = useState(false);
 
   useEffect(() => {
+
     // Fetch the user email and token from local storage
     const user = JSON.parse(localStorage.getItem("user"))
 
@@ -102,11 +103,15 @@ function App() {
         setLoggedIn('success' === r.message)
         setEmail(user.email || "")
       })
+
   }, [])
+  
 
   return (
     <div className="App">
-      <BrowserRouter>
+      
+      <BrowserRouter
+      >
       <Sidebar showPrintView={showPrintView}/>
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
