@@ -32,15 +32,25 @@ const ShowEmployee = (props) => {
     } = props;
 
     const navigate = useNavigate();
+    const [expandedSections, setExpandedSections] = useState([
+        "personalInfo",
+        "contactInfo",
+        "employmentInfo",
+        "schoolInfo",
+        "serviceInfo",
+        "retirementInfo",
+        "terminationInfo"
+    ]);; // Default to employmentInfo expanded
     const [formData, setFormData] = useState(ed);
     const [selectedTab, setSelectedTab] = useState("personalInfo");
     const [tabIndex, setTabIndex] = useState(0); // State for active 
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [expanded, setExpanded] = useState(true);
     const [printMode, setPrintMode] = useState(false);
-    const [isLoading, setIsLoading] = useState(true); 
+    const [isLoading, setIsLoading] = useState(true);
     //const [isPrinting, setIsPrinting] = useState(false);
     // const [showPrintView, setShowPrintView] = useState(false);
+
 
     useEffect(() => {
 
@@ -79,9 +89,6 @@ const ShowEmployee = (props) => {
                 setShowScrollTop(false);
             }
         };
-
-
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -254,7 +261,15 @@ const ShowEmployee = (props) => {
 
     const handlePrint = () => {
         setExpanded(true);
-
+        setExpandedSections([
+            "personalInfo",
+            "contactInfo",
+            "employmentInfo",
+            "schoolInfo",
+            "serviceInfo",
+            "retirementInfo",
+            "terminationInfo"
+        ]);
         //  window.print();
         setShowPrintView(true); // Show print view before printing
         setTimeout(() => {
@@ -268,7 +283,7 @@ const ShowEmployee = (props) => {
         <TextField
             fullWidth
             label={label}
-            value={ value != null ? value : ""}
+            value={value != null ? value : ""}
             margin="normal"
             InputProps={{ readOnly: true }}
             onChange={(e) => handleFieldChange(fieldName, e.target.value)}
@@ -276,17 +291,32 @@ const ShowEmployee = (props) => {
         />
     );
 
-    const handleTabClick = (sectionName) => {
-        setSelectedTab(sectionName);
+   // Function to handle tab clicks
+const handleTabClick = (sectionName) => {
+    setSelectedTab(sectionName);
 
-        scroller.scrollTo(sectionName, {
-            duration: 800,
-            delay: 0,
-            smooth: "easeInOutQuart"
-        });
+    // Expand the clicked section if it's not already expanded
+    if (!expandedSections.includes(sectionName)) {
+        setExpandedSections((prev) => [...prev, sectionName]);
+    }
 
+    // Scroll to the clicked section
+    scroller.scrollTo(sectionName, {
+        duration: 800,
+        delay: 0,
+        smooth: "easeInOutQuart"
+    });
+};
 
-    };
+// Toggle function for the accordions
+
+const toggleSection = (sectionName) => {
+    setExpandedSections((prev) =>
+        prev.includes(sectionName)
+            ? prev.filter((sec) => sec !== sectionName) // Collapse if already expanded
+            : [...prev, sectionName] // Expand if collapsed
+    );
+};
 
     return (
         <div className="mainContainer">
@@ -366,7 +396,7 @@ const ShowEmployee = (props) => {
                     onClick={() => handleTabClick("schoolInfo")}
                     className={selectedTab === "schoolInfo" ? "tab-button active" : "tab-button"}
                 >
-                    School Information
+                    Emp School Information
                 </Button>
                 <Button
                     onClick={() => handleTabClick("serviceInfo")}
@@ -421,7 +451,9 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="personalInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded 
+                         expanded={expandedSections.includes("personalInfo")}
+                         onChange={() => toggleSection("personalInfo")}   sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -454,7 +486,9 @@ const ShowEmployee = (props) => {
                     }
                 }} >
                     <Element name="contactInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded 
+                        expanded={expandedSections.includes("contactInfo")}
+                        onChange={() => toggleSection("contactInfo")}  sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -486,7 +520,10 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="employmentInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded
+                            expanded={expandedSections.includes("employmentInfo")}
+                            onChange={() => toggleSection("employmentInfo")}   
+                            sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -513,7 +550,9 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="schoolInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded
+                          expanded={expandedSections.includes("schoolInfo")}
+                          onChange={() => toggleSection("schoolInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -542,7 +581,9 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="serviceInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded 
+                         expanded={expandedSections.includes("serviceInfo")}
+                         onChange={() => toggleSection("serviceInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -579,7 +620,9 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="retirementInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded 
+                          expanded={expandedSections.includes("retirementInfo")}
+                          onChange={() => toggleSection("retirementInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -613,7 +656,9 @@ const ShowEmployee = (props) => {
                     }
                 }}>
                     <Element name="terminationInfo" className="page-break">
-                        <Accordion defaultExpanded sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded
+                        expanded={expandedSections.includes("terminationInfo")}
+                        onChange={() => toggleSection("terminationInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
