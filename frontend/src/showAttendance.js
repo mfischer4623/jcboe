@@ -56,6 +56,10 @@ const ShowAttendance = (props) => {
         return <h1>Loading...</h1>
     }
 
+    if (!ad) {
+        return <h1>Loading...</h1>;
+    }
+
     // const attendanceSelected = (HANUM, HAJOB, HAABS) => {
     //     const adido = {
     //         TMLSSN: HANUM,
@@ -80,7 +84,7 @@ const ShowAttendance = (props) => {
         ) 
     }
 
-    let attendanceFormatted = ad.map((add, i) => {
+    let attendanceFormatted = ad?.map((add, i) => {
         if (add.HAFBBL !== 0 || add.HAFERN !== 0 || add.HAFUSE !== 0 || add.HABAL !== 0) {
             if (add.MEMBER != holdYear) {
                 holdYear=add.MEMBER
