@@ -502,9 +502,11 @@ const toggleSection = (sectionName) => {
                                 {renderField("Address Security", formData.EMADSC, "EMADSC")}
                                 {renderField("Country", formData.EMCTRY, "EMCTRY")}
                                 {renderField("Permanent Address", "Y", "EMCTRY")}
-                                {renderField("Location", `${formData.EMLOC} ${formData.LCNAME}`, "EMLOC_LCNAME")}
+                                {/* {renderField("Location", `${formData.EMLOC} ${formData.LCNAME}`, "EMLOC_LCNAME")} */}
+                                {formData.EMLOC && formData.LCNAME && renderField("Location", `${formData.EMLOC} ${formData.LCNAME}`, "EMLOC_LCNAME")}
                                 {renderField("District", `${formData.EMHDT || ''}`, "EMHDT")}
-                                {renderField("Sub Location", `${formData.EMLOC2}, ${formData.CLNAME} `, "EMLOC2_CLNAME")}
+                                {/* {renderField("Sub Location", `${formData.EMLOC2}, ${formData.CLNAME} `, "EMLOC2_CLNAME")} */}
+                                {formData.EMLOC2 && formData.CLNAME && renderField("Sub Location", `${formData.EMLOC2}, ${formData.CLNAME}`, "EMLOC2_CLNAME")}
                                 {renderField("City/State/Zip", `${formData.EMCITY}, ${formData.EMST} ${zipCode}`, "cityStateZip")}
                             </AccordionDetails>
                         </Accordion>
@@ -667,7 +669,8 @@ const toggleSection = (sectionName) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 {renderField("Termination Date", `${ETMDAT}`, "ETMDAT")}
-                                {renderField("Termination Code", `${formData.ETMCDE} ${formData.TRMTTL}`, "ETMCDE")}
+                                {/* {renderField("Termination Code", `${formData.ETMCDE} ${formData.TRMTTL}`, "ETMCDE")} */}
+                                {formData.ETMCDE && formData.TRMTTL && renderField("Termination Code", `${formData.ETMCDE} ${formData.TRMTTL}`, "ETMCDE")}
                                 {renderField("Employee Detail", formData.ETMDS1, "ETMDS1")}
                                 {renderField("Additional Detail", `${formData.ETMDS2} ${formData.ETMDS3}  ${formData.ETMDS4}  ${formData.ETMDS5}  ${formData.ETMDS6}`, "ETMDS2")}
                             </AccordionDetails>
