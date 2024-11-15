@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     Table, TableBody, TableCell, TableContainer, TableHead,
-    TableRow, TablePagination, Paper
+    TableRow, TablePagination, Paper, Button
 } from "@mui/material";
+import "./showW2s.css";
 
 const ShowW2s = (props) => {
-    const { loggedIn, email, employeeNumber, ssn, w2s, setW2s, empName, setW2ID } = props;
+    const { loggedIn, email, employeeNumber, ssn, w2s, setW2s, empName, setW2ID, setShowPrintView , showPrintView } = props;
     const navigate = useNavigate();
 
     const [page, setPage] = useState(0);
@@ -22,7 +23,8 @@ const ShowW2s = (props) => {
             try {
                 const response = await fetch(`https://as400.jcboe.org:8080/api/employees/pfrs860s/${ssn}`);
                 const resData = await response.json();
-                setW2s(resData);
+                // Ensure that resData is an array before setting it to w2s
+                setW2s(Array.isArray(resData) ? resData : []);
             } catch (error) {
                 console.log("error", error);
                 navigate("/showEmployee");
@@ -31,7 +33,7 @@ const ShowW2s = (props) => {
         fetchData();
     }, []);
 
-    if (w2s === null) {
+    if (!Array.isArray(w2s)) {
         return <h1>Loading...</h1>;
     }
 
@@ -55,30 +57,60 @@ const ShowW2s = (props) => {
         setPage(0);
     };
 
+    const handlePrint = () => {
+        setShowPrintView(true); // Show print view before printing
+        setTimeout(() => {
+            window.print();
+            setShowPrintView(false); // Hide print view after printing
+            // setExpanded(false);
+        }, 500);       
+    };
+
     return (
         <div className="mainContainer">
-            <div className="titleContainer">
+            {/* Print-only heading */}
+            <div className="print-heading">
+                Employee Number: {employeeNumber} <br />
+                Employee Name: {empName}
+            </div>
+            <div className="titleContainer w2s-table">
+            
                 <div>W2s</div>
             </div>
             <br />
-            <Paper>
+            <Paper >               
+                 <style>
+                    {`
+                    .headerCell {
+                        color: white;
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
+                    .rowCell {
+                        color: #FFD700;
+                    }
+                    .headerRow {
+                        background-color: #865d36;
+                    }
+                `}
+                </style>
                 <TableContainer>
                     <Table>
                         <TableHead>
-                            <TableRow>
-                                <TableCell colSpan={7}>Employee Number: {employeeNumber}</TableCell>
+                            <TableRow className="header-row headerRow">
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }} colSpan={7}>Employee Number: {employeeNumber}</TableCell>
                             </TableRow>
-                            <TableRow>
-                                <TableCell colSpan={7}>Employee Name: {empName}</TableCell>
+                            <TableRow className="header-row" style={{ backgroundColor: "#865d36" }}>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }} colSpan={7}>Employee Name: {empName}</TableCell>
                             </TableRow>
-                            <TableRow>
-                                <TableCell>Tax</TableCell>
-                                <TableCell>Federal</TableCell>
-                                <TableCell>FICA</TableCell>
-                                <TableCell>Medicare</TableCell>
-                                <TableCell>Federal</TableCell>
-                                <TableCell>FICA</TableCell>
-                                <TableCell>Medicare</TableCell>
+                            <TableRow style={{ backgroundColor: "#865d36" }}>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>Tax</TableCell>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>Federal</TableCell>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>FICA</TableCell>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>Medicare</TableCell>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>Federal</TableCell>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>FICA</TableCell>
+                                <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>Medicare</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Year</TableCell>
@@ -94,7 +126,7 @@ const ShowW2s = (props) => {
                             {w2s.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((w2sd, i) => {
                                 let W2CLYR = w2sd.W2CLYR < 10 ? `200${w2sd.W2CLYR}` : `20${w2sd.W2CLYR}`;
                                 return (
-                                    <TableRow key={i}>
+                                    <TableRow key={i} className="table-row">
                                         <TableCell>
                                             <a href="#" onClick={() => w2Selected(w2sd.W2CLYR, w2sd.W2ESTB)}>
                                                 {W2CLYR}
@@ -122,6 +154,10 @@ const ShowW2s = (props) => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
+            <br />
+            <Button  className="print-button" variant="contained" color="primary" onClick={handlePrint}>
+                Print
+            </Button>
             <br />
             <div>Your email is {email}</div>
         </div>
