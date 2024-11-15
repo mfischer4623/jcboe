@@ -155,7 +155,7 @@ const ShowW2s = (props) => {
                 />
             </Paper>
             <br />
-            <Button  className="print-button" variant="contained" color="primary" onClick={handlePrint}>
+            <Button  sx={{backgroundColor: 'rgb(134, 93, 54)','&:hover': {backgroundColor: 'black'}}} className="print-button" variant="contained" color="primary" onClick={handlePrint}>
                 Print
             </Button>
             <br />

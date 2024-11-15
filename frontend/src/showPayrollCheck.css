@@ -1,0 +1,69 @@
+/* General Styles */
+.mainContainer {
+    font-family: Arial, sans-serif;
+}
+
+.print-button {
+    background-color: #865d36;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.print-button:hover {
+    background-color: black;
+    color: white;
+}
+
+/* Print-specific styles */
+/* Print-Specific Styles */
+@media print {
+    .print-button {
+        display: none !important; /* Hide print button during print */
+    }
+    thead th,
+    tbody tr:first-child td {
+        font-weight: bold !important; /* Ensure headers are bold */
+    }
+    thead th {
+        background-color: #f4f4f4 !important; /* Light gray background */
+        color: black !important; /* Black text color */
+        font-weight: bold !important;
+        border: 1px solid black; /* Add borders for clear separation */
+        padding: 8px;
+        text-align: center;
+    }
+
+    .mainContainer {
+        margin: 0;
+        padding: 0;
+        font-size: 14px; /* Adjust font size for print */
+    }
+
+    .titleContainer h2 {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th[colspan="6"] {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 0;
+    }
+}
