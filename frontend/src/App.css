@@ -6,6 +6,24 @@
  
 }
 
+/* Global styles for button and input[type="button"] */
+button,
+input[type="button"] {
+    background-color: #865d36; /* Default background color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+button:hover,
+input[type="button"]:hover {
+    background-color: black; /* Hover background color */
+}
+
 .titleContainer {
   display: flex;
   flex-direction: column;
