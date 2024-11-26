@@ -1,0 +1,7 @@
+@media print {
+.employee-header {
+    white-space: pre-line; 
+    text-align: center;
+    margin-left: 20px;
+}
+}

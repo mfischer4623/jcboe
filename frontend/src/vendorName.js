@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import {
     Table, TableBody, TableCell, TableContainer, TableHead,
     TableRow, TablePagination, TableSortLabel, Paper, TextField, Toolbar,
-    Typography
+    Typography, Button
 } from "@mui/material";
+import "./vendorName.css";
 
 const VendorName = (props) => {
-    const { loggedIn, email, setVendorNumber, vendorName, vens, setVendorNames } = props;
+    const { loggedIn, email, setVendorNumber, vendorName, vens, setVendorNames, showPrintView, setShowPrintView } = props;
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -16,6 +17,7 @@ const VendorName = (props) => {
 
     const [filterVendorNumber, setFilterVendorNumber] = useState("");
     const [filterVendorName, setFilterVendorName] = useState("");
+    const [expandTable, setExpandTable] = useState(false); // State to manage table view
 
     const navigate = useNavigate();
 
@@ -59,12 +61,23 @@ const VendorName = (props) => {
         setPage(0);
     };
 
-    // Filter and sort vendors
+    const handleExpandTable = () => {
+        setExpandTable(!expandTable);
+    };
+
+    const handlePrint = () => {
+        setShowPrintView(true); // Show print view before printing
+        setTimeout(() => {
+            window.print();
+            setShowPrintView(false); // Hide print view after printing
+        }, 500);
+      //  window.print();
+    };
+
     const filteredVendors = vens?.filter((ven) =>
         ven.VNNO.toString().toLowerCase().includes(filterVendorNumber.toLowerCase()) &&
         ven.VNNAME.toLowerCase().includes(filterVendorName.toLowerCase())
     );
-    
 
     const sortedVendors = filteredVendors?.sort((a, b) => {
         if (order === "asc") {
@@ -101,9 +114,39 @@ const VendorName = (props) => {
                     onChange={(e) => setFilterVendorName(e.target.value)}
                     style={{ marginRight: "10px", backgroundColor: '#F0E8E2' }}
                 />
+                <Button
+                    variant="contained"
+                    sx={{
+                        backgroundColor: '#865d36',
+                        color: 'white',
+                        '&:hover': {
+                            backgroundColor: 'black',
+                        },
+                        marginRight: '10px',
+                    }}
+                  //  color="primary"
+                    onClick={handleExpandTable}
+                    style={{ marginLeft: "auto", marginRight: "10px" }}
+                >
+                    {expandTable ? "Collapse Table" : "Expand Table"}
+                </Button>
+                <Button
+                    variant="contained"
+                    sx={{
+                        backgroundColor: '#865d36',
+                        color: 'white',
+                        '&:hover': {
+                            backgroundColor: 'black',
+                        },
+                    }}
+                   // color="secondary"
+                    onClick={handlePrint}
+                >
+                    Print Table
+                </Button>
             </Toolbar>
 
-            <TableContainer style={{ width: "70%", marginLeft:'10%' }} component={Paper}>
+            <TableContainer style={{ width: "70%", marginLeft: '10%' }} component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -112,7 +155,7 @@ const VendorName = (props) => {
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell sx={{  backgroundColor: '#865d36', color: 'white' }}>
+                            <TableCell sx={{ backgroundColor: '#865d36', color: 'white' }}>
                                 <TableSortLabel
                                     active={orderBy === "VNNO"}
                                     direction={orderBy === "VNNO" ? order : "asc"}
@@ -122,7 +165,7 @@ const VendorName = (props) => {
                                     <b>Vendor #</b>
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell sx={{  backgroundColor: '#865d36', color: 'white' }}>
+                            <TableCell sx={{ backgroundColor: '#865d36', color: 'white' }}>
                                 <TableSortLabel
                                     active={orderBy === "VNNAME"}
                                     direction={orderBy === "VNNAME" ? order : "asc"}
@@ -132,17 +175,16 @@ const VendorName = (props) => {
                                     <b>Vendor Name</b>
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell sx={{  fontSize: '20px', backgroundColor: '#865d36', color: 'white' }}>
+                            <TableCell sx={{ fontSize: '20px', backgroundColor: '#865d36', color: 'white' }}>
                                 <b>Address</b>
                             </TableCell>
-                            <TableCell sx={{  fontSize: '20px', backgroundColor: '#865d36', color: 'white' }}>
+                            <TableCell sx={{ fontSize: '20px', backgroundColor: '#865d36', color: 'white' }}>
                                 <b>City, State Zip</b>
                             </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sortedVendors
-                            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        {(expandTable ? sortedVendors : sortedVendors?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
                             .map((ven, index) => (
                                 <TableRow
                                     key={ven.VNNO}
@@ -172,15 +214,17 @@ const VendorName = (props) => {
                             ))}
                     </TableBody>
                 </Table>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={filteredVendors?.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                {!expandTable && (
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={filteredVendors?.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                )}
             </TableContainer>
             <br />
             <div>Your email is {email}</div>

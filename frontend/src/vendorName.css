@@ -1,0 +1,18 @@
+@media print {
+    /* Hide toolbar (buttons and filters) */
+    .MuiToolbar-root {
+        display: none !important;
+    }
+
+    /* Adjust table to fit the print view */
+    .mainContainer {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    /* Optional: Adjust any other elements for print view */
+    .mainContainer * {
+        visibility: visible;
+    }
+}
