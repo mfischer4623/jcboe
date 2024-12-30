@@ -1,11 +1,22 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./certificates.css";
 
 const Certificates = (props) => {
 
-    const { loggedIn, email, employeeNumber, empName, cd, setCertificates } = props
+    const { loggedIn, email, employeeNumber, empName, cd, setCertificates, showPrintView, setShowPrintView } = props
 
     const navigate = useNavigate();
+    const [isHovered, setIsHovered] = React.useState(false);
+    
+    const handlePrint = () => {
+        setShowPrintView(true); // Show print view before printing
+        setTimeout(() => {
+            window.print();
+            setShowPrintView(false); // Hide print view after printing
+        }, 500);
+        //  window.print();
+    };
 
     // const showEmployeeButtonClick = () => {
     //     navigate("/showEmployee")
@@ -91,6 +102,24 @@ const Certificates = (props) => {
         </div>
         <br />
         <div>Your email is {email}</div>
+        <br />
+            <button
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="print-button"
+                onClick={handlePrint}
+                style={{
+                    padding: "10px 15px",
+                    backgroundColor: isHovered ? "black" : "#865d36", // Change to black on hover
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    transition: "background-color 0.3s ease", // Smooth transition effect
+                }}
+            >
+                Print Table
+            </button>
     </div >
 }
 

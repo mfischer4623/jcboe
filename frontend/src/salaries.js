@@ -112,8 +112,8 @@ const Salaries = (props) => {
             <br />
 
             {/* Filters */}
-            <Toolbar>
-                <Typography sx={{ fontSize: '20px', marginRight: '20px' }}>
+            <Toolbar sx={{marginLeft:"150px"}}>
+                <Typography sx={{ fontSize: '20px', marginRight: '30px' }}>
                     <b>Filter Data: </b>
                 </Typography>
                 <TextField
