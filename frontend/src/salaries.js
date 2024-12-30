@@ -57,7 +57,7 @@ const Salaries = (props) => {
         setTimeout(() => {
             window.print();
             setShowPrintView(false); // Hide print view after printing
-        }, 500);
+        }, 1000);
         //  window.print();
     };
 
@@ -166,7 +166,9 @@ const Salaries = (props) => {
                 </Button>
             </Toolbar>
             {/* Table */}
-            <TableContainer style={{ width: "70%", marginLeft: '15%' }} component={Paper}>
+            {/* <TableContainer style={{ width: "70%", marginLeft: '15%' }} component={Paper}> */}
+            <TableContainer style={{ width:showPrintView? "100%" :'70%', marginLeft:showPrintView?"0%": "15%" }} component={Paper}>
+
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -270,7 +272,7 @@ const Salaries = (props) => {
                                     <TableCell>{sdd.ASSTAB}</TableCell>
                                     <TableCell>{sdd.ASGRAD}</TableCell>
                                     <TableCell>{sdd.ASSTEP}</TableCell>
-                                    <TableCell>{dollarUS.format(sdd.SALARY)}</TableCell>
+                                 <TableCell>{dollarUS.format(sdd.SALARY)}</TableCell>
                                     <TableCell>{sdd.JDTITL}</TableCell>
                                 </TableRow>
                             ))}
