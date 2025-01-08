@@ -12,11 +12,13 @@ import {
     TextField,
     Toolbar,
     Typography,
+    Button,
+    Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const ShowAttendance = (props) => {
-    const { loggedIn, email, employeeNumber, ad, setAttendanceData, empName } = props;
+    const { loggedIn, email, employeeNumber, ad, setAttendanceData, empName, setShowPrintView, showPrintView } = props;
 
     const [order, setOrder] = useState("asc");
     const [orderBy, setOrderBy] = useState("HAJOB");
@@ -24,6 +26,7 @@ const ShowAttendance = (props) => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filterJobCode, setFilterJobCode] = useState("");
     const [filterAbsenceCode, setFilterAbsenceCode] = useState("");
+    const [expanded, setExpanded] = useState(false); // State for expand/collapse
 
     const navigate = useNavigate();
 
@@ -64,7 +67,25 @@ const ShowAttendance = (props) => {
         setPage(0);
     };
 
-    // Filter and sort attendance data
+    const handleToggleExpand = () => {
+        if (expanded) {
+            setRowsPerPage(5);
+            setExpanded(false);
+        } else {
+            setRowsPerPage(ad.length); // Show all rows
+            setExpanded(true);
+        }
+    };
+
+    const handlePrint = () => {
+        setShowPrintView(true); // Show print view before printing
+        setTimeout(() => {
+            window.print();
+            setShowPrintView(false); // Hide print view after printing
+        }, 1000);
+        //  window.print();
+    };
+
     const filteredAndSortedAttendance = ad
         ?.filter((entry) => {
             return (
@@ -105,11 +126,38 @@ const ShowAttendance = (props) => {
                     size="small"
                     value={filterAbsenceCode}
                     onChange={(e) => setFilterAbsenceCode(e.target.value)}
-                    style={{ backgroundColor: "#F0E8E2" }}
+                    style={{ backgroundColor: "#F0E8E2", marginRight: "2%" }}
                 />
+                <Box sx={{ marginLeft: "auto", display: "flex", gap: "10px" }}>
+                    <Button
+                        sx={{
+                            backgroundColor: "#865d36", color: 'white',
+                            '&:hover': { backgroundColor: 'black' }
+                        }}
+                        variant="contained"
+                        color="primary"
+                        onClick={handleToggleExpand}
+                    >
+                        {expanded ? "Collapse" : "Expand"}
+                    </Button>
+                    <Button
+                        sx={{
+                            backgroundColor: "#865d36",
+                            color: 'white',
+                            '&:hover': { backgroundColor: 'black' }
+                        }}
+                        variant="contained"
+                        color="secondary"
+                        onClick={handlePrint}
+                    >
+                        Print
+                    </Button>
+                </Box>
             </Toolbar>
 
-            <TableContainer component={Paper} style={{ marginTop: "20px", width: '60%', marginLeft: '10%' }}>
+            <TableContainer component={Paper} style={{ marginTop: "20px", width: showPrintView ? "100%" : "60%", marginLeft: showPrintView ? "0%" : "10%" }}>
+                {/* <TableContainer style={{ width:showPrintView? "100%" :'70%', marginLeft:showPrintView?"0%": "15%" }} component={Paper}> */}
+
                 <Table>
                     <TableHead sx={{ backgroundColor: "#865d36", color: "white" }}>
                         <TableRow>
@@ -118,7 +166,7 @@ const ShowAttendance = (props) => {
                                     color: "white",
                                     fontSize: "20px",
                                     textAlign: "center",
-                                    "&:hover": { color: "#FFD700" }, // Yellow on hover
+                                    "&:hover": { color: "#FFD700" },
                                 }}
                                 sortDirection={orderBy === "HAJOB" ? order : false}
                             >
@@ -126,10 +174,6 @@ const ShowAttendance = (props) => {
                                     active={orderBy === "HAJOB"}
                                     direction={orderBy === "HAJOB" ? order : "asc"}
                                     onClick={() => handleRequestSort("HAJOB")}
-                                    sx={{
-                                        "&:hover": { color: "#FFD700" }, // Yellow on hover
-                                        "&.Mui-active": { color: "#FFD700" }, // Yellow when active (clicked)
-                                    }}
                                 >
                                     Job Code
                                 </TableSortLabel>
@@ -139,7 +183,7 @@ const ShowAttendance = (props) => {
                                     color: "white",
                                     fontSize: "20px",
                                     textAlign: "center",
-                                    "&:hover": { color: "#FFD700" }, // Yellow on hover
+                                    "&:hover": { color: "#FFD700" },
                                 }}
                                 sortDirection={orderBy === "HAABS" ? order : false}
                             >
@@ -147,70 +191,44 @@ const ShowAttendance = (props) => {
                                     active={orderBy === "HAABS"}
                                     direction={orderBy === "HAABS" ? order : "asc"}
                                     onClick={() => handleRequestSort("HAABS")}
-                                    sx={{
-                                        "&:hover": { color: "#FFD700" }, // Yellow on hover
-                                        "&.Mui-active": { color: "#FFD700" }, // Yellow when active (clicked)
-                                    }}
                                 >
                                     Absence Code
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell
-                                sx={{
-                                    color: "white",
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                    "&:hover": { color: "#FFD700" },
-                                }}
-                            >
+                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
                                 Begin Balance
                             </TableCell>
-                            <TableCell
-                                sx={{
-                                    color: "white",
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                    "&:hover": { color: "#FFD700" },
-                                }}
-                            >
+                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
                                 Fiscal Earned
                             </TableCell>
-                            <TableCell
-                                sx={{
-                                    color: "white",
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                    "&:hover": { color: "#FFD700" },
-                                }}
-                            >
+                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
                                 Fiscal Used
                             </TableCell>
-                            <TableCell
-                                sx={{
-                                    color: "white",
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                    "&:hover": { color: "#FFD700" },
-                                }}
-                            >
+                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
                                 Balance Available
                             </TableCell>
+                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
+                                School Year                            </TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
                         {filteredAndSortedAttendance
                             ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((entry, i) => (
-                                <TableRow key={i}>
-                                    <TableCell>{entry.HAJOB}</TableCell>
-                                    <TableCell>{entry.HAABS}</TableCell>
-                                    <TableCell>{entry.HAFBBL}</TableCell>
-                                    <TableCell>{entry.HAFERN}</TableCell>
-                                    <TableCell>{entry.HAFUSE}</TableCell>
-                                    <TableCell>{entry.HABAL}</TableCell>
-                                </TableRow>
-                            ))}
+                            .map((entry, i) => {
+                                console.log(entry, "this is the entry")
+                                return (
+                                    <TableRow key={i}>
+                                        <TableCell>{entry.HAJOB}</TableCell>
+                                        <TableCell>{entry.HAABS}</TableCell>
+                                        <TableCell>{entry.HAFBBL}</TableCell>
+                                        <TableCell>{entry.HAFERN}</TableCell>
+                                        <TableCell>{entry.HAFUSE}</TableCell>
+                                        <TableCell>{entry.HABAL}</TableCell>
+                                        <TableCell>{entry.MEMBER}</TableCell> 
+                                    </TableRow>
+                                )
+                            })}
                     </TableBody>
                 </Table>
                 <TablePagination
