@@ -30,6 +30,7 @@ import VendorName from './vendorName';
 import ShowVendor from './showVendor';
 import CheckSearch from './checkSearch';
 import ShowCheck from './showCheck';
+import ShowPO from './showPO';
 
 import Sidebar from './navcomponents/Sidebar';
 
@@ -72,6 +73,7 @@ function App() {
   const [vendorNumber, setVendorNumber] = useState("")
   const [vendorName, setVendorName] = useState("")
   const [vens, setVendorNames] = useState(null)
+  const [poFromVendor, setPoFromVendor] = useState(null)
   const [aphbnk, setAphbnk] = useState("")
   const [aphbac, setAphbac] = useState("")
   const [aphfrm, setAphfrm] = useState("")
@@ -79,6 +81,7 @@ function App() {
   const [aphven, setAphven] = useState("")
   const [scd, setCheckData] = useState(null)
   const [showPrintView, setShowPrintView] = useState(false);
+
 
   useEffect(() => {
 
@@ -142,9 +145,10 @@ function App() {
           <Route path="/showPurchaseOrder" element={<ShowPurchaseOrder loggedIn={loggedIn} email={email} PODOC={PODOC} PONUM={PONUM} pod={pod} setShowPurchaseOrder={setShowPurchaseOrder} />} />   
           <Route path="/vendorSearch" element={<VendorSearch loggedIn={loggedIn} email={email} vendorName={vendorName} vendorNumber={vendorNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} vend={vend} setVendorNumber={setVendorNumber} setVendorName={setVendorName} setVendorNames={setVendorNames} />} />
           <Route path="/vendorName" element={<VendorName loggedIn={loggedIn} email={email} vendorNumber={vendorNumber} vendorName={vendorName} setLoggedIn={setLoggedIn} setEmail={setEmail} vens={vens} setVendorNames={setVendorNames} setVendorNumber={setVendorNumber} setShowPrintView={setShowPrintView} showPrintView={showPrintView} />} />
-          <Route path="/showVendor" element={<ShowVendor loggedIn={loggedIn} email={email} vendorNumber={vendorNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} setVendorNumber={setVendorNumber} vend={vend} setVendorData={setVendorData} setShowPrintView={setShowPrintView} showPrintView={showPrintView}/>} />
+          <Route path="/showVendor" element={<ShowVendor loggedIn={loggedIn} email={email} vendorNumber={vendorNumber} setLoggedIn={setLoggedIn} setEmail={setEmail} setVendorNumber={setVendorNumber} vend={vend} setVendorData={setVendorData} setShowPrintView={setShowPrintView} showPrintView={showPrintView} poFromVendor={poFromVendor} setPoFromVendor={setPoFromVendor}/>} />
           <Route path="/checkSearch" element={<CheckSearch loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} setAphbnk={setAphbnk} setAphbac={setAphbac} setAphfrm={setAphfrm} setAphchk={setAphchk} setAphven={setAphven} aphbnk={aphbnk} aphbac={aphbac} aphfrm={aphfrm} aphchk={aphchk} aphven={aphven} />} />
           <Route path="/showCheck" element={<ShowCheck loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} scd={scd} setCheckData={setCheckData} aphbnk={aphbnk} aphbac={aphbac} aphfrm={aphfrm} aphchk={aphchk} aphven={aphven} />} />
+          <Route path="/showPO" element={<ShowPO loggedIn={loggedIn} email={email}   PODOC={PODOC} PONUM={PONUM} poFromVendor={poFromVendor} setPoFromVendor={setPoFromVendor} vendorNumber={vendorNumber} showPrintView={showPrintView} setShowPrintView={setShowPrintView}/> } />
           
         </Routes>
       </BrowserRouter>

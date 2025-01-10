@@ -23,6 +23,7 @@ module.exports = app => {
     const purchaseOrders = require("../controllers/purchaseOrders.controller.js");
     const ppur301s = require("../controllers/ppur301s.controller.js");
     const lacp441s = require("../controllers/lacp441s.controller.js");
+    const pofromvendor = require("../controllers/pofromvendor.controller.js");
 
     var router = require("express").Router();
 
@@ -82,6 +83,9 @@ module.exports = app => {
 
     // Retrieve a purchase order from purchaseOrders using ?poDoc=POC11&poNum=91401
     router.get("/purchaseOrders/", purchaseOrders.findAll);
+
+    // Retrieve a purchase order using vendor number ?poVEND=41350
+    router.get("/pofromvendor/", pofromvendor.findAll);
 
     // Retrieve "all or search" from lacp441s
     router.get("/lacp441s/", lacp441s.findAll);

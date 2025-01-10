@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./showVendor.css";
 
 const ShowVendor = (props) => {
-    const { loggedIn, email, vendorNumber, vend, setVendorData, setShowPrintView, showPrintView } = props;
+    const { loggedIn, email, vendorNumber, vend, setVendorData, setShowPrintView, showPrintView, poFromVendor, setPoFromVendor } = props;
 
     const navigate = useNavigate();
 
@@ -30,6 +30,24 @@ const ShowVendor = (props) => {
         };
         fetchData();
     }, []);
+
+    const onShowPOClick = async () => {
+        let resData = null;
+         try {
+            const response = await fetch(`https://as400.jcboe.org:8080/api/employees/pofromvendor/?poVEND=${vendorNumber}`);
+            resData = await response.json();
+           // console.log(response,"this is the reposnse for vendor number to show po")
+            setPoFromVendor(resData)
+            if (resData.length > 0 ) {
+                navigate("/showPO");
+            } else {
+                window.alert(`No PO's found with vendor number ` + vendorNumber);
+            }
+        } catch (error) {
+            console.log("error", error);
+            navigate("/showVendor");
+        }
+    };
 
     const handlePrint = () => {
         setShowPrintView(true); // Show print view before printing
@@ -174,9 +192,11 @@ const ShowVendor = (props) => {
             </div>
             <br />
             <div className="hide-on-print">Your email is {email}</div>
-            <button className="print-button hide-on-print" onClick={handlePrint}>Print</button>
+            <button className="print-button hide-on-print" style={{"marginBottom":'20px'}} onClick={handlePrint}>Print</button>
+            <button className="search-po-button hide-on-print" onClick={onShowPOClick}>Search PO</button>
         </div>
     );
 };
+
 
 export default ShowVendor;
