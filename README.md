@@ -17,5 +17,5 @@
 
 SQL Server
 
-    "IP Address":1433
+    10.0.0.42:1433
     
