@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ShowPO = (props) => {
-  const { loggedIn, poFromVendor, setPoFromVendor, vendorNumber, showPrintView, setShowPrintView } = props;
+  const { loggedIn, poFromVendor, setPoFromVendor, vendorNumber, showPrintView, setShowPrintView, setPODOC, setPONUM } = props;
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => setIsHovered(true);
@@ -32,6 +32,27 @@ const ShowPO = (props) => {
     fetchData();
   }, [loggedIn, vendorNumber, setPoFromVendor, navigate]);
 
+
+  const onPOButtonClick = async (PONUM,PODOC) => {
+  //  console.log(PONUM,PODOC,"this is inside pobutton click")
+    let resData = null
+    try {
+        const response = await fetch(`https://as400.jcboe.org:8080/api/employees/purchaseOrders/?poDoc=${PODOC}&poNum=${PONUM}`);
+        resData = await response.json()
+        console.log(resData)
+        // console.log(PONUM)
+        if (resData[0].PO == PONUM) {
+            navigate("/showPurchaseOrder")
+        } else {
+            window.alert(`Wrong Puchase Order Number ` + PODOC + ' ' + PONUM)
+        }
+    }
+    catch (error) {
+        console.log(error);
+        window.alert(`Wrong Purchase Order Number ` + PODOC + ' ' + PONUM)
+    }
+}
+
   const displayKeys = ["PO", "PODOC", "POATTN", "POTOT", "POIUSR", "POAUSR"];
 
   // Print the table
@@ -55,7 +76,7 @@ const ShowPO = (props) => {
         onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
         style={{
-          margin: "20px 17%",
+          margin: "5px 17%",
           padding: "10px 20px",
           backgroundColor: isHovered ? "black" : "#865d36",
           color: "white",
@@ -71,7 +92,7 @@ const ShowPO = (props) => {
           style={{
             borderCollapse: "collapse",
             width: "60%",
-            marginLeft: "17%",
+            marginLeft: "4%",
             textAlign: "left",
           }}
           border="1"
@@ -97,7 +118,13 @@ const ShowPO = (props) => {
                 {displayKeys.map((key) => (
                   <td key={key} style={{ padding: "10px" }}>
                     {key === "PO" ? (
-                      <a
+                      <a 
+                       onClick={()=>{
+                        setPODOC(row.PODOC)
+                        setPONUM(row.PO)
+                        {onPOButtonClick(row.PO,row.PODOC)}
+                       }
+                       }
                         href={`#/${row[key]}`} // Replace with the actual URL or link format
                         style={{
                           color: "blue",
@@ -105,6 +132,7 @@ const ShowPO = (props) => {
                         }}
                       >
                         {row[key]}
+                        {/* {console.log(row,'this is row',key)} */}
                       </a>
                     ) : row[key] !== null ? (
                       row[key].toString()
