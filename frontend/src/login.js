@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs"; // ✅ Import bcrypt for frontend password comparison
 import {
   Avatar,
   Button,
@@ -11,116 +12,105 @@ import {
   Grid,
   Box,
   Typography,
-  Container,
-  CircularProgress
+  Container
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Loader from './loader'; // Import Loader component
+
+const API_USERS = "https://as400.jcboe.org:8080/api/users";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // New state for loader
-
-  localStorage.removeItem("user");
-  props.setLoggedIn(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
+
+  // ✅ Fetch users from API
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(API_USERS);
+      if (!response.ok) throw new Error("Failed to fetch users");
+      const data = await response.json();
+      setUsers(data.users || []);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const onButtonClick = () => {
     setEmailError("");
     setPasswordError("");
 
-    if (email === "") {
+    if (!email) {
       setEmailError("Please enter your email");
       return;
     }
 
-    if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError("Please enter a valid email");
-      return;
-    }
-
-    if (password === "") {
+    if (!password) {
       setPasswordError("Please enter a password");
       return;
     }
 
-    if (password.length < 8) {
-      setPasswordError("The password must be 8 characters or longer");
+    setIsLoading(true); // ✅ Show loader while logging in
+    checkAccountExists(email, password);
+  };
+
+  // ✅ Compare entered password with hashed password
+  const checkAccountExists = async (email, enteredPassword) => {
+    const user = users.find(u => u.email === email);
+
+    if (!user) {
+      alert(`No account found for ${email}. Contact your administrator.`);
+      setIsLoading(false);
       return;
     }
 
-    setIsLoading(true); // Start the loader
+    // ✅ Compare entered password with hashed password
+    const passwordMatches = await bcrypt.compare(enteredPassword, user.password);
 
-    checkAccountExists((accountExists) => {
-      if (accountExists) {
-        logIn();
-      } else if (window.confirm(`An account does not exist with this email address: ${email}. Do you want to create a new account?`)) {
-        logIn();
-      } else {
-        setIsLoading(false); // Stop the loader if user cancels
-      }
-    });
+    if (!passwordMatches) {
+      alert("Incorrect password.");
+      setIsLoading(false);
+      return;
+    }
+
+    logIn(email);
   };
 
-  const checkAccountExists = (callback) => {
-    fetch("https://as400.jcboe.org:3080/check-account", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    })
-    .then(r => r.json())
-    .then(r => {
-      callback(r?.userExists);
-    });
-  };
-
-  const logIn = () => {
-    fetch("https://as400.jcboe.org:3080/auth", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    })
-    .then(r => r.json())
-    .then(r => {
-      if (r.message === 'success') {
-        localStorage.setItem("user", JSON.stringify({ email, token: r.token }));
+  // ✅ Login user
+  const logIn = async (email) => {
+    try {
+      localStorage.setItem("user", JSON.stringify({ email }));
+      setTimeout(() => {
         props.setLoggedIn(true);
         props.setEmail(email);
         navigate("/main");
-      } else {
-        alert("Wrong email or password");
-      }
-      setIsLoading(false); // Stop the loader after login response
-    });
+      }, 0);
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="mainContainer" style={{ backgroundColor: '#C6B2A3' }}>
-      {isLoading && <Loader />} {/* Show loader when isLoading is true */}
+      {isLoading && <Loader />} {/* ✅ Show loader when logging in */}
 
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: -8,
-            marginLeft: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography 
-            variant="h1" 
-            component="h1" 
-            gutterBottom 
-            sx={{ color: 'black', fontWeight: 'bold', fontSize: '2.5rem', letterSpacing: '0.1em' }}
-          >
-          Legacy Data
+        <Box sx={{ marginTop: -8, marginLeft: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography variant="h1" component="h1" gutterBottom sx={{ color: 'black', fontWeight: 'bold', fontSize: '2.5rem', letterSpacing: '0.1em' }}>
+            Legacy Data
           </Typography>
           
           <Avatar sx={{ m: 1, bgcolor: '#865d36' }}>

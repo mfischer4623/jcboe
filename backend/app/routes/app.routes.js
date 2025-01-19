@@ -1,7 +1,4 @@
-//const { db } = require("../models/index.js");
-
-module.exports = app => {
-
+module.exports = (app) => {
     const employees = require("../controllers/employee.controller.js");
     const ppay802s = require("../controllers/ppay802s.controller.js");
     const ppai719as = require("../controllers/ppai719as.controller.js");
@@ -25,79 +22,45 @@ module.exports = app => {
     const lacp441s = require("../controllers/lacp441s.controller.js");
     const pofromvendor = require("../controllers/pofromvendor.controller.js");
 
+    // ✅ Import User Management Controller
+    const users = require("../controllers/users.controller.js");
+
     var router = require("express").Router();
 
-    // Retrieve "all or search" from employees
+    // ✅ Existing Employee Routes (Base Path: /api/employees)
     router.get("/", employees.findAll);
-
-    // Retrieve "all or search" from ppay802s
     router.get("/attendance/:id", ppay802s.findAll);
-
-    // Retrieve ppay121s
     router.get("/ppay121s", ppay121s.findAll);
-
-    // Retrieve ppay122s
     router.get("/ppay122s", ppay122s.findAll);
-
-    // Retrieve ppay125s
     router.get("/ppay125s", ppay125s.findAll);
-
-    // Retrieve ppay124s
     router.get("/ppay124s", ppay124s.findAll);
-
-    // Retrieve ppay127s
     router.get("/ppay127s", ppay127s.findAll);
-
-    // Retrieve "all or search" from ppay802s
     router.get("/attendancedetail/:id", ppai719as.findAll);
-
-    // Retrieve "all or search" from ppay802s
     router.get("/pfrs860s/:id", pfrs860s.findAll);
-
-    // Retrieve an employee from employees using id
     router.get("/pfrs860sdetails/data", pfrs860sdetails.findAll);
-
-    // Retrieve "all or search" from peis480ds
     router.get("/miscdata/:id", peis480ds.findAll);
-
-    // Retrieve "all or search" from certificates
     router.get("/certificates/:id", certificates.findAll);
-
-    // Retrieve "all or search" from assignments/contracts
     router.get("/salaries/:id", salaries.findAll);
-
-    // Retrieve "all or search" from voluntary deductions
     router.get("/voldeductions/:id", ppay3403s.findAll);
-
-    // Retrieve "all or search" from voluntary deductions
     router.get("/tags/:id", peis480hs.findAll);
-
-    // Retrieve "all or search" from voluntary deductions
     router.get("/payroll/:id", ppai712s.findAll);
-
-    // Retrieve "all or search" from voluntary deductions
     router.get("/payrollCheck/", ppai713s.findAll);
-
-    // Retrieve "all or search" from voluntary deductions
     router.get("/payrollCheckDeductions/", ppai715s.findAll);
-
-    // Retrieve a purchase order from purchaseOrders using ?poDoc=POC11&poNum=91401
     router.get("/purchaseOrders/", purchaseOrders.findAll);
-
-    // Retrieve a purchase order using vendor number ?poVEND=41350
     router.get("/pofromvendor/", pofromvendor.findAll);
-
-    // Retrieve "all or search" from lacp441s
     router.get("/lacp441s/", lacp441s.findAll);
-
-    // Retrieve "all or search" from ppur301s
     router.get("/ppur301s/", ppur301s.findAll);
-
-    // Retrieve a vendor from ppur301s using id
     router.get("/ppur301s/:id", ppur301s.findOne);
-
-    // Retrieve an employee from employees using id
     router.get("/:id", employees.findOne);
 
     app.use('/api/employees', router);
+
+    // ✅ User Management Routes (Base Path: /api/users)
+    var userRouter = require("express").Router();
+    userRouter.get("/", users.findAll);          // Get all users
+    userRouter.post("/", users.create);         // Add a new user
+    userRouter.put("/:email", users.update);    // Update a user by email
+    userRouter.delete("/:email", users.delete); // Delete a user by email
+
+    app.use('/api/users', userRouter);
 };

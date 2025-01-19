@@ -73,6 +73,58 @@ app.post("/auth", (req, res) => {
 
 })
 
+// Update Password Endpoint
+app.post("/update-password", async (req, res) => {
+    const { email, newPassword } = req.body;
+  
+    if (!email || !newPassword) {
+      return res.status(400).json({ message: "Email and password are required." });
+    }
+  
+    const user = db.get("users").find({ email }).value();
+  
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+  
+    try {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      db.get("users")
+        .find({ email })
+        .assign({ password: hashedPassword })
+        .write();
+  
+      res.status(200).json({ message: "Password updated successfully." });
+    } catch (error) {
+      console.error("Error updating password:", error);
+      res.status(500).json({ message: "Internal server error." });
+    }
+  });
+
+  // Delete User Endpoint
+app.post("/delete-user", (req, res) => {
+    const { email } = req.body;
+  
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+  
+    const user = db.get("users").find({ email }).value();
+  
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+  
+    try {
+      db.get("users").remove({ email }).write();
+      res.status(200).json({ message: "User deleted successfully." });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).json({ message: "Internal server error." });
+    }
+  });
+  
+
 // The verify endpoint that checks if a given JWT token is valid
 app.post('/verify', (req, res) => {
     const tokenHeaderKey = "jwt-token";
