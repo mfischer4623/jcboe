@@ -52,7 +52,7 @@ const EmployeeSearch = (props) => {
             <Paper elevation={3} sx={{ padding: 4, marginTop: 4 }}>
                 <Box textAlign="center" mb={2}>
                     <Typography variant="h5" component="div" gutterBottom>
-                        AS/400 Data
+                       Legacy Data
                     </Typography>
                     <Typography variant="h6" component="div" gutterBottom>
                         Employee Search

@@ -38,7 +38,7 @@ const Home = (props) => {
                // textDecoration: 'underline',
                 padding: '10px',
             }}>
-                            AS/400 Data
+                        Legacy Data
                         </Typography>
                     </Box>
                     <Box sx={{ textAlign: "center", mb: 4 }}>

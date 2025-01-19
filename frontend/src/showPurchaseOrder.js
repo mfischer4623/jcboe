@@ -2,11 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ShowPurchaseOrder = (props) => {
-  const { loggedIn, email, PODOC, PONUM, pod, setShowPurchaseOrder, showPrintView, setShowPrintView } = props;
+  const {
+    loggedIn,
+    email,
+    PODOC,
+    PONUM,
+    pod,
+    setShowPurchaseOrder,
+    showPrintView,
+    setShowPrintView,
+  } = props;
   const [isHovered, setIsHovered] = useState(false);
+  const [isBackHovered, setIsBackHovered] = useState(false);
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
+  
+  const handleBackMouseEnter = () => setIsBackHovered(true);
+  const handleBackMouseLeave = () => setIsBackHovered(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,14 +47,14 @@ const ShowPurchaseOrder = (props) => {
     return <h1>Loading...</h1>;
   }
 
-   // Print the table
-   const handlePrint = () => {
+  // Print the table
+  const handlePrint = () => {
     setShowPrintView(true); // Show print view before printing
     setTimeout(() => {
-        window.print();
-        setShowPrintView(false); // Hide print view after printing
+      window.print();
+      setShowPrintView(false); // Hide print view after printing
     }, 500);
-};
+  };
 
   let dollarUS = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -190,22 +203,43 @@ const ShowPurchaseOrder = (props) => {
     <div className={"mainContainer"}>
       <div className={"titleContainer"}>
         <div>Purchase Order</div>
-        <button
-          onClick={handlePrint}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            margin: "2px 0",
-            padding: "5px 10px",
-            backgroundColor: isHovered ? "black" : "#865d36",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Print
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          {/* Back Button */}
+          <button
+            onClick={() => navigate("/showPO")}
+            onMouseEnter={handleBackMouseEnter}
+            onMouseLeave={handleBackMouseLeave}
+            style={{
+              margin: "2px 0",
+              padding: "5px 10px",
+              backgroundColor: isBackHovered ? "black" : "#865d36",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Go Back
+          </button>
+
+          {/* Print Button */}
+          <button
+            onClick={handlePrint}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              margin: "2px 0",
+              padding: "5px 10px",
+              backgroundColor: isHovered ? "black" : "#865d36",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Print
+          </button>
+        </div>
       </div>
       <br />
       <div>

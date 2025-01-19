@@ -120,7 +120,7 @@ const Login = (props) => {
             gutterBottom 
             sx={{ color: 'black', fontWeight: 'bold', fontSize: '2.5rem', letterSpacing: '0.1em' }}
           >
-            AS/400 Data
+          Legacy Data
           </Typography>
           
           <Avatar sx={{ m: 1, bgcolor: '#865d36' }}>

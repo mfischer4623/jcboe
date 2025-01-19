@@ -54,7 +54,7 @@ const VendorSearch = (props) => {
 
     return <div className={"mainContainer"}>
         <div className={"titleContainer"}>
-            <div>AS/400 Data</div>
+            <div>Legacy Data</div>
         </div>
         <br />
         <div className={"titleContainer"}>
