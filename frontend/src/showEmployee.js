@@ -121,9 +121,14 @@ const ShowEmployee = (props) => {
     if (ed.EMMNAM == null) {
         ed.EMMNAM = " "
     }
-    var empNameX = ed?.EMLNAM + ', ' + ed?.EMFNAM + ' ' + ed?.EMMNAM
-    setEmpName(empNameX)
-    setSsn(ed?.EMPSSN)
+
+    if (ed) {
+        var empNameX = ed?.EMLNAM + ', ' + ed?.EMFNAM + ' ' + ed?.EMMNAM;
+        setEmpName(empNameX);
+        setSsn(ed?.EMPSSN);
+    }
+
+
 
     function normalize(phone) {
         //normalize string and remove all unnecessary characters
@@ -291,32 +296,32 @@ const ShowEmployee = (props) => {
         />
     );
 
-   // Function to handle tab clicks
-const handleTabClick = (sectionName) => {
-    setSelectedTab(sectionName);
+    // Function to handle tab clicks
+    const handleTabClick = (sectionName) => {
+        setSelectedTab(sectionName);
 
-    // Expand the clicked section if it's not already expanded
-    if (!expandedSections.includes(sectionName)) {
-        setExpandedSections((prev) => [...prev, sectionName]);
-    }
+        // Expand the clicked section if it's not already expanded
+        if (!expandedSections.includes(sectionName)) {
+            setExpandedSections((prev) => [...prev, sectionName]);
+        }
 
-    // Scroll to the clicked section
-    scroller.scrollTo(sectionName, {
-        duration: 800,
-        delay: 0,
-        smooth: "easeInOutQuart"
-    });
-};
+        // Scroll to the clicked section
+        scroller.scrollTo(sectionName, {
+            duration: 800,
+            delay: 0,
+            smooth: "easeInOutQuart"
+        });
+    };
 
-// Toggle function for the accordions
+    // Toggle function for the accordions
 
-const toggleSection = (sectionName) => {
-    setExpandedSections((prev) =>
-        prev.includes(sectionName)
-            ? prev.filter((sec) => sec !== sectionName) // Collapse if already expanded
-            : [...prev, sectionName] // Expand if collapsed
-    );
-};
+    const toggleSection = (sectionName) => {
+        setExpandedSections((prev) =>
+            prev.includes(sectionName)
+                ? prev.filter((sec) => sec !== sectionName) // Collapse if already expanded
+                : [...prev, sectionName] // Expand if collapsed
+        );
+    };
 
     return (
         <div className="mainContainer">
@@ -451,9 +456,9 @@ const toggleSection = (sectionName) => {
                     }
                 }}>
                     <Element name="personalInfo" className="page-break">
-                        <Accordion defaultExpanded 
-                         expanded={expandedSections.includes("personalInfo")}
-                         onChange={() => toggleSection("personalInfo")}   sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded
+                            expanded={expandedSections.includes("personalInfo")}
+                            onChange={() => toggleSection("personalInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -486,9 +491,9 @@ const toggleSection = (sectionName) => {
                     }
                 }} >
                     <Element name="contactInfo" className="page-break">
-                        <Accordion defaultExpanded 
-                        expanded={expandedSections.includes("contactInfo")}
-                        onChange={() => toggleSection("contactInfo")}  sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded
+                            expanded={expandedSections.includes("contactInfo")}
+                            onChange={() => toggleSection("contactInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -524,7 +529,7 @@ const toggleSection = (sectionName) => {
                     <Element name="employmentInfo" className="page-break">
                         <Accordion defaultExpanded
                             expanded={expandedSections.includes("employmentInfo")}
-                            onChange={() => toggleSection("employmentInfo")}   
+                            onChange={() => toggleSection("employmentInfo")}
                             sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
@@ -553,8 +558,8 @@ const toggleSection = (sectionName) => {
                 }}>
                     <Element name="schoolInfo" className="page-break">
                         <Accordion defaultExpanded
-                          expanded={expandedSections.includes("schoolInfo")}
-                          onChange={() => toggleSection("schoolInfo")} sx={{ width: '90%' }}>
+                            expanded={expandedSections.includes("schoolInfo")}
+                            onChange={() => toggleSection("schoolInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -583,9 +588,9 @@ const toggleSection = (sectionName) => {
                     }
                 }}>
                     <Element name="serviceInfo" className="page-break">
-                        <Accordion defaultExpanded 
-                         expanded={expandedSections.includes("serviceInfo")}
-                         onChange={() => toggleSection("serviceInfo")} sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded
+                            expanded={expandedSections.includes("serviceInfo")}
+                            onChange={() => toggleSection("serviceInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -622,9 +627,9 @@ const toggleSection = (sectionName) => {
                     }
                 }}>
                     <Element name="retirementInfo" className="page-break">
-                        <Accordion defaultExpanded 
-                          expanded={expandedSections.includes("retirementInfo")}
-                          onChange={() => toggleSection("retirementInfo")} sx={{ width: '90%' }}>
+                        <Accordion defaultExpanded
+                            expanded={expandedSections.includes("retirementInfo")}
+                            onChange={() => toggleSection("retirementInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',
@@ -659,8 +664,8 @@ const toggleSection = (sectionName) => {
                 }}>
                     <Element name="terminationInfo" className="page-break">
                         <Accordion defaultExpanded
-                        expanded={expandedSections.includes("terminationInfo")}
-                        onChange={() => toggleSection("terminationInfo")} sx={{ width: '90%' }}>
+                            expanded={expandedSections.includes("terminationInfo")}
+                            onChange={() => toggleSection("terminationInfo")} sx={{ width: '90%' }}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6" sx={{
                                     textAlign: 'center',

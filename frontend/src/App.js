@@ -44,6 +44,11 @@ function App() {
   const [employeeNumber, setEmployeeNumber] = useState("");  // ✅ Added employeeNumber state
   const [employeeName, setEmployeeName] = useState("");      // ✅ Added employeeName state
   const [employeeNames, setEmployeeNames] = useState([]);    // ✅ Added employeeNames array
+  const [ed, setEmployeeData] = useState(null);
+  const [ssn, setSsn] = useState(null);
+  const [showPrintView, setShowPrintView] = useState(false);
+  const [empName, setEmpName] = useState("");  // ✅ Define setEmpName
+
   const [alc, setAbsenceLeaveCodes] = useState([]);
 
   useEffect(() => {
@@ -103,9 +108,15 @@ function App() {
             <ShowEmployee
               loggedIn={loggedIn}
               email={email}
+              employeeNumber={employeeNumber}
               setLoggedIn={setLoggedIn}
               setEmail={setEmail}
-              employeeNumber={employeeNumber}
+              setEmployeeData={setEmployeeData} // ✅ Ensure this is passed
+              ed={ed}
+              setEmpName={setEmpName}
+              setSsn={setSsn}
+              setShowPrintView={setShowPrintView}
+              showPrintView={showPrintView}
             />
           } />
 
