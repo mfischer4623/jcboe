@@ -48,6 +48,8 @@ function App() {
   const [ssn, setSsn] = useState(null);
   const [showPrintView, setShowPrintView] = useState(false);
   const [empName, setEmpName] = useState("");  // ✅ Define setEmpName
+  const [ad, setAttendanceData] = useState([]);  // ✅ Define Attendance Data state
+
 
   const [alc, setAbsenceLeaveCodes] = useState([]);
 
@@ -121,7 +123,19 @@ function App() {
             />
           } />
 
-          <Route path="/showAttendance" element={<ShowAttendance loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          <Route path="/showAttendance" element={
+            <ShowAttendance
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber} // ✅ Ensure employeeNumber is passed
+              ad={ad}  // ✅ Pass Attendance Data
+              setAttendanceData={setAttendanceData}  // ✅ Pass function to update Attendance Data
+              setLoggedIn={setLoggedIn}
+              setEmail={setEmail}
+            />
+          } />
+
+
           <Route path="/showAttendanceDetail" element={<ShowAttendanceDetail loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/miscData" element={<MiscData loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/certificates" element={<Certificates loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />

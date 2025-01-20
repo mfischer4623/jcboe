@@ -18,23 +18,31 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const ShowAttendance = (props) => {
-    const { loggedIn, email, employeeNumber, ad, setAttendanceData, empName, setShowPrintView, showPrintView } = props;
-
+    const { loggedIn, email, employeeNumber, ad = [], setAttendanceData, empName, setShowPrintView, showPrintView } = props;
+    
+    const navigate = useNavigate();
     const [order, setOrder] = useState("asc");
     const [orderBy, setOrderBy] = useState("HAJOB");
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filterJobCode, setFilterJobCode] = useState("");
     const [filterAbsenceCode, setFilterAbsenceCode] = useState("");
-    const [expanded, setExpanded] = useState(false); // State for expand/collapse
-
-    const navigate = useNavigate();
+    const [expanded, setExpanded] = useState(false);
+    const [attendanceData, setLocalAttendanceData] = useState([]); // ✅ Local state
 
     useEffect(() => {
         if (!loggedIn) {
             localStorage.removeItem("user");
             props.setLoggedIn(false);
             navigate("/");
+            return;
+        }
+
+        // ✅ Validate employeeNumber before making the API request
+        if (!employeeNumber || employeeNumber === "undefined") {
+            console.error("Invalid employee number:", employeeNumber);
+            navigate("/showEmployee");
+            return;
         }
 
         const fetchData = async () => {
@@ -42,13 +50,22 @@ const ShowAttendance = (props) => {
                 const response = await fetch(
                     `https://as400.jcboe.org:8080/api/employees/attendance/${employeeNumber}`
                 );
+
+                if (!response.ok) {
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+
                 const resData = await response.json();
-                setAttendanceData(resData);
+                setLocalAttendanceData(resData);
+                if (typeof setAttendanceData === "function") {
+                    setAttendanceData(resData);
+                }
             } catch (error) {
-                console.log("error", error);
+                console.error("Error fetching attendance data:", error);
                 navigate("/showEmployee");
             }
         };
+
         fetchData();
     }, [loggedIn, navigate, employeeNumber, setAttendanceData]);
 
@@ -72,21 +89,20 @@ const ShowAttendance = (props) => {
             setRowsPerPage(5);
             setExpanded(false);
         } else {
-            setRowsPerPage(ad.length); // Show all rows
+            setRowsPerPage(attendanceData.length);
             setExpanded(true);
         }
     };
 
     const handlePrint = () => {
-        setShowPrintView(true); // Show print view before printing
+        setShowPrintView(true);
         setTimeout(() => {
             window.print();
-            setShowPrintView(false); // Hide print view after printing
+            setShowPrintView(false);
         }, 1000);
-        //  window.print();
     };
 
-    const filteredAndSortedAttendance = ad
+    const filteredAndSortedAttendance = attendanceData
         ?.filter((entry) => {
             return (
                 (filterJobCode === "" || entry.HAJOB.toString().includes(filterJobCode)) &&
@@ -155,86 +171,42 @@ const ShowAttendance = (props) => {
                 </Box>
             </Toolbar>
 
-            <TableContainer component={Paper} style={{ marginTop: "20px", width: showPrintView ? "100%" : "60%", marginLeft: showPrintView ? "0%" : "10%" }}>
-                {/* <TableContainer style={{ width:showPrintView? "100%" :'70%', marginLeft:showPrintView?"0%": "15%" }} component={Paper}> */}
-
+            <TableContainer component={Paper} style={{ marginTop: "20px", width: "60%", marginLeft: "10%" }}>
                 <Table>
                     <TableHead sx={{ backgroundColor: "#865d36", color: "white" }}>
                         <TableRow>
-                            <TableCell
-                                sx={{
-                                    color: "white",
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                    "&:hover": { color: "#FFD700" },
-                                }}
-                                sortDirection={orderBy === "HAJOB" ? order : false}
-                            >
-                                <TableSortLabel
-                                    active={orderBy === "HAJOB"}
-                                    direction={orderBy === "HAJOB" ? order : "asc"}
-                                    onClick={() => handleRequestSort("HAJOB")}
-                                >
-                                    Job Code
-                                </TableSortLabel>
-                            </TableCell>
-                            <TableCell
-                                sx={{
-                                    color: "white",
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                    "&:hover": { color: "#FFD700" },
-                                }}
-                                sortDirection={orderBy === "HAABS" ? order : false}
-                            >
-                                <TableSortLabel
-                                    active={orderBy === "HAABS"}
-                                    direction={orderBy === "HAABS" ? order : "asc"}
-                                    onClick={() => handleRequestSort("HAABS")}
-                                >
-                                    Absence Code
-                                </TableSortLabel>
-                            </TableCell>
-                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
-                                Begin Balance
-                            </TableCell>
-                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
-                                Fiscal Earned
-                            </TableCell>
-                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
-                                Fiscal Used
-                            </TableCell>
-                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
-                                Balance Available
-                            </TableCell>
-                            <TableCell sx={{ color: "white", fontSize: "20px", textAlign: "center" }}>
-                                School Year                            </TableCell>
+                            {["HAJOB", "HAABS", "HAFBBL", "HAFERN", "HAFUSE", "HABAL", "MEMBER"].map((col) => (
+                                <TableCell key={col} sx={{ fontSize: "20px", textAlign: "center" }}>
+                                    <TableSortLabel
+                                        active={orderBy === col}
+                                        direction={orderBy === col ? order : "asc"}
+                                        onClick={() => handleRequestSort(col)}
+                                    >
+                                        {col}
+                                    </TableSortLabel>
+                                </TableCell>
+                            ))}
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
-                        {filteredAndSortedAttendance
-                            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((entry, i) => {
-                                console.log(entry, "this is the entry")
-                                return (
-                                    <TableRow key={i}>
-                                        <TableCell>{entry.HAJOB}</TableCell>
-                                        <TableCell>{entry.HAABS}</TableCell>
-                                        <TableCell>{entry.HAFBBL}</TableCell>
-                                        <TableCell>{entry.HAFERN}</TableCell>
-                                        <TableCell>{entry.HAFUSE}</TableCell>
-                                        <TableCell>{entry.HABAL}</TableCell>
-                                        <TableCell>{entry.MEMBER}</TableCell> 
-                                    </TableRow>
-                                )
-                            })}
+                        {filteredAndSortedAttendance.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((entry, index) => (
+                            <TableRow key={index}>
+                                <TableCell>{entry.HAJOB}</TableCell>
+                                <TableCell>{entry.HAABS}</TableCell>
+                                <TableCell>{entry.HAFBBL}</TableCell>
+                                <TableCell>{entry.HAFERN}</TableCell>
+                                <TableCell>{entry.HAFUSE}</TableCell>
+                                <TableCell>{entry.HABAL}</TableCell>
+                                <TableCell>{entry.MEMBER}</TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={filteredAndSortedAttendance?.length || 0}
+                    count={filteredAndSortedAttendance.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
