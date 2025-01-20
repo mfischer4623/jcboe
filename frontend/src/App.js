@@ -99,7 +99,16 @@ function App() {
             />
           } />
 
-          <Route path="/showEmployee" element={<ShowEmployee loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          <Route path="/showEmployee" element={
+            <ShowEmployee
+              loggedIn={loggedIn}
+              email={email}
+              setLoggedIn={setLoggedIn}
+              setEmail={setEmail}
+              employeeNumber={employeeNumber}
+            />
+          } />
+
           <Route path="/showAttendance" element={<ShowAttendance loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/showAttendanceDetail" element={<ShowAttendanceDetail loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/miscData" element={<MiscData loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
