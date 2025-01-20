@@ -51,9 +51,12 @@ function App() {
   const [ad, setAttendanceData] = useState([]);
   const [adl, setAttendanceDataDetail] = useState([]);
   const [sd, setSalaries] = useState([]);
+  const [vd, setVolDeductions] = useState([]);
   const [alc, setAbsenceLeaveCodes] = useState([]);
   const [cd, setCertificates] = useState([]);
   const [md, setMiscData] = useState([]);
+  const [payroll, setPayroll] = useState([]);
+  const [payrollCheck, setPayrollCheck] = useState([]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -143,8 +146,39 @@ function App() {
               employeeNumber={employeeNumber}
               adl={adl}
               setAttendanceDataDetail={setAttendanceDataDetail}
-              setLoggedIn={setLoggedIn}
-              setEmail={setEmail}
+            />
+          } />
+
+          <Route path="/showPayroll" element={
+            <ShowPayroll
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber}
+              payroll={payroll}
+              setPayroll={setPayroll}
+            />
+          } />
+
+          <Route path="/showPayrollCheck" element={
+            <ShowPayrollCheck
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber}
+              payrollCheck={payrollCheck}
+              setPayrollCheck={setPayrollCheck}
+            />
+          } />
+
+          <Route path="/showVolDeductions" element={
+            <ShowVolDeductions
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber}
+              empName={empName}
+              vd={vd}
+              setVolDeductions={setVolDeductions}
+              showPrintView={showPrintView}
+              setShowPrintView={setShowPrintView}
             />
           } />
 
@@ -156,8 +190,6 @@ function App() {
               empName={empName}
               md={md}
               setMiscData={setMiscData}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
             />
           } />
 
@@ -187,27 +219,12 @@ function App() {
             />
           } />
 
-          <Route path="/showVolDeductions" element={<ShowVolDeductions loggedIn={loggedIn} email={email} />} />
-          <Route path="/tags" element={<Tags loggedIn={loggedIn} email={email} />} />
-          <Route path="/showPayroll" element={<ShowPayroll loggedIn={loggedIn} email={email} />} />
-          <Route path="/showPayrollCheck" element={<ShowPayrollCheck loggedIn={loggedIn} email={email} />} />
-          <Route path="/payrollTables" element={<PayrollTables loggedIn={loggedIn} email={email} />} />
-
-          <Route path="/absenceLeaveCodes" element={
-            <AbsenceLeaveCodes
-              loggedIn={loggedIn}
-              email={email}
-              alc={alc}
-              setAbsenceLeaveCodes={setAbsenceLeaveCodes}
-            />
-          } />
-
+          <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/deductionsContributionsCodes" element={<DeductionsContributionsCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/terminationCodes" element={<TerminationCodes loggedIn={loggedIn} email={email} />} />
-
           <Route path="/showW2s" element={<ShowW2s loggedIn={loggedIn} email={email} />} />
           <Route path="/showW2Details" element={<ShowW2Details loggedIn={loggedIn} email={email} />} />
         </Routes>
