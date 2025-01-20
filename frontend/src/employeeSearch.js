@@ -19,7 +19,9 @@ const EmployeeSearch = (props) => {
         try {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/${employeeNumber}`);
             resData = await response.json();
-            if (resData.EMSSAN === employeeNumber) {
+            console.log(resData.EMSSAN)
+            console.log(employeeNumber)
+            if (resData.EMSSAN == employeeNumber) {
                 navigate("/showEmployee");
             } else {
                 window.alert(`Wrong Employee Number ` + employeeNumber);
