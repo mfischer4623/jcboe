@@ -81,5 +81,5 @@ safeRoute("get", "/ppur301s/:id", ppur301s.findOne);
 
 // ✅ Attach router to the app
 module.exports = (app) => {
-  app.use("/api", router);
+  app.use("/api/employees", router);
 };

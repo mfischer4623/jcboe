@@ -44,6 +44,7 @@ function App() {
   const [employeeNumber, setEmployeeNumber] = useState("");  // ✅ Added employeeNumber state
   const [employeeName, setEmployeeName] = useState("");      // ✅ Added employeeName state
   const [employeeNames, setEmployeeNames] = useState([]);    // ✅ Added employeeNames array
+  const [alc, setAbsenceLeaveCodes] = useState([]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -56,11 +57,11 @@ function App() {
       method: "POST",
       headers: { 'jwt-token': user.token }
     })
-    .then(r => r.json())
-    .then(r => {
-      setLoggedIn('success' === r.message);
-      setEmail(user.email || "");
-    });
+      .then(r => r.json())
+      .then(r => {
+        setLoggedIn('success' === r.message);
+        setEmail(user.email || "");
+      });
   }, []);
 
   return (
@@ -75,26 +76,26 @@ function App() {
 
           {/* ✅ Fix: Pass setEmployeeName and setEmployeeNumber */}
           <Route path="/employeeSearch" element={
-            <EmployeeSearch 
-              loggedIn={loggedIn} 
-              email={email} 
-              employeeNumber={employeeNumber} 
-              setEmployeeNumber={setEmployeeNumber} 
-              employeeName={employeeName} 
-              setEmployeeName={setEmployeeName} 
-              setEmployeeNames={setEmployeeNames} 
-              setLoggedIn={setLoggedIn} 
-              setEmail={setEmail} 
+            <EmployeeSearch
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber}
+              setEmployeeNumber={setEmployeeNumber}
+              employeeName={employeeName}
+              setEmployeeName={setEmployeeName}
+              setEmployeeNames={setEmployeeNames}
+              setLoggedIn={setLoggedIn}
+              setEmail={setEmail}
             />
           } />
-          
+
           <Route path="/employeeName" element={
-            <EmployeeName 
-              loggedIn={loggedIn} 
-              email={email} 
-              employeeName={employeeName} 
-              setEmployeeNames={setEmployeeNames} 
-              employeeNames={employeeNames} 
+            <EmployeeName
+              loggedIn={loggedIn}
+              email={email}
+              employeeName={employeeName}
+              setEmployeeNames={setEmployeeNames}
+              employeeNames={employeeNames}
             />
           } />
 
@@ -109,7 +110,18 @@ function App() {
           <Route path="/showPayroll" element={<ShowPayroll loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/showPayrollCheck" element={<ShowPayrollCheck loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/payrollTables" element={<PayrollTables loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
-          <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
+
+          {/* <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} /> */}
+          <Route path="/absenceLeaveCodes" element={
+            <AbsenceLeaveCodes
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              email={email}
+              alc={alc}
+              setAbsenceLeaveCodes={setAbsenceLeaveCodes}
+            />
+          } />
+
           <Route path="/deductionsContributionsCodes" element={<DeductionsContritbutionsCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
           <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
           <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
