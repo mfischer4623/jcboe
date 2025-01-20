@@ -19,26 +19,33 @@ const MiscData = (props) => {
             try {
                 const response = await fetch(`https://as400.jcboe.org:8080/api/employees/miscdata/${employeeNumber}`);
                 const resData = await response.json();
-                setMiscData(resData);
+                setMiscData(Array.isArray(resData) ? resData : []); // ✅ Ensure data is an array
             } catch (error) {
                 console.log("error", error);
                 navigate("/showEmployee");
             }
         };
         fetchData();
-    }, []);
+    }, [loggedIn, employeeNumber, setMiscData, navigate]);
 
     const handlePrint = () => {
-        setShowPrintView(true); // Show print view before printing
+        setShowPrintView(true);
         setTimeout(() => {
             window.print();
-            setShowPrintView(false); // Hide print view after printing
-            // setExpanded(false);
-        }, 500);       
+            setShowPrintView(false);
+        }, 500);
     };
 
-    if (md === null) {
-        return <h1>Loading...</h1>;
+    if (!md || md.length === 0) {  // ✅ Fix: Handle cases where md is undefined or empty
+        return (
+            <div className="mainContainer">
+                <div className="titleContainer">
+                    <h2>Additional Tags</h2>
+                </div>
+                <p>No miscellaneous data available for this employee.</p>
+                <div>Your email is {email}</div>
+            </div>
+        );
     }
 
     function blankLineFunction(j) {
@@ -56,7 +63,7 @@ const MiscData = (props) => {
         );
     }
 
-    let miscDataFormatted = md.map((mdd, i) => {
+    let miscDataFormatted = (md || []).map((mdd, i) => {  // ✅ Fix: Ensure md is always an array
         if (mdd.PCTID !== holdTag) {
             holdTag = mdd.PCTID;
             if (first === true) {
@@ -81,56 +88,14 @@ const MiscData = (props) => {
     });
 
     return (
-        <div className={"mainContainer"}>
-            <div className={"titleContainer"}>
-                <div>Additional Tags</div>
+        <div className="mainContainer">
+            <div className="titleContainer">
+                <h2>Additional Tags</h2>
             </div>
-            <br />
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th colSpan="8">Employee Number: {employeeNumber}</th>
-                        </tr>
-                        <tr>
-                            <th colSpan="8">Employee Name: {empName}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Tag</td>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                            <td>Data 6</td>
-                            <td>Data 7</td>
-                        </tr>
-                        {miscDataFormatted}
-                    </tbody>
-                </table>
-            </div>
-            <br />
-            <div>Your email is {email}</div>
-            <br />
-            {/* Print Button */}
-            <button
-                onClick={handlePrint}
-                style={{
-                    padding: "10px 15px",
-                    backgroundColor: "#865d36",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    transition: "background-color 0.3s ease",
-                }}
-                onMouseEnter={(e) => (e.target.style.backgroundColor = "black")}
-                onMouseLeave={(e) => (e.target.style.backgroundColor = "#865d36")}
-            >
-                Print Table
-            </button>
+            <table>
+                <tbody>{miscDataFormatted}</tbody>
+            </table>
+            <button onClick={handlePrint}>Print Table</button>
         </div>
     );
 };
