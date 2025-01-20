@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 const API_USERS = "https://as400.jcboe.org:8080/api/users";
 
 const MaintainUser = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [editingEmail, setEditingEmail] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -18,9 +20,12 @@ const MaintainUser = () => {
       const response = await fetch(API_USERS);
       if (!response.ok) throw new Error("Failed to fetch users");
       const data = await response.json();
-      setUsers(data.users);
+      setUsers(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching users:", error);
+      setError("Failed to load users. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,7 +55,7 @@ const MaintainUser = () => {
         throw new Error(errorData.error || "Error updating user");
       }
 
-      fetchUsers(); // Refresh users after update
+      fetchUsers(); // ✅ Refresh users after update
       setEmail("");
       setPassword("");
       setEditingEmail(null);
@@ -63,7 +68,7 @@ const MaintainUser = () => {
   // ✅ Edit User
   const handleEdit = (user) => {
     setEmail(user.email);
-    setPassword(user.password || "");
+    setPassword(""); // Do not prefill password for security
     setEditingEmail(user.email);
   };
 
@@ -83,7 +88,7 @@ const MaintainUser = () => {
       }
 
       // ✅ Remove deleted user from state
-      setUsers(users.filter(user => user.email !== email));
+      setUsers(users.filter((user) => user.email !== email));
     } catch (error) {
       console.error("Error deleting user:", error);
       alert("Failed to delete user.");
@@ -93,6 +98,10 @@ const MaintainUser = () => {
   return (
     <div style={{ padding: "20px" }}>
       <h2>Maintain Users</h2>
+
+      {/* Show loading/error messages */}
+      {loading && <p>Loading users...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       {/* User Form */}
       <form onSubmit={handleSubmit}>
@@ -117,21 +126,27 @@ const MaintainUser = () => {
         <thead>
           <tr>
             <th>Email</th>
-            <th>Password (Hashed)</th>
+            <th>Password (Encrypted)</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user.email}>
-              <td>{user.email}</td>
-              <td>{user.password || "No Password"}</td>
-              <td>
-                <button onClick={() => handleEdit(user)}>Edit</button>
-                <button onClick={() => handleDelete(user.email)}>Delete</button>
-              </td>
+          {users.length === 0 ? (
+            <tr>
+              <td colSpan="3">No users found.</td>
             </tr>
-          ))}
+          ) : (
+            users.map((user) => (
+              <tr key={user.email}>
+                <td>{user.email}</td>
+                <td>{user.password ? "Encrypted" : "No Password"}</td>
+                <td>
+                  <button onClick={() => handleEdit(user)}>Edit</button>
+                  <button onClick={() => handleDelete(user.email)}>Delete</button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

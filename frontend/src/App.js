@@ -31,7 +31,7 @@ import ShowVendor from './showVendor';
 import CheckSearch from './checkSearch';
 import ShowCheck from './showCheck';
 import ShowPO from './showPO';
-import MaintainUser from "./maintainUser";
+import MaintainUser from "./maintainUser"; // ✅ Ensure MaintainUser is correctly imported
 
 import Sidebar from './navcomponents/Sidebar';
 
@@ -46,27 +46,21 @@ function App() {
   const [employeeNames, setEmployeeNames] = useState([]);    // ✅ Added employeeNames array
 
   useEffect(() => {
-    // Fetch the user email and token from local storage
     const user = JSON.parse(localStorage.getItem("user"));
-
-    // If the token/email does not exist, mark the user as logged out
     if (!user || !user.token) {
       setLoggedIn(false);
       return;
     }
 
-    // If the token exists, verify it with the auth server to see if it is valid
     fetch("https://as400.jcboe.org:3080/verify", {
       method: "POST",
-      headers: {
-        'jwt-token': user.token
-      }
+      headers: { 'jwt-token': user.token }
     })
-      .then(r => r.json())
-      .then(r => {
-        setLoggedIn('success' === r.message);
-        setEmail(user.email || "");
-      });
+    .then(r => r.json())
+    .then(r => {
+      setLoggedIn('success' === r.message);
+      setEmail(user.email || "");
+    });
   }, []);
 
   return (
@@ -77,9 +71,9 @@ function App() {
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/main" element={<Main loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/maintainUsers" element={<MaintainUser />} />
+          <Route path="/maintainUser" element={<MaintainUser />} />  {/* ✅ Fix: Ensure MaintainUser is accessible */}
 
-          {/* ✅ Fix: Pass missing setEmployeeName and setEmployeeNumber */}
+          {/* ✅ Fix: Pass setEmployeeName and setEmployeeNumber */}
           <Route path="/employeeSearch" element={
             <EmployeeSearch 
               loggedIn={loggedIn} 

@@ -1,3 +1,4 @@
+
 const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcryptjs");
@@ -9,16 +10,31 @@ if (!fs.existsSync(DB_FILE)) {
   fs.writeFileSync(DB_FILE, JSON.stringify({ users: [] }, null, 2));
 }
 
-// ✅ Read all users
-exports.findAll = (req, res) => {
-  fs.readFile(DB_FILE, "utf8", (err, data) => {
+// ✅ Authenticate User (Login)
+exports.authenticate = (req, res) => {
+  const { email, password } = req.body;
+
+  fs.readFile(DB_FILE, "utf8", async (err, data) => {
     if (err) {
       console.error("Error reading database file:", err);
       return res.status(500).json({ error: "Error reading database file" });
     }
+
     try {
-      const db = JSON.parse(data);
-      res.json(db);
+      let db = JSON.parse(data);
+      const user = db.users.find((u) => u.email === email);
+
+      if (!user || !user.password) {
+        return res.status(404).json({ error: "User not found or password missing" });
+      }
+
+      // ✅ Compare entered password with hashed password
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        res.json({ message: "success", token: "your-jwt-token" }); // Replace with real JWT implementation
+      } else {
+        res.status(401).json({ error: "Invalid credentials" });
+      }
     } catch (parseError) {
       console.error("Error parsing database file:", parseError);
       return res.status(500).json({ error: "Invalid JSON format in database file" });
@@ -26,27 +42,42 @@ exports.findAll = (req, res) => {
   });
 };
 
-// ✅ Add a new user (with bcrypt password hashing)
+// ✅ Get all users
+exports.findAll = (req, res) => {
+  fs.readFile(DB_FILE, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading database file:", err);
+      return res.status(500).json({ error: "Error reading database file" });
+    }
+
+    try {
+      const db = JSON.parse(data);
+      res.json(db.users);
+    } catch (parseError) {
+      console.error("Error parsing database file:", parseError);
+      return res.status(500).json({ error: "Invalid JSON format in database file" });
+    }
+  });
+};
+
+// ✅ Create a new user (Hash password)
 exports.create = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email) {
     return res.status(400).json({ error: "Email is required" });
   }
-  if (!password) {
-    return res.status(400).json({ error: "Password is required" });
-  }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash password
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
 
     fs.readFile(DB_FILE, "utf8", (err, data) => {
       if (err) return res.status(500).json({ error: "Error reading database file" });
 
       let db = JSON.parse(data);
 
-      if (db.users.some(user => user.email === email)) {
-        return res.status(400).json({ error: "User with this email already exists" });
+      if (db.users.some((user) => user.email === email)) {
+        return res.status(400).json({ error: "User already exists" });
       }
 
       db.users.push({ email, password: hashedPassword });
@@ -62,27 +93,22 @@ exports.create = async (req, res) => {
   }
 };
 
-// ✅ Update a user by email (Hash new password only if provided)
+// ✅ Update an existing user (Hash new password if provided)
 exports.update = async (req, res) => {
   const { email } = req.params;
   const { password } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ error: "Email is required" });
-  }
 
   fs.readFile(DB_FILE, "utf8", async (err, data) => {
     if (err) return res.status(500).json({ error: "Error reading database file" });
 
     try {
       let db = JSON.parse(data);
-      const userIndex = db.users.findIndex(user => user.email === email);
+      const userIndex = db.users.findIndex((user) => user.email === email);
 
       if (userIndex === -1) {
         return res.status(404).json({ error: "User not found" });
       }
 
-      // Hash new password only if provided
       if (password) {
         db.users[userIndex].password = await bcrypt.hash(password, 10);
       }
@@ -108,7 +134,7 @@ exports.delete = (req, res) => {
     try {
       let db = JSON.parse(data);
       const initialLength = db.users.length;
-      db.users = db.users.filter(user => user.email !== email);
+      db.users = db.users.filter((user) => user.email !== email);
 
       if (db.users.length === initialLength) {
         return res.status(404).json({ error: "User not found" });
