@@ -44,8 +44,10 @@ safeRoute("put", "/users/:email", users.update);
 safeRoute("delete", "/users/:email", users.delete);
 
 // ✅ Employee Routes
-safeRoute("get", "/employees", employees.findAll);
-safeRoute("get", "/employees/:id", employees.findOne);
+// safeRoute("get", "/employees", employees.findAll);
+// safeRoute("get", "/employees/:id", employees.findOne);
+safeRoute("get", "/", employees.findAll);
+safeRoute("get", "/:id", employees.findOne);
 
 // ✅ Payroll & Attendance Routes
 safeRoute("get", "/attendance/:id", ppay802s.findAll);
