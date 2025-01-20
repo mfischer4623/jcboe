@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 import Home from './home';
 import Login from './login';
 import Main from './main';
@@ -31,26 +33,23 @@ import ShowVendor from './showVendor';
 import CheckSearch from './checkSearch';
 import ShowCheck from './showCheck';
 import ShowPO from './showPO';
-import MaintainUser from "./maintainUser"; // ✅ Ensure MaintainUser is correctly imported
+import MaintainUser from "./maintainUser";
 
 import Sidebar from './navcomponents/Sidebar';
-
 import './App.css';
-import { useEffect, useState } from 'react';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
-  const [employeeNumber, setEmployeeNumber] = useState("");  // ✅ Added employeeNumber state
-  const [employeeName, setEmployeeName] = useState("");      // ✅ Added employeeName state
-  const [employeeNames, setEmployeeNames] = useState([]);    // ✅ Added employeeNames array
+  const [employeeNumber, setEmployeeNumber] = useState("");  
+  const [employeeName, setEmployeeName] = useState("");      
+  const [employeeNames, setEmployeeNames] = useState([]);    
   const [ed, setEmployeeData] = useState(null);
   const [ssn, setSsn] = useState(null);
   const [showPrintView, setShowPrintView] = useState(false);
-  const [empName, setEmpName] = useState("");  // ✅ Define setEmpName
-  const [ad, setAttendanceData] = useState([]);  // ✅ Define Attendance Data state
-
-
+  const [empName, setEmpName] = useState("");  
+  const [ad, setAttendanceData] = useState([]);  
+  const [adl, setAttendanceDataDetail] = useState([]);  
   const [alc, setAbsenceLeaveCodes] = useState([]);
 
   useEffect(() => {
@@ -79,9 +78,9 @@ function App() {
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/main" element={<Main loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/maintainUser" element={<MaintainUser />} />  {/* ✅ Fix: Ensure MaintainUser is accessible */}
+          <Route path="/maintainUser" element={<MaintainUser />} />
 
-          {/* ✅ Fix: Pass setEmployeeName and setEmployeeNumber */}
+          {/* Employee Search */}
           <Route path="/employeeSearch" element={
             <EmployeeSearch
               loggedIn={loggedIn}
@@ -102,7 +101,7 @@ function App() {
               email={email}
               setEmployeeNumber={setEmployeeNumber}
               employeeName={employeeName}
-              es={employeeNames}  // ✅ Ensure it's passing correctly
+              es={employeeNames}  
               setEmployeeNames={setEmployeeNames}
             />
           } />
@@ -114,7 +113,7 @@ function App() {
               employeeNumber={employeeNumber}
               setLoggedIn={setLoggedIn}
               setEmail={setEmail}
-              setEmployeeData={setEmployeeData} // ✅ Ensure this is passed
+              setEmployeeData={setEmployeeData}
               ed={ed}
               setEmpName={setEmpName}
               setSsn={setSsn}
@@ -123,20 +122,33 @@ function App() {
             />
           } />
 
+          {/* Attendance */}
           <Route path="/showAttendance" element={
             <ShowAttendance
               loggedIn={loggedIn}
               email={email}
-              employeeNumber={employeeNumber} // ✅ Ensure employeeNumber is passed
-              ad={ad}  // ✅ Pass Attendance Data
-              setAttendanceData={setAttendanceData}  // ✅ Pass function to update Attendance Data
+              employeeNumber={employeeNumber}
+              ad={ad}
+              setAttendanceData={setAttendanceData}
               setLoggedIn={setLoggedIn}
               setEmail={setEmail}
             />
           } />
 
+          <Route path="/showAttendanceDetail" element={
+            <ShowAttendanceDetail
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber}
+              adl={adl}
+              setAttendanceDataDetail={setAttendanceDataDetail}
+              empName={empName}
+              setLoggedIn={setLoggedIn}
+              setEmail={setEmail}
+            />
+          } />
 
-          <Route path="/showAttendanceDetail" element={<ShowAttendanceDetail loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          {/* Other Routes */}
           <Route path="/miscData" element={<MiscData loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/certificates" element={<Certificates loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/salaries" element={<Salaries loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
@@ -146,7 +158,7 @@ function App() {
           <Route path="/showPayrollCheck" element={<ShowPayrollCheck loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/payrollTables" element={<PayrollTables loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
 
-          {/* <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} /> */}
+          {/* Absence Leave Codes */}
           <Route path="/absenceLeaveCodes" element={
             <AbsenceLeaveCodes
               loggedIn={loggedIn}
@@ -162,16 +174,6 @@ function App() {
           <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
           <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
           <Route path="/terminationCodes" element={<TerminationCodes loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} />} />
-          <Route path="/showW2s" element={<ShowW2s loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/showW2Details" element={<ShowW2Details loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/purchaseOrderSearch" element={<PurchaseOrderSearch loggedIn={loggedIn} email={email} />} />
-          <Route path="/showPurchaseOrder" element={<ShowPurchaseOrder loggedIn={loggedIn} email={email} />} />
-          <Route path="/vendorSearch" element={<VendorSearch loggedIn={loggedIn} email={email} />} />
-          <Route path="/vendorName" element={<VendorName loggedIn={loggedIn} email={email} />} />
-          <Route path="/showVendor" element={<ShowVendor loggedIn={loggedIn} email={email} />} />
-          <Route path="/checkSearch" element={<CheckSearch loggedIn={loggedIn} email={email} />} />
-          <Route path="/showCheck" element={<ShowCheck loggedIn={loggedIn} email={email} />} />
-          <Route path="/showPO" element={<ShowPO loggedIn={loggedIn} email={email} />} />
         </Routes>
       </BrowserRouter>
     </div>
