@@ -48,10 +48,11 @@ function App() {
   const [ssn, setSsn] = useState(null);
   const [showPrintView, setShowPrintView] = useState(false);
   const [empName, setEmpName] = useState("");
-  const [ad, setAttendanceData] = useState([]);  
-  const [adl, setAttendanceDataDetail] = useState([]);  
+  const [ad, setAttendanceData] = useState([]);
+  const [adl, setAttendanceDataDetail] = useState([]);
   const [alc, setAbsenceLeaveCodes] = useState([]);
-  const [miscData, setMiscData] = useState([]);  
+  const [miscData, setMiscData] = useState([]);
+  const [certificates, setCertificates] = useState([]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -125,27 +126,27 @@ function App() {
             />
           } />
 
-          {/* Show Attendance */}
+          {/* Attendance */}
           <Route path="/showAttendance" element={
             <ShowAttendance
               loggedIn={loggedIn}
               email={email}
-              employeeNumber={employeeNumber}  
-              ad={ad}  
-              setAttendanceData={setAttendanceData}  
+              employeeNumber={employeeNumber}
+              ad={ad}
+              setAttendanceData={setAttendanceData}
               setLoggedIn={setLoggedIn}
               setEmail={setEmail}
             />
           } />
 
-          {/* Show Attendance Detail */}
+          {/* Attendance Detail */}
           <Route path="/showAttendanceDetail" element={
             <ShowAttendanceDetail
               loggedIn={loggedIn}
               email={email}
               employeeNumber={employeeNumber}
-              adl={adl}  
-              setAttendanceDataDetail={setAttendanceDataDetail}  
+              adl={adl}
+              setAttendanceDataDetail={setAttendanceDataDetail}
               setLoggedIn={setLoggedIn}
               setEmail={setEmail}
             />
@@ -158,39 +159,45 @@ function App() {
               email={email}
               employeeNumber={employeeNumber}
               empName={empName}
-              md={miscData}  
-              setMiscData={setMiscData}  
-              setLoggedIn={setLoggedIn}
-              setEmail={setEmail}
+              md={miscData}
+              setMiscData={setMiscData}
               showPrintView={showPrintView}
               setShowPrintView={setShowPrintView}
             />
           } />
 
-          {/* Absence Leave Codes */}
-          <Route path="/absenceLeaveCodes" element={
-            <AbsenceLeaveCodes
+          {/* Certificates */}
+          <Route path="/certificates" element={
+            <Certificates
               loggedIn={loggedIn}
-              setLoggedIn={setLoggedIn}
               email={email}
-              alc={alc}
-              setAbsenceLeaveCodes={setAbsenceLeaveCodes}
+              employeeNumber={employeeNumber}
+              empName={empName}
+              cd={certificates}
+              setCertificates={setCertificates}
+              showPrintView={showPrintView}
+              setShowPrintView={setShowPrintView}
             />
           } />
 
-          {/* Other Routes */}
-          <Route path="/certificates" element={<Certificates loggedIn={loggedIn} email={email} />} />
+          {/* All Payroll & Employment Routes */}
           <Route path="/salaries" element={<Salaries loggedIn={loggedIn} email={email} />} />
           <Route path="/showVolDeductions" element={<ShowVolDeductions loggedIn={loggedIn} email={email} />} />
-          <Route path="/tags" element={<Tags loggedIn={loggedIn} email={email} />} />
           <Route path="/showPayroll" element={<ShowPayroll loggedIn={loggedIn} email={email} />} />
           <Route path="/showPayrollCheck" element={<ShowPayrollCheck loggedIn={loggedIn} email={email} />} />
           <Route path="/payrollTables" element={<PayrollTables loggedIn={loggedIn} email={email} />} />
+
+          {/* Absences, Deductions & Job Codes */}
+          <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/deductionsContributionsCodes" element={<DeductionsContritbutionsCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} email={email} />} />
-          <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/terminationCodes" element={<TerminationCodes loggedIn={loggedIn} email={email} />} />
+
+          {/* W2 & Vendor Management */}
+          <Route path="/showW2s" element={<ShowW2s loggedIn={loggedIn} email={email} />} />
+          <Route path="/vendorSearch" element={<VendorSearch loggedIn={loggedIn} email={email} />} />
+          <Route path="/showVendor" element={<ShowVendor loggedIn={loggedIn} email={email} />} />
         </Routes>
       </BrowserRouter>
     </div>
