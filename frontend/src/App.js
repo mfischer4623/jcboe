@@ -98,9 +98,10 @@ function App() {
             <EmployeeName
               loggedIn={loggedIn}
               email={email}
+              setEmployeeNumber={setEmployeeNumber}
               employeeName={employeeName}
+              es={employeeNames}  // ✅ Ensure it's passing correctly
               setEmployeeNames={setEmployeeNames}
-              employeeNames={employeeNames}
             />
           } />
 
