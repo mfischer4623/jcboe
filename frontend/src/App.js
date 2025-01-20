@@ -55,8 +55,9 @@ function App() {
   const [alc, setAbsenceLeaveCodes] = useState([]);
   const [cd, setCertificates] = useState([]);
   const [md, setMiscData] = useState([]);
-  const [payroll, setPayroll] = useState([]);
+  const [payrollData, setPayrollData] = useState([]);
   const [payrollCheck, setPayrollCheck] = useState([]);
+  const [checkID, setCheckID] = useState(null);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -116,8 +117,6 @@ function App() {
               loggedIn={loggedIn}
               email={email}
               employeeNumber={employeeNumber}
-              setLoggedIn={setLoggedIn}
-              setEmail={setEmail}
               setEmployeeData={setEmployeeData}
               ed={ed}
               setEmpName={setEmpName}
@@ -134,8 +133,6 @@ function App() {
               employeeNumber={employeeNumber}
               ad={ad}
               setAttendanceData={setAttendanceData}
-              setLoggedIn={setLoggedIn}
-              setEmail={setEmail}
             />
           } />
 
@@ -154,8 +151,10 @@ function App() {
               loggedIn={loggedIn}
               email={email}
               employeeNumber={employeeNumber}
-              payroll={payroll}
-              setPayroll={setPayroll}
+              pd={payrollData}
+              setPayrollData={setPayrollData}
+              setCheckID={setCheckID}
+              empName={empName}
             />
           } />
 
@@ -163,22 +162,9 @@ function App() {
             <ShowPayrollCheck
               loggedIn={loggedIn}
               email={email}
-              employeeNumber={employeeNumber}
+              checkID={checkID}
               payrollCheck={payrollCheck}
               setPayrollCheck={setPayrollCheck}
-            />
-          } />
-
-          <Route path="/showVolDeductions" element={
-            <ShowVolDeductions
-              loggedIn={loggedIn}
-              email={email}
-              employeeNumber={employeeNumber}
-              empName={empName}
-              vd={vd}
-              setVolDeductions={setVolDeductions}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
             />
           } />
 
@@ -201,8 +187,6 @@ function App() {
               empName={empName}
               cd={cd}
               setCertificates={setCertificates}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
             />
           } />
 
@@ -214,19 +198,29 @@ function App() {
               empName={empName}
               sd={sd}
               setSalaries={setSalaries}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
             />
           } />
 
-          <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} email={email} />} />
+          <Route path="/showVolDeductions" element={
+            <ShowVolDeductions
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber}
+              empName={empName}
+              vd={vd}
+              setVolDeductions={setVolDeductions}
+            />
+          } />
+
+          <Route path="/absenceLeaveCodes" element={
+            <AbsenceLeaveCodes loggedIn={loggedIn} email={email} alc={alc} setAbsenceLeaveCodes={setAbsenceLeaveCodes} />
+          } />
+
           <Route path="/deductionsContributionsCodes" element={<DeductionsContributionsCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} email={email} />} />
           <Route path="/terminationCodes" element={<TerminationCodes loggedIn={loggedIn} email={email} />} />
-          <Route path="/showW2s" element={<ShowW2s loggedIn={loggedIn} email={email} />} />
-          <Route path="/showW2Details" element={<ShowW2Details loggedIn={loggedIn} email={email} />} />
         </Routes>
       </BrowserRouter>
     </div>
