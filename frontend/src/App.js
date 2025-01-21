@@ -128,7 +128,7 @@ function App() {
           {/* Payroll */}
           <Route path="/showPayroll" element={
             <ShowPayroll loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              pd={pd} setPayrollData={setPayrollData} setCheckID={setCheckID} empName={empName}
+              pd={pd} cid={cid} setPayrollData={setPayrollData} setCheckID={setCheckID} empName={empName}
             />
           } />
 

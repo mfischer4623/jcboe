@@ -30,14 +30,15 @@ export default function AbsenceLeaveCodes(props) {
                 console.log("API Response:", resData); // ✅ Debugging API response
 
                 if (typeof setAbsenceLeaveCodes === "function") {
+                    console.log(typeof setAbsenceLeaveCodes + "this is typeof setabsenceleavecodes")
                     setAbsenceLeaveCodes(resData);
                 }
 
                 // ✅ Ensure row data is properly structured
                 setRowData(Array.isArray(resData) ? resData.map((item, index) => ({
                     id: item.id || index, 
-                    key: item.key || `Unknown-${index}`, 
-                    description: item.description || "No Description"
+                    key: item.ABKEY || `Unknown-${index}`, 
+                    description: item.ABDESC || "No Description"
                 })) : []);
 
             } catch (error) {
