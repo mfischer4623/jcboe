@@ -28,7 +28,6 @@ const ShowEmployee = (props) => {
         setEmpName,
         setSsn,
         setShowPrintView,
-        showPrintView
     } = props;
 
     const navigate = useNavigate();

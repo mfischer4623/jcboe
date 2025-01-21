@@ -3,16 +3,17 @@ import Home from "./home";
 import Login from "./login";
 import Main from "./main";
 import EmployeeSearch from "./employeeSearch";
-import EmployeeName from "./employeeName";
 import ShowEmployee from "./showEmployee";
-import ShowAttendance from "./showAttendance";
-import ShowAttendanceDetail from "./showAttendanceDetail";
-import MiscData from "./miscData";
-import Certificates from "./certificates";
-import Salaries from "./salaries";
-import ShowVolDeductions from "./showVolDeductions";
+import ShowW2s from "./showW2s";
+import ShowW2Details from "./showW2Details";
 import ShowPayroll from "./showPayroll";
 import ShowPayrollCheck from "./showPayrollCheck";
+import ShowAttendance from "./showAttendance";
+import ShowAttendanceDetail from "./showAttendanceDetail";
+import Salaries from "./salaries";
+import ShowVolDeductions from "./showVolDeductions";
+import Certificates from "./certificates";
+import MiscData from "./miscData";
 import Tags from "./tags";
 import PayrollTables from "./payrollTables";
 import AbsenceLeaveCodes from "./absenceLeaveCodes";
@@ -21,17 +22,6 @@ import PayTableCodes from "./payTableCodes";
 import JobCodes from "./jobCodes";
 import AddendaCodes from "./addendaCodes";
 import TerminationCodes from "./terminationCodes";
-import ShowW2s from "./showW2s";
-import ShowW2Details from "./showW2Details";
-import PurchaseOrderSearch from "./purchaseOrderSearch";
-import ShowPurchaseOrder from "./showPurchaseOrder";
-import VendorSearch from "./vendorSearch";
-import VendorName from "./vendorName";
-import ShowVendor from "./showVendor";
-import CheckSearch from "./checkSearch";
-import ShowCheck from "./showCheck";
-import ShowPO from "./showPO";
-import MaintainUser from "./maintainUser";
 import Sidebar from "./navcomponents/Sidebar";
 
 import "./App.css";
@@ -41,23 +31,17 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [employeeNumber, setEmployeeNumber] = useState("");
-  const [employeeName, setEmployeeName] = useState("");
-  const [employeeNames, setEmployeeNames] = useState([]);
-  const [ed, setEmployeeData] = useState(null);
-  const [ssn, setSsn] = useState(null);
-  const [showPrintView, setShowPrintView] = useState(false);
   const [empName, setEmpName] = useState("");
-  const [ad, setAttendanceData] = useState([]);
-  const [adl, setAttendanceDataDetail] = useState([]);
-  const [md, setMiscData] = useState([]);
-  const [cd, setCertificates] = useState([]);
-  const [sd, setSalaries] = useState([]);
-  const [vd, setVolDeductions] = useState([]);
+  const [w2ID, setW2ID] = useState({}); // ✅ W2 ID State
+  const [showPrintView, setShowPrintView] = useState(false);
   const [pd, setPayrollData] = useState([]);
   const [pcd, setPayrollCheckData] = useState([]);
   const [pcddd, setPayrollDeductionData] = useState([]);
   const [cid, setCheckID] = useState({});
   const [alc, setAbsenceLeaveCodes] = useState([]);
+  const [employeeData, setEmployeeData] = useState(null);
+  const [ssn, setSsn] = useState("");
+  const [attendanceDataDetail, setAttendanceDataDetail] = useState([]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -82,50 +66,40 @@ function App() {
       <BrowserRouter>
         <Sidebar />
         <Routes>
-          {/* Authentication & Main Pages */}
+          {/* ✅ Authentication & Main Pages */}
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/main" element={<Main loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/maintainUser" element={<MaintainUser />} />
+          <Route path="/main" element={<Main loggedIn={loggedIn} />} />
 
-          {/* Employee Related Routes */}
+          {/* ✅ Employee Routes */}
           <Route path="/employeeSearch" element={
-            <EmployeeSearch
-              loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              setEmployeeNumber={setEmployeeNumber} employeeName={employeeName}
-              setEmployeeName={setEmployeeName} setEmployeeNames={setEmployeeNames}
-              setLoggedIn={setLoggedIn} setEmail={setEmail}
-            />
-          } />
-
-          <Route path="/employeeName" element={
-            <EmployeeName loggedIn={loggedIn} email={email} setEmployeeNumber={setEmployeeNumber}
-              employeeName={employeeName} es={employeeNames} setEmployeeNames={setEmployeeNames}
+            <EmployeeSearch loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
+              setEmployeeNumber={setEmployeeNumber} empName={empName}
             />
           } />
 
           <Route path="/showEmployee" element={
             <ShowEmployee loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              setLoggedIn={setLoggedIn} setEmail={setEmail} setEmployeeData={setEmployeeData}
-              ed={ed} setEmpName={setEmpName} setSsn={setSsn} setShowPrintView={setShowPrintView}
-              showPrintView={showPrintView}
+              setLoggedIn={setLoggedIn} setEmail={setEmail} empName={empName} setEmpName={setEmpName}
+              setEmployeeData={setEmployeeData} ed={employeeData}
+              setSsn={setSsn} // ✅ Ensure this is passed
             />
           } />
 
-          {/* Attendance */}
-          <Route path="/showAttendance" element={
-            <ShowAttendance loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              ad={ad} setAttendanceData={setAttendanceData} setLoggedIn={setLoggedIn} setEmail={setEmail}
+          {/* ✅ W2 Routes */}
+          <Route path="/showW2s" element={
+            <ShowW2s loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
+              empName={empName} w2ID={w2ID} setW2ID={setW2ID}
             />
           } />
 
-          <Route path="/showAttendanceDetail" element={
-            <ShowAttendanceDetail loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              adl={adl} setAttendanceDataDetail={setAttendanceDataDetail}
+          <Route path="/showW2Details" element={
+            <ShowW2Details loggedIn={loggedIn} email={email} w2ID={w2ID}
+              empName={empName} employeeNumber={employeeNumber}
             />
           } />
 
-          {/* Payroll */}
+          {/* ✅ Payroll Routes */}
           <Route path="/showPayroll" element={
             <ShowPayroll loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
               pd={pd} cid={cid} setPayrollData={setPayrollData} setCheckID={setCheckID} empName={empName}
@@ -139,33 +113,47 @@ function App() {
             />
           } />
 
-          {/* Salaries & Deductions */}
+          {/* ✅ Attendance Routes */}
+          <Route path="/showAttendance" element={
+            <ShowAttendance loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
+            />
+          } />
+
+          <Route path="/showAttendanceDetail" element={
+            <ShowAttendanceDetail loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
+              adl={attendanceDataDetail}
+              setAttendanceDataDetail={setAttendanceDataDetail}
+              empName={empName}
+            />
+          } />
+
+          {/* ✅ Salaries & Deductions */}
           <Route path="/salaries" element={
             <Salaries loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} sd={sd} setSalaries={setSalaries} showPrintView={showPrintView} setShowPrintView={setShowPrintView}
+              empName={empName} showPrintView={showPrintView} setShowPrintView={setShowPrintView}
             />
           } />
 
           <Route path="/showVolDeductions" element={
             <ShowVolDeductions loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} vd={vd} setVolDeductions={setVolDeductions} setShowPrintView={setShowPrintView}
+              empName={empName} setShowPrintView={setShowPrintView}
             />
           } />
 
-          {/* Certificates & Miscellaneous Data */}
+          {/* ✅ Certificates & Miscellaneous Data */}
           <Route path="/certificates" element={
             <Certificates loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} cd={cd} setCertificates={setCertificates} setShowPrintView={setShowPrintView}
+              empName={empName} setShowPrintView={setShowPrintView}
             />
           } />
 
           <Route path="/miscData" element={
             <MiscData loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} md={md} setMiscData={setMiscData} setShowPrintView={setShowPrintView}
+              empName={empName} setShowPrintView={setShowPrintView}
             />
           } />
 
-          {/* Codes */}
+          {/* ✅ Codes */}
           <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} alc={alc} setAbsenceLeaveCodes={setAbsenceLeaveCodes} />} />
           <Route path="/deductionsContributionsCodes" element={<DeductionsContributionsCodes loggedIn={loggedIn} />} />
           <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} />} />
