@@ -47,13 +47,13 @@ const ShowPayrollCheck = (props) => {
                 // if (!response1.ok) throw new Error(`HTTP Error ${response1.status}`);
                 // const resData1 = await response1.json();
 
-                console.log("📡 Fetching payroll check: ", `SSN=${cid.SSN}, RUN=${cid.RUN}`);
+                // console.log("📡 Fetching payroll check: ", `SSN=${cid.SSN}, RUN=${cid.RUN}`);
 
                 const response1 = await fetch(`https://as400.jcboe.org:8080/api/employees/payrollCheck/?SSN=${cid.SSN}&RUN=${cid.RUN}`);
                 if (!response1.ok) throw new Error(`HTTP Error ${response1.status}`);
 
                 const resData1 = await response1.json();
-                console.log("✅ Payroll check response:", resData1);
+                // console.log("✅ Payroll check response:", resData1);
 
                 setPayrollCheckData(Array.isArray(resData1) ? resData1 : []);
             } catch (error) {

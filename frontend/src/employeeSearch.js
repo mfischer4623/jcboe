@@ -19,8 +19,8 @@ const EmployeeSearch = (props) => {
         try {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/${employeeNumber}`);
             resData = await response.json();
-            console.log(resData.EMSSAN)
-            console.log(employeeNumber)
+            // console.log(resData.EMSSAN)
+            // console.log(employeeNumber)
             if (resData.EMSSAN == employeeNumber) {
                 navigate("/showEmployee");
             } else {
