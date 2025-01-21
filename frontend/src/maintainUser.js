@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const API_USERS = "https://as400.jcboe.org:8080/api/users";
+const API_USERS = "https://as400.jcboe.org:8080/api/employees/users";
 
 const MaintainUser = () => {
   const [users, setUsers] = useState([]); 

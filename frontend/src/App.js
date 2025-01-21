@@ -14,7 +14,7 @@ import Salaries from "./salaries";
 import ShowVolDeductions from "./showVolDeductions";
 import Certificates from "./certificates";
 import MiscData from "./miscData";
-import Tags from "./tags";
+// import Tags from "./tags";
 import PayrollTables from "./payrollTables";
 import AbsenceLeaveCodes from "./absenceLeaveCodes";
 import DeductionsContributionsCodes from "./deductionsContributionsCodes";
@@ -23,6 +23,7 @@ import JobCodes from "./jobCodes";
 import AddendaCodes from "./addendaCodes";
 import TerminationCodes from "./terminationCodes";
 import Sidebar from "./navcomponents/Sidebar";
+import MaintainUser from "./maintainUser";
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -73,6 +74,9 @@ function App() {
       <BrowserRouter>
         <Sidebar />
         <Routes>
+
+          <Route path="/maintainUser" element={<MaintainUser/>} />
+
           {/* ✅ Authentication & Main Pages */}
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
