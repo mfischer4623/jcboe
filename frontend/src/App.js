@@ -46,6 +46,8 @@ function App() {
   const [certificatesData, setCertificates] = useState([]);
   const [salariesData, setSalaries] = useState([]);
   const [volDeductionsData, setVolDeductions] = useState([]);
+  const [w2sData, setW2s] = useState([]);
+  const [w2d, setW2Details] = useState([])
 
 
   useEffect(() => {
@@ -94,13 +96,21 @@ function App() {
           {/* ✅ W2 Routes */}
           <Route path="/showW2s" element={
             <ShowW2s loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} w2ID={w2ID} setW2ID={setW2ID}
+              empName={empName}
+              ssn={ssn}  // ✅ Ensure SSN is passed
+              w2s={w2sData}
+              setW2s={setW2s}  // ✅ Pass setW2s
+              setW2ID={setW2ID}
+              w2ID={w2ID}
+              showPrintView={showPrintView}
+              setShowPrintView={setShowPrintView}
             />
           } />
 
           <Route path="/showW2Details" element={
             <ShowW2Details loggedIn={loggedIn} email={email} w2ID={w2ID}
               empName={empName} employeeNumber={employeeNumber}
+              w2d={w2d} setW2Details={setW2Details}
             />
           } />
 

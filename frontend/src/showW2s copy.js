@@ -7,7 +7,7 @@ import {
 import "./showW2s.css";
 
 const ShowW2s = (props) => {
-    const { loggedIn, email, employeeNumber, ssn, w2s, setW2s, empName, setW2ID, w2ID, setShowPrintView , showPrintView } = props;
+    const { loggedIn, email, employeeNumber, ssn, w2s, setW2s, empName, setW2ID, setShowPrintView , showPrintView } = props;
     const navigate = useNavigate();
 
     const [page, setPage] = useState(0);
