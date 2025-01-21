@@ -42,6 +42,11 @@ function App() {
   const [employeeData, setEmployeeData] = useState(null);
   const [ssn, setSsn] = useState("");
   const [attendanceDataDetail, setAttendanceDataDetail] = useState([]);
+  const [miscData, setMiscData] = useState([]);
+  const [certificatesData, setCertificates] = useState([]);
+  const [salariesData, setSalaries] = useState([]);
+  const [volDeductionsData, setVolDeductions] = useState([]);
+
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -131,12 +136,16 @@ function App() {
           <Route path="/salaries" element={
             <Salaries loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
               empName={empName} showPrintView={showPrintView} setShowPrintView={setShowPrintView}
+              sd={salariesData}
+              setSalaries={setSalaries} // ✅ Ensure this is passed
             />
           } />
 
           <Route path="/showVolDeductions" element={
             <ShowVolDeductions loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
               empName={empName} setShowPrintView={setShowPrintView}
+              vd={volDeductionsData}
+              setVolDeductions={setVolDeductions} // ✅ Ensure this is passed
             />
           } />
 
@@ -144,12 +153,17 @@ function App() {
           <Route path="/certificates" element={
             <Certificates loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
               empName={empName} setShowPrintView={setShowPrintView}
+              cd={certificatesData}
+              setCertificates={setCertificates} // ✅ Ensure this is passed
             />
           } />
 
           <Route path="/miscData" element={
             <MiscData loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
               empName={empName} setShowPrintView={setShowPrintView}
+              md={miscData}
+              setMiscData={setMiscData} // ✅ Ensure this is passed
+              showPrintView={showPrintView}
             />
           } />
 
