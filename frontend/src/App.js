@@ -25,6 +25,7 @@ import TerminationCodes from "./terminationCodes";
 import Sidebar from "./navcomponents/Sidebar";
 import MaintainUser from "./maintainUser";
 import EmployeeName from "./employeeName";  // Import the appropriate component
+import PurchaseOrderSearch from "./purchaseOrderSearch";
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -52,6 +53,9 @@ function App() {
   const [volDeductionsData, setVolDeductions] = useState([]);
   const [w2sData, setW2s] = useState([]);
   const [w2d, setW2Details] = useState([])
+  const [PODOC, setPODOC] = useState("");
+  const [PONUM, setPONUM] = useState("");
+
 
 
   useEffect(() => {
@@ -190,6 +194,19 @@ function App() {
               showPrintView={showPrintView}
             />
           } />
+
+          <Route path="/purchaseOrderSearch" element={
+            <PurchaseOrderSearch
+              loggedIn={loggedIn}
+              email={email}
+              PODOC={PODOC}
+              PONUM={PONUM}
+              setPODOC={setPODOC}
+              setPONUM={setPONUM}
+              setLoggedIn={setLoggedIn}
+            />
+          } />
+
 
           {/* ✅ Codes */}
           <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} alc={alc} setAbsenceLeaveCodes={setAbsenceLeaveCodes} />} />
