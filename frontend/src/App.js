@@ -32,6 +32,8 @@ import ShowVendor from "./showVendor";
 import ShowPO from "./showPO";
 import ShowPurchaseOrder from "./showPurchaseOrder";
 import CheckSearch from "./checkSearch"
+import ShowCheck from "./showCheck";
+
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -68,14 +70,17 @@ function App() {
   const [poFromVendor, setPoFromVendor] = useState([]);
   const [pod, setShowPurchaseOrder] = useState([]);
 
-  const [aphbnk, setAphbnk]=useState("")
-  const [aphbac, setAphbac]=useState("")
-  const [aphfrm, setAphfrm]=useState("")
-  const [aphchk, setAphchk]=useState("")
-  const [aphven, setAphven]=useState("")
+  const [aphbnk, setAphbnk] = useState("")
+  const [aphbac, setAphbac] = useState("")
+  const [aphfrm, setAphfrm] = useState("")
+  const [aphchk, setAphchk] = useState("")
+  const [aphven, setAphven] = useState("")
 
   const [dcc, setDeductionsContributionsCodes] = useState([]);
-
+  const [ptc, setPayTableCodes] = useState([]);
+  const [jcc, setJobCodes] = useState([]);
+  const [acc, setAddendaCodes] = useState([]);
+  const [scd, setCheckData] = useState([])
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -314,13 +319,27 @@ function App() {
             />
           } />
 
+          <Route path="/showCheck" element={
+            <ShowCheck
+              loggedIn={loggedIn}
+              email={email}
+              aphbnk={aphbnk}
+              aphbac={aphbac}
+              aphfrm={aphfrm}
+              aphchk={aphchk}
+              aphven={aphven}
+              scd={scd}
+              setCheckData={setCheckData}
+            />
+          } />
+
           {/* ✅ Codes */}
           <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} alc={alc} setAbsenceLeaveCodes={setAbsenceLeaveCodes} />} />
           <Route path="/deductionsContributionsCodes" element={<DeductionsContributionsCodes loggedIn={loggedIn} email={email} dcc={dcc} setDeductionsContributionsCodes={setDeductionsContributionsCodes} />} />
-          <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} />} />
-          <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} />} />
-          <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} />} />
-          <Route path="/terminationCodes" element={<TerminationCodes loggedIn={loggedIn} />} />
+          <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} email={email} ptc={ptc} setPayTableCodes={setPayTableCodes} />} />
+          <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} email={email} jcc={jcc} setJobCodes={setJobCodes} />} />
+          <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} email={email} acc={acc} setAddendaCodes={setAddendaCodes} />} />
+          <Route path="/terminationCodes" element={<TerminationCodes loggedIn={loggedIn} email={email} />} />
 
         </Routes>
       </BrowserRouter>
