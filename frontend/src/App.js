@@ -24,6 +24,7 @@ import AddendaCodes from "./addendaCodes";
 import TerminationCodes from "./terminationCodes";
 import Sidebar from "./navcomponents/Sidebar";
 import MaintainUser from "./maintainUser";
+import EmployeeName from "./employeeName";  // Import the appropriate component
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -33,6 +34,8 @@ function App() {
   const [email, setEmail] = useState("");
   const [employeeNumber, setEmployeeNumber] = useState("");
   const [empName, setEmpName] = useState("");
+  const [es, setEmployeeNames] = useState([]);
+  const [employeeName, setEmployeeName] = useState("")
   const [w2ID, setW2ID] = useState({}); // ✅ W2 ID State
   const [showPrintView, setShowPrintView] = useState(false);
   const [pd, setPayrollData] = useState([]);
@@ -75,7 +78,7 @@ function App() {
         <Sidebar />
         <Routes>
 
-          <Route path="/maintainUser" element={<MaintainUser/>} />
+          <Route path="/maintainUser" element={<MaintainUser />} />
 
           {/* ✅ Authentication & Main Pages */}
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
@@ -85,8 +88,15 @@ function App() {
           {/* ✅ Employee Routes */}
           <Route path="/employeeSearch" element={
             <EmployeeSearch loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              setEmployeeNumber={setEmployeeNumber} empName={empName}
+              employeeName={employeeName}
+              setEmployeeNumber={setEmployeeNumber} empName={empName} setEmployeeName={setEmployeeName}
+              setEmployeeNames={setEmployeeNames} // ✅ Pass it as a prop
             />
+          } />
+
+          <Route path="/employeeName" element={
+            <EmployeeName loggedIn={loggedIn} email={email} setEmployeeNumber={setEmployeeNumber} employeeName={employeeName} es={es}
+              setEmployeeNames={setEmployeeNames} />
           } />
 
           <Route path="/showEmployee" element={

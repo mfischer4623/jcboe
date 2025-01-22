@@ -8,7 +8,7 @@ import {
 import "./employeeName.css";
 
 const EmployeeName = (props) => {
-    const { loggedIn, email, setEmployeeNumber, employeeName, es = [], setEmployeeNames } = props; // ✅ Ensure `es` is an array
+    const { loggedIn, email, setEmployeeNumber, employeeName, es, setEmployeeNames } = props; // ✅ Ensure `es` is an array
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -32,7 +32,8 @@ const EmployeeName = (props) => {
             try {
                 const response = await fetch(`https://as400.jcboe.org:8080/api/employees/?name=${employeeName}`);
                 const resData = await response.json();
-                setEmployeeNames(Array.isArray(resData) ? resData : []); // ✅ Ensure resData is an array
+                // setEmployeeNames(Array.isArray(resData) ? resData : []); // ✅ Ensure resData is an array
+                setEmployeeNames(resData)
             } catch (error) {
                 console.error("Error fetching employees:", error);
                 navigate("/employeeSearch");

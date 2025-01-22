@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Box, Typography, TextField, Button, Paper } from '@mui/material';
 
 const EmployeeSearch = (props) => {
-    const { loggedIn, email, employeeNumber, employeeName, setEmployeeNumber, setEmployeeName, setEmployeeNames } = props;
+    const { loggedIn, email, employeeNumber, employeeName, setEmployeeNumber, empName, setEmployeeName, setEmployeeNames } = props;
     const navigate = useNavigate();
 
     useEffect(() => {
