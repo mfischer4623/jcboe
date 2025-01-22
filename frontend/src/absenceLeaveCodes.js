@@ -27,10 +27,10 @@ export default function AbsenceLeaveCodes(props) {
             try {
                 const response = await fetch(`https://as400.jcboe.org:8080/api/employees/ppay121s`);
                 const resData = await response.json();
-                console.log("API Response:", resData); // ✅ Debugging API response
+                // console.log("API Response:", resData); // ✅ Debugging API response
 
                 if (typeof setAbsenceLeaveCodes === "function") {
-                    console.log(typeof setAbsenceLeaveCodes + "this is typeof setabsenceleavecodes")
+                    // console.log(typeof setAbsenceLeaveCodes + "this is typeof setabsenceleavecodes")
                     setAbsenceLeaveCodes(resData);
                 }
 
@@ -50,7 +50,7 @@ export default function AbsenceLeaveCodes(props) {
         fetchData();
     }, [loggedIn, navigate, setAbsenceLeaveCodes]);
 
-    console.log("Row Data to Render:", rowData); // ✅ Debugging table data
+    // console.log("Row Data to Render:", rowData); // ✅ Debugging table data
 
     if (!rowData.length) {
         return <h2>Loading or No Data Found...</h2>; // ✅ Prevents blank table

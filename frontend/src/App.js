@@ -74,6 +74,8 @@ function App() {
   const [aphchk, setAphchk]=useState("")
   const [aphven, setAphven]=useState("")
 
+  const [dcc, setDeductionsContributionsCodes] = useState([]);
+
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -314,7 +316,7 @@ function App() {
 
           {/* ✅ Codes */}
           <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} alc={alc} setAbsenceLeaveCodes={setAbsenceLeaveCodes} />} />
-          <Route path="/deductionsContributionsCodes" element={<DeductionsContributionsCodes loggedIn={loggedIn} />} />
+          <Route path="/deductionsContributionsCodes" element={<DeductionsContributionsCodes loggedIn={loggedIn} email={email} dcc={dcc} setDeductionsContributionsCodes={setDeductionsContributionsCodes} />} />
           <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} />} />
           <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} />} />
           <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} />} />
