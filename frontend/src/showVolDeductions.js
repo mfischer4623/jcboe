@@ -37,7 +37,8 @@ const ShowVolDeductions = (props) => {
         };
 
         fetchData();
-    }, [loggedIn, employeeNumber, navigate, props, setVolDeductions]);
+    }, []);
+    // }, [loggedIn, employeeNumber, navigate, props, setVolDeductions]);
 
     if (!Array.isArray(vd) || vd.length === 0) {
         return <h1>Loading...</h1>;

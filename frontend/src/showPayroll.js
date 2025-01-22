@@ -22,7 +22,8 @@ const ShowPayroll = (props) => {
             }
         };
         fetchData();
-    }, [loggedIn, employeeNumber, setPayrollData, navigate, props]);
+    }, []);
+    // }, [loggedIn, employeeNumber, setPayrollData, navigate, props]);
 
     if (!Array.isArray(pd)) {
         return <h1>Loading...</h1>;
