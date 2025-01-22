@@ -15,7 +15,7 @@ import ShowVolDeductions from "./showVolDeductions";
 import Certificates from "./certificates";
 import MiscData from "./miscData";
 // import Tags from "./tags";
-import PayrollTables from "./payrollTables";
+// import PayrollTables from "./payrollTables";
 import AbsenceLeaveCodes from "./absenceLeaveCodes";
 import DeductionsContributionsCodes from "./deductionsContributionsCodes";
 import PayTableCodes from "./payTableCodes";
@@ -27,6 +27,8 @@ import MaintainUser from "./maintainUser";
 import EmployeeName from "./employeeName";  // Import the appropriate component
 import PurchaseOrderSearch from "./purchaseOrderSearch";
 import VendorSearch from "./vendorSearch";
+import VendorName from "./vendorName";
+import ShowVendor from "./showVendor";
 
 
 import "./App.css";
@@ -60,6 +62,9 @@ function App() {
   const [vendorNumber, setVendorNumber] = useState("");
   const [vendorName, setVendorName] = useState("");
   const [vendorNames, setVendorNames] = useState([]);
+  const [vendorData, setVendorData] = useState(null);
+  const [poFromVendor, setPoFromVendor] = useState([]);
+  
 
 
 
@@ -225,6 +230,34 @@ function App() {
             />
           } />
 
+          <Route path="/vendorName" element={
+            <VendorName
+              loggedIn={loggedIn}
+              email={email}
+              setVendorNumber={setVendorNumber}
+              vendorName={vendorName}
+              vens={vendorNames}
+              setVendorNames={setVendorNames}
+              showPrintView={showPrintView}
+              setShowPrintView={setShowPrintView}
+              setLoggedIn={setLoggedIn}
+            />
+          } />
+
+          <Route path="/showVendor" element={
+            <ShowVendor
+              loggedIn={loggedIn}
+              email={email}
+              vendorNumber={vendorNumber}
+              vend={vendorData}
+              setVendorData={setVendorData}
+              setShowPrintView={setShowPrintView}
+              showPrintView={showPrintView}
+              poFromVendor={poFromVendor}
+              setPoFromVendor={setPoFromVendor}
+              setLoggedIn={setLoggedIn}
+            />
+          } />
 
           {/* ✅ Codes */}
           <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} alc={alc} setAbsenceLeaveCodes={setAbsenceLeaveCodes} />} />
