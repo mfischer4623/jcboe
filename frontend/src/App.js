@@ -30,6 +30,7 @@ import VendorSearch from "./vendorSearch";
 import VendorName from "./vendorName";
 import ShowVendor from "./showVendor";
 import ShowPO from "./showPO";
+import ShowPurchaseOrder from "./showPurchaseOrder";
 
 
 import "./App.css";
@@ -65,7 +66,7 @@ function App() {
   const [vendorNames, setVendorNames] = useState([]);
   const [vendorData, setVendorData] = useState(null);
   const [poFromVendor, setPoFromVendor] = useState([]);
-
+  const [pod, setShowPurchaseOrder] = useState([]);
 
 
 
@@ -271,6 +272,20 @@ function App() {
               setShowPrintView={setShowPrintView}
               setPODOC={setPODOC}
               setPONUM={setPONUM}
+              setLoggedIn={setLoggedIn}
+            />
+          } />
+
+          <Route path="/showPurchaseOrder" element={
+            <ShowPurchaseOrder
+              loggedIn={loggedIn}
+              email={email}
+              PODOC={PODOC}
+              PONUM={PONUM}
+              pod={pod}
+              setShowPurchaseOrder={setShowPurchaseOrder}
+              showPrintView={showPrintView}
+              setShowPrintView={setShowPrintView}
               setLoggedIn={setLoggedIn}
             />
           } />
