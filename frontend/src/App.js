@@ -29,6 +29,7 @@ import PurchaseOrderSearch from "./purchaseOrderSearch";
 import VendorSearch from "./vendorSearch";
 import VendorName from "./vendorName";
 import ShowVendor from "./showVendor";
+import ShowPO from "./showPO";
 
 
 import "./App.css";
@@ -64,7 +65,8 @@ function App() {
   const [vendorNames, setVendorNames] = useState([]);
   const [vendorData, setVendorData] = useState(null);
   const [poFromVendor, setPoFromVendor] = useState([]);
-  
+
+
 
 
 
@@ -255,6 +257,20 @@ function App() {
               showPrintView={showPrintView}
               poFromVendor={poFromVendor}
               setPoFromVendor={setPoFromVendor}
+              setLoggedIn={setLoggedIn}
+            />
+          } />
+
+          <Route path="/showPO" element={
+            <ShowPO
+              loggedIn={loggedIn}
+              poFromVendor={poFromVendor}
+              setPoFromVendor={setPoFromVendor}
+              vendorNumber={vendorNumber}
+              showPrintView={showPrintView}
+              setShowPrintView={setShowPrintView}
+              setPODOC={setPODOC}
+              setPONUM={setPONUM}
               setLoggedIn={setLoggedIn}
             />
           } />
