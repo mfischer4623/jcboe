@@ -86,6 +86,7 @@ safeRoute("get", "/pofromvendor/", controllers.pofromvendor.findAll, "pofromvend
 // ✅ Vendor Routes
 safeRoute("get", "/lacp441s/", controllers.lacp441s.findAll, "lacp441s.findAll");
 safeRoute("get", "/ppur301s/", controllers.ppur301s.findAll, "ppur301s.findAll");
+safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOne");
 
 // ✅ Employee Routes
 safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");
