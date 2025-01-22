@@ -26,6 +26,8 @@ import Sidebar from "./navcomponents/Sidebar";
 import MaintainUser from "./maintainUser";
 import EmployeeName from "./employeeName";  // Import the appropriate component
 import PurchaseOrderSearch from "./purchaseOrderSearch";
+import VendorSearch from "./vendorSearch";
+
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -55,6 +57,9 @@ function App() {
   const [w2d, setW2Details] = useState([])
   const [PODOC, setPODOC] = useState("");
   const [PONUM, setPONUM] = useState("");
+  const [vendorNumber, setVendorNumber] = useState("");
+  const [vendorName, setVendorName] = useState("");
+  const [vendorNames, setVendorNames] = useState([]);
 
 
 
@@ -203,6 +208,19 @@ function App() {
               PONUM={PONUM}
               setPODOC={setPODOC}
               setPONUM={setPONUM}
+              setLoggedIn={setLoggedIn}
+            />
+          } />
+
+          <Route path="/vendorSearch" element={
+            <VendorSearch
+              loggedIn={loggedIn}
+              email={email}
+              vendorNumber={vendorNumber}
+              vendorName={vendorName}
+              setVendorNumber={setVendorNumber}
+              setVendorName={setVendorName}
+              setVendorNames={setVendorNames}
               setLoggedIn={setLoggedIn}
             />
           } />
