@@ -31,7 +31,7 @@ import VendorName from "./vendorName";
 import ShowVendor from "./showVendor";
 import ShowPO from "./showPO";
 import ShowPurchaseOrder from "./showPurchaseOrder";
-
+import CheckSearch from "./checkSearch"
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -68,7 +68,11 @@ function App() {
   const [poFromVendor, setPoFromVendor] = useState([]);
   const [pod, setShowPurchaseOrder] = useState([]);
 
-
+  const [aphbnk, setAphbnk]=useState("")
+  const [aphbac, setAphbac]=useState("")
+  const [aphfrm, setAphfrm]=useState("")
+  const [aphchk, setAphchk]=useState("")
+  const [aphven, setAphven]=useState("")
 
 
   useEffect(() => {
@@ -286,6 +290,24 @@ function App() {
               setShowPurchaseOrder={setShowPurchaseOrder}
               showPrintView={showPrintView}
               setShowPrintView={setShowPrintView}
+              setLoggedIn={setLoggedIn}
+            />
+          } />
+
+          <Route path="/checkSearch" element={
+            <CheckSearch
+              loggedIn={loggedIn}
+              email={email}
+              setAphbnk={setAphbnk}
+              setAphbac={setAphbac}
+              setAphfrm={setAphfrm}
+              setAphchk={setAphchk}
+              setAphven={setAphven}
+              aphbnk={aphbnk}
+              aphbac={aphbac}
+              aphfrm={aphfrm}
+              aphchk={aphchk}
+              aphven={aphven}
               setLoggedIn={setLoggedIn}
             />
           } />
