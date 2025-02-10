@@ -101,7 +101,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor:'#C6B2A3'}}>
       <BrowserRouter>
         <Sidebar />
         <Routes>
