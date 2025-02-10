@@ -106,7 +106,7 @@ function App() {
         <Sidebar />
         <Routes>
 
-          <Route path="/maintainUser" element={<MaintainUser />} />
+          <Route path="/maintainUser" element={<MaintainUser loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 
           {/* ✅ Authentication & Main Pages */}
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
