@@ -18,8 +18,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const ShowAttendance = (props) => {
-    const { loggedIn, email, employeeNumber, ad = [], setAttendanceData, empName, setShowPrintView, showPrintView } = props;
-    
+    const { loggedIn, email, employeeNumber, adl = [], setAttendanceData, setShowPrintView } = props;
+
     const navigate = useNavigate();
     const [order, setOrder] = useState("asc");
     const [orderBy, setOrderBy] = useState("HAJOB");
@@ -102,8 +102,8 @@ const ShowAttendance = (props) => {
         }, 1000);
     };
 
-    const filteredAndSortedAttendance = attendanceData
-        ?.filter((entry) => {
+    const filteredAndSortedAttendance = (Array.isArray(adl) ? adl : [])
+        .filter((entry) => {
             return (
                 (filterJobCode === "" || entry.HAJOB.toString().includes(filterJobCode)) &&
                 (filterAbsenceCode === "" || entry.HAABS.toString().includes(filterAbsenceCode))

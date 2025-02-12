@@ -69,6 +69,8 @@ function App() {
   const [vendorData, setVendorData] = useState(null);
   const [poFromVendor, setPoFromVendor] = useState([]);
   const [pod, setShowPurchaseOrder] = useState([]);
+  const [attendanceData, setAttendanceData] = useState([]);
+
 
   const [aphbnk, setAphbnk] = useState("")
   const [aphbac, setAphbac] = useState("")
@@ -101,7 +103,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App" style={{backgroundColor:'#C6B2A3'}}>
+    <div className="App" style={{ backgroundColor: '#C6B2A3' }}>
       <BrowserRouter>
         <Sidebar />
         <Routes>
@@ -170,9 +172,13 @@ function App() {
             />
           } />
 
-          {/* ✅ Attendance Routes */}
           <Route path="/showAttendance" element={
-            <ShowAttendance loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
+            <ShowAttendance
+              loggedIn={loggedIn}
+              email={email}
+              employeeNumber={employeeNumber}
+              adl={attendanceDataDetail}  // ✅ Pass this correctly
+              setAttendanceData={setAttendanceData}
             />
           } />
 
