@@ -105,18 +105,19 @@ const ShowAttendance = (props) => {
     const filteredAndSortedAttendance = (Array.isArray(adl) ? adl : [])
         .filter((entry) => {
             return (
-                (filterJobCode === "" || entry.HAJOB.toString().includes(filterJobCode)) &&
-                (filterAbsenceCode === "" || entry.HAABS.toString().includes(filterAbsenceCode))
+                (filterJobCode === "" || (entry.HAJOB && entry.HAJOB.toString().includes(filterJobCode))) &&
+                (filterAbsenceCode === "" || (entry.HAABS && entry.HAABS.toString().includes(filterAbsenceCode)))
             );
         })
         .sort((a, b) => {
-            if (orderBy === "HAJOB") {
-                return order === "asc" ? a.HAJOB.localeCompare(b.HAJOB) : b.HAJOB.localeCompare(a.HAJOB);
+            const aValue = a[orderBy] || ""; // Ensure a valid string
+            const bValue = b[orderBy] || ""; // Ensure a valid string
+
+            if (orderBy === "HAJOB" || orderBy === "HAABS") {
+                return order === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
             }
-            if (orderBy === "HAABS") {
-                return order === "asc" ? a.HAABS.localeCompare(b.HAABS) : b.HAABS.localeCompare(a.HAABS);
-            }
-            return order === "asc" ? a[orderBy] - b[orderBy] : b[orderBy] - a[orderBy];
+
+            return order === "asc" ? (a[orderBy] || 0) - (b[orderBy] || 0) : (b[orderBy] || 0) - (a[orderBy] || 0);
         });
 
     return (
