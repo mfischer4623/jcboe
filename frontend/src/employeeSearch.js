@@ -9,7 +9,7 @@ const EmployeeSearch = (props) => {
     useEffect(() => {
         if (!loggedIn) {
             localStorage.removeItem("user");
-            props.setLoggedIn(false);
+            // props.setLoggedIn(false);
             navigate("/");
         }
     }, [loggedIn, navigate, props]);
