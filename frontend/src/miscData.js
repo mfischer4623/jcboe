@@ -12,7 +12,7 @@ const MiscData = (props) => {
     useEffect(() => {
         if (!loggedIn) {
             localStorage.removeItem("user");
-            props.setLoggedIn(false);
+            // props.setLoggedIn(false);
             navigate("/");
         }
         const fetchData = async () => {
