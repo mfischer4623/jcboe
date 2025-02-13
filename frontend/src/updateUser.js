@@ -59,7 +59,7 @@
 
 //   const handleSubmit = async () => {
 //     if (!validateInputs()) return;
-//     fetch("https://as400.jcboe.org:3080/auth", {
+//     fetch("https://as400.jcboe.org:5000/auth", {
 //       method: "POST",
 //       headers: { 'Content-Type': 'application/json' },
 //       body: JSON.stringify({ email, newPassword })
@@ -247,7 +247,7 @@ const UpdateUser = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://as400.jcboe.org:3080/update-password", {
+      const response = await fetch("https://as400.jcboe.org:5000/update-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword }),
@@ -279,7 +279,7 @@ const UpdateUser = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://as400.jcboe.org:3080/delete-user", {
+      const response = await fetch("https://as400.jcboe.org:5000/delete-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

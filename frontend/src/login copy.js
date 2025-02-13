@@ -33,7 +33,7 @@ const Login = ({ setLoggedIn, setEmail }) => {
       return;
     }
 
-    fetch("https://as400.jcboe.org:3080/auth", {
+    fetch("https://as400.jcboe.org:5000/auth", {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

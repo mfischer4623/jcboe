@@ -91,7 +91,7 @@ function App() {
       return;
     }
 
-    fetch("https://as400.jcboe.org:3080/verify", {
+    fetch("https://as400.jcboe.org:5000/verify", {
       method: "POST",
       headers: { "jwt-token": user.token },
     })
