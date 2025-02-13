@@ -11,111 +11,54 @@ if (!fs.existsSync(DB_FILE)) {
 }
 
 // ✅ Authenticate User (Login)
-// exports.authenticate = (req, res) => {
-//   const { email, password } = req.body;
-
-//   fs.readFile(DB_FILE, "utf8", async (err, data) => {
-//     if (err) {
-//       console.error("Error reading database file:", err);
-//       return res.status(500).json({ error: "Error reading database file" });
-//     }
-
-//     try {
-//       let db = JSON.parse(data);
-//       const user = db.users.find((u) => u.email === email);
-
-//       if (!user || !user.password) {
-//         return res.status(404).json({ error: "User not found or password missing" });
-//       }
-
-//       // ✅ Compare entered password with hashed password
-//       const match = await bcrypt.compare(password, user.password);
-//       if (match) {
-//         res.json({ message: "success", token: "your-jwt-token" }); // Replace with real JWT implementation
-//       } else {
-//         res.status(401).json({ error: "Invalid credentials" });
-//       }
-//     } catch (parseError) {
-//       console.error("Error parsing database file:", parseError);
-//       return res.status(500).json({ error: "Invalid JSON format in database file" });
-//     }
-//   });
-// };
-
-
-// exports.authenticate = async (req, res) => {
-//   const { email, password } = req.body;
-
-//   console.log("🔍 Authenticating user:", email);
-
-//   fs.readFile(DB_FILE, "utf8", async (err, data) => {
-//     if (err) {
-//       console.error("❌ Error reading database file:", err);
-//       return res.status(500).json({ error: "Error reading database file" });
-//     }
-
-//     try {
-//       const db = JSON.parse(data);
-
-//       // ✅ Find the user by email
-//       const user = db.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-
-//       if (!user || !user.password) {
-//         console.error("❌ Invalid email or password attempt for:", email);
-//         return res.status(401).json({ error: "Invalid email or password" });
-//       }
-
-//       // ✅ Compare entered password with stored hashed password
-//       const match = await bcrypt.compare(password, user.password);
-//       if (!match) {
-//         console.error("❌ Incorrect password for:", email);
-//         return res.status(401).json({ error: "Invalid email or password" });
-//       }
-
-//       console.log("✅ Login successful:", email);
-
-//       // ✅ Generate a dummy token (Replace with JWT in production)
-//       const token = "your-jwt-token";
-
-//       res.json({ message: "success", token, email });
-//     } catch (parseError) {
-//       console.error("❌ Error parsing database file:", parseError);
-//       return res.status(500).json({ error: "Invalid JSON format in database file" });
-//     }
-//   });
-// };
 
 exports.authenticate = async (req, res) => {
   const { email, password } = req.body;
+  console.log("🔍 Login attempt for:", email);
 
   fs.readFile(DB_FILE, "utf8", async (err, data) => {
-    if (err) {
-      console.error("Error reading database file:", err);
-      return res.status(500).json({ error: "Error reading database file" });
-    }
-
-    try {
-      const db = JSON.parse(data);
-      const user = db.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-
-      if (!user || !user.password) {
-        return res.status(401).json({ error: "Invalid email or password" });
+      if (err) {
+          console.error("❌ Error reading database file:", err);
+          return res.status(500).json({ error: "Error reading database file" });
       }
 
-      // ✅ Compare entered password with stored hashed password
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        return res.status(401).json({ error: "Invalid email or password" });
-      }
+      try {
+          const db = JSON.parse(data);
+          const user = db.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
 
-      // ✅ Return admin status along with authentication success
-      res.json({ message: "success", token: "your-jwt-token", admin: user.admin });
-    } catch (parseError) {
-      console.error("Error parsing database file:", parseError);
-      return res.status(500).json({ error: "Invalid JSON format in database file" });
-    }
+          if (!user) {
+              console.error("❌ User not found:", email);
+              return res.status(401).json({ error: "Invalid email or password" });
+          }
+
+          console.log("✅ Found user:", user);
+
+          if (!user.password) {
+              console.error("❌ No password stored for user:", email);
+              return res.status(401).json({ error: "Invalid email or password" });
+          }
+
+          console.log("🔍 Hashed password in database:", user.password);
+          console.log("🔍 Password entered by user:", password);
+
+          const match = await bcrypt.compare(password, user.password);
+          console.log("🔍 Password match result:", match);
+
+          if (!match) {
+              console.error("❌ Incorrect password for:", email);
+              return res.status(401).json({ error: "Invalid email or password" });
+          }
+
+          console.log("✅ Login successful:", email);
+
+          res.json({ message: "success", token: "your-jwt-token", admin: user.admin });
+      } catch (parseError) {
+          console.error("❌ Error parsing database file:", parseError);
+          return res.status(500).json({ error: "Invalid JSON format in database file" });
+      }
   });
 };
+
 
 // ✅ Get all users
 exports.findAll = (req, res) => {

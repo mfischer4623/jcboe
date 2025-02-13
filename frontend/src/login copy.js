@@ -19,7 +19,7 @@ const Login = ({ setLoggedIn, setEmail }) => {
 
   const navigate = useNavigate();
 
-  const onButtonClick = async () => {
+  const onButtonClick = () => {
     setEmailError("");
     setPasswordError("");
 
@@ -33,29 +33,28 @@ const Login = ({ setLoggedIn, setEmail }) => {
       return;
     }
 
-    try {
-      const response = await fetch("https://as400.jcboe.org:5000/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("user", JSON.stringify({ email, admin: data.admin }));
-        setLoggedIn(true);
+    fetch("https://as400.jcboe.org:3080/auth", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message === 'success') {
+        localStorage.setItem("user", JSON.stringify({ email, token: data.token }));
+        setLoggedIn(true);  // ✅ Updating loggedIn in App.js
         setEmail(email);
         navigate("/employeeSearch");
       } else {
         setEmailError("Invalid email or password");
-        setLoggedIn(false);
+        setLoggedIn(false);  // ✅ Ensure failed login sets loggedIn to false
       }
-    } catch (error) {
+    })
+    .catch(error => {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");
-      setLoggedIn(false);
-    }
+      setLoggedIn(false);  // ✅ Ensure failed login sets loggedIn to false
+    });
   };
 
   return (
