@@ -1,9 +1,9 @@
 # jcboe
 
 (1) cd auth-server
-    node app.js
+    node server.js
 
-    Server is running on port 3080
+    Server is running on port 5000
 
 (2) cd backend
     node server.js
