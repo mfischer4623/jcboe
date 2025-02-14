@@ -93,13 +93,15 @@ function App() {
 
     fetch("https://as400.jcboe.org:5000/verify", {
       method: "POST",
-      headers: { "jwt-token": user.token },
+      headers: { "Content-Type": "application/json", "jwt-token": user.token },
     })
       .then((r) => r.json())
       .then((r) => {
-        setLoggedIn("success" === r.message);
-        setEmail(user.email || "");
-      });
+        setLoggedIn(r.message === "success");
+        setEmail(r.email || "");
+      })
+      .catch(() => setLoggedIn(false));
+
   }, []);
 
   return (
