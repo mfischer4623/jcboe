@@ -33,7 +33,6 @@ const ShowAttendance = (props) => {
     useEffect(() => {
         if (!loggedIn) {
             localStorage.removeItem("user");
-            // props.setLoggedIn(false);
             navigate("/");
             return;
         }
@@ -56,6 +55,7 @@ const ShowAttendance = (props) => {
                 }
 
                 const resData = await response.json();
+                console.log("Fetched Attendance Data:", resData); // ✅ Debugging
                 setLocalAttendanceData(resData);
                 if (typeof setAttendanceData === "function") {
                     setAttendanceData(resData);
@@ -102,7 +102,7 @@ const ShowAttendance = (props) => {
         }, 1000);
     };
 
-    const filteredAndSortedAttendance = (Array.isArray(adl) ? adl : [])
+    const filteredAndSortedAttendance = (Array.isArray(attendanceData) ? attendanceData : [])
         .filter((entry) => {
             return (
                 (filterJobCode === "" || (entry.HAJOB && entry.HAJOB.toString().includes(filterJobCode))) &&

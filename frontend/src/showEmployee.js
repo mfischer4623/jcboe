@@ -93,10 +93,15 @@ const ShowEmployee = (props) => {
             window.removeEventListener('scroll', handleScroll);
         };
 
-
-
     }, [loggedIn, employeeNumber, navigate, setEmployeeData]);
-
+    
+    useEffect(() => {
+        if (ed) {
+            const empNameX = `${ed?.EMLNAM}, ${ed?.EMFNAM} ${ed?.EMMNAM}`;
+            setEmpName(empNameX);
+            setSsn(ed?.EMPSSN);
+        }
+    }, [ed, setEmpName, setSsn]);    
 
     if (isLoading) {
         return (
@@ -120,14 +125,6 @@ const ShowEmployee = (props) => {
     if (ed.EMMNAM == null) {
         ed.EMMNAM = " "
     }
-
-    if (ed) {
-        var empNameX = ed?.EMLNAM + ', ' + ed?.EMFNAM + ' ' + ed?.EMMNAM;
-        setEmpName(empNameX);
-        setSsn(ed?.EMPSSN);
-    }
-
-
 
     function normalize(phone) {
         //normalize string and remove all unnecessary characters
