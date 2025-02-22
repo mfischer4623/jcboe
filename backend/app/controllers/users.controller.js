@@ -1,4 +1,3 @@
-
 const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcryptjs");
@@ -59,7 +58,6 @@ exports.authenticate = async (req, res) => {
   });
 };
 
-
 // ✅ Get all users
 exports.findAll = (req, res) => {
   fs.readFile(DB_FILE, "utf8", (err, data) => {
@@ -111,38 +109,6 @@ exports.create = async (req, res) => {
   }
 };
 
-// ✅ Update an existing user (Hash new password if provided)
-// exports.update = async (req, res) => {
-//   const { email } = req.params;
-//   const { password } = req.body;
-
-//   fs.readFile(DB_FILE, "utf8", async (err, data) => {
-//     if (err) return res.status(500).json({ error: "Error reading database file" });
-
-//     try {
-//       let db = JSON.parse(data);
-//       const userIndex = db.users.findIndex((user) => user.email === email);
-
-//       if (userIndex === -1) {
-//         return res.status(404).json({ error: "User not found" });
-//       }
-
-//       if (password) {
-//         db.users[userIndex].password = await bcrypt.hash(password, 10);
-//       }
-
-//       fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), (writeErr) => {
-//         if (writeErr) return res.status(500).json({ error: "Error updating user" });
-//         res.json({ success: true, user: { email } });
-//       });
-//     } catch (parseError) {
-//       console.error("Error parsing database file:", parseError);
-//       return res.status(500).json({ error: "Invalid JSON format in database file" });
-//     }
-//   });
-// };
-
-
 exports.update = async (req, res) => {
   const { email } = req.params;
   const { password, admin } = req.body;
@@ -189,9 +155,6 @@ exports.update = async (req, res) => {
     }
   });
 };
-
-
-
 
 // ✅ Delete a user by email
 exports.delete = (req, res) => {
