@@ -23,11 +23,16 @@ if (!SECRET_KEY) {
     process.exit(1); // Stop execution if key is missing
 }
 
-// Load user data
-const usersData = JSON.parse(fs.readFileSync("./database.json", "utf-8"));
-
 // ✅ Authentication Route (Login)
 app.post("/auth", async (req, res) => {
+    // Read the database file each time this endpoint is invoked.
+    let usersData;
+    try {
+        usersData = JSON.parse(fs.readFileSync("./database.json", "utf-8"));
+    } catch (error) {
+        return res.status(500).json({ message: "Error reading user data." });
+    }
+
     const { email, password } = req.body;
     const user = usersData.users.find(user => user.email === email);
     if (!user) return res.status(401).json({ message: "Invalid email or password" });
