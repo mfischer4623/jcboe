@@ -138,18 +138,20 @@ const ShowPayrollCheck = (props) => {
     return (
         <div className="mainContainer">
             <div className="titleContainer">
-                <div>Payroll Check</div>
+                <h2>Payroll Check</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
             </div>
             <br />
             <div className="attTableContainer">
                 <table>
                     <thead className="thatt">
-                        <tr>
+                        {/* <tr>
                             <th colSpan="6">Employee Number: {employeeNumber}</th>
                         </tr>
                         <tr>
                             <th colSpan="6">Employee Name: {empName}</th>
-                        </tr>
+                        </tr> */}
                         {payrollCheckHeaderFormatted()}
                         <tr>
                             <th colSpan="6">

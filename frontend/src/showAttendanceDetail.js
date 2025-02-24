@@ -97,6 +97,8 @@ const ShowAttendance = (props) => {
     <div className="mainContainer">
       <div className="titleContainer">
         <h2>Attendance Details</h2>
+        <h4>Employee Name: {empName}</h4>
+        <h4>Employee Number: {employeeNumber}</h4>
       </div>
       <br />
 
@@ -134,39 +136,39 @@ const ShowAttendance = (props) => {
       <TableContainer component={Paper} style={{ marginTop: "20px", width: "50%" }}>
         <Table>
           <TableHead sx={{ backgroundColor: "#865d36", color: "white" }}>
-            <TableRow>
-              <TableCell colSpan={4} sx={{ color: "white", fontSize: "20px", textAlign: "center","&:hover": { color: "#FFD700" }  }}>
+            {/* <TableRow>
+              <TableCell colSpan={4} sx={{ color: "white", fontSize: "20px", textAlign: "center", "&:hover": { color: "#FFD700" } }}>
                 <b>Employee: {empName}</b>
               </TableCell>
-            </TableRow>
+            </TableRow> */}
             <TableRow>
               <TableCell
                 sx={{ color: "white" }}
                 sortDirection={orderBy === "TMLLOC" ? order : false}
               >
                 <TableSortLabel
-                 sx={{"&:hover": { color: "#FFD700" } }}
+                  sx={{ "&:hover": { color: "#FFD700" } }}
                   active={orderBy === "TMLLOC"}
                   direction={orderBy === "TMLLOC" ? order : "asc"}
                   onClick={() => handleRequestSort("TMLLOC")}
                 >
-                 <b>Location Code</b> 
+                  <b>Location Code</b>
                 </TableSortLabel>
               </TableCell>
               <TableCell
-                sx={{ color: "white"}}
+                sx={{ color: "white" }}
                 sortDirection={orderBy === "TMLDAT" ? order : false}
               >
                 <TableSortLabel
-                 sx={{"&:hover": { color: "#FFD700" } }}
+                  sx={{ "&:hover": { color: "#FFD700" } }}
                   active={orderBy === "TMLDAT"}
                   direction={orderBy === "TMLDAT" ? order : "asc"}
                   onClick={() => handleRequestSort("TMLDAT")}
                 >
-                 <b>Absence Date</b> 
+                  <b>Absence Date</b>
                 </TableSortLabel>
               </TableCell>
-              <TableCell sx={{ color: "white",  '&:hover': { color: '#FFD700' } }}><b>Absence Code</b></TableCell>
+              <TableCell sx={{ color: "white", '&:hover': { color: '#FFD700' } }}><b>Absence Code</b></TableCell>
               <TableCell sx={{ color: "white", "&:hover": { color: "#FFD700" } }}><b>Units</b></TableCell>
             </TableRow>
           </TableHead>

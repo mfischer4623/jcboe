@@ -41,6 +41,8 @@ const MiscData = (props) => {
             <div className="mainContainer">
                 <div className="titleContainer">
                     <h2>Additional Tags</h2>
+                    <h4>Employee Name: {empName}</h4>
+                    <h4>Employee Number: {employeeNumber}</h4>
                 </div>
                 <p>No miscellaneous data available for this employee.</p>
                 <div>Your email is {email}</div>
@@ -91,6 +93,8 @@ const MiscData = (props) => {
         <div className="mainContainer">
             <div className="titleContainer">
                 <h2>Additional Tags</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
             </div>
             <table>
                 <tbody>{miscDataFormatted}</tbody>

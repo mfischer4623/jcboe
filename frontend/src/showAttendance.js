@@ -18,7 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const ShowAttendance = (props) => {
-    const { loggedIn, email, employeeNumber, adl = [], setAttendanceData, setShowPrintView } = props;
+    const { loggedIn, email, employeeNumber, adl = [], setAttendanceData, empName, setShowPrintView } = props;
 
     const navigate = useNavigate();
     const [order, setOrder] = useState("asc");
@@ -124,6 +124,8 @@ const ShowAttendance = (props) => {
         <div className="mainContainer">
             <div className="titleContainer">
                 <h2>Attendance</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
             </div>
             <Toolbar>
                 <Typography sx={{ fontSize: "20px", marginRight: "20px" }}>

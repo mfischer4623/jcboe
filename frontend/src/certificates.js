@@ -41,13 +41,16 @@ const Certificates = (props) => {
 
     return (
         <div className={"mainContainer"}>
-            <div className={"titleContainer"}>Certificates</div>
-            <br />
+            <div className={"titleContainer"}>
+                <h2>Certificates</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
+            </div>
             <table>
-                <thead>
+                {/* <thead>
                     <tr><th colSpan="6">Employee Number: {employeeNumber}</th></tr>
                     <tr><th colSpan="6">Employee Name: {empName}</th></tr>
-                </thead>
+                </thead> */}
                 <tbody>
                     <tr>
                         <th>Certificate</th>

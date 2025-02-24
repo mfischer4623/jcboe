@@ -138,22 +138,14 @@ const ShowW2Details = (props) => {
     return (
         <div className="mainContainer">
             <div className="titleContainer">
-                <div>W2 Details</div>
+                <h2>W2 Details</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
+                <h4>Year: {W2CLYR}</h4>
             </div>
             <br />
             <div>
                 <table>
-                    <thead>
-                        <tr>
-                            <th colSpan="4">Employee Number: {employeeNumber}</th>
-                        </tr>
-                        <tr>
-                            <th colSpan="4">Employee Name: {empName}</th>
-                        </tr>
-                        <tr>
-                            <th colSpan="4">Form W2 {W2CLYR}</th>
-                        </tr>
-                    </thead>
                     {w2dFormatted}
                 </table>
             </div>

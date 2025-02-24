@@ -7,7 +7,7 @@ import {
 import "./showW2s.css";
 
 const ShowW2s = (props) => {
-    const { loggedIn, email, employeeNumber, ssn, w2s, setW2s, empName, setW2ID, w2ID, setShowPrintView , showPrintView } = props;
+    const { loggedIn, email, employeeNumber, ssn, w2s, setW2s, empName, setW2ID, w2ID, setShowPrintView, showPrintView } = props;
     const navigate = useNavigate();
 
     const [page, setPage] = useState(0);
@@ -63,7 +63,7 @@ const ShowW2s = (props) => {
             window.print();
             setShowPrintView(false); // Hide print view after printing
             // setExpanded(false);
-        }, 500);       
+        }, 500);
     };
 
     return (
@@ -73,13 +73,14 @@ const ShowW2s = (props) => {
                 Employee Number: {employeeNumber} <br />
                 Employee Name: {empName}
             </div>
-            <div className="titleContainer w2s-table">
-            
-                <div>W2s</div>
+            <div className="titleContainer">
+                <h2>W2s</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
             </div>
             <br />
-            <Paper >               
-                 <style>
+            <Paper >
+                <style>
                     {`
                     .headerCell {
                         color: white;
@@ -97,12 +98,12 @@ const ShowW2s = (props) => {
                 <TableContainer>
                     <Table>
                         <TableHead>
-                            <TableRow className="header-row headerRow">
+                            {/* <TableRow className="header-row headerRow">
                                 <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }} colSpan={7}>Employee Number: {employeeNumber}</TableCell>
                             </TableRow>
                             <TableRow className="header-row" style={{ backgroundColor: "#865d36" }}>
                                 <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }} colSpan={7}>Employee Name: {empName}</TableCell>
-                            </TableRow>
+                            </TableRow> */}
                             <TableRow style={{ backgroundColor: "#865d36" }}>
                                 <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>Tax</TableCell>
                                 <TableCell className="headerCell" sx={{ "&:hover": { color: "yellow" } }}>Federal</TableCell>
@@ -155,7 +156,7 @@ const ShowW2s = (props) => {
                 />
             </Paper>
             <br />
-            <Button  sx={{backgroundColor: 'rgb(134, 93, 54)','&:hover': {backgroundColor: 'black'}}} className="print-button" variant="contained" color="primary" onClick={handlePrint}>
+            <Button sx={{ backgroundColor: 'rgb(134, 93, 54)', '&:hover': { backgroundColor: 'black' } }} className="print-button" variant="contained" color="primary" onClick={handlePrint}>
                 Print
             </Button>
             <br />

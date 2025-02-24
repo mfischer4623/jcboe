@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const ShowVolDeductions = (props) => {
     const { loggedIn, email, employeeNumber, empName, vd = [], setVolDeductions, setShowPrintView, showPrintView } = props;
-    
+
     let holdYear = null;
     let first = true;
     let j = 99999;
@@ -15,7 +15,7 @@ const ShowVolDeductions = (props) => {
         setTimeout(() => {
             window.print();
             setShowPrintView(false);
-        }, 500);       
+        }, 500);
     };
 
     useEffect(() => {
@@ -91,17 +91,19 @@ const ShowVolDeductions = (props) => {
         <div className="mainContainer">
             <div className="titleContainer">
                 <h2>Voluntary Deductions</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
             </div>
             <br />
             <table>
-                <thead>
+                {/* <thead>
                     <tr>
                         <th colSpan="5">Employee Number: {employeeNumber}</th>
                     </tr>
                     <tr>
                         <th colSpan="5">Employee Name: {empName}</th>
                     </tr>
-                </thead>
+                </thead> */}
                 <tbody>
                     <tr>
                         <th>School Year Ending</th>

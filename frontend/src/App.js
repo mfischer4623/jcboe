@@ -181,6 +181,7 @@ function App() {
               employeeNumber={employeeNumber}
               adl={attendanceDataDetail}  // ✅ Pass this correctly
               setAttendanceData={setAttendanceData}
+              empName={empName}
             />
           } />
 

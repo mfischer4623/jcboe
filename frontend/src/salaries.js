@@ -63,7 +63,11 @@ const Salaries = (props) => {
 
     return (
         <div className="mainContainer">
-            <h2>Salaries</h2>
+            <div className="titleContainer">
+                <h2>Salaries</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
+            </div>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>

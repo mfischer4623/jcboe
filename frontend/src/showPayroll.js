@@ -92,18 +92,20 @@ const ShowPayroll = (props) => {
         <div className="mainContainer">
             <div className="titleContainer">
                 <h2>Payroll</h2>
+                <h4>Employee Name: {empName}</h4>
+                <h4>Employee Number: {employeeNumber}</h4>
             </div>
             <br />
             <div>
                 <table>
-                    <thead>
+                    {/* <thead>
                         <tr>
                             <th colSpan="4">Employee Number: {employeeNumber}</th>
                         </tr>
                         <tr>
                             <th colSpan="4">Employee Name: {empName}</th>
                         </tr>
-                    </thead>
+                    </thead> */}
                     <tbody>
                         <tr>
                             <td>Check Date</td>
