@@ -178,7 +178,7 @@ const ShowAttendance = (props) => {
                 <Table>
                     <TableHead sx={{ backgroundColor: "#865d36", color: "white" }}>
                         <TableRow>
-                            {["HAJOB", "HAABS", "HAFBBL", "HAFERN", "HAFUSE", "HABAL", "MEMBER"].map((col) => (
+                            {["Job Code", "Absence Type", "Begining Balance", "Earned", "Used", "Ending Balance", "Year"].map((col) => (
                                 <TableCell key={col} sx={{ fontSize: "20px", textAlign: "center" }}>
                                     <TableSortLabel
                                         active={orderBy === col}
