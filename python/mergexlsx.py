@@ -2,7 +2,7 @@ import pandas as pd
 import glob
 
 # Get all Excel files
-file_list = glob.glob(r"C:\Users\as400\Documents\Systems3000\Archive_System3000\Pay-output\excel files\*.xlsx")
+file_list = glob.glob(r"C:\Users\as400\Documents\Systems3000\Archive_System3000\Check Register\loaded\*.xlsx")
 
 
 # Read and concatenate all files
