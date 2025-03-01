@@ -1,157 +1,221 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('lacp441s', {
-    USG: {
+  return sequelize.define('payoutputs', {
+    emp_num: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    BUSY: {
+    firstname: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVEN: {
+    middleini: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHINV: {
+    lastname: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPOD: {
+    address1: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPON: {
+    address2: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPOV: {
+    city: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHREQ: {
+    state: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVCH: {
+    zip: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHIDT: {
+    suffix: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDDT: {
+    dept: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHIAC: {
+    gender: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVAC: {
+    hispanic: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDES: {
+    native_am: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHEBY: {
+    asian: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHECL: {
+    african_am: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHABY: {
+    pacisl_haw: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHACL: {
+    white: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPDT: {
+    smid: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHBCH: {
+    location: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APH109: {
+    hiredate: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHOAM: {
+    termdate: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPAM: {
+    lastsaldte: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDAM: {
+    abs_stat: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCDY: {
+    birthdate: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCOP: {
+    active: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCTN: {
+    phone: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHBNK: {
+    phone2: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHBAC: {
+    account1: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHFRM: {
+    account2: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCHK: {
+    account3: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCDT: {
+    account4: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCAM: {
+    account5: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHNAM: {
+    account6: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    member: {
+    account7: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    createdAt: {
-      type: DataTypes.DATEONLY,
+    account8: {
+      type: DataTypes.STRING(50),
       allowNull: true
     },
-    updatedAt: {
-      type: DataTypes.DATEONLY,
+    account9: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    account10: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    scname: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    jtcode: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    mode: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    workdays: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    long: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    salary: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    rate: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    rateunit: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    hours: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    ed_code: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    civilserv: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    active_s: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    active_e: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    deactive_s: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    'deactive_e                              ': {
+      type: DataTypes.STRING(50),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'lacp441s',
+    tableName: 'payoutputs',
     schema: 'dbo',
     timestamps: false,
     underscored: true

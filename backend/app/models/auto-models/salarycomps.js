@@ -1,157 +1,161 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('lacp441s', {
-    USG: {
+  return sequelize.define('salarycomps', {
+    ENUM: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    BUSY: {
+    SEQNO: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVEN: {
+    'Employee#': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHINV: {
+    'Last Name': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPOD: {
+    'First Name': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPON: {
+    'Middle Initial': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPOV: {
+    Location: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHREQ: {
+    Department: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVCH: {
+    'Tenured?': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHIDT: {
+    'Tenure Date': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDDT: {
+    EM_AVSDATE: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHIAC: {
+    'Job Title1': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVAC: {
+    'Job Title2': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDES: {
+    'Calculated Salary': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHEBY: {
+    'Calculated?': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHECL: {
+    'District Experience': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHABY: {
+    DISTRICT: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHACL: {
+    'Job Title3': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPDT: {
+    Definition: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHBCH: {
+    Year: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APH109: {
+    'FTE %': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHOAM: {
+    Amount: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPAM: {
+    Step: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDAM: {
+    'Active?': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCDY: {
+    Percentage: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCOP: {
+    'Run Amount': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCTN: {
+    ESC_HOURS: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHBNK: {
+    Mode: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHBAC: {
+    'Hire Date': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHFRM: {
+    'Birth Date': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCHK: {
+    'State Experience': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCDT: {
+    'Military Experience': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCAM: {
+    'Public Experience': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHNAM: {
+    'Other Experience': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    member: {
+    STEPDESC: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    createdAt: {
-      type: DataTypes.DATEONLY,
+    HOURRATE: {
+      type: DataTypes.STRING(50),
       allowNull: true
     },
-    updatedAt: {
-      type: DataTypes.DATEONLY,
+    REPORTYEAR: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    JT_WORKDAYS: {
+      type: DataTypes.STRING(50),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'lacp441s',
+    tableName: 'salarycomps',
     schema: 'dbo',
     timestamps: false,
     underscored: true

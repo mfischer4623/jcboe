@@ -135,7 +135,9 @@ var _PSTU350D = require("./PSTU350D");
 var _PSTU360D = require("./PSTU360D");
 var _SALACTXX = require("./SALACTXX");
 var _SALARYXX = require("./SALARYXX");
+var _checkregisters = require("./checkregisters");
 var _lacp441s = require("./lacp441s");
+var _payoutputs = require("./payoutputs");
 var _pcds801s = require("./pcds801s");
 var _peis301s = require("./peis301s");
 var _peis480ds = require("./peis480ds");
@@ -154,7 +156,11 @@ var _ppay802s = require("./ppay802s");
 var _ppur201s = require("./ppur201s");
 var _ppur301s = require("./ppur301s");
 var _ppur410hs = require("./ppur410hs");
+var _ratebases = require("./ratebases");
+var _s3000checkReports = require("./s3000checkReports");
+var _s3000payOutput = require("./s3000payOutput");
 var _salaries = require("./salaries");
+var _salarycomps = require("./salarycomps");
 
 function initModels(sequelize) {
   var PACP210 = _PACP210(sequelize, DataTypes);
@@ -293,7 +299,9 @@ function initModels(sequelize) {
   var PSTU360D = _PSTU360D(sequelize, DataTypes);
   var SALACTXX = _SALACTXX(sequelize, DataTypes);
   var SALARYXX = _SALARYXX(sequelize, DataTypes);
+  var checkregisters = _checkregisters(sequelize, DataTypes);
   var lacp441s = _lacp441s(sequelize, DataTypes);
+  var payoutputs = _payoutputs(sequelize, DataTypes);
   var pcds801s = _pcds801s(sequelize, DataTypes);
   var peis301s = _peis301s(sequelize, DataTypes);
   var peis480ds = _peis480ds(sequelize, DataTypes);
@@ -312,7 +320,11 @@ function initModels(sequelize) {
   var ppur201s = _ppur201s(sequelize, DataTypes);
   var ppur301s = _ppur301s(sequelize, DataTypes);
   var ppur410hs = _ppur410hs(sequelize, DataTypes);
+  var ratebases = _ratebases(sequelize, DataTypes);
+  var s3000checkReports = _s3000checkReports(sequelize, DataTypes);
+  var s3000payOutput = _s3000payOutput(sequelize, DataTypes);
   var salaries = _salaries(sequelize, DataTypes);
+  var salarycomps = _salarycomps(sequelize, DataTypes);
 
 
   return {
@@ -452,7 +464,9 @@ function initModels(sequelize) {
     PSTU360D,
     SALACTXX,
     SALARYXX,
+    checkregisters,
     lacp441s,
+    payoutputs,
     pcds801s,
     peis301s,
     peis480ds,
@@ -471,7 +485,11 @@ function initModels(sequelize) {
     ppur201s,
     ppur301s,
     ppur410hs,
+    ratebases,
+    s3000checkReports,
+    s3000payOutput,
     salaries,
+    salarycomps,
   };
 }
 module.exports = initModels;

@@ -1,159 +1,162 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('lacp441s', {
-    USG: {
+module.exports = (sequelize, Sequelize) => {
+  const S3000payOutput = sequelize.define("s3000payOutput", {
+    emp_num: {
+      type: DataTypes.SMALLINT,
+      allowNull: true
+    },
+    firstname: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    BUSY: {
+    middleini: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVEN: {
+    lastname: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHINV: {
+    address1: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPOD: {
+    address2: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPON: {
+    city: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPOV: {
+    state: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHREQ: {
+    zip: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVCH: {
+    suffix: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHIDT: {
+    dept: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDDT: {
+    gender: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHIAC: {
+    hispanic: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    native_am: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    asian: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    african_am: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    pacisl_haw: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHVAC: {
+    white: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    smid: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    location: {
+      type: DataTypes.SMALLINT,
+      allowNull: true
+    },
+    hiredate: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDES: {
+    termdate: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHEBY: {
+    lastsaldte: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHECL: {
+    abs_stat: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHABY: {
+    birthdate: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHACL: {
+    active: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPDT: {
+    phone: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHBCH: {
+    phone2: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APH109: {
+    account1: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    scname: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHOAM: {
+    jtcode: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHPAM: {
+    mode: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHDAM: {
+    workdays: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCDY: {
+    long: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    salary: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    APHCOP: {
-      type: DataTypes.STRING(50),
+    rate: {
+      type: DataTypes.TINYINT,
       allowNull: true
     },
-    APHCTN: {
-      type: DataTypes.STRING(50),
+    rateunit: {
+      type: DataTypes.STRING(1),
       allowNull: true
     },
-    APHBNK: {
-      type: DataTypes.STRING(50),
+    hours: {
+      type: DataTypes.FLOAT,
       allowNull: true
     },
-    APHBAC: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    APHFRM: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    APHCHK: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    APHCDT: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    APHCAM: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    APHNAM: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    member: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    createdAt: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    updatedAt: {
-      type: DataTypes.DATEONLY,
+    ed_code: {
+      type: DataTypes.SMALLINT,
       allowNull: true
     }
-  }, {
-    sequelize,
-    tableName: 'lacp441s',
-    schema: 'dbo',
-    timestamps: false,
-    underscored: true
   });
-};
+ 
+    return S3000payOutput;
+  };
