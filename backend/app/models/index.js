@@ -39,4 +39,7 @@ db.purchaseOrders = require("./purchaseOrders.model.js")(sequelize, Sequelize);
 db.ppur301s = require("./ppur301s.model.js")(sequelize, Sequelize);
 db.lacp441s = require("./lacp441s.model.js")(sequelize, Sequelize);
 
+db.s3000checkReports = require("./s3000checkReports.model.js")(sequelize, Sequelize);
+db.s3000payOutput = require("./s3000payOutput.model.js")(sequelize, Sequelize);
+
 module.exports = db;
