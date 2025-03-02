@@ -33,6 +33,7 @@ import ShowPO from "./showPO";
 import ShowPurchaseOrder from "./showPurchaseOrder";
 import CheckSearch from "./checkSearch"
 import ShowCheck from "./showCheck";
+import S3000EmpSrch from "./s3000EmpSrch";
 
 
 import "./App.css";
@@ -54,6 +55,7 @@ function App() {
   const [alc, setAbsenceLeaveCodes] = useState([]);
   const [employeeData, setEmployeeData] = useState(null);
   const [ssn, setSsn] = useState("");
+  const [attendanceData, setAttendanceData] = useState([]);
   const [attendanceDataDetail, setAttendanceDataDetail] = useState([]);
   const [miscData, setMiscData] = useState([]);
   const [certificatesData, setCertificates] = useState([]);
@@ -69,8 +71,6 @@ function App() {
   const [vendorData, setVendorData] = useState(null);
   const [poFromVendor, setPoFromVendor] = useState([]);
   const [pod, setShowPurchaseOrder] = useState([]);
-  const [attendanceData, setAttendanceData] = useState([]);
-
 
   const [aphbnk, setAphbnk] = useState("")
   const [aphbac, setAphbac] = useState("")
@@ -126,6 +126,7 @@ function App() {
             />
           } />
 
+
           <Route path="/employeeName" element={
             <EmployeeName loggedIn={loggedIn} email={email} setEmployeeNumber={setEmployeeNumber} employeeName={employeeName} es={es}
               setEmployeeNames={setEmployeeNames} />
@@ -138,6 +139,9 @@ function App() {
               setSsn={setSsn} // ✅ Ensure this is passed
             />
           } />
+
+           {/* ✅ S3000 Employee Routes */}
+          <Route path="/s3000EmpSrch" element={<S3000EmpSrch />} />
 
           {/* ✅ W2 Routes */}
           <Route path="/showW2s" element={

@@ -25,6 +25,8 @@ const controllers = {
   ppur301s: require("../controllers/ppur301s.controller.js"),
   lacp441s: require("../controllers/lacp441s.controller.js"),
   pofromvendor: require("../controllers/pofromvendor.controller.js"),
+  // New controller for employee search
+  s3000EmpSrch: require("../controllers/s3000EmpSrch.controller.js")
 };
 
 // 🚀 Log missing controllers for debugging
@@ -92,6 +94,12 @@ safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOn
 // ✅ Employee Routes
 safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");
 safeRoute("get", "/:id", controllers.employees.findOne, "employees.findOne");
+
+// ✅ Employee Search Routes
+// GET /s3000EmpSrch/:emp_num - Fetch employee by number (returns 404 if not found)
+safeRoute("get", "/s3000EmpSrch/:emp_num", controllers.s3000EmpSrch.findByEmpNum, "s3000EmpSrch.findByEmpNum");
+// GET /s3000EmpSrch?name=lastname - Fetch employee(s) by last name (404 if none found)
+safeRoute("get", "/s3000EmpSrch", controllers.s3000EmpSrch.findByLastName, "s3000EmpSrch.findByLastName");
 
 // ✅ Attach router to the app
 module.exports = (app) => {
