@@ -10,7 +10,7 @@ const S3000EmpSrch = () => {
     // Fetch employee by number
     const onSearchByNumber = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/employees/${employeeNumber}`);
+            const response = await fetch(`https://as400.jcboe.org:8080/api/employees/s3000EmpSrch/${employeeNumber}`);
             if (!response.ok) throw new Error("Employee not found");
             const data = await response.json();
             setEmployeeData(data);
@@ -23,7 +23,7 @@ const S3000EmpSrch = () => {
     // Fetch employees by last name
     const onSearchByName = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/employees?name=${employeeName}`);
+            const response = await fetch(`https://as400.jcboe.org:8080/api/employees/s3000EmpSrch?name=${employeeName}`);
             if (!response.ok) throw new Error("No employees found");
             const data = await response.json();
             setEmployees(data);

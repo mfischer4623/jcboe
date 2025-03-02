@@ -91,15 +91,16 @@ safeRoute("get", "/lacp441s/", controllers.lacp441s.findAll, "lacp441s.findAll")
 safeRoute("get", "/ppur301s/", controllers.ppur301s.findAll, "ppur301s.findAll");
 safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOne");
 
+// ✅ Employee Search Routes
+// GET /s3000EmpSrch/:emp_num - Fetch employee by number (returns 404 if not found)
+safeRoute("get", "/s3000EmpSrch/:emp_num", controllers.s3000EmpSrch.findOne, "s3000EmpSrch.findOne");
+// GET /s3000EmpSrch?name=lastname - Fetch employee(s) by last name (404 if none found)
+safeRoute("get", "/s3000EmpSrch", controllers.s3000EmpSrch.findAll, "s3000EmpSrch.findAll");
+
 // ✅ Employee Routes
 safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");
 safeRoute("get", "/:id", controllers.employees.findOne, "employees.findOne");
 
-// ✅ Employee Search Routes
-// GET /s3000EmpSrch/:emp_num - Fetch employee by number (returns 404 if not found)
-safeRoute("get", "/s3000EmpSrch/:emp_num", controllers.s3000EmpSrch.findByEmpNum, "s3000EmpSrch.findByEmpNum");
-// GET /s3000EmpSrch?name=lastname - Fetch employee(s) by last name (404 if none found)
-safeRoute("get", "/s3000EmpSrch", controllers.s3000EmpSrch.findByLastName, "s3000EmpSrch.findByLastName");
 
 // ✅ Attach router to the app
 module.exports = (app) => {

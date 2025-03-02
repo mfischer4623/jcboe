@@ -1,162 +1,170 @@
-module.exports = (sequelize, Sequelize) => {
-  const S3000payOutput = sequelize.define("s3000payOutput", {
-    emp_num: {
-      type: Sequelize.SMALLINT,
-      allowNull: true
-    },
-    firstname: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    middleini: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    lastname: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    address1: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    address2: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    city: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    state: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    zip: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    suffix: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    dept: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    gender: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    hispanic: {
-      type: Sequelize.BOOLEAN,
-      allowNull: true
-    },
-    native_am: {
-      type: Sequelize.BOOLEAN,
-      allowNull: true
-    },
-    asian: {
-      type: Sequelize.BOOLEAN,
-      allowNull: true
-    },
-    african_am: {
-      type: Sequelize.BOOLEAN,
-      allowNull: true
-    },
-    pacisl_haw: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    white: {
-      type: Sequelize.BOOLEAN,
-      allowNull: true
-    },
-    smid: {
-      type: Sequelize.INTEGER,
-      allowNull: true
-    },
-    location: {
-      type: Sequelize.SMALLINT,
-      allowNull: true
-    },
-    hiredate: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    termdate: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    lastsaldte: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    abs_stat: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    birthdate: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    active: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    phone: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    phone2: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    account1: {
-      type: Sequelize.FLOAT,
-      allowNull: true
-    },
-    scname: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    jtcode: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    mode: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    workdays: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    long: {
-      type: Sequelize.FLOAT,
-      allowNull: true
-    },
-    salary: {
-      type: Sequelize.STRING(50),
-      allowNull: true
-    },
-    rate: {
-      type: Sequelize.TINYINT,
-      allowNull: true
-    },
-    rateunit: {
-      type: Sequelize.STRING(1),
-      allowNull: true
-    },
-    hours: {
-      type: Sequelize.FLOAT,
-      allowNull: true
-    },
-    ed_code: {
-      type: Sequelize.SMALLINT,
-      allowNull: true
-    }
-  });
- 
-    return S3000payOutput;
-  };
+module.exports = (sequelize, DataTypes) => {
+
+const S3000payOutput = sequelize.define("S3000payOutput", {
+  emp_num: {
+    type: DataTypes.SMALLINT,
+    allowNull: false,          // ✅ Primary keys should not be NULL
+    primaryKey: true           // ✅ Explicitly mark as primary key
+  },
+  firstname: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  middleini: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  lastname: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  address1: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  address2: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  city: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  state: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  zip: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  suffix: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  dept: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  gender: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  hispanic: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
+  native_am: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
+  asian: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
+  african_am: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
+  pacisl_haw: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  white: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
+  smid: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  location: {
+    type: DataTypes.SMALLINT,
+    allowNull: true
+  },
+  hiredate: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  termdate: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  lastsaldte: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  abs_stat: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  birthdate: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  active: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  phone: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  phone2: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  account1: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
+  scname: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  jtcode: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  mode: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  workdays: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  long: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
+  salary: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  rate: {
+    type: DataTypes.TINYINT,
+    allowNull: true
+  },
+  rateunit: {
+    type: DataTypes.STRING(1),
+    allowNull: true
+  },
+  hours: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
+  ed_code: {
+    type: DataTypes.SMALLINT,
+    allowNull: true
+  },
+  // (Other fields remain unchanged)
+}, {
+  freezeTableName: true, // 👈 Prevents Sequelize from pluralizing the table name
+  tableName: "s3000payOutput",  // ✅ Ensure Sequelize uses the correct table name
+  timestamps: false,  // ✅ Disables auto `createdAt` and `updatedAt` columns
+  id: false  // ✅ Prevents Sequelize from expecting an `id` column
+});
+
+return S3000payOutput;
+};
