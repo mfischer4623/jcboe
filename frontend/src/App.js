@@ -34,7 +34,7 @@ import ShowPurchaseOrder from "./showPurchaseOrder";
 import CheckSearch from "./checkSearch"
 import ShowCheck from "./showCheck";
 import S3000EmpSrch from "./s3000EmpSrch";
-
+import S3000EmpName from "./s3000EmpName";
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -84,6 +84,10 @@ function App() {
   const [acc, setAddendaCodes] = useState([]);
   const [scd, setCheckData] = useState([])
 
+  const [s3000EmployeeNames, setS3000EmployeeNames] = useState([]);
+  const [s3000EmployeeNumber, setS3000EmployeeNumber] = useState("");
+
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.token) {
@@ -116,6 +120,22 @@ function App() {
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/main" element={<Main loggedIn={loggedIn} />} />
+
+          <Route path="/s3000EmpSrch" element={
+            <S3000EmpSrch
+              setEmployeeNames={setS3000EmployeeNames}
+              setEmployeeNumber={setS3000EmployeeNumber}
+            />}
+          />
+
+          <Route path="/s3000EmpName" element={
+            <S3000EmpName
+              setEmployeeNumber={setS3000EmployeeNumber}
+              employeeName={employeeName}
+              s3000EmployeeNames={s3000EmployeeNames}
+              s3000EmployeeNumber={s3000EmployeeNumber}
+            />}
+          />
 
           {/* ✅ Employee Routes */}
           <Route path="/employeeSearch" element={
@@ -186,6 +206,7 @@ function App() {
               adl={attendanceDataDetail}  // ✅ Pass this correctly
               setAttendanceData={setAttendanceData}
               empName={empName}
+              attendanceData={attendanceData}
             />
           } />
 

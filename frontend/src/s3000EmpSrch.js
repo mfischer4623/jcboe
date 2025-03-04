@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Container, Box, Typography, TextField, Button, Paper } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const S3000EmpSrch = () => {
-    const [employeeNumber, setEmployeeNumber] = useState("");
+const S3000EmpSrch = (props) => {
+    const { setEmployeeNames, setEmployeeNumber } = props;
+    const [employeeNumber, setLocalEmployeeNumber] = useState("");
     const [employeeName, setEmployeeName] = useState("");
-    const [employeeData, setEmployeeData] = useState(null);
-    const [employees, setEmployees] = useState([]);
+    const navigate = useNavigate();
 
     // Fetch employee by number
     const onSearchByNumber = async () => {
@@ -13,7 +14,8 @@ const S3000EmpSrch = () => {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/s3000EmpSrch/${employeeNumber}`);
             if (!response.ok) throw new Error("Employee not found");
             const data = await response.json();
-            setEmployeeData(data);
+            setEmployeeNumber(employeeNumber);
+            navigate("/showEmployee");
         } catch (error) {
             console.error("Error fetching employee:", error);
             alert("Employee not found");
@@ -26,7 +28,12 @@ const S3000EmpSrch = () => {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/s3000EmpSrch?name=${employeeName}`);
             if (!response.ok) throw new Error("No employees found");
             const data = await response.json();
-            setEmployees(data);
+            setEmployeeNames(data);
+            if (data.length > 0) {
+                navigate("/s3000EmpName");
+            } else {
+                alert("No employees found with that last name.");
+            }
         } catch (error) {
             console.error("Error fetching employees:", error);
             alert("No employees found");
@@ -47,7 +54,7 @@ const S3000EmpSrch = () => {
                         variant="outlined"
                         label="Employee Number"
                         value={employeeNumber}
-                        onChange={(e) => setEmployeeNumber(e.target.value)}
+                        onChange={(e) => setLocalEmployeeNumber(e.target.value)}
                     />
                     <Button fullWidth variant="contained" sx={{ mt: 2 }} onClick={onSearchByNumber}>
                         Search by Employee Number
@@ -67,29 +74,6 @@ const S3000EmpSrch = () => {
                         Search by Last Name
                     </Button>
                 </Box>
-
-                {/* Display Employee Data */}
-                {employeeData && (
-                    <Box mt={2} p={2} bgcolor="lightgray">
-                        <Typography variant="h6">Employee Details</Typography>
-                        <Typography>Emp Num: {employeeData.emp_num}</Typography>
-                        <Typography>Name: {employeeData.firstname} {employeeData.lastname}</Typography>
-                        <Typography>Department: {employeeData.dept}</Typography>
-                        <Typography>Phone: {employeeData.phone}</Typography>
-                    </Box>
-                )}
-
-                {/* Display Multiple Employees Found */}
-                {employees.length > 0 && (
-                    <Box mt={2}>
-                        <Typography variant="h6">Matching Employees</Typography>
-                        {employees.map((emp) => (
-                            <Box key={emp.emp_num} p={1} bgcolor="lightgray" mb={1}>
-                                {emp.firstname} {emp.lastname} (Emp Num: {emp.emp_num})
-                            </Box>
-                        ))}
-                    </Box>
-                )}
             </Paper>
         </Container>
     );
