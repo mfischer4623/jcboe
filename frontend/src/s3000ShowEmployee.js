@@ -22,8 +22,7 @@ const S3000ShowEmployee = ({ s3000EmployeeNumber }) => {
                 if (!response.ok) throw new Error("Employee not found");
                 const data = await response.json();
                 setEmployeeData(data);
-                console.log(employeeData)
-                console.log(data)
+                // console.log(data)
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -59,7 +58,7 @@ const S3000ShowEmployee = ({ s3000EmployeeNumber }) => {
                     <Button variant="contained" color="secondary" onClick={() => navigate("/s3000EmpSrch")}>
                         BACK
                     </Button>
-                    <Button variant="contained" color="primary" onClick={() => navigate("/s3000ShowPayments")}>
+                    <Button variant="contained" color="primary" onClick={() => navigate(`/s3000ShowPayments/${s3000EmployeeNumber}`)}>
                         SHOW PAYMENTS
                     </Button>
                 </Box>
