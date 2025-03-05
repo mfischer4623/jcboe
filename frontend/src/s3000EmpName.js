@@ -19,7 +19,7 @@ const S3000EmpName = (props) => {
     const employeeSelected = (key) => {
         setS3000EmployeeNumber(key);
         console.log("Fetched employee number:", key);
-        navigate("/s3000showEmployee");
+        navigate("/s3000ShowEmployee");
     };
 
     const handleChangePage = (event, newPage) => {

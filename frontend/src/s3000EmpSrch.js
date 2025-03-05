@@ -16,7 +16,7 @@ const S3000EmpSrch = (props) => {
             const data = await response.json();
             setS3000EmployeeNumber(data.emp_num);
             console.log("Fetched employee number:", data.emp_num);
-            navigate("/s3000showEmployee");
+            navigate("/s3000ShowEmployee");
         } catch (error) {
             console.error("Error fetching employee:", error);
             alert("Employee not found");

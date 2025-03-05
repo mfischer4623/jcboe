@@ -35,6 +35,7 @@ import CheckSearch from "./checkSearch"
 import ShowCheck from "./showCheck";
 import S3000EmpSrch from "./s3000EmpSrch";
 import S3000EmpName from "./s3000EmpName";
+import S3000ShowEmployee from "./s3000ShowEmployee"
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -137,6 +138,8 @@ function App() {
               s3000EmployeeName={s3000EmployeeName}
             />}
           />
+
+          <Route path="/s3000showEmployee" element={<S3000ShowEmployee s3000EmployeeNumber={s3000EmployeeNumber} />} />
 
           {/* ✅ Employee Routes */}
           <Route path="/employeeSearch" element={
