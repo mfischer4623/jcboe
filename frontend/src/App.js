@@ -84,6 +84,7 @@ function App() {
   const [acc, setAddendaCodes] = useState([]);
   const [scd, setCheckData] = useState([])
 
+  const [s3000EmployeeName, setS3000EmployeeName] = useState("");
   const [s3000EmployeeNames, setS3000EmployeeNames] = useState([]);
   const [s3000EmployeeNumber, setS3000EmployeeNumber] = useState("");
 
@@ -123,17 +124,17 @@ function App() {
 
           <Route path="/s3000EmpSrch" element={
             <S3000EmpSrch
-              setEmployeeNames={setS3000EmployeeNames}
-              setEmployeeNumber={setS3000EmployeeNumber}
+              setS3000EmployeeNames={setS3000EmployeeNames}
+              setS3000EmployeeNumber={setS3000EmployeeNumber}
+              setS3000EmployeeName={setS3000EmployeeName}
             />}
           />
 
           <Route path="/s3000EmpName" element={
             <S3000EmpName
-              setEmployeeNumber={setS3000EmployeeNumber}
-              employeeName={employeeName}
+              setS3000EmployeeNumber={setS3000EmployeeNumber}
               s3000EmployeeNames={s3000EmployeeNames}
-              s3000EmployeeNumber={s3000EmployeeNumber}
+              s3000EmployeeName={s3000EmployeeName}
             />}
           />
 

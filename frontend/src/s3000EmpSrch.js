@@ -3,9 +3,9 @@ import { Container, Box, Typography, TextField, Button, Paper } from "@mui/mater
 import { useNavigate } from "react-router-dom";
 
 const S3000EmpSrch = (props) => {
-    const { setEmployeeNames, setEmployeeNumber } = props;
-    const [employeeNumber, setLocalEmployeeNumber] = useState("");
-    const [employeeName, setEmployeeName] = useState("");
+    const { setS3000EmployeeNames, setS3000EmployeeNumber, setS3000EmployeeName } = props;
+    const [employeeNumber, setLocalEmployeeNumber] = useState('');
+    const [employeeName, setLocalEmployeeName] = useState([]);
     const navigate = useNavigate();
 
     // Fetch employee by number
@@ -14,8 +14,9 @@ const S3000EmpSrch = (props) => {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/s3000EmpSrch/${employeeNumber}`);
             if (!response.ok) throw new Error("Employee not found");
             const data = await response.json();
-            setEmployeeNumber(employeeNumber);
-            navigate("/showEmployee");
+            setS3000EmployeeNumber(data.emp_num);
+            console.log("Fetched employee number:", data.emp_num);
+            navigate("/s3000showEmployee");
         } catch (error) {
             console.error("Error fetching employee:", error);
             alert("Employee not found");
@@ -28,7 +29,8 @@ const S3000EmpSrch = (props) => {
             const response = await fetch(`https://as400.jcboe.org:8080/api/employees/s3000EmpSrch?name=${employeeName}`);
             if (!response.ok) throw new Error("No employees found");
             const data = await response.json();
-            setEmployeeNames(data);
+            setS3000EmployeeNames(data);
+            setS3000EmployeeName(employeeName)
             if (data.length > 0) {
                 navigate("/s3000EmpName");
             } else {
@@ -68,7 +70,7 @@ const S3000EmpSrch = (props) => {
                         variant="outlined"
                         label="Employee Last Name"
                         value={employeeName}
-                        onChange={(e) => setEmployeeName(e.target.value)}
+                        onChange={(e) => setLocalEmployeeName(e.target.value)}
                     />
                     <Button fullWidth variant="contained" sx={{ mt: 2 }} onClick={onSearchByName}>
                         Search by Last Name
