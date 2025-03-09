@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     Table, TableBody, TableCell, TableContainer, TableHead,
-    TableRow, TablePagination, Paper
+    TableRow, TablePagination, Paper, Button
 } from "@mui/material";
 import "./employeeName.css";
 
@@ -18,9 +18,9 @@ const S3000EmpName = (props) => {
 
     const employeeSelected = (key) => {
         setS3000EmployeeNumber(key);
-        // console.log("Fetched employee number:", key);
-        navigate("/s3000ShowEmployee");
+        navigate(`/s3000ShowEmployee/${key}`); // Pass employee number as a parameter
     };
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -85,6 +85,16 @@ const S3000EmpName = (props) => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </TableContainer>
+
+            {/* Back Button */}
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate("/s3000EmpSrch")}
+                sx={{ marginBottom: 2 }}
+            >
+                Back
+            </Button>
         </div>
     );
 };

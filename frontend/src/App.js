@@ -37,6 +37,7 @@ import S3000EmpSrch from "./s3000EmpSrch";
 import S3000EmpName from "./s3000EmpName";
 import S3000ShowEmployee from "./s3000ShowEmployee"
 import S3000ShowPayments from "./s3000ShowPayments"
+import S3000DisplayPayment from "./s3000DisplayPayment";  // ✅ Import the new component
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -140,9 +141,12 @@ function App() {
             />}
           />
 
-          <Route path="/s3000showEmployee" element={<S3000ShowEmployee s3000EmployeeNumber={s3000EmployeeNumber} />} />
-          <Route path="/s3000ShowPayments/:s3000EmployeeNumber" element={<S3000ShowPayments />} />
+          {/* <Route path="/s3000showEmployee" element={<S3000ShowEmployee s3000EmployeeNumber={s3000EmployeeNumber} />} /> */}
+          {/* <Route path="/s3000ShowEmployee/:s3000EmployeeNumber" element={<S3000ShowEmployee />} /> */}
+          <Route path="/s3000ShowEmployee/:s3000EmployeeNumber" element={<S3000ShowEmployee />} />
 
+          <Route path="/s3000ShowPayments/:s3000EmployeeNumber" element={<S3000ShowPayments />} />
+          <Route path="/s3000DisplayPayment/:chknum/:chkdate" element={<S3000DisplayPayment />} />
 
           {/* ✅ Employee Routes */}
           <Route path="/employeeSearch" element={

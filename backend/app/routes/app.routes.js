@@ -26,7 +26,8 @@ const controllers = {
   lacp441s: require("../controllers/lacp441s.controller.js"),
   pofromvendor: require("../controllers/pofromvendor.controller.js"),
   s3000EmpSrch: require("../controllers/s3000EmpSrch.controller.js"),
-  s3000ShowPayments: require("../controllers/s3000ShowPayments.controller.js")
+  s3000ShowPayments: require("../controllers/s3000ShowPayments.controller.js"),
+  s3000DisplayPayment: require("../controllers/s3000DisplayPayment.controller.js")  // ✅ Import the new controller
 };
 
 // 🚀 Log missing controllers for debugging
@@ -97,6 +98,7 @@ safeRoute("get", "/s3000EmpSrch/:emp_num", controllers.s3000EmpSrch.findOne, "s3
 // GET /s3000EmpSrch?name=lastname - Fetch employee(s) by last name (404 if none found)
 safeRoute("get", "/s3000EmpSrch", controllers.s3000EmpSrch.findAll, "s3000EmpSrch.findAll");
 safeRoute("get", "/s3000ShowPayments/:employeeNumber", controllers.s3000ShowPayments.findAll, "s3000ShowPayments.findAll");
+safeRoute("get", "/s3000DisplayPayment/:chknum/:chkdate", controllers.s3000DisplayPayment.findAllByCheck, "s3000DisplayPayment.findAllByCheck");
 
 // ✅ Employee Routes
 safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");

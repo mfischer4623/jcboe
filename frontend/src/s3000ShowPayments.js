@@ -43,6 +43,10 @@ const S3000ShowPayments = () => {
         fetchPayments();
     }, [s3000EmployeeNumber]);
 
+    const handleRowClick = (chknum, chkdate) => {
+        navigate(`/s3000DisplayPayment/${chknum}/${chkdate}`);
+    };
+
     if (loading) return <CircularProgress />;
     if (error) return <Typography color="error">{error}</Typography>;
 
@@ -67,7 +71,12 @@ const S3000ShowPayments = () => {
                             </TableHead>
                             <TableBody>
                                 {payments.map((payment, index) => (
-                                    <TableRow key={`${payment.chknum}-${payment.chkdate}-${index}`}>
+                                    <TableRow
+                                        key={`${payment.chknum}-${payment.chkdate}-${index}`}
+                                        hover
+                                        onClick={() => handleRowClick(payment.chknum, payment.chkdate)}
+                                        style={{ cursor: "pointer" }}
+                                    >
                                         <TableCell>{payment.chknum}</TableCell>
                                         <TableCell>{formatDate(payment.chkdate)}</TableCell>
                                         <TableCell>${formatCurrency(payment.gwages)}</TableCell>
@@ -83,9 +92,10 @@ const S3000ShowPayments = () => {
                 )}
 
                 <Box mt={3} textAlign="center">
-                    <Button variant="contained" color="secondary" onClick={() => navigate("/s3000EmpSrch")}>
+                    <Button variant="contained" color="secondary" onClick={() => navigate(`/s3000ShowEmployee/${s3000EmployeeNumber}`)}>
                         BACK
                     </Button>
+
                 </Box>
             </Paper>
         </Container>

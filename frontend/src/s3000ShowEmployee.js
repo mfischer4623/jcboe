@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Box, Typography, Paper, CircularProgress, Button } from "@mui/material";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const S3000ShowEmployee = ({ s3000EmployeeNumber }) => {
+const S3000ShowEmployee = () => {
+    const { s3000EmployeeNumber } = useParams();
+    // Now use `s3000EmployeeNumber` as before
+
     const [employeeData, setEmployeeData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -55,7 +58,7 @@ const S3000ShowEmployee = ({ s3000EmployeeNumber }) => {
                     <Typography>No data available</Typography>
                 )}
                 <Box mt={3} display="flex" justifyContent="space-between">
-                    <Button variant="contained" color="secondary" onClick={() => navigate("/s3000EmpSrch")}>
+                    <Button variant="contained" color="secondary" onClick={() => navigate("/s3000EmpName")}>
                         BACK
                     </Button>
                     <Button variant="contained" color="primary" onClick={() => navigate(`/s3000ShowPayments/${s3000EmployeeNumber}`)}>
