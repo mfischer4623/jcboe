@@ -1,0 +1,1898 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+$main-font:  "Inter", sans-serif;
+$whitecolor: #ffffff;
+$bluecolor:#263EAC;
+$blackcolor:#000000;
+$orangecolor:#EC6800;
+$bgcolor: #F3F3F3;
+$textcolor:#5c5c5c;
+$inputcolorgrey:#707070;
+$blackheadcolor:#2a2a2a;
+$bordersidecolor:#BEBEBE;
+$greencolor:#058227;
+$accbordercolor:#C1C1C1;
+$greyshade:#d2d2d2;
+$redcolor:#d32f2f;
+
+
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: $main-font;
+    background-color: $bgcolor;
+   
+  }
+
+  @mixin pos-block{
+    width: 100%;
+    position: relative;
+    display: block;
+  }
+  @mixin pos-inlineblock{
+    width: 100%;
+    position: relative;
+    display: inline-block;
+  }
+
+  .main-sec{
+    @include pos-block;
+    padding: 20px;
+  }
+
+  .main-sec-logo{
+    .login-sec{
+      box-shadow: 1px 1px 10px rgb(0 0 0 / 20%);
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+      position: relative;
+      display: inline-block;
+      margin-top: 5% !important;
+      background-color: $whitecolor;
+      padding-bottom: 40px;
+    .login-logo-sec{
+      background-color: $bluecolor;
+      padding: 10px 0px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3019607843);
+      h1{
+        font-size: 20px;
+        font-weight: 500;
+        color: $whitecolor;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      img{
+        height: 69px;
+      }
+      .login-logo-sec{
+        background-color: $bluecolor;
+      }
+    }
+
+  }
+  }
+
+  .login-btn-sec{
+    margin:70px 0px;
+  }
+  .btn-nologin{
+    width: 100%;
+    max-width: 250px;
+    border: 2px solid $orangecolor;
+    border-radius: 0px;
+    background-color: $whitecolor;
+    color: $orangecolor;
+    padding: 10px 0px;
+    font-size: 17px;
+    font-weight: 500;
+    box-shadow: 1px 1px 15px #ec68001a;
+    &:hover{
+      background-color: $orangecolor;
+      color: $whitecolor;
+    }
+    &:active{
+      background-color: $whitecolor !important;
+      color: $orangecolor !important;
+    }
+  }
+
+  .header-sec{
+    background-color: $bluecolor;
+  }
+  
+.navbar-collapse{
+  justify-content: flex-end;
+}
+
+.form-sec{
+    .MuiBox-root {
+      .MuiFormControl-root{
+        .MuiFormLabel-root{
+          font-family: $main-font !important;
+          font-weight: 500;
+          font-size: 17px;
+          top: -2px;
+        }
+        .MuiOutlinedInput-root{
+          .MuiInputBase-input{
+            color: $textcolor !important;
+            font-weight: 400 !important;
+            font-family: $main-font !important;
+            box-shadow: 1px 1px 8px rgb(134 129 129 / 12%);
+            text-align: left !important;
+            padding: 14.5px 14px !important;
+          }
+          .MuiOutlinedInput-notchedOutline{
+            border-radius: 0px !important;
+          }
+        }
+      }
+    }
+  }
+
+  .login-details {
+    padding: 50px 55px;
+}
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+    border-color: $bluecolor !important;
+  }
+  .MuiInputLabel-root.Mui-focused{
+    color: $bluecolor !important;
+  }
+  .form-no-sec{
+    margin:0 auto;
+    margin-bottom: 40px;
+  }
+  .form-sec .MuiBox-root .MuiFormControl-root .MuiInputLabel-shrink{
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .MuiSelect-nativeInput{
+    font-family: $main-font !important;
+  }
+
+  .margin-login{
+    margin-bottom: 34px;
+  }
+  .login-icon{
+    position: relative;
+    display: block;
+    svg{
+      color: $inputcolorgrey;
+      position: absolute;
+      left: 10px;
+      bottom: 17px;
+      font-size: 22px;
+    }
+  }
+
+  .margin-login .MuiBox-root .MuiFormControl-root .MuiFormLabel-root{
+    left: 24px;
+  }
+  .margin-login .MuiBox-root .MuiFormControl-root .MuiInputLabel-shrink{
+    left:0px;
+  }
+  .margin-login .MuiBox-root .MuiFormControl-root .MuiOutlinedInput-root .MuiInputBase-input{
+    padding: 16.5px 14px 16.5px 36px !important;
+  }
+
+  .btn-login{
+    max-width: 100%;
+  }
+  .logn-new{
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .login-eye-off{
+    float: right;
+    position: relative;
+    display: block;
+    svg{
+      color:$inputcolorgrey;
+      position: absolute;
+  
+    }
+  }
+  
+  .visi-sec{
+    float: right;
+    position: relative;
+    display: block;
+    
+    svg{
+      color:$inputcolorgrey;
+      position: absolute;
+      right: 10px; 
+      bottom: 15px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+  }
+
+  .log-name{
+    .MuiBox-root {
+      .MuiInputBase-root {
+        fieldset{
+          legend{
+            span{
+              padding-left: 15px;
+              padding-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .log-email{
+    .MuiBox-root {
+      .MuiInputBase-root {
+        fieldset{
+          legend{
+            span{
+              padding-left: 15px;
+              padding-right: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .log-emp{
+    .MuiBox-root {
+      .MuiInputBase-root {
+        fieldset{
+          legend{
+            span{
+              padding-left: 5px;
+              padding-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+//   sidebar code start here
+.aside-fixed + .content{margin-left: 220px !important;}
+
+.admin-fixed {
+  background-color: $bluecolor;
+  border-right: 0 solid #05050b;
+  bottom: 0;
+  box-shadow: 0 1.6rem 3rem #0000001a;
+  color: $whitecolor;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin: 0px 0px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  transition: all .2sease-in-out;
+  width: 14.1rem;
+  z-index: 1035;
+}
+@media (min-width: 992px) {
+  .aside {
+      transform: translateX(0);
+  }
+}
+//    
+@media (min-width: 992px) {
+  .aside-header {
+      height: 92px;
+      padding: 0 20px;
+      transform: none;
+  }
+}
+.aside-header {
+  align-items: center;
+  background-color: $bluecolor!important;
+  border-right: 1px solid #485e9029;
+  display: block;
+  justify-content: space-between;
+  padding: 0 11px;
+}
+.aside-logo, .aside-logo:focus, .aside-logo:hover {
+  color: $blackcolor;
+  font-weight: 400;
+}
+@media (min-width: 992px) {
+  .aside-logo {
+      font-size: 23px;
+  }
+}
+.aside-logo {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-left: -4px;
+  margin-top: -3px;
+  position: relative;
+  top: -22px;
+  text-decoration: none;
+}
+.aside-logo, .aside-logo:focus, .aside-logo:hover {
+  color: $blackcolor;
+  font-weight: 400;
+} 
+.aside{
+  overflow-y: scroll;
+}
+.aside-body {
+  background-color: $bluecolor;
+  border-right: 1px solid #485e9029;
+  border-top: 1px solid #485e9029;
+  height: calc(100% - 59px);
+  padding: 23px 0px 9px 0px;
+  position: relative;
+  ul{
+    display: block;
+    float: left;
+    width: 101%;
+
+    li{
+      text-align: left;
+      cursor: pointer;
+ 
+      //margin-bottom: 1px;
+    a{
+      font-size: 17px;
+      font-weight: 500;
+      display: flex;
+      color:$whitecolor;
+      text-decoration: none;
+      padding:16px 5px;
+      border-left: 3px solid $bluecolor;
+      border-bottom: 1px solid $bordersidecolor;
+      display: block;
+      svg{
+        margin-right: 10px;
+        font-size: 23px;
+        top: 0px;
+        position: relative;
+      }
+      span{
+        font-size: 17px;
+        font-weight:400;
+        line-height: 27px;
+        top: 3px;
+        position: relative;
+      }
+      img{
+        height: 22px;
+        margin-right: 9px;
+        position: relative;
+        left: 3px;
+      }
+    
+    }
+    .activeapprove{
+      background-color: #213594;
+     
+    }
+    }
+  }
+}
+
+// .nav-aside {
+//   flex-direction: column;
+//   font-size: 13px;
+//   line-height: 1.6;
+//   margin-bottom: 25px;
+//   white-space: nowrap;
+// }
+
+.nav-aside .nav-item {
+  padding: 2px 3px 0;
+  position: relative;
+}
+
+.user-details{
+  @include pos-block;
+  padding: 20px 0px 20px 0px;
+  svg{
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+  p{
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight:400;
+  }
+}
+.aside-fixed+.content-header {
+  margin-left: 225px !important;
+}
+.content-header{
+  .header-approve{
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    padding: 30px 20px 30px 20px;
+    background-color: $whitecolor;
+   
+  }
+}
+
+.heading-top{
+  font-size: 23px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  color: $blackheadcolor;
+}
+
+.aside-fixed+.content-main {
+  margin-left: 220px !important;
+}
+.ver-sec{
+    text-decoration: none;
+    color: $whitecolor;
+    font-size: 12px;
+    position: relative;
+    top: -12px;
+    font-weight: 400;
+}
+.vendor-img{
+    height: 18px !important;
+    margin-right: 9px !important;
+}
+.arrow-right{
+    float: right;
+    svg{
+        margin-right: 0px !important;
+        font-size: 29px !important;
+        top: -4px !important;
+        float: right;    
+    }
+}
+// sidebar code end here
+
+// header code start here
+.aside-fixed+.content-header {
+    margin-left: 225px !important;
+  }
+  .content-header{
+    .header-approve{
+      width: 100%;
+      margin: 0 auto;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+      padding: 30px 20px 30px 20px;
+      background-color: $whitecolor;
+     
+    }
+  }
+  .heading-top{
+    font-size: 23px;
+    font-weight: 600;
+    margin-bottom: 0px;
+    color: $blackheadcolor;
+  }
+  .aside-fixed + .content-header {
+    margin-left: 225px !important;
+}
+.content-header {
+    margin-left: 225px !important;
+}
+// header code end here
+
+
+.content-main {
+    margin-left: 230px !important;
+}
+
+.main-inner-heading{
+@include pos-block;
+  
+
+.emp-serach{
+   @include pos-block();
+    padding: 34px 0px 22px 0px;
+    font-family: $main-font !important;
+    h2{
+        font-size: 20px;
+        color:$blackheadcolor;
+        font-weight: 600;
+        font-family: $main-font;
+    }
+}
+}
+
+.tab-sec-emp{
+    margin:0px 30px
+}
+.tab-sec-main{
+    .MuiBox-root{
+        .MuiBox-root{
+            border-bottom: none !important;
+            .MuiTabs-root{
+                .MuiTabs-scroller{
+                    .MuiTabs-list{
+                        font-family: $main-font !important;
+                       
+                         .MuiButtonBase-root{
+                            text-transform: initial !important;
+                            font-size: 18px !important;
+                            font-weight: 500;
+                            width: 155px;
+                            padding: 16px 10px !important;
+                            font-family: $main-font !important;
+                        }
+                        .MuiButtonBase-root.Mui-selected{
+                            background-color: $bluecolor !important;
+                            color: $whitecolor !important;
+                            width: 155px;
+                            padding: 16px 10px !important;
+                            font-family: $main-font !important;
+                        }
+                    }
+                    .MuiTabs-indicator{
+                        height:0px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.tab-sec-main-inner{
+    background-color: $whitecolor !important;
+    box-shadow: 1px 1px 10px rgb(0 0 0 / 12%) !important;
+    padding: 90px 80px 110px 80px !important;
+    .MuiBox-root {
+        padding: 0px !important;
+    }
+       
+
+}
+.or-sec{
+    margin-bottom: 0px;
+    font-size: 18px;
+    color: $inputcolorgrey;
+    position: relative;
+    top: 14px;
+    font-weight: 500;
+}
+
+
+.btn-search{
+    width: 100%;
+    max-width: 120px;
+    border: 2px solid $orangecolor;
+    border-radius: 0px;
+    background-color: $orangecolor;
+    color: $whitecolor;
+    padding: 10px 0px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 1px 1px 15px #ec68001a;
+    margin-right: 10px;
+    &:hover{
+      background-color: $whitecolor;
+      color: $orangecolor;
+      border: 2px solid $orangecolor;
+    }
+    &:active{
+      background-color: $whitecolor !important;
+      color: $orangecolor !important;
+    }
+  }
+
+  .search-btn-sec{
+    text-align: left;
+  }
+
+
+  .emp-name-span{
+    .MuiBox-root {
+      .MuiInputBase-root {
+        fieldset{
+          legend{
+            span{
+              padding-left: 15px;
+              padding-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .oir-sec{
+    width: 5%;
+    /* float: left; */
+    justify-content: space-around;
+    display: flex;
+    padding: 0px 15px !important;
+  }
+  .tab-sec-main-inner-show{
+    .row{
+        justify-content: center !important;
+    }
+  }
+
+  .emp-data-head{
+    h3{
+        font-size: 19px;
+        color: $blackheadcolor !important;
+        font-weight: 600;
+        font-family: $main-font !important;
+        margin-top: 6px;
+    }
+  }
+
+  .form-autocomple-sec .MuiAutocomplete-root{
+    width:100%;
+  }
+  .form-autocomple-sec .MuiAutocomplete-root {
+    font-family: $main-font !important;
+    box-shadow: 1px 1px 8px rgba(134, 129, 129, 0.12);
+}
+.form-autocomple-sec{
+    .MuiAutocomplete-root{
+        .MuiFormControl-root{
+            label{
+                font-family: $main-font !important;
+                font-weight: 500;
+                font-size: 17px;
+                top: 0px;
+            }
+            .MuiInputBase-root{
+                .MuiAutocomplete-endAdornment{}
+                .MuiInputBase-input {
+                    font-weight: 400 !important;
+                    font-family: "Inter", sans-serif !important;
+                    text-align: left !important;
+                    font-size: 16px;
+                    color:$textcolor !important;
+                }
+                .MuiOutlinedInput-notchedOutline{
+                    border-radius: 0px !important;
+                }
+            }
+        }
+    }
+}
+
+.emp-name-span{
+    .MuiAutocomplete-root {
+      .MuiFormControl-root  {
+        .MuiInputBase-root{
+            .MuiOutlinedInput-notchedOutline{
+          legend{
+            span{
+              padding-left: 8px;
+              padding-right: 10px;
+            }
+          }
+        }
+    }
+      }
+    }
+  } 
+  .MuiAutocomplete-option {
+    font-family: $main-font !important;
+  }
+
+  .print-sec-inner{
+    position: relative;
+    display: block;
+    // float: right;
+    // margin-right: 120px;
+    // bottom: 30px;
+    width: 100%;
+    .print-icon{
+      float: right;
+    position: absolute;
+    right: 90px;
+      svg{
+        color:$greencolor;
+        font-size: 30px;
+        cursor: pointer;
+      }
+    }
+
+  }
+  .emp-print .print-icon {
+    right: 90px;
+    bottom: 10px;
+}
+
+  .margin-all-sec{
+    margin: 0px 30px !important;
+  }
+
+  .accordion-margin{
+    margin:0px 100px !important;
+  }
+  .lastnav-link{
+    border-bottom: none !important;
+  }
+
+  .form-accor-sec{
+    .MuiPaper-root{
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12) !important;
+      border:1px solid $accbordercolor !important;
+      border-radius: 0px !important;
+      margin-bottom: 20px !important;
+      .MuiAccordion-heading{
+        .MuiButtonBase-root{
+          // border-bottom: 2px solid $accbordercolor !important;
+          .MuiAccordionSummary-content{
+            color:$inputcolorgrey !important;
+            font-family: $main-font !important;
+            margin:18px 0px !important;
+            .MuiTypography-root{
+              font-size: 19px !important;
+              font-family: $main-font !important;
+              font-weight: 600 !important;
+            }
+           
+            }
+            .MuiAccordionSummary-expandIconWrapper {
+              svg{
+                color:$orangecolor !important;
+                font-size: 30px !important;
+           }
+          }
+        }
+      }
+    }
+    .MuiCollapse-root {
+      .MuiCollapse-wrapper{
+        .MuiCollapse-wrapperInner{
+          .MuiAccordion-region{
+            border-top: 2px solid $accbordercolor !important;
+          }
+        }
+      }
+    }
+  } 
+  
+
+  .form-detail-main{
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    background-color: $whitecolor;
+    padding: 40px 40px;
+    .form-detail-left {
+      width: 47%;
+      float: left;
+      .form-detail-left-inner{
+        width: 55%;
+        float: left;
+        .form-details-label{
+          width: 100%;
+          position: relative;
+          display: inline-block;
+          margin-bottom: 17px;
+          vertical-align: middle;
+          h3{
+            font-size: 17px;
+            color: $inputcolorgrey;
+            float: left;
+            text-align: left;
+            font-weight: 600;
+            width: 71%;
+            float: left;
+            font-family: $main-font !important;
+            line-height: 26px !important;
+          }
+          p{
+            margin-bottom: 0px;
+            color: $inputcolorgrey;
+            font-size: 21px;
+            top: -6px;
+            position: relative;
+            font-family: $main-font !important;
+          }
+        }
+      }
+  }
+  .form-detail-midle {
+    width: 4%;
+    float: left;
+    padding-left: 0px !important;
+}
+.form-detail-right {
+  width: 47%;
+  float: left;
+}
+  }
+
+.form-detail-sec .form-detail-inner .form-details-value p {
+    color: $inputcolorgrey !important;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: left;
+}
+.form-detail-inner .form-detail-left .form-detail-right-inner {
+  width: 45%;
+  float: left;
+  .form-details-value{
+    p{
+      text-align: left;
+      font-family: $main-font !important;
+      color: $inputcolorgrey !important;
+      font-size: 17px;
+    }
+  }
+}
+
+.form-detail-midle {
+  width: 4%;
+  float: left;
+}
+.border-after {
+  position: relative;
+  display: inline;
+  background: $whitecolor;
+  width: 100%;
+  height: 100%;
+  display: block;
+} 
+.border-after::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 100%;
+  background-color: rgba(112, 112, 112, 0.368627451);
+}
+.form-detail-right .form-detail-left-innerss {
+  width: 55%;
+  float: left;
+}
+
+.form-detail-inner .form-detail-left-innerss .form-details-label {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 17px;
+  vertical-align: middle;
+  h3{
+    font-size: 17px;
+    color: $inputcolorgrey;
+    float: left;
+    text-align: left;
+    font-weight: 600;
+    width: 73%;
+    float: left;
+    font-family: $main-font !important;
+    line-height: 21px;
+  }
+  p{
+    margin-bottom: 0px;
+    color: $inputcolorgrey;
+    font-size: 21px;
+    top: -6px;
+    position: relative;
+    font-family: $main-font !important;
+  }
+}
+
+.form-detail-right .form-detail-right-innerss {
+  width: 45%;
+  float: left;
+}
+
+.form-accor-sec{
+  .MuiPaper-root{
+    .MuiCollapse-root {
+      .MuiCollapse-wrapper{
+        .MuiCollapse-wrapperInner{
+          .MuiAccordion-region{
+            .MuiAccordionDetails-root{
+              .MuiTypography-root {
+                box-shadow: none !important;
+                padding: 20px 10px !important;
+            
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.last-right-data{
+  .form-details-label{
+    margin-bottom: 0px !important;
+  }
+}
+
+.form-detail-right-innerss{
+  .form-details-value{
+    p{
+      text-align: left;
+      color: $inputcolorgrey !important;
+      font-weight: 400;
+      font-family: $main-font !important;
+      font-size: 17px;
+    }
+  }
+}
+
+.form-large-data-sec{
+  width: 74%;
+  margin-top: 20px;
+  .form-detail-left-inner{
+    width: 55%;
+    float: left;
+    .form-details-label{
+      width: 100%;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 17px;
+      vertical-align: middle;
+      h3{
+        width: 100%;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 17px;
+    vertical-align: middle;
+    font-size: 17px;
+    color: $inputcolorgrey; 
+    text-align: left;
+    font-weight: 600;
+    width: 71%;
+    float: left;
+    font-family: $main-font !important;
+    line-height: 26px !important;
+      }
+    }
+  }
+  .form-detail-right-inner{
+    width: 45%;
+    float: left;
+    .form-details-value{
+      p{
+        text-align: left;
+    font-family:$main-font !important;
+    color: $inputcolorgrey !important;
+    font-size: 17px;
+      }
+    }
+  }
+}
+
+.form-detail-terminate{
+  .form-detail-left{
+    width:100%;
+    .form-detail-left-inner{
+      width:26%;
+      float: left;
+    }
+    .form-detail-right-inner{
+      width:70%;
+      float: left;
+    }
+  }
+}
+
+.submenudisblock {
+  display: block !important;
+}
+.submenudisnone{
+  display: none !important;
+}
+
+.sub-menu-employee{
+  padding-left: 0px;
+  list-style-type: none;
+  background-color: $whitecolor;
+  color: $bluecolor !important;
+  li{
+    padding:16px 10px 16px 20px !important;
+    border-bottom: 1px solid $bluecolor !important;
+  }
+}
+
+.emp-main-heading-emp{
+  max-width: 100%;
+  margin: 0 15px;
+    
+    .head-inner{
+      width: 100%;
+    position: relative;
+    display: block;
+    h2{
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 0px !important;
+      font-weight: 600;
+      color: $blackheadcolor !important;
+    }
+    .head-right{
+      display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    position: absolute;
+    right: 0px;
+    top: -10px;
+    align-items: center;
+    }
+    }
+}
+
+.btn-clear{
+  width: 100%;
+    max-width: 120px;
+    border: 2px solid $orangecolor;
+    border-radius: 0px;
+    background-color: $orangecolor;
+    color: $whitecolor;
+    padding: 10px 0px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 1px 1px 15px rgb(236 104 0 / 32%);
+    margin-right: 10px;
+    padding: 10px 15px;
+    max-width: 140px;
+    &:hover{
+      background-color: $whitecolor;
+      color: $orangecolor;
+      border: 2px solid $orangecolor;
+    }
+}
+.print-icon{
+  svg{
+    color: $greencolor;
+    font-size: 27px;
+    margin-right: 18px;
+    cursor: pointer;
+  }
+}
+.emp-another-sec{
+  padding-bottom: 15px;
+}
+
+.emp-table-sec{
+  padding: 0px 25px !important;
+  .form-table-sec {
+    margin:40px 0px 20px 0px !important;
+    max-width: 100%;
+    padding:0px 13px 50px 13px!important;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    padding: 23px 25px;
+    margin-top: 30px;
+    background-color: $whitecolor;
+  }
+
+}
+
+.search-sec{
+  position: relative;
+  display: flex;
+  /* border: none !important; */
+  /* float: right; */
+  justify-content: right;
+  gap:20px;
+    .input-srch{
+      width: 232px;
+      float: left;
+      border: none;
+      border-bottom: 1px solid $textcolor;
+      outline: none;
+      color: $inputcolorgrey;
+      font-size: 16px;
+    }
+}
+
+.emp-serch-main{
+  float: right;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  padding: 20px 30px;
+
+}
+
+.go-sec{
+  width: 100%;
+  max-width: 120px;
+  border: 2px solid $orangecolor;
+  border-radius: 0px;
+  background-color: $whitecolor;
+  color: $orangecolor;
+  /* padding: 10px 16px !important; */
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 1px 1px 15px rgba(236, 104, 0, 0.32);
+  margin-right: 0px;
+  padding: 8px 11px;
+  max-width: 60px;
+  margin-left: -10px;
+}
+
+.pagination-sec {
+  width: 100%;
+  position: relative;
+  display: block;
+  .page-left {
+    width: 100%;
+    max-width: 216px;
+    background-color: $whitecolor;
+    color: $orangecolor;
+    display: inline-block;
+    position: relative;
+    float: left;
+    border: none !important;
+    padding: 10px 0px;
+    border: 2px solid $orangecolor !important;
+    box-shadow: 1px 1px 5px rgba(236, 104, 0, 0.2588235294);
+    margin-top: 10px;
+    p{
+      float: left;
+      margin-bottom: 0px;
+      font-size: 17px;
+      padding: 0px 2px;
+      color: $textcolor;
+      span{
+        float: left;
+        svg{
+          font-size: 30px;
+          color: $textcolor;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.page-name {
+  margin-right: 8px;
+  position: relative;
+  top: 2px;
+}
+.pagination-sec .page-left p input {
+  width: 46px;
+  outline: none;
+  border: none !important;
+  height: 30px;
+  text-align: center;
+  margin-right: 3px;
+  background-color: $orangecolor;
+  color: $whitecolor;
+}
+
+/** Scrollbar section code start **/
+::-webkit-scrollbar {width:4px;height: 7px;}
+::-webkit-scrollbar-track {background-color: #cccccc;-webkit-border-radius: 5px;border-radius: 10px;}
+::-webkit-scrollbar-thumb {-webkit-border-radius: 5px;border-radius: 10px;background: #cccccc; }
+/** Scroll section code end **/
+
+.table-main-sec{
+  .table-sec{
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    thead{
+      border-top:3px solid $bluecolor;
+      tr{
+        th{
+          border: 2px solid $accbordercolor;
+          color:$bluecolor !important;
+          font-size: 17px !important;
+          vertical-align: middle !important;
+          font-weight: 600 !important;
+        }
+      }
+    }
+    tbody{
+      tr{
+        td{
+          border:2px solid $accbordercolor !important;
+          vertical-align: middle !important;
+          font-size: 17px;
+          font-weight: 500;
+          p{
+            margin-bottom: 0px;
+            color: $inputcolorgrey;
+          
+          }
+        }
+      }
+    }
+  }
+}
+
+.filt-icon{
+  img{
+    height: 14px;
+    position: relative;
+    left: 4px;
+  }
+}
+
+.check-width{
+  .MuiFormGroup-root {
+    justify-content: center;
+    label{
+      justify-content: center;
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+      .MuiCheckbox-root.Mui-checked{
+        color:$bluecolor !important;
+      }
+    }
+  }
+}
+
+.unit-width{
+  width:180px;
+}
+.no-data{
+  margin-top: 60px;
+  font-size: 17px;
+  font-weight: 500;
+}
+.certi-width{
+  width:180px;
+}
+.cert-desc-width{
+  width:270px;
+}
+.type-width{width:170px}
+.type-desc-width{
+  width:250px;
+}
+.level-width{
+  width:140px;
+}
+.level-desc-width{
+  width:160px;
+}
+.check-width{
+  width: 70px;;
+}
+.schol-yaer-widh{
+  width:209px;
+}
+.deductn-width{
+  width:200px;
+}
+.juris-width{
+  width:300px;
+}
+
+
+.menu-sec{
+  a{
+    img{
+      margin-right: 17px !important;
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .payroll-check-amt{
+    width:15% !important;
+  }
+ .emp-data-inner .emp-data-sec .emp-data-value-sec .form-newsss-pure {
+    width: 47% !important;
+}
+.emp-data-inner .emp-data-sec .emp-data-value-sec .form-newss-right-pure {
+  width: 51% !important;
+}
+  .level-desc-width {
+    width: 210px !important;
+  }
+  .tab-sec-main-inner {
+    padding: 90px 20px 110px 20px !important;
+}
+.heading-top {
+  font-size: 21px;
+}
+}
+
+@media (max-width: 1400px) {
+  .schol-yaer-widh{
+    width:248px;
+  }
+  .deductn-width{
+    width:120px;
+  }
+  .duct-width{
+    width:200px;
+  }
+  .perctnt-width{
+    width:180px;
+  }
+  .heading-top {
+    font-size: 20px;
+  }
+  .tab-sec-main .MuiBox-root .MuiBox-root .MuiTabs-root .MuiTabs-scroller .MuiTabs-list .MuiButtonBase-root.Mui-selected{
+
+  }
+}
+
+@media (max-width: 1250px) {
+  .level-desc-width {
+    width: 216px !important;
+}
+  .tab-sec-main-inner {
+    padding: 90px 20px 110px 20px !important;
+}
+.heading-top {
+  font-size: 19px;
+}
+}
+
+.form-neww-details-se{
+  width:49% !important;
+  .form-details-label{
+    h3{
+      width:78% !important;
+    }
+  }
+}
+@media (max-width: 1600px) {
+  .heading-top {
+    font-size: 21px;
+  }
+  .print-sec-inner .print-icon svg{
+    font-size: 28px !important;
+  }
+  .accordion-margin {
+    margin: 0px 80px !important;
+}
+.emp-print .print-icon {
+  right: 70px;}
+  .form-detail-main .form-detail-left .form-detail-left-inner .form-details-label h3{
+    width: 91%;
+  }
+  .form-detail-inner .form-detail-left-innerss .form-details-label h3{
+    width:91%;
+  }
+  .level-desc-width {
+    width: 170px;
+}
+}
+@media (max-width: 1500px) {
+  .emp-data-sec .emp-data-value-sec .form-newsss-pure {
+    width: 44% !important;
+}
+.emp-data-sec .emp-data-value-sec .form-newss-right-pure {
+  width: 54% !important;
+}
+  .accordion-margin {
+    margin: 0px 50px !important;
+}
+.emp-print .print-icon {
+  right: 40px;
+}
+.heading-top {
+  font-size: 20px;
+}
+.level-desc-width {
+  width: 180px;
+}
+}
+@media (max-width: 1350px) {
+  .form-detail-inner .form-detail-left .form-detail-right-inner .form-details-value p{
+    font-size: 16px;
+  }
+  .form-detail-right-innerss .form-details-value p{
+    font-size: 16px;
+  }
+  .accordion-margin {
+    margin: 0px 35px !important;
+}
+.emp-print .print-icon {
+  right: 20px;
+}
+.form-accor-sec .MuiPaper-root .MuiCollapse-root .MuiCollapse-wrapper .MuiCollapse-wrapperInner .MuiAccordion-region .MuiAccordionDetails-root .MuiTypography-root {
+  box-shadow: none !important;
+  padding: 20px 5px !important;
+}
+.form-detail-main .form-detail-left .form-detail-left-inner .form-details-label h3 {
+  width: 94%;
+}
+.form-detail-inner .form-detail-left-innerss .form-details-label h3 {
+  width: 94%;
+}
+.form-detail-main .form-detail-left .form-detail-left-inner .form-details-label h3{
+  font-size: 16px;
+}
+.form-detail-inner .form-detail-left-innerss .form-details-label h3{
+  font-size: 16px;
+}
+.form-accor-sec .MuiPaper-root .MuiAccordion-heading .MuiButtonBase-root .MuiAccordionSummary-content .MuiTypography-root {
+  font-size: 18px !important;}
+  .form-large-data-sec .form-newsss-pure .form-details-label h3{
+    font-size: 16px;
+  }
+  .form-large-data-sec .form-newss-right-pure .form-details-value p{
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .emp-main-heading-emp .head-inner h2{
+    font-size: 19px;
+  }
+  .emp-data-inner .emp-data-sec .emp-data-value-sec .form-newsss-pure {
+    width: 51% !important;
+}
+.emp-data-inner .emp-data-sec .emp-data-value-sec .form-newss-right-pure {
+  width: 48% !important;
+}
+  .perctnt-width {
+    width: 190px;
+}
+  .level-desc-width {
+    width: 246px !important;
+}
+  .main-inner-heading .emp-serach h2 {
+    font-size: 19px;}
+    .emp-data-head h3 {
+      font-size: 18px;
+    }
+    .print-sec-inner .print-icon svg {
+      font-size: 27px !important;
+  }  
+  .pagination-sec .page-left p{
+    font-size: 16px;
+  }
+  .pagination-sec .page-left p{
+    padding: 0px 0px;
+  }
+  .pagination-sec .page-left{
+    max-width: 203px !important;
+  }
+}
+@media(max-width:1850px){
+  .emp-data-value-sec .form-newsss-pure{
+    width:35% !important;
+    .form-details-label{
+      h3{
+        width:90% !important;
+      }
+    }
+  }
+  .emp-data-value-sec .form-newss-right-pure{
+    width: 62% !important;
+  }
+  
+  .form-large-fill{
+    width: 100%;;
+  }
+}
+@media (max-width: 1250px) {
+  .no-data{
+    font-size: 16px !important;
+  }
+  .form-detail-inner .form-detail-left .form-detail-right-inner .form-details-value p {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.form-detail-right-innerss .form-details-value p {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.form-accor-sec .MuiPaper-root .MuiAccordion-heading .MuiButtonBase-root .MuiAccordionSummary-content .MuiTypography-root {
+  font-size: 17px !important;
+}
+.emp-data-sec{
+  .MuiPaper-root{
+    .MuiAccordion-heading{
+      .MuiButtonBase-root {
+        min-height: 55px !important;
+      }
+    }
+  }
+}
+.accordion-margin {
+  margin: 0px 25px !important;
+}
+.emp-print .print-icon {
+  right: 10px;
+}
+.heading-top {
+  font-size: 19px;
+}
+.content-header .header-approve{
+  padding: 25px 20px 25px 20px;
+}
+.table-main-sec .table-sec thead tr th{
+font-size: 16px !important;
+}
+.table-main-sec .table-sec tbody tr td{
+  font-size: 16px;
+}
+.filt-icon img {
+  height: 12px;
+}
+}
+@media(max-width:1800px){
+  .emp-data-value-sec .form-newsss-pure {
+    width: 38% !important;
+}
+.emp-data-value-sec .form-newss-right-pure {
+  width: 62% !important;
+}
+}
+
+@media(max-width:1700px){
+  .emp-data-value-sec .form-newsss-pure {
+    width: 40% !important;
+}
+.emp-data-value-sec .form-newss-right-pure {
+  width: 58% !important;
+}
+}
+
+
+.form-newsss-pure{
+  width:34% !important;
+  .form-details-label{
+    h3{
+      width:90% !important;
+    }
+  }
+}
+.form-newss-right-pure{
+  width: 65% !important;
+}
+
+.form-large-fill{
+  width: 100%;;
+}
+
+
+
+
+
+// pdf react code start
+.id-span{
+  font-weight: 500;
+}
+
+/** pdf page code start**/
+.reqid-sec{ color: $blackcolor; padding: 18px 8px 17px !important; font-weight: bold; margin-bottom: 6px; border: 0px;  text-align: center;   font-size: 16px; text-transform: uppercase;background-color: $greyshade}
+.conatiner-pdf{width:100%;max-width: 700px;margin:0 auto;margin-bottom: 10px;}
+.main-pdf-sec{width:100%; margin:16px 0 3px 3px;  font-size: 15px;}
+.general-sec-pdf{width: 100%;  font-size: 15px;}
+.main-gen-inner{padding: 3px 0; border: none; text-align: left; width:40%;    vertical-align: top;}
+.main-gen-width{width:200px;text-align: left;    vertical-align: baseline;padding-bottom: 8px !important;    font-size: 15px;}
+.main-full-width-col{padding: 3px 0; border: none; text-align: left}
+.padding-pdf-bom{margin-bottom: 3px;}
+.pdf-data{font-size: 14px;text-align: left;    vertical-align: baseline;}
+.mid-pdf-content{text-align: center;font-weight: 700;    margin-bottom: 10px;margin-top: 10px;}
+.table-status th{background-color: #e3e1e1;}
+.table-status{text-align: center;border:1px solid $greyshade;}
+.table-status th{padding: 5px 1px;font-size: 14px;border:1px solid $greyshade;    border-top: 2px solid $blackheadcolor;}
+.table-status td{padding: 5px 5px;font-size: 14px;border:1px solid $greyshade;}
+.pdf-half-sec{width: 50%; padding: 2px 4px 2px 0px; font-size: 14px;}
+.pdf-half-sec-head{width: 172px; font-size: 15px; color: $blackcolor; font-weight: bold; text-align: left !important; vertical-align: top !important;}
+.pdf-half-sec-head-data{font-size: 14px; color: $blackcolor; text-align: left !important; vertical-align: middle !important;}
+.travel-sec{margin-bottom: 0px;font-weight: 700;background-color: $greyshade;padding: 3px 0px;}
+.pdf-half-sec-heads{width:100px; font-size: 13px;font-size: 14px;color: $blackheadcolor;font-weight: bold;text-align: left !important;vertical-align: top !important;}
+.pdf-half-sec-headss{width:110px; font-size: 13px;font-size: 14px;color: $blackheadcolor;font-weight: bold;text-align: left !important;vertical-align: top !important;}
+.pdf-half-secs{width: 25%;padding: 10px 4px 0px 0px;font-size: 14px;}
+.pdf-halfs-top{margin-bottom: 5px;}
+.travel-sec{margin-bottom: 5px;margin-top: 5px;}
+.margin-top-travel{border-top: 1px solid $greyshade;margin-top: 20px;margin-bottom: 20px;    margin-bottom: 20px;padding-top: 23px;display: block;}
+.pdf-half-sec-four{width: 50%;padding: 5px 4px 0px 0px;font-size: 14px;}
+.travel-hgead{font-weight: 700; font-family: 'Segoe UI', sans-serif;padding:2px 0px;text-align: left;}
+.table-statuss{text-align: center;border: 1px solid $greyshade;}
+.purchase-sec{padding-left: 10px;}
+.main-margin{padding: 10px 0px;}
+.padf-sec-top{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+// .pf-sl{
+//   width:53px
+// }
+// .pf-wl{
+//   width:180px;
+// }
+// .pf-date{
+//   width:83px;
+// }
+// .pf-time{
+//   width:201px;
+// }
+// .pf-wo{
+//   width:124px;
+// }
+// .pf-wt{
+//   width:88px;
+// }
+// .pf-resn{
+//   width:180px;
+// }
+.pf-sl{
+  width:6%;
+}
+.pf-time{width:23%;}
+.pf-wt{width:12%}
+.pf-wo{width:13%;}
+.pf-wl{width:16%;}
+.pf-date{width:13%;}
+.pf-resn{width:18%;}
+.reqid-sec-pdf{
+  padding: 5px 0px !important;
+}
+.pdf-header{
+  img{
+    height: 70px;
+  }
+}
+.padding-top-pdf{
+  padding-top: 15px !important;
+  border-top: 2px solid #000000;
+}
+.padding-bottom-pdf{
+  padding-bottom: 15px !important;
+}
+.pdf-main-heads{
+  font-size: 17px;
+    background-color: #d2d2d2;
+    text-align: left;
+    padding: 13px 20px;
+    border-left: 2px solid #000000;
+    margin-bottom: 20px;
+
+}
+.meaintot-diff-insure{
+  width: 51%;
+}
+.section-pdf{
+  margin-top: 50px;
+}
+
+@media print {
+  .pagebreak{
+  
+    page-break-before: always;
+  }
+
+}
+
+.pdf-job-cde{
+  width:10%;
+}
+.pdf-begn-bal{
+  width:17%;
+}
+.pdf-earn{
+  width:10%;
+}
+.pdf-used{
+  width:8%;
+}
+.pdf-end-bal{
+  width:15%;
+}
+.pad-wrk-tpe{
+  width:12%;
+}
+.termin-width{
+  width:29%;
+  padding-bottom: 3px !important;
+}
+/** pdf page code end**/
+
+// pdf react code end
+
+.login-details{
+  .form-logn{
+    .MuiBox-root{
+      .MuiFormControl-root{
+        .MuiFormHelperText-root.Mui-error{
+          font-size: 13px !important;
+          position: absolute;
+          top: 55px;
+          font-family: $main-font !important;
+          margin: 0px !important;
+        }
+      }
+    }
+  }
+}
+
+.form-logn .MuiBox-root .MuiFormControl-root .MuiFormLabel-root{
+  top: 1px;
+}
+
+.success-msg {
+  @include pos-block;
+  .success-login{
+    color: $greencolor;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 18px;
+    position: absolute;
+    margin:0px !important
+  }
+}
+
+.login-main-details {
+  padding: 50px 55px 10px 55px;
+}
+
+.error-msg {
+  @include pos-block;
+  .error-login{
+    color: $redcolor;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 18px;
+    position: absolute;
+    margin:0px !important
+  }
+  .emp-data-error{
+    left: 44%;
+    transform: translate(-50%, 90%);
+  }
+}
+
+.log-new-emp .MuiBox-root .MuiInputBase-root fieldset legend span {
+    padding-left: 8px;
+    padding-right: 5px;
+}
+
+.modal-check-box{
+  .MuiDialog-container{
+    .MuiPaper-root {
+      margin: 0px !important;
+      max-width:420px !important;
+      width: 100% !important;
+      border-radius: 0px !important;
+      overflow-y: initial; 
+      border-top: 4px solid $bluecolor !important; 
+      
+      .MuiButtonBase-root{
+        position: absolute;
+        background-color: $whitecolor!important;
+        border-radius: 0px !important;
+        color: $whitecolor !important;
+        svg{
+          color:$whitecolor !important;
+          position: absolute;
+          right: -30px;
+          bottom: 19px;
+        }
+      }
+      .MuiDialogContent-root{
+        border-top: 0px !important;
+        border-bottom: 0px !important;
+        .MuiTypography-root {
+          .form-details-inner{
+            p{
+              font-family: $main-font !important;
+              font-size: 19px;
+              color: $blackheadcolor !important;
+              font-weight: 500;
+              text-align: center;
+              margin-top: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.nav-disply{
+  display: flex !important;
+}
+.action-width-payroll{
+  width:140px;
+  
+}
+
+.pay-visi-sec{
+  svg{
+    color:$greencolor !important;
+    cursor: pointer;
+  }
+}
+
+.search-sec-pay {
+  @include pos-inlineblock();
+  padding-top: 50px;
+  padding-bottom: 20px;
+  .payroll-details-data{
+    width:20%;
+    float: left;
+    h3{
+      color: $bluecolor !important;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    p{
+      font-size: 17px;
+      color: $inputcolorgrey !important;
+      margin-top: 7px;
+      font-weight:500;
+    }
+  }
+}
+
+.payroll-desc{
+  width:32%;
+}
+.payroll-ref{
+  width:15%;
+}
+.payroll-ref-sec{
+  width:15%;
+}
+.payroll-type{
+  width:11%;
+}
+.payroll-cal-amt{
+  width:12%;
+}
+.payroll-check-amt{
+  width:13%;
+}
+
+.pdf-payroll-desc{
+  width: 19% !important;
+}
+.pdf-payroll-ref{
+  width:8%;
+}
+.pdf-payroll-ref-sec{
+  width:8%;
+}
+.pdf-payroll-type{
+  width:7%;
+}
+.pdf-payroll-cal-amt{
+  width:7%;
+}
+.pdf-payroll-chk-amt{
+  width:9%;
+}
+
+.main-gen-width-new{
+  width:150px;
+}
+
+.form-newsss-pure{
+  .form-details-label{
+    .semicolon{
+      margin-bottom: 0px;
+      color: $inputcolorgrey;
+      font-size: 21px;
+      top: -6px;
+      position: relative;
+      font-family: "Inter", sans-serif !important;
+    }
+  }
+}
+
+.back-sec{
+  @include pos-block();
+  .back-btn-sec{
+    position: absolute;
+    left: 0px;
+    top: -22px;
+    text-decoration: none;
+    color: $orangecolor;
+    font-size: 19px;
+    font-weight: 500;
+    svg{
+      position: relative;
+      top: -1px;
+      font-size: 28px;
+    }
+  }
+}
