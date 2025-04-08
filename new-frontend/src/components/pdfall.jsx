@@ -466,7 +466,7 @@ function Pdf() {
                   </table>
                 </div>
 
-                <div className="main-pdf-sec">
+                <div className="main-pdf-sec pagebrpr pagebreak">
                   <h2 className='pdf-main-heads'>Employment Information</h2>
                   <table className="general-sec-pdf">
                     <tbody>
@@ -568,7 +568,7 @@ function Pdf() {
                   </table>
                 </div>
 
-                <div className="main-pdf-sec pagebrpr pagebreak">
+                <div className="main-pdf-sec ">
                   <h2 className='pdf-main-heads'>Emp School Information</h2>
                   <table className="general-sec-pdf">
                     <tbody>
@@ -650,7 +650,7 @@ function Pdf() {
 
 
 
-                <div className="main-pdf-sec">
+                <div className="main-pdf-sec pagebrpr pagebreak">
                   <h2 className='pdf-main-heads'>Service Details</h2>
                   <table className="general-sec-pdf">
                     <tbody>

@@ -1633,17 +1633,17 @@ font-size: 16px !important;
 }
 .padding-top-pdf{
   padding-top: 15px !important;
-  border-top: 2px solid #000000;
+  border-top: 2px solid $blackcolor;
 }
 .padding-bottom-pdf{
   padding-bottom: 15px !important;
 }
 .pdf-main-heads{
   font-size: 17px;
-    background-color: #d2d2d2;
+    background-color: $greyshade;
     text-align: left;
     padding: 13px 20px;
-    border-left: 2px solid #000000;
+    border-left: 2px solid $blackcolor;
     margin-bottom: 20px;
 
 }

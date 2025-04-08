@@ -10,8 +10,11 @@ import vendorsrchimg from '../assets/img/vendor-serach-icon.png';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import payrollcodeimg from '../assets/img/payroll-code.png';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
-
+import { loginSuccess } from '../features/userdataSlice';
+import { login, foegetpasword } from '../actions/admin.actions';
+import secureLocalStorage from "react-secure-storage";
+import { useDispatch } from "react-redux";
+import { AppContext } from '../context';
 const Sidebar = () => {
   const location = useLocation();
   const isActiveMenu = (paths) => {
@@ -21,6 +24,7 @@ const Sidebar = () => {
   const [formDate, setformDate] = useState("");
   const [activeMenus, setActiveMenus] = useState('home');
   const [activeSubMenus, setActiveSubMenus] = useState();
+    const dispatch = useDispatch();
   React.useEffect(() => {
 
     if (window.location.pathname == '/') {
@@ -130,7 +134,15 @@ const Sidebar = () => {
 
 
   }
+  const logout = (e) => {
+   
+    // secureLocalStorage.removeItem('employeeData');
+    secureLocalStorage.removeItem('token');
+      dispatch(loginSuccess());
 
+    navigate(`/login`);
+
+  }
   return (
     <>
       <aside className="aside aside-fixed admin-fixed">
@@ -174,7 +186,7 @@ const Sidebar = () => {
             <li><NavLink to="/" className={({ isActive }) => `nav-link-menu ${isActive ? 'activeapprove' : ''}`}><img src={vendorsrchimg} className='vendor-img' /><span>Vendor Search</span></NavLink></li>
             <li><NavLink to="/" className={({ isActive }) => `nav-link-menu ${isActive ? 'activeapprove' : ''}`}><CheckCircleIcon /><span>Check Search</span></NavLink></li>
             <li className='menu-sec'><NavLink to="/" className={({ isActive }) => `nav-link-menu ${isActive ? 'activeapprove' : ''}`}><img src={payrollcodeimg} /><span>Payroll Codes <span className='arrow-right'><NavigateNextIcon /></span></span></NavLink></li>
-            <li><NavLink to="/" className={({ isActive }) => `nav-link-menu lastnav-link ${isActive ? 'activeapprove' : ''}`}><LogoutIcon /><span>Logout</span></NavLink></li>
+            <li onClick={(e) => { logout(e) }}><NavLink to="/" className={({ isActive }) => `nav-link-menu lastnav-link ${isActive ? 'activeapprove' : ''}`} ><LogoutIcon /><span>Logout</span></NavLink></li>
           </ul>
         </div>
       </aside>
