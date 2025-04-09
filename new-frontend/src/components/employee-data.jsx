@@ -219,7 +219,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMLNAM} ,{employeeData.EMFNAM} {employeeData.EMMNAM} </p>
+                                                                            <p>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM} </p>
                                                                         </div>
 
                                                                     </div>

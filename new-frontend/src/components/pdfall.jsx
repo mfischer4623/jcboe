@@ -650,7 +650,7 @@ function Pdf() {
 
 
 
-                <div className="main-pdf-sec pagebrpr pagebreak">
+                <div className="main-pdf-sec">
                   <h2 className='pdf-main-heads'>Service Details</h2>
                   <table className="general-sec-pdf">
                     <tbody>
