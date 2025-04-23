@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from './header';
 import Sidebar from './sidebar';
@@ -6,17 +7,18 @@ import SearchIcon from '@mui/icons-material/Search';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import filticon from '../assets/img/filter-icon-blue.png';
+import viewicon from '../assets/img/view-icon.png';
+import { Link } from 'react-router-dom';
+import secureLocalStorage from "react-secure-storage";
+import {
+  useNavigate
+} from "react-router-dom";
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+
+import { purchaseOrders } from '../actions/admin.actions';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
-import { useSelector } from 'react-redux';
-import { updateNullOfObjectValues } from '../helpers/helper';
-import { attaendansear } from '../actions/admin.actions';
-import secureLocalStorage from "react-secure-storage";
-import { AppContext } from '../context';
-
 // modal code start here
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -27,10 +29,6 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import {
-  useNavigate
-} from "react-router-dom";
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -41,20 +39,19 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-const Attendance = () => {
-  const [employeeData, setEmployeeData] = useState(null);
+const Vendorsearchlist = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const [perPage, setPerPage] = useState(10);
-
+  const [vendeoda, setvendeoda] = useState(null);
 
   const [firstLoading, setFirstLoading] = useState(true);
   const [loader, setLoader] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [searchPlaceholder, setSearchPlaceholder] = useState('Job Code');
-  const [searchBy, setSearchBy] = useState('job_code');
+  const [searchPlaceholder, setSearchPlaceholder] = useState('Vendor #');
+  const [searchBy, setSearchBy] = useState('VNNO');
   const [searchValue, setSearchValue] = useState('');
   const [actionallCsv, setActionallCsv] = useState(Array(0));
   const [actionbulkallCsv, setActionbulkallCsv] = useState(Array(0));
@@ -65,43 +62,38 @@ const Attendance = () => {
   const handleClosedraft = () => setOpendraft(false);
   let navigate = useNavigate();
   useEffect(() => {
-    var userid = secureLocalStorage.getItem('employeeData');
+    var userid = secureLocalStorage.getItem('showPOData');
+    var podat = secureLocalStorage.getItem('vendorNumberData');
+
+    if ((userid) == null || (userid) == undefined) {
 
 
-
-    if (Object.keys(userid).length === 0) {
-
-
-      navigate(`/employeedata`);
+      navigate(`/vendordetails`);
 
     } else {
+       console.log(podat);
+      setvendeoda(podat[0]);
       setFirstLoading(true);
-      console.log(userid);
-      setEmployeeData(userid);
-      attaendansear(userid.EMSSAN).then((res) => {
-        console.log('get-attendence res====>>>', res.data);
-        if (res.data.length > 0) {
-          const totalPages = Math.ceil(res.data.length / perPage);
-          setTotalPage(totalPages);
-          const startIndex = (pageNo - 1) * perPage;
-          const endIndex = startIndex + perPage;
-          setAllattendataexta(res.data);
-          var customerList_temp = res.data.slice(startIndex, endIndex);
-          for (let i = 0; i < customerList_temp.length; i++) { customerList_temp[i].check_status = false; }
-          console.log(customerList_temp);
-          setAllattendata(customerList_temp);
-        }
+      const totalPages = Math.ceil(userid.length / perPage);
+      setTotalPage(totalPages);
+      const startIndex = (pageNo - 1) * perPage;
+      const endIndex = startIndex + perPage;
+      setAllattendataexta(userid);
+      var customerList_temp = userid.slice(startIndex, endIndex);
+      for (let i = 0; i < customerList_temp.length; i++) { customerList_temp[i].check_status = false; }
+      console.log(customerList_temp);
+      setAllattendata(customerList_temp);
+      setFirstLoading(false);
 
 
-        setFirstLoading(false);
-
-      }).catch(err => {
-        setFirstLoading(false);
-      })
-        ;
     }
 
   }, []);
+
+
+
+
+
   const changePage = (page) => {
 
     if (page < 1) page = 1;
@@ -122,18 +114,21 @@ const Attendance = () => {
   const handleColumnClick = (type) => {
     let placeholder = '';
     switch (type) {
-      case 'job_code':
-        placeholder = 'Job Code';
+      case 'VNNO':
+        placeholder = 'Vendor #';
         break;
-      case 'type':
-        placeholder = 'Absence Type';
+      case 'VNNAME':
+        placeholder = 'Vendor Name';
         break;
-      case 'year':
-        placeholder = 'Year';
+      case 'VNADDR':
+        placeholder = 'Address';
+        break;
+      case 'VNCITY':
+        placeholder = 'City, State Zip';
         break;
 
       default:
-        placeholder = 'Job Code';
+        placeholder = 'Vendor #';
         break;
     }
     setSearchPlaceholder(placeholder);
@@ -156,9 +151,22 @@ const Attendance = () => {
   const gosubmit = (e) => {
 
     setFirstLoading(true);
-    if (searchBy == 'job_code') {
+    if (searchBy == 'VNNO') {
+      const filteredData = allattendataextac.filter(item => item.VNNO.toString().includes(searchValue));
+      const totalPages = Math.ceil(filteredData.length / perPage);
+      setTotalPage(totalPages);
+      const startIndex = (1 - 1) * perPage;
+      var customerList_temp = filteredData.slice(startIndex, startIndex + perPage);
+      for (let i = 0; i < customerList_temp.length; i++) { customerList_temp[i].check_status = false; }
+      console.log(customerList_temp);
+      setAllattendata(customerList_temp);
+      setPageNo(1);
+
+
+    }
+    if (searchBy == 'VNNAME') {
       const filteredData = allattendataextac.filter((item) =>
-        item.HAJOB.toLowerCase().includes(searchValue.toLowerCase())
+        item.VNNAME.toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -171,24 +179,11 @@ const Attendance = () => {
 
 
     }
-    if (searchBy == 'type') {
+    if (searchBy == 'VNCITY') {
       const filteredData = allattendataextac.filter((item) =>
-        item.HAABS.toLowerCase().includes(searchValue.toLowerCase())
-      );
-      const totalPages = Math.ceil(filteredData.length / perPage);
-      setTotalPage(totalPages);
-      const startIndex = (1 - 1) * perPage;
-      var customerList_temp = filteredData.slice(startIndex, startIndex + perPage);
-      for (let i = 0; i < customerList_temp.length; i++) { customerList_temp[i].check_status = false; }
-      console.log(customerList_temp);
-      setAllattendata(customerList_temp);
-      setPageNo(1);
-
-
-    }
-    if (searchBy == 'year') {
-      const filteredData = allattendataextac.filter((item) =>
-        item.MEMBER.toLowerCase().includes(searchValue.toLowerCase())
+        item.VNCITY.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.VNST.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.VNZIP.toString().toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -210,8 +205,8 @@ const Attendance = () => {
 
   }
   const handleClearFilter = () => {
-    setSearchPlaceholder('Job Code');
-    setSearchBy('job_code');
+    setSearchPlaceholder('Vendor #');
+    setSearchBy('VNNO');
     setSearchValue('');
     setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / perPage);
@@ -259,39 +254,40 @@ const Attendance = () => {
     setAllattendata(customerList_temp);
 
   };
-  
-const exportTopdf = (e) => {
+
+  const exportTopdf = (e) => {
 
 
-  setErrorMsgForm('');
-  // Headers for each column
-
-  // Convert users data to a csv
-  console.log(actionbulkallCsv);
-  console.log('actionbulkallCsv', actionbulkallCsv);
-  var temp_csv = Array(0);
-  console.log(actionbulkallCsv.length);
-
-  if (actionbulkallCsv.length > 0) {
-    if (actionbulkallCsv.length < 26) {
-      let text = actionbulkallCsv.toString();
-      console.log(text);
-      localStorage.setItem("allprintnew", JSON.stringify(actionbulkallCsv));
-      window.open('printattende/', '_blank', 'noopener,noreferrer');
-    } else {
-      setErrorMsgForm('Maximum Limit of 25 forms reached!');
-      setOpendraft(true);
-    }
+        window.open('printshowPO/', '_blank', 'noopener,noreferrer');
+ 
 
 
-  }
-  else {
-    setErrorMsgForm('Please Select a Row');
-    setOpendraft(true);
+   
 
-  }
+  };
 
-};
+  const checkSelected = (PO, PODOC) => {
+    purchaseOrders( PODOC,PO).then((res) => {
+      console.log('add-user res=====>>>>', res.data);
+      if (res.data == '' || res.data == null) {
+
+
+        return;
+      } else {
+
+        secureLocalStorage.setItem("poData", res.data);
+        secureLocalStorage.setItem("checkforsh", 'yes');
+        secureLocalStorage.setItem("pobasicData", { podoc:PODOC, ponum: PO  });
+
+        navigate("/podetails");
+      }
+
+
+    }).catch((error) => {
+
+      console.log('error occurs while registring the user', error);
+    });
+  };
   return (
     <>
       <Header />
@@ -302,10 +298,10 @@ const exportTopdf = (e) => {
           <div className='col-md-12'>
             <div className='emp-main-serach'>
               <div className='emp-serach emp-data-head emp-another-sec'>
-                {employeeData != null &&
+                {vendeoda != null &&
                   <>
-                    <h2>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM} </h2>
-                    <h3>Emp Id:- <span> {employeeData.EMSSAN}</span></h3>
+
+                    <h3>Vendor Number:-<span> {vendeoda.VNNO}</span></h3>
                   </>
                 }
                 {/* <div className='print-sec-inner'>
@@ -322,11 +318,14 @@ const exportTopdf = (e) => {
           <div class="main-heading-sec ">
             <div class="col-md-12">
               <div class="head-inner">
-                <h2>Attendance</h2>
-                <div class="head-right">
-                  <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
-                  <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
+                <h2>Purchase Orders</h2>
+                <div class="head-right po-print-right">
+                  <span className='print-icon ' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                  {/* <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button> */}
                 </div>
+              </div>
+              <div className='back-sec'>
+                <Link to="/vendordetails" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
               </div>
             </div>
           </div>
@@ -339,10 +338,10 @@ const exportTopdf = (e) => {
             <div className='row'>
 
               <div className='col-md-12 emp-serch-main' >
-                <div className='search-sec'>
+                {/* <div className='search-sec'>
                   <input type='text' className='input-srch' placeholder={searchPlaceholder} onChange={handleSearchInput} value={searchValue} onKeyPress={handleKeypress} />
                   <button className='go-sec' onClick={(e) => gosubmit()}>Go</button>
-                </div>
+                </div> */}
               </div>
 
             </div>
@@ -352,70 +351,65 @@ const exportTopdf = (e) => {
                 <table class="table table-sec">
                   <thead class="thead-before-sec thaed-colaps-sec">
                     <tr>
-                      <th className='check-width'>
-                        {/* <FormGroup>
-                          <FormControlLabel control={<Checkbox />} label="" />
-                        </FormGroup> */}
-                        #
-                      </th>
-                      <th className='job-width' onClick={() => handleColumnClick('job_code')}>Job Code <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width' onClick={() => handleColumnClick('type')}>Absence Type <span className='filt-icon'><img src={filticon} /></span></th>
 
-                      <th className='beg-bal-width' >Beginning Balance </th>
-                      <th className='earnd-width'>Earned </th>
+                      <th className='job-width vendor-widh' >PO</th>
+                      <th className='abse-type-width vendo-name-width' >PODOC <span className='filt-icon'></span></th>
 
-                      <th className='used-width'>Used </th>
-                      <th className='earn-balan-width'>Ending Balance </th>
-
-                      <th className='year-width' onClick={() => handleColumnClick('year')}>Year <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='beg-bal-width addrss-widh' >POATTN <span className='filt-icon'></span></th>
+                      <th className='earnd-width city-widh' >POTOT <span className='filt-icon'></span></th>
+                      <th className='earnd-width city-widh' >POIUSR <span className='filt-icon'></span></th>
+                      <th className='earnd-width city-widh' >POAUSR <span className='filt-icon'></span></th>
+                      <th className='used-width view-widh'>View </th>
                     </tr>
                   </thead>
                   <tbody class="tbody-light">
+
                     {
-                      firstLoading ? <tr ><td colSpan={8}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
+                      firstLoading ? <tr ><td colSpan={7}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
                         {allattendata.length > 0 ?
 
                           allattendata.map((entry, index) => (
 
                             <tr>
-                              <td class="check-width">
-                                <FormGroup>
-                                  <FormControlLabel control={<Checkbox />} label=""
-
-                                    name="prev_all"
-                                    checked={entry.check_status}
-                                    onClick={(e) => entry.HAJOB && createCsv(e, entry, index)}
-                                  />
-                                </FormGroup>
-                              </td>
-                              <td class="value-table">
-                                <p>{entry.HAJOB} </p>
-                              </td>
-                              <td class="value-table">
-                                <p>{entry.HAABS}</p>
-                              </td>
-                              <td class="value-table">
-                                <p>{entry.HAFBBL} </p>
-                              </td>
-                              <td class="value-table">
-                                <p>{entry.HAFERN}</p>
-                              </td>
-                              <td class="value-table">
-                                <p>{entry.HAFUSE}</p>
-                              </td>
-                              <td class="value-table">
-                                <p>{entry.HABAL}</p>
-                              </td>
 
                               <td class="value-table">
-                                <p>{entry.MEMBER}</p>
+                                <p>{entry.PO} </p>
+                              </td>
+                              <td class="value-table">
+                                <p>{entry.PODOC}</p>
+                              </td>
+                              <td class="value-table">
+                                <p>{entry.POATTN} </p>
+                              </td>
+                              <td class="value-table">
+                                <p>{entry.POTOT}</p>
+
+                              </td>
+                              <td class="value-table">
+                                <p>{entry.POIUSR}</p>
+
+                              </td>
+                              <td class="value-table">
+                                <p>{entry.POAUSR}</p>
+
+                              </td>
+
+                              <td class="value-table view-sec">
+                                <Link to="#"
+                                  onClick={(e) => { e.preventDefault(); checkSelected(entry.PO, entry.PODOC); }}
+
+                                >  <img src={viewicon} className='view-icon' alt="view" /></Link>
                               </td>
                             </tr>
 
                           ))
-                          : <tr><td colSpan={8}>No Data Found</td></tr>}
+                          : <tr><td colSpan={7}>No Data Found</td></tr>}
                       </>
                     }
+
+
+
+
 
 
 
@@ -426,9 +420,6 @@ const exportTopdf = (e) => {
                   </tbody>
                 </table>
               </div>
-              {/* table section end from here */}
-
-              {/* pagination section start here */}
               {totalPage > 1 ? <>
                 <div className='pagination-sec'>
                   <div className='page-left'>
@@ -439,7 +430,6 @@ const exportTopdf = (e) => {
                 </div>
               </> : ''
               }
-              {/* pagination section end here */}
 
             </div>
           </div>
@@ -451,6 +441,7 @@ const exportTopdf = (e) => {
 
 
       </div>
+
       <BootstrapDialog
         onClose={handleClosedraft}
         aria-labelledby="customized-dialog-title"
@@ -476,9 +467,8 @@ const exportTopdf = (e) => {
           </Typography>
         </DialogContent>
       </BootstrapDialog>
-
     </>
   )
 }
 
-export default Attendance;
+export default Vendorsearchlist;

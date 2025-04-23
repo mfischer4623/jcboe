@@ -2,25 +2,24 @@ import React, { useState, useEffect } from 'react';
 import Header from './header';
 import Sidebar from './sidebar';
 import PrintIcon from '@mui/icons-material/Print';
-import SearchIcon from '@mui/icons-material/Search';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import filticon from '../assets/img/filter-icon-blue.png';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { useSelector } from 'react-redux';
 import { updateNullOfObjectValues } from '../helpers/helper';
-import { voldeductions } from '../actions/admin.actions';
+import { absencecode } from '../actions/admin.actions';
 import secureLocalStorage from "react-secure-storage";
 import { AppContext } from '../context';
 import {
   useNavigate
 } from "react-router-dom";
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-const Voluntarydeductions = () => {
+const Absence = () => {
+
   const [employeeData, setEmployeeData] = useState(null);
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
@@ -32,43 +31,33 @@ const Voluntarydeductions = () => {
   const [loader, setLoader] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [searchPlaceholder, setSearchPlaceholder] = useState('School Year Ending ');
-  const [searchBy, setSearchBy] = useState('school_year');
+  const [searchPlaceholder, setSearchPlaceholder] = useState('Code');
+  const [searchBy, setSearchBy] = useState('ABKEY');
   const [searchValue, setSearchValue] = useState('');
   let navigate = useNavigate();
   useEffect(() => {
-    var userid = secureLocalStorage.getItem('employeeData');
+
+    setFirstLoading(true);
+
+    absencecode().then((res) => {
+      console.log('get-attendence res====>>>', res.data);
+      if (res.data.length > 0) {
+        const totalPages = Math.ceil(res.data.length / perPage);
+        setTotalPage(totalPages);
+        const startIndex = (pageNo - 1) * perPage;
+        const endIndex = startIndex + perPage;
+        setAllattendataexta(res.data);
+        setAllattendata(res.data.slice(startIndex, endIndex));
+      }
 
 
+      setFirstLoading(false);
 
-    if (Object.keys(userid).length === 0) {
+    }).catch(err => {
+      setFirstLoading(false);
+    })
+      ;
 
-
-      navigate(`/employeedata`);
-
-    } else {
-      setFirstLoading(true);
-      console.log(userid);
-      setEmployeeData(userid);
-      voldeductions(userid.EMSSAN).then((res) => {
-        console.log('get-attendence res====>>>', res.data);
-        if (res.data.length > 0) {
-          const totalPages = Math.ceil(res.data.length / perPage);
-          setTotalPage(totalPages);
-          const startIndex = (pageNo - 1) * perPage;
-          const endIndex = startIndex + perPage;
-          setAllattendataexta(res.data);
-          setAllattendata(res.data.slice(startIndex, endIndex));
-        }
-
-
-        setFirstLoading(false);
-
-      }).catch(err => {
-        setFirstLoading(false);
-      })
-        ;
-    }
 
   }, []);
   const changePage = (page) => {
@@ -89,18 +78,18 @@ const Voluntarydeductions = () => {
   const handleColumnClick = (type) => {
     let placeholder = '';
     switch (type) {
-      case 'job_code':
-        placeholder = 'Job Code';
+      case 'ABKEY':
+        placeholder = 'Code ';
         break;
-      case 'type':
-        placeholder = 'Absence Type';
+      case 'check_date':
+        placeholder = 'Check Date';
         break;
-      case 'year':
-        placeholder = 'Year';
+      case 'form':
+        placeholder = 'Form';
         break;
 
       default:
-        placeholder = 'Job Code';
+        placeholder = 'Code';
         break;
     }
     setSearchPlaceholder(placeholder);
@@ -123,9 +112,9 @@ const Voluntarydeductions = () => {
   const gosubmit = (e) => {
 
     setFirstLoading(true);
-    if (searchBy == 'school_year') {
+    if (searchBy == 'ABKEY') {
       const filteredData = allattendataextac.filter((item) =>
-        item.schyear.toLowerCase().includes(searchValue.toLowerCase())
+        item.ABKEY.toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -145,8 +134,8 @@ const Voluntarydeductions = () => {
 
   }
   const handleClearFilter = () => {
-    setSearchPlaceholder('Job Code');
-    setSearchBy('school_year');
+    setSearchPlaceholder('Code');
+    setSearchBy('ABKEY');
     setSearchValue('');
     setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / perPage);
@@ -160,43 +149,32 @@ const Voluntarydeductions = () => {
 
   }
 
-  let percentageUS = Intl.NumberFormat("en-US", {
-    style: "percent",
-    maximumFractionDigits: 2
-  });
   return (
     <>
+
       <Header />
       <Sidebar />
 
       <div className='main-inner-sec content-main'>
-        <div className='main-inner-heading'>
+        {/* <div className='main-inner-heading'>
           <div className='col-md-12'>
             <div className='emp-main-serach'>
               <div className='emp-serach emp-data-head emp-another-sec'>
-                {employeeData != null &&
-                  <>
-                    <h2>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM} </h2>
-                    <h3>Emp Id:- <span> {employeeData.EMSSAN}</span></h3>
-                  </>
-                }
-                {/* <div className='print-sec-inner'>
-                  <span className='print-icon'><PrintIcon /></span>
-                </div> */}
+              
+                    <h2>Vendor Name Search</h2>
               </div>
             </div>
 
 
           </div>
-        </div>
+        </div> */}
 
-        <div class=" emp-main-heading-emp">
+        <div class=" emp-main-heading-emp all-simple-table-margin">
           <div class="main-heading-sec ">
             <div class="col-md-12">
               <div class="head-inner">
-                <h2>Voluntary Deductions</h2>
+                <h2>Absence Leave Codes</h2>
                 <div class="head-right">
-                  {/* <span className='print-icon'><PrintIcon /></span> */}
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
@@ -224,22 +202,20 @@ const Voluntarydeductions = () => {
                 <table class="table table-sec">
                   <thead class="thead-before-sec thaed-colaps-sec">
                     <tr>
-                      {/* <th className='check-width'>
-                        <FormGroup>
-                          <FormControlLabel control={<Checkbox />} label="" />
-                        </FormGroup>
-                      </th> */}
-                      <th className='job-width schol-yaer-widh'>School Year Ending <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width deductn-width'>Deduction </th>
-                      <th className='used-width juris-width'>Jurisdiction </th>
-                      <th className='used-width duct-width'>Deduction Amount </th>
-                      <th className='used-width perctnt-width'>Percent of Gross </th>
+
+                      <th className='job-width vendor-widh code-widh' >Code<span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='abse-type-width desc-widh'>Description</th>
+
                     </tr>
                   </thead>
                   <tbody class="tbody-light">
+
+
+
                     {
-                      firstLoading ? <tr ><td colSpan={6}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
+                      firstLoading ? <tr ><td colSpan={2}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
                         {allattendata.length > 0 ?
+
                           allattendata.map((entry, index) => (
 
                             <tr>
@@ -249,29 +225,24 @@ const Voluntarydeductions = () => {
                                 </FormGroup>
                               </td> */}
                               <td class="value-table">
-                                <p>{entry.schyear} </p>
+                                <p>{(entry.ABKEY)} </p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.DVDED} </p>
+                                <p>{(entry.ABDESC)} </p>
                               </td>
-                              <td class="value-table">
-                                <p>{entry.DVJUR}</p>
-                              </td>
-                              <td class="value-table">
-                                <p>$ {entry.DVAMT}</p>
-                              </td>
-                              <td class="value-table">
-                                <p>{percentageUS.format(entry.DVPCT)}</p>
-                              </td>
+
 
 
                             </tr>
-
-
                           ))
-                          : <tr><td colSpan={5}>No Data Found</td></tr>}
+                          : <tr><td colSpan={2}>No Data Found</td></tr>}
                       </>
                     }
+
+
+
+
+
 
 
 
@@ -279,9 +250,6 @@ const Voluntarydeductions = () => {
                   </tbody>
                 </table>
               </div>
-              {/* table section end from here */}
-
-              {/* pagination section start here */}
               {totalPage > 1 ? <>
                 <div className='pagination-sec'>
                   <div className='page-left'>
@@ -292,8 +260,6 @@ const Voluntarydeductions = () => {
                 </div>
               </> : ''
               }
-
-              {/* pagination section end here */}
 
             </div>
           </div>
@@ -310,4 +276,4 @@ const Voluntarydeductions = () => {
   )
 }
 
-export default Voluntarydeductions;
+export default Absence;

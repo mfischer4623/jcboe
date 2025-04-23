@@ -95,8 +95,13 @@ const EmployeeSearch = () => {
     };
     const handleInputChange = (e) => {
         setFormerror("");
-        setEmpnumsear(e.target.value);
 
+        if(!isNaN(parseInt(e.target.value)) && parseInt(e.target.value) > 0){
+            setEmpnumsear(parseInt(e.target.value))
+        } else{
+            setEmpnumsear('');
+        }   
+       
 
 
     };
@@ -134,7 +139,12 @@ const EmployeeSearch = () => {
 
 
     };
-
+    const handleKeypress = (e) => {
+        if (e.which === 13) {
+            handleSubmit();
+            e.preventDefault();
+        }
+    };
     return (
         <>
             <Header />
@@ -192,7 +202,9 @@ const EmployeeSearch = () => {
 
                                                     value={empnumsear}
 
-                                                    onChange={(e) => { handleInputChange(e) }} />
+                                                    onChange={(e) => { handleInputChange(e) }} 
+                                                    onKeyPress={handleKeypress}
+                                                    />
                                             </Box>
                                         </div>
                                     </div>

@@ -577,6 +577,9 @@ $redcolor:#d32f2f;
     font-weight: 500;
     box-shadow: 1px 1px 15px #ec68001a;
     margin-right: 10px;
+    position: relative;
+    top: 1px;
+
     &:hover{
       background-color: $whitecolor;
       color: $orangecolor;
@@ -709,7 +712,7 @@ $redcolor:#d32f2f;
 }
 
   .margin-all-sec{
-    margin: 0px 30px !important;
+    margin: 0px 25px !important;
   }
 
   .accordion-margin{
@@ -1080,6 +1083,7 @@ $redcolor:#d32f2f;
   /* border: none !important; */
   /* float: right; */
   justify-content: right;
+  font-family: $main-font !important;
   gap:20px;
     .input-srch{
       width: 232px;
@@ -1089,6 +1093,7 @@ $redcolor:#d32f2f;
       outline: none;
       color: $inputcolorgrey;
       font-size: 16px;
+      font-family: $main-font !important;
     }
 }
 
@@ -1276,6 +1281,13 @@ $redcolor:#d32f2f;
 }
 
 @media (max-width: 1400px) {
+  .backg-shaw-botm {
+    padding: 90px 50px 60px 50px !important;
+}
+
+    .diff-po-table .tbody-po-light tr th {
+        width: 257px !important;
+    }
   .payroll-check-amt{
     width:15% !important;
   }
@@ -1293,6 +1305,33 @@ $redcolor:#d32f2f;
 }
 .heading-top {
   font-size: 21px;
+}
+.diff-po-table .tbody-po-light tr th {
+  width: 253px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .bank-accont-widh{
+  width: 390px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-form-widh{
+  width:100px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-ven-widh{
+  width:235px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-no-widh{
+  width:450px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-date-widh{
+  width:160px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-recon-widh{
+  width:100px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list  .chk-recon-date-widh{
+  width:100px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chek-amt-widh{
+  width:100px !important;
 }
 }
 
@@ -1315,8 +1354,24 @@ $redcolor:#d32f2f;
   .tab-sec-main .MuiBox-root .MuiBox-root .MuiTabs-root .MuiTabs-scroller .MuiTabs-list .MuiButtonBase-root.Mui-selected{
 
   }
+  .po-details-sec .po-details-head h2 {
+    font-size: 18px;
+  }
+ .po-details-sec .diff-po-table .table .tbody-left-po tr th {
+    width: 210px !important;
 }
-
+.diff-po-table .table .tbody-po-light tr th {
+  width: 237px !important;
+}
+}
+@media (max-width: 1450px) {
+.diff-po-table .table .tbody-po-light tr th {
+  width: 254px !important;
+}
+.diff-po-table .table .tbody-left-po tr th {
+  width: 254px !important;
+}
+}
 @media (max-width: 1250px) {
   .level-desc-width {
     width: 216px !important;
@@ -1326,6 +1381,15 @@ $redcolor:#d32f2f;
 }
 .heading-top {
   font-size: 19px;
+}
+body .tab-sec-main .backg-shaw-botm{
+  padding:90px 25px 110px 25px !important;
+}
+.form-detail-main .form-detail-left .vebdor-details-left .form-details-label h3{
+  line-height: 30px !important;
+}
+.form-detail-inner .vedor-detail-right .vebdor-details-left .form-details-label h3{
+  line-height: 30px !important;
 }
 }
 
@@ -1358,6 +1422,21 @@ $redcolor:#d32f2f;
   .level-desc-width {
     width: 170px;
 }
+.table-main-sec .table .check-bank-widh{
+  width:202px !important;
+}
+.table-main-sec .table .bank-accont-widh{
+  width:259px !important;
+}
+.table-main-sec .table .chk-ven-widh{
+  width:189px !important;
+}
+.table-main-sec .table .chk-no-widh{
+  width:284px !important;
+}
+.table-main-sec .table .chk-date-widh{
+  width:168px !important;
+}
 }
 @media (max-width: 1500px) {
   .emp-data-sec .emp-data-value-sec .form-newsss-pure {
@@ -1378,8 +1457,47 @@ $redcolor:#d32f2f;
 .level-desc-width {
   width: 180px;
 }
+.emp-main-heading-emp .head-inner h2{
+  font-size: 19px;
+}
+.head-inner-main h3{
+  font-size: 19px;
+}
+.table-main-sec .table-sech-list thead tr th{
+padding: 5px 5px !important;
+line-height: 23px;
+}
+.table-main-sec .table-sech-list .chek-amt-widh{
+  width: 100px !important;
+}
+.table-main-sec .table-sech-list .chk-recon-date-widh{
+  width:130px !important;
+}
+.table-main-sec .table-sech-list .chk-no-widh{
+  width:369px !important;
+}
+.table-main-sec .table-sech-list .chk-ven-widh{
+  width:220px !important;
+}
+.table-main-sec .table-sech-list .bank-accont-widh{
+  width:360px !important;
+}
+.table-main-sec .table-sech-list .check-bank-widh{
+  width:150px !important;
+}
+.table-sech-list .filt-icon img{
+  height: 11px;
+  position: relative;
+  left: 1px;
+}
 }
 @media (max-width: 1350px) {
+  .vebdor-details-left {
+    margin-bottom: 1px;
+}
+  .main-inner-sec .tab-sec-emp .backg-shaw-botm{
+    padding: 90px 40px 60px 40px !important;
+  }
   .form-detail-inner .form-detail-left .form-detail-right-inner .form-details-value p{
     font-size: 16px;
   }
@@ -1416,9 +1534,96 @@ $redcolor:#d32f2f;
   .form-large-data-sec .form-newss-right-pure .form-details-value p{
     font-size: 16px;
   }
+  .tab-sec-main  .backg-shaw-main{
+    padding: 90px 40px 90px 40px !important;
+  }
+  .diff-po-table .tbody-po-light tr th{
+    font-size: 17px !important;
+    padding: 17px 13px 17px 13px !important;
+  }
+  .diff-po-table .tbody-po-light tr td{
+    padding: 17px 13px 17px 13px !important;
+    font-size: 17px !important;
+  }
+  .diff-po-table .tbody-po-light tr th {
+    width: 215px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .bank-accont-widh{
+  width: 390px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-form-widh{
+  width:100px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-ven-widh{
+  width:235px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-no-widh{
+  width:240px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-date-widh{
+  width:160px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-recon-widh{
+  width:100px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list  .chk-recon-date-widh{
+  width:100px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chek-amt-widh{
+  width:90px !important;
+}
+.table-main-sec .table-sech-list thead tr th {
+  padding: 5px 1px !important;
+}
+.form-detail-main .form-detail-left .vebdor-details-left .form-details-label{
+  margin-bottom: 10px;
+}
+.vedor-detail-right .form-detail-left-innerss .form-details-label {
+  margin-bottom: 10px !important;
+}
+.emp-table-sec .backg-detaisl {
+  padding: 50px 30px 50px 40px !important;
+}
 }
 
 @media (max-width: 1300px) {
+  .view-sec img {
+    height: 13px !important;}  
+  .emp-table-inner .table-main-sec .table-sech-list .chk-date-widh {
+    width: 120px !important;
+}
+  .po-details-sec .diff-po-table .table .tbody-left-po tr th {
+    width: 200px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .bank-accont-widh {
+  width: 410px !important;
+}
+.diff-po-table .tbody-po-light tr td {
+  padding: 17px 11px 17px 10px !important;
+  font-size: 17px !important;
+}
+.diff-po-table .tbody-po-light tr th {
+  font-size: 17px !important;
+  padding: 17px 10px 17px 10px !important;
+}
+  .emp-table-inner .table-main-sec .table-sech-list .chk-no-widh {
+    width: 230px !important;
+}
+  .table-main-sec .table-sec thead tr th {
+    font-size: 16px !important;
+}
+.table-main-sec .table-sec tbody tr td{
+  font-size: 16px !important;
+}
+  .emp-table-inner .table-main-sec .table-sech-list .chk-ven-widh {
+    width: 245px !important;
+}
+  .diff-po-table .tbody-po-light tr td{
+    font-size: 16px !important;
+  }
+  .diff-po-table .tbody-po-light tr th {
+    width: 230px !important;
+}
   .emp-main-heading-emp .head-inner h2{
     font-size: 19px;
   }
@@ -1468,8 +1673,24 @@ $redcolor:#d32f2f;
   .form-large-fill{
     width: 100%;;
   }
+  .po-details-sec .po-details-head h2 {
+    font-size: 18px;}
 }
 @media (max-width: 1250px) {
+  .po-details-sec .diff-po-table .table .tbody-left-po tr th {
+    width: 180px !important;
+}
+.po-details-sec .po-details-head h2 {
+  font-size: 18px !important;}
+.diff-po-table .table .tbody-po-light tr th {
+  width: 234px !important;
+}
+  .emp-table-inner .table-main-sec .table-sech-list .chk-no-widh {
+    width: 260px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .chk-ven-widh {
+  width: 295px !important;
+}
   .no-data{
     font-size: 16px !important;
   }
@@ -1514,7 +1735,19 @@ font-size: 16px !important;
 .filt-icon img {
   height: 12px;
 }
+.tab-sec-main  .backg-shaw-main{
+  padding: 90px 0px 90px 0px !important;
 }
+.emp-table-sec .backg-detaisl {
+  padding: 40px 30px 40px 30px !important;
+}
+.emp-table-inner .table-main-sec .table-sech-list .bank-accont-widh {
+  width: 230px !important;
+}
+
+}
+
+
 @media(max-width:1800px){
   .emp-data-value-sec .form-newsss-pure {
     width: 38% !important;
@@ -1522,6 +1755,23 @@ font-size: 16px !important;
 .emp-data-value-sec .form-newss-right-pure {
   width: 62% !important;
 }
+.form-detail-main .vendor-detail-left{
+  width:48%;
+}
+.form-detail-main .vedor-detail-right{
+  width:48%;
+}
+.form-detail-main .vendor-detail-left .vebdor-details-left{
+  width: 56%;
+}
+.form-detail-inner .vendor-detail-left .form-detail-right-inner {
+  width: 44%;}
+  .form-detail-right .vebdor-details-left{
+    width: 56%;
+  }
+  .vedor-detail-right .form-detail-right-innerss{
+    width:44%;
+  }
 }
 
 @media(max-width:1700px){
@@ -1531,8 +1781,37 @@ font-size: 16px !important;
 .emp-data-value-sec .form-newss-right-pure {
   width: 58% !important;
 }
+.diff-po-table .table .tbody-po-light tr th{
+  width:300px;
+}
+.table .chk-no-widh{
+  width: 224px !important;
+}
+.table .chk-recon-date-widh{
+  width:180px !important;
+}
+.table .chek-amt-widh{
+  width:170px !important;
+}
 }
 
+@media(max-width:1850px){
+.chk-no-widh{
+  width: 190px !important;
+}
+.chk-date-widh{
+  width:150px !important;
+}
+.chk-recon-date-widh{
+  width:170px !important;
+}
+.chek-amt-widh{
+  width:152px !important;
+}
+.chk-form-widh{
+  width:150px !important;
+}
+}
 
 .form-newsss-pure{
   width:34% !important;
@@ -1562,6 +1841,7 @@ font-size: 16px !important;
 /** pdf page code start**/
 .reqid-sec{ color: $blackcolor; padding: 18px 8px 17px !important; font-weight: bold; margin-bottom: 6px; border: 0px;  text-align: center;   font-size: 16px; text-transform: uppercase;background-color: $greyshade}
 .conatiner-pdf{width:100%;max-width: 700px;margin:0 auto;margin-bottom: 10px;}
+.conatiner-pdfss{max-width: 750px;width:100%;margin:0 auto;}
 .main-pdf-sec{width:100%; margin:16px 0 3px 3px;  font-size: 15px;}
 .general-sec-pdf{width: 100%;  font-size: 15px;}
 .main-gen-inner{padding: 3px 0; border: none; text-align: left; width:40%;    vertical-align: top;}
@@ -1658,6 +1938,16 @@ font-size: 16px !important;
   .pagebreak{
   
     page-break-before: always;
+  }
+
+}
+
+
+@media print {
+  .pagebreakdd{
+  
+    page-break-before: always;
+    margin-top: 20px;
   }
 
 }
@@ -1895,4 +2185,332 @@ font-size: 16px !important;
       font-size: 28px;
     }
   }
+}
+
+.backg-shaw-main{
+  background-color: $whitecolor !important;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12) !important;
+    padding: 100px 80px 100px 80px !important;
+}
+
+.main-all-marg{
+  margin-top: 5px;
+}
+.head-inner-main{
+  h2{
+    font-size: 19px;
+  }
+  h3{
+    text-align: center;
+    font-size: 19px;
+    margin-bottom: 0px !important;
+    font-weight: 600;
+    color: $blackheadcolor !important;
+    margin-top: 8px;
+  }
+ 
+}
+
+.print-diff{
+  top: 14px !important;
+}
+
+.po-details-sec{
+  margin-top: 40px;
+  margin-bottom: 20px;
+  .po-details-head{
+    background-color: $whitecolor!important;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12) !important;
+    padding: 20px 20px 20px 20px !important;
+    border-left: 3px solid $bluecolor !important;
+    h2{
+      
+      font-size: 19px;
+      text-align: left;
+      margin-bottom: 0px;
+      line-height: 25px;
+      font-weight: 600;
+  }
+}
+}
+
+.margin-top-po-table{
+  margin-top: 30px;
+}
+.tbody-po-light{
+  tr{
+    th{
+      border-bottom: 2px solid $accbordercolor;
+    }
+  }
+}
+.diff-po-table{
+  .tbody-po-light{
+    border-top: 4px solid $bluecolor !important;
+    tr{
+      th{
+        text-align: left;
+        color: $bluecolor !important;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 20px 15px 20px 15px;
+        width:350px;
+      }
+      td{
+        color:$blackheadcolor !important;
+        font-size: 18px;
+        font-weight: 400;
+        padding: 20px 15px 20px 15px;
+        border-right: none !important;
+        text-align: left;
+        p{
+          color:$blackheadcolor !important;
+        }
+      }
+    }
+  }
+}
+.po-data-td{
+  color:$blackheadcolor !important;
+}
+
+.all-simple-table-margin{
+  margin-top: 50px;
+}
+
+.view-sec{
+  p{
+    svg{
+      color:$greencolor !important;
+    }
+  }
+  img{
+    height: 16px;
+    cursor: pointer;
+  }
+}
+
+.print-right{
+  top:0px !important;
+}
+.backg-detaisl {
+  padding: 50px 40px 50px 40px !important;
+}
+
+.border-top-sec{
+  border-top:4px solid $bluecolor !important;
+}
+.vebdor-details-left{
+  margin-bottom: 4px;
+}
+.margin-btm-vendtal{
+  margin-bottom:30px;
+}
+.tab-sec-main-inner-show .row-left{
+  justify-content: left !important;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.search-btn-left{
+  text-align: center !important;
+}
+.check-bank-widh{
+  width:220px;
+}
+.bank-accont-widh{
+  width:250px;
+}
+.chk-form-widh{
+  width:190px;
+}
+.chk-ven-widh{
+  width:180px;
+}
+.chk-no-widh{
+  width:162px;
+}
+.chk-date-widh{
+  width:134px;
+}
+.chk-recon-widh{
+  width:120px;
+}
+.chk-recon-date-widh{
+  width:150px;
+}
+.chek-amt-widh{
+  width:138px;
+}
+
+.aside-body ul li .nav-disply svg{
+top:4px;
+}
+.diff-check-widh{
+ width:150px; 
+}
+.table .code-widh{
+  width:400px !important;
+}
+.table .desc-widh{
+  width:750px !important;
+}
+
+.vali-secs{
+  .MuiBox-root{
+    .MuiFormControl-root{
+      position: relative;
+    .MuiFormHelperText-root {
+      font-family: $main-font !important;
+      position: absolute;
+      bottom: -25px;
+      color:$redcolor !important;
+      margin: 0px !important;
+    }   
+   }
+  }
+}
+
+.bodycloor{
+  background-color: $whitecolor !important;
+}
+.main-heading-sec  .pdf-po{
+  .po-doc-pdf{
+    font-size: 17px !important;
+    margin-bottom: 8px !important;
+  }
+  .po-num-pdf{
+    margin-bottom: 10px !important;
+    font-size: 17px !important;
+  }
+}
+.po-img{
+  padding-bottom: 5px !important;
+}
+.pdf-po-details{
+  margin-top: 20px !important;
+}
+.emp-table-pdf{
+  margin:0 15px !important;
+}
+.margin-top-po-pdf{margin-top: 20px !important;
+  .diff-po-table .tbody-po-light{
+    border-top:3px solid $blackcolor !important;
+  }
+  .diff-po-table .tbody-po-light tr th{
+    color:$blackcolor !important;
+  }
+}
+
+.btn-show-po{
+  position: relative;
+  display: block;
+  top:-5px
+}
+// .pdf-vendor-left{
+//   width:100% !important;
+// }
+// .vendor-detail-middle{
+//   width:100% !important;
+// }
+// .vedor-detail-right{
+//   width:100% !important;
+// }
+
+.pdf-vend-deta{
+  padding-bottom: 15px !important;
+}
+.po-pdf-margin{
+  margin-top: 17px !important;
+}
+
+.emp-table-pdf .pdf-details-headss{
+  border-left: 3px solid $blackcolor !important;
+}
+
+.emp-name-span-bank{
+
+}
+
+.backg-shaw-botm{
+  padding: 90px 80px 60px 80px !important;
+}
+
+.po-print-sec {
+  top: 29px !important;
+}
+
+.vendor-widh{
+width:225px !important;
+}
+.vendo-name-width{
+  width:400px !important;
+}
+.addrss-widh{
+  width:400px;
+}
+
+.city-widh{
+  width:400px;
+}
+.view-widh{
+  width:140px;
+}
+
+.pdf-ven-hash{
+  width:5%;
+}
+.pdf-ven-name{
+  width:10%;
+}
+.pdf-ven-addrss{
+  width:12%;
+}
+.pdf-ven-city{
+  width:15%;
+}
+
+.vedor-detail-right .form-detail-left-innerss .form-details-label{
+  margin-bottom: 19px !important;
+}
+.vendor-print{
+  .print-icon{
+    svg{
+      top: -6px;
+    position: relative;
+    }
+  }
+}
+
+.po-print-right{
+  top:1px;
+}
+
+.bank-accont-widhss {
+  width: 320px;
+}
+.check-bank-widh{
+  width:160px;
+}
+.bank-accont-widhss{
+  width:190px;
+}
+.chk-form-widh{
+  width:150px;
+}
+.chk-ven-widh{
+  width:190px;
+}
+.chk-no-widh{
+  width:170px;
+}
+.chk-date-widh{
+  width:160px;
+}
+.chk-recon-widh{
+  width:100px;
+}
+
+.error-msg .check-error{
+  left: 50%;
+  transform: translate(-50%, 10px);
 }

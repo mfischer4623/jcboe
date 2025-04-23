@@ -189,6 +189,12 @@ function Pdf() {
       marginTop: '10px',
     },
   };
+   useEffect(() => {
+      document.body.className = 'bodycloor';
+      return () => {
+        document.body.className = ''; // clean up
+      };
+    }, []);
   return (
     <>
   

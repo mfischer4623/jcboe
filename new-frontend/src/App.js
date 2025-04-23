@@ -25,8 +25,26 @@ import Pdfall from "./components/pdfall";
 import Pdfattnedetails from "./components/pdfattnedetails";
 import Payrollcheck from "./components/payrollcheck";
 import Payrollcheckprint from "./components/printpayroll";
+import Posearch from "./components/posearch";
+import Podetails from "./components/po-details";
+import Vendorsearch from "./components/vendor-search";
+import Vendorsearchlist from "./components/vendor-search-list";
+import Vendordetails from "./components/vendordetails";
+import Checksearch from "./components/checksearch";
+import Checksearchlist from "./components/checksearchlist";
+import Absence from "./components/absence";
+import Deduct from "./components/deduct";
+import Paytable from "./components/paytable";
+import Job from "./components/job";
+import Addenda from "./components/addenda";
+import Termination from "./components/termination";
+import Pdfvendoename from "./components/pdfvendoename";
+import Pdfvendordetails from "./components/pdfvendordetails";
+import ShowPO  from "./components/showPO";
 
+import Pdfpo from "./components/pdfpo";
 
+import PdfprintshowPO from "./components/pdfprintshowPO";
 // import AdminLayout from "./ui-components/AdminLayout";
 function App() {
 
@@ -72,8 +90,25 @@ function App() {
         <Route path="/printattende" element={<Pdfattnedetails />} />
         <Route path="/showPayrollCheck" element={<Payrollcheck />} />
         <Route path="/printpayroll" element={<Payrollcheckprint />} />
+        <Route path="/posearch" element={<Posearch />} />
+        <Route path="/podetails" element={<Podetails />} />
+        <Route path="/vendorsearch" element={<Vendorsearch />} />
+        <Route path="/vendorsearchlist" element={<Vendorsearchlist />} />
+        <Route path="/vendordetails" element={<Vendordetails />} />
+        <Route path="/checksearch" element={<Checksearch />} />
+        <Route path="/checksearchlist" element={<Checksearchlist />} />
+        <Route path="/absence" element={<Absence />} />
+        <Route path="/deduct" element={<Deduct />} />
+        <Route path="/paytable" element={<Paytable />} />
+        <Route path="/job" element={<Job />} />
+        <Route path="/addenda" element={<Addenda />} />
+        <Route path="/termination" element={<Termination />} />
+        <Route path="/printvendornamre" element={<Pdfvendoename />} />
+        <Route path="/Pdfvendordeta" element={<Pdfvendordetails />} />
         
-        
+        <Route path="/showPO" element={<ShowPO />} />
+        <Route path="/printshowPO" element={<PdfprintshowPO />} />
+        <Route path="/Pdfpo" element={<Pdfpo />} />
         </Route>
         </Routes>
       </BrowserRouter>

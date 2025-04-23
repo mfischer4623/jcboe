@@ -66,5 +66,52 @@ export const payrollCheckDeductions = (SSN,RUN) => {
 }
 
 
+export const purchaseOrders = (PODOC,PONUM) => {
+    return axios.get(`/employees/purchaseOrders/?poDoc=${PODOC}&poNum=${PONUM}`);
+
+}
 
 
+export const vendorNumberSearch = (vendorNumber) => {
+    return axios.get(`/employees/ppur301s/${vendorNumber}`);
+
+}
+
+
+export const vendorNameSearch = (vendorName) => {
+    return axios.get(`/employees/ppur301s/?name=${vendorName}`);
+
+}
+export const pofromvendorSearch = (vendorNumber) => {
+    return axios.get(`/employees/pofromvendor/?poVEND=${vendorNumber}`);
+
+}
+
+export const checkbankSearch = (aphbnk,aphbac,aphfrm,aphchk,aphven) => {
+    return axios.get(`/employees/lacp441s/?aphbnk=${aphbnk}&aphbac=${aphbac}&aphfrm=${aphfrm}&aphchk=${aphchk}&aphven=${aphven}`);
+
+}
+
+
+
+export const addaged = () => {
+    return axios.get('/employees/ppay127s');
+
+}
+export const jobcode = () => {
+    return axios.get('/employees/ppay124s');
+
+}
+export const paytablecode = () => {
+    return axios.get('/employees/ppay125s');
+
+}
+export const deductionscode = () => {
+    return axios.get('/employees/ppay122s');
+
+}
+
+export const absencecode = () => {
+    return axios.get('/employees/ppay121s');
+
+}

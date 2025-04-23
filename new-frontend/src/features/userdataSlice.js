@@ -18,12 +18,12 @@ export const userSlice = createSlice({
         loginSuccess: (state, action) => {
             state.value = action.payload.user;
             state.token = action.payload.token;
-            axios.defaults.headers['Authorization'] = `Bearer ${action.payload.token}`;
+            // axios.defaults.headers['Authorization'] = `Bearer ${action.payload.token}`;
         },
         logout: (state) => {
             state.value = {};
             state.token = null;
-            axios.defaults.headers['Authorization'] = '';
+            // axios.defaults.headers['Authorization'] = '';
             secureLocalStorage.removeItem('token');
         },
         setLocations: (state, action) => {

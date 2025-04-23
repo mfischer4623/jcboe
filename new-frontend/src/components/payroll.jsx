@@ -76,7 +76,7 @@ const Payroll = () => {
     if (page > totalPage) page = totalPage;
     setFirstLoading(true);
     const startIndex = (page - 1) * perPage;
-    const endIndex = startIndex + perPage;
+    const endIndex = parseInt(startIndex) + parseInt(perPage);
 
     setAllattendata(allattendataextac.slice(startIndex, endIndex));
     setFirstLoading(false);
