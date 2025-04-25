@@ -2,7 +2,10 @@
 import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import DrawerHeader from './ui-components/DrawerHeader';
-import SidebarAdmin from './components/admin/sidebaradmin';
+
+
+import Header from './components/header';
+import Sidebar from './sidebar';
 import { Box } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLocationList } from "./actions/admin.actions";
@@ -23,14 +26,11 @@ const AdminLayout = () => {
   }, [userdata.value])
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <SidebarAdmin />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }} className='main-adn-sss'>
-        <DrawerHeader />
-
-        <Outlet />
-      </Box>
-    </Box>
+    <>
+      <Header />
+      <Sidebar />
+      <Outlet />
+    </>
   );
 };
 

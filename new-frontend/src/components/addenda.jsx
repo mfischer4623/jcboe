@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Header from './header';
-import Sidebar from './sidebar';
+// import Header from './header';
+// import Sidebar from './sidebar';
 import PrintIcon from '@mui/icons-material/Print';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -150,9 +150,9 @@ const Addenda = () => {
  
   return (
     <>  
-
+{/* 
       <Header />
-      <Sidebar />
+      <Sidebar /> */}
 
       <div className='main-inner-sec content-main'>
         {/* <div className='main-inner-heading'>

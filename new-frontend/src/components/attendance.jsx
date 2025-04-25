@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Header from './header';
-import Sidebar from './sidebar';
+// import Header from './header';
+// import Sidebar from './sidebar';
 import PrintIcon from '@mui/icons-material/Print';
 import SearchIcon from '@mui/icons-material/Search';
 import FormGroup from '@mui/material/FormGroup';
@@ -294,8 +294,8 @@ const exportTopdf = (e) => {
 };
   return (
     <>
-      <Header />
-      <Sidebar />
+      {/* <Header />
+      <Sidebar /> */}
 
       <div className='main-inner-sec content-main'>
         <div className='main-inner-heading'>

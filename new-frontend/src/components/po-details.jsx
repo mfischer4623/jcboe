@@ -188,7 +188,7 @@ const Podetails = () => {
                                 <div className="row">
                                     <div className='col-md-12'>
                                         <div className='po-details-head'>
-                                            <h2>Vendor Name: <span>{employeeData[0].VNNAME} ({employeeData[0].POVEND} )</span></h2>
+                                            <h2>Vendor Name: <span>{employeeData[0].VNNAME} ({employeeData[0].POVEND})</span></h2>
                                         </div>
                                     </div>
                                 </div>

@@ -25,7 +25,7 @@ const Sidebar = () => {
   const [activeMenus, setActiveMenus] = useState('home');
   const [activeSubMenus, setActiveSubMenus] = useState();
     const dispatch = useDispatch();
-  React.useEffect(() => {
+React.useEffect(() => {
 
     if (window.location.pathname == '/') {
       setActiveMenus('home');
@@ -73,43 +73,43 @@ const Sidebar = () => {
       setActiveSubMenus('W2s');
     }
     else if (window.location.pathname == '/posearch' || window.location.pathname == '/podetails') {
-      setActiveMenus('home');
+      setActiveMenus('posearch');
       setActiveSubMenus('posearch');
     }
 else if (window.location.pathname == '/vendorsearch' || window.location.pathname == '/vendorsearchlist' || window.location.pathname == '/vendordetails') {
-      setActiveMenus('home');
+      setActiveMenus('vendor');
       setActiveSubMenus('vendorsearch');
     }
     else if (window.location.pathname == '/checksearch') {
-      setActiveMenus('home');
+      setActiveMenus('serach');
       setActiveSubMenus('checksearch');
     }
     else if (window.location.pathname == '/checksearchlist') {
-      setActiveMenus('home');
+      setActiveMenus('serach');
       setActiveSubMenus('checksearchlist');
     }
     else if (window.location.pathname == '/absence') {
-      setActiveMenus('home');
+      setActiveMenus('payroll');
       setActiveSubMenus('absence');
     }
     else if (window.location.pathname == '/deduct') {
-      setActiveMenus('home');
+      setActiveMenus('payroll');
       setActiveSubMenus('deduct');
     } 
     else if (window.location.pathname == '/paytable') {
-      setActiveMenus('home');
+      setActiveMenus('payroll');
       setActiveSubMenus('paytable');
     }
     else if (window.location.pathname == '/job') {
-      setActiveMenus('home');
+      setActiveMenus('payroll');
       setActiveSubMenus('job');
     }
     else if (window.location.pathname == '/addenda') {
-      setActiveMenus('home');
+      setActiveMenus('payroll');
       setActiveSubMenus('addenda');
     }
     else if (window.location.pathname == '/termination') {
-      setActiveMenus('home');
+      setActiveMenus('payroll');
       setActiveSubMenus('termination');
     }
 
@@ -134,6 +134,7 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
   const handleclicksubmenus = (e) => {
     if (e == 'attendance') {
       //console.log(e);
+
       navigate(`/attendance`);
     }
     if (e == 'empdata') {
@@ -198,6 +199,8 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
     }
     if (e == 'absence') {
           //console.log(e);
+          // alert('absence');
+          setActiveMenus('payroll');
           navigate(`/absence`);
         }
     if (e == 'deduct') {
@@ -241,6 +244,28 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
     navigate(`/`);
 
   }
+  const handleclickmenus = (e) => {
+
+    if (e ==  'posearch' || e ==  'podetails') {
+      setActiveMenus('posearch');
+      setActiveSubMenus('posearch');
+      navigate(`/posearch`);
+    }
+   if (e ==  'vendorsearch' || e ==  'vendorsearchlist' || e ==  'vendordetails') {
+      setActiveMenus('vendor');
+      setActiveSubMenus('vendorsearch');
+      navigate(`/vendorsearch`);
+    }
+     if (e ==  'checksearch') {
+      setActiveMenus('serach');
+      setActiveSubMenus('checksearch');
+      navigate(`/checksearch`);
+    }
+   
+      
+  
+  
+    }
   return (
     <>
       <aside className="aside aside-fixed admin-fixed">
@@ -278,14 +303,14 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
                 <li className={`menu-sec ${activeSubMenus == 'W2s' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('W2s')}>W2s  {activeSubMenus == 'W2s' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
               </ul>
             </li>
-            <li><NavLink to="/posearch" className={`nav-link-menu nav-disply ${ (activeSubMenus == 'posearch' || activeSubMenus == 'podetails') ? 'activeapprove' : ''}`}><DescriptionIcon /><span>PO Search</span></NavLink></li>
-            <li><NavLink to="/vendorsearch" className={`nav-link-menu  ${ (activeSubMenus == 'vendorsearch' || activeSubMenus == 'vendorsearchlist' || activeSubMenus == 'vendordetails') ? 'activeapprove' : ''}`}><img src={vendorsrchimg} className='vendor-img' /><span>Vendor Search</span></NavLink></li>
-            <li><NavLink to="/checksearch" className={`nav-link-menu ${(activeSubMenus == 'checksearch' || activeSubMenus == 'checksearchlist') ? 'activeapprove' : ''}`}><CheckCircleIcon /><span>Check Search</span></NavLink></li>
+            <li><a href="#"  onClick={(e) => handleclickmenus('posearch')}  className={`nav-link-menu nav-disply ${ (activeSubMenus == 'posearch' || activeSubMenus == 'podetails') ? 'activeapprove' : ''}`}><DescriptionIcon /><span>PO Search</span></a></li>
+            <li><a href="#"  onClick={(e) => handleclickmenus('vendorsearch')} className={`nav-link-menu  ${ (activeSubMenus == 'vendorsearch' || activeSubMenus == 'vendorsearchlist' || activeSubMenus == 'vendordetails') ? 'activeapprove' : ''}`}><img src={vendorsrchimg} className='vendor-img' /><span>Vendor Search</span></a></li>
+            <li><a href="#"  onClick={(e) => handleclickmenus('checksearch')} className={`nav-link-menu ${(activeSubMenus == 'checksearch' || activeSubMenus == 'checksearchlist') ? 'activeapprove' : ''}`}><CheckCircleIcon /><span>Check Search</span></a></li>
             
             <li className='menu-sec'>
               {/* <NavLink to="/" className={({ isActive }) => `nav-link-menu ${isActive ? 'activeapprove' : ''}`}><img src={payrollcodeimg} /><span>Payroll Codes <span className='arrow-right'><NavigateNextIcon /></span></span></NavLink> */}
-              <NavLink to="/absence" className={`nav-link-menu ${( ( activeSubMenus == 'absence' || activeSubMenus == 'deduct' || activeSubMenus == 'paytable' || activeSubMenus == 'job' || activeSubMenus == 'addenda' || activeSubMenus == 'termination' )) ? 'activeapprove ' : ''}`} ><img src={payrollcodeimg} /><span>Payroll Codes <span className='arrow-right'><NavigateNextIcon /></span></span></NavLink>
-              <ul className={`sub-menu-sec sub-menu-employee ${( (activeSubMenus == 'absence' || activeSubMenus == 'deduct' || activeSubMenus == 'paytable' || activeSubMenus == 'job' || activeSubMenus == 'addenda' || activeSubMenus == 'termination')) ? 'submenudisblock ' : 'submenudisnone'}`} >
+              <a href="#"  onClick={(e) => handleclicksubmenus('absence')} className={`nav-link-menu ${( (activeMenus == 'payroll' && ( activeSubMenus == 'absence' || activeSubMenus == 'deduct' || activeSubMenus == 'paytable' || activeSubMenus == 'job' || activeSubMenus == 'addenda' || activeSubMenus == 'termination' ))) ? 'activeapprove ' : ''}`} ><img src={payrollcodeimg} /><span>Payroll Codes <span className='arrow-right'><NavigateNextIcon /></span></span></a>
+              <ul className={`sub-menu-sec sub-menu-employee ${( activeMenus == 'payroll' && (activeSubMenus == 'absence' || activeSubMenus == 'deduct' || activeSubMenus == 'paytable' || activeSubMenus == 'job' || activeSubMenus == 'addenda' || activeSubMenus == 'termination')) ? 'submenudisblock ' : 'submenudisnone'}`} >
                 <li className={`menu-sec ${activeSubMenus == 'absence' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('absence')}>Absence/Leave {activeSubMenus == 'absence' && <span className='arrow-right'><NavigateNextIcon /></span>} </li>
                 <li className={`menu-sec ${activeSubMenus == 'deduct' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('deduct')}>Deduct/Contrib {activeSubMenus == 'deduct' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
                 <li className={`menu-sec ${activeSubMenus == 'paytable' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('paytable')}>Pay Table  {activeSubMenus == 'paytable' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>

@@ -45,7 +45,7 @@ import ShowPO  from "./components/showPO";
 import Pdfpo from "./components/pdfpo";
 
 import PdfprintshowPO from "./components/pdfprintshowPO";
-// import AdminLayout from "./ui-components/AdminLayout";
+ import AdminLayout from "./ui-components/AdminLayout";
 function App() {
 
   var baseName = '/';
@@ -76,8 +76,25 @@ function App() {
         <Routes>
         <Route path="/" element={<Login />} />
           <Route element={<RequireAuth userdata={userdata} />} >
-        <Route path="/employee-search" element={<EmployeeSearch />} />
-        <Route path="/employeedata" element={<EmployeeData />} />
+          <Route path="/employee-search" element={<EmployeeSearch />} />
+          <Route path="/employeedata" element={<EmployeeData />} />
+          <Route path="/posearch" element={<Posearch />} />
+          <Route path="/podetails" element={<Podetails />} />
+          <Route path="/vendorsearch" element={<Vendorsearch />} />
+        <Route path="/vendorsearchlist" element={<Vendorsearchlist />} />
+        <Route path="/vendordetails" element={<Vendordetails />} />
+        <Route path="/checksearch" element={<Checksearch />} />
+        <Route path="/checksearchlist" element={<Checksearchlist />} />
+        <Route path="/printshowPO" element={<PdfprintshowPO />} />
+        <Route path="/Pdfpo" element={<Pdfpo />} />
+        <Route path="/printpayroll" element={<Payrollcheckprint />} />
+        <Route path="/printemployee" element={<Pdfall />} />
+        <Route path="/printattende" element={<Pdfattnedetails />} />
+        <Route path="/printvendornamre" element={<Pdfvendoename />} />
+        <Route path="/Pdfvendordeta" element={<Pdfvendordetails />} />
+            <Route element={<AdminLayout />}>
+      
+      
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/attendancedetails" element={<AttendanceDetails />} />
         <Route path="/additionaltags" element={<AdditionalTags />} />
@@ -86,29 +103,22 @@ function App() {
         <Route path="/voluntarydeductions" element={<Voluntarydeductions />} />
         <Route path="/payroll" element={<Payroll />} />
         <Route path="/w2s" element={<W2S />} />
-        <Route path="/printemployee" element={<Pdfall />} />
-        <Route path="/printattende" element={<Pdfattnedetails />} />
+    
         <Route path="/showPayrollCheck" element={<Payrollcheck />} />
-        <Route path="/printpayroll" element={<Payrollcheckprint />} />
-        <Route path="/posearch" element={<Posearch />} />
-        <Route path="/podetails" element={<Podetails />} />
-        <Route path="/vendorsearch" element={<Vendorsearch />} />
-        <Route path="/vendorsearchlist" element={<Vendorsearchlist />} />
-        <Route path="/vendordetails" element={<Vendordetails />} />
-        <Route path="/checksearch" element={<Checksearch />} />
-        <Route path="/checksearchlist" element={<Checksearchlist />} />
+      
+      
+     
         <Route path="/absence" element={<Absence />} />
         <Route path="/deduct" element={<Deduct />} />
         <Route path="/paytable" element={<Paytable />} />
         <Route path="/job" element={<Job />} />
         <Route path="/addenda" element={<Addenda />} />
         <Route path="/termination" element={<Termination />} />
-        <Route path="/printvendornamre" element={<Pdfvendoename />} />
-        <Route path="/Pdfvendordeta" element={<Pdfvendordetails />} />
+    
         
         <Route path="/showPO" element={<ShowPO />} />
-        <Route path="/printshowPO" element={<PdfprintshowPO />} />
-        <Route path="/Pdfpo" element={<Pdfpo />} />
+     
+        </Route>
         </Route>
         </Routes>
       </BrowserRouter>

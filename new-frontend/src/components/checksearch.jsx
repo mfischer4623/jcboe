@@ -265,6 +265,14 @@ const Checksearch = () => {
                                 </div>
                             </div>
                         </div>
+
+                        <div className='row'>
+                        <div className='col-md-12'>
+                            <div className='mandt-sec-new '>
+                                <p className=' mandtor-login-sec'>All fields are mandatory</p>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>

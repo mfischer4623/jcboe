@@ -182,13 +182,25 @@ const Posearch = () => {
                         <div className='row'>
                         <div className='col-md-12'>
                         <div className='form-sec-vali error-msg'>
-                                        <p className='erro-vali-sec  error-login emp-data-error'>{formerror}</p>
-                                    </div>
-                                    </div>
-                                    </div>
+                                <p className='erro-vali-sec  error-login emp-data-error'>{formerror}</p>
+                            </div>
+                            </div>
+                        </div>
 
+                        <div className='row'>
+                        <div className='col-md-12'>
+                            <div className='mandt-sec form-sec-vali error-msg'>
+                                <p className='erro-vali-sec  error-login emp-data-error mandtor-login'>All fields are mandatory</p>
+                            </div>
+                        </div>
+                    </div>
 
                     </div>
+
+                  
+                    
+                   
+                   
                 </div>
             </div>
         </>

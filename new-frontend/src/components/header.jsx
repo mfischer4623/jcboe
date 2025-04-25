@@ -5,7 +5,7 @@ const Header = () => {
      <div className="content-header">
       <div className="header-approve">
           <div className="container-fluid">
-          <h1 className="heading-top">AS400 Legacy Data</h1>
+          <h1 className="heading-top"> Legacy Data</h1>
           </div>
       </div>
     

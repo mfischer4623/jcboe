@@ -328,6 +328,7 @@ $redcolor:#d32f2f;
 } 
 .aside{
   overflow-y: scroll;
+  
 }
 .aside-body {
   background-color: $bluecolor;
@@ -1939,6 +1940,20 @@ font-size: 16px !important;
   
     page-break-before: always;
   }
+  @page {
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  /* Optional: Hide anything not needed */
+  header, footer, nav, .no-print {
+    display: none !important;
+  }
+
+
 
 }
 
@@ -2514,3 +2529,21 @@ width:225px !important;
   left: 50%;
   transform: translate(-50%, 10px);
 }
+
+.mandtor-login{
+  transform: translate(-50%, 270%) !important;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.mandt-sec-new {
+  .mandtor-login-sec{
+    color:$redcolor !important;
+    margin-bottom: 0px;
+    position: relative;
+    top: 45px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+}
+
