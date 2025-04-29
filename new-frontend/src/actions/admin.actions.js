@@ -118,6 +118,6 @@ export const absencecode = () => {
 
 
 export const showBank = (aphven) => {
-    return axios.get(`/employees/showBank?aphven=${aphven}`);
+    return axios.get(`/employees/checksearch?aphven=${aphven}`);
 
 }
