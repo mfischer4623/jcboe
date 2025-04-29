@@ -36,3 +36,32 @@ exports.findAll = (req, res) => {
             });
         });
 };;
+
+// CheckSearch API 
+
+exports.checkSearch = (req, res) => {
+    console.log(req.query)
+
+    var aphven = req.query.aphven
+
+    var condition =  { 
+      
+        APHVEN: aphven
+    } 
+    
+    console.log(condition)
+    var sortOrder = [
+        ['APHNAM', 'ASC'],
+    ]
+    
+    Lacp441s.findAll({ where: condition, order: sortOrder })    
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving dbo.lacp441s."
+            });
+        });
+};;

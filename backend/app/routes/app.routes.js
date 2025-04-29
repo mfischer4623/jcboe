@@ -27,7 +27,8 @@ const controllers = {
   pofromvendor: require("../controllers/pofromvendor.controller.js"),
   s3000EmpSrch: require("../controllers/s3000EmpSrch.controller.js"),
   s3000ShowPayments: require("../controllers/s3000ShowPayments.controller.js"),
-  s3000DisplayPayment: require("../controllers/s3000DisplayPayment.controller.js") 
+  s3000DisplayPayment: require("../controllers/s3000DisplayPayment.controller.js"),
+  checkSearch: require("../controllers/lacp441s.controller.js")
 };
 
 // 🚀 Log missing controllers for debugging
@@ -91,6 +92,7 @@ safeRoute("get", "/pofromvendor/", controllers.pofromvendor.findAll, "pofromvend
 safeRoute("get", "/lacp441s/", controllers.lacp441s.findAll, "lacp441s.findAll");
 safeRoute("get", "/ppur301s/", controllers.ppur301s.findAll, "ppur301s.findAll");
 safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOne");
+safeRoute("get", "/checksearch/", controllers.lacp441s.checkSearch, "lacp441s.checkSearch");
 
 // ✅ Employee Search Routes
 safeRoute("get", "/s3000EmpSrch/:emp_num", controllers.s3000EmpSrch.findOne, "s3000EmpSrch.findOne");
