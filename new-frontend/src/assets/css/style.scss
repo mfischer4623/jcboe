@@ -1372,6 +1372,17 @@ $redcolor:#d32f2f;
 .diff-po-table .table .tbody-left-po tr th {
   width: 254px !important;
 }
+.ven-all-pdf .btn-all-sec {
+  max-width: 109px !important;
+  padding: 10px 0px !important;
+  font-size: 15px;
+  display: inline-block;
+  line-height: 21px;
+}
+.ven-all-pdf .print-icon svg {
+  top: -4px;
+  font-size: 25px;
+}
 }
 @media (max-width: 1250px) {
   .level-desc-width {
@@ -1392,6 +1403,12 @@ body .tab-sec-main .backg-shaw-botm{
 .form-detail-inner .vedor-detail-right .vebdor-details-left .form-details-label h3{
   line-height: 30px !important;
 }
+.po-show-print svg{
+  font-size: 26px;
+}
+.print-check-icon svg{
+  font-size: 25px;
+}
 }
 
 .form-neww-details-se{
@@ -1403,6 +1420,9 @@ body .tab-sec-main .backg-shaw-botm{
   }
 }
 @media (max-width: 1600px) {
+  .head-inner-main .ven-all-pdf .btn-all-bank{
+    max-width: 124px !important;
+  }
   .heading-top {
     font-size: 21px;
   }
@@ -1491,7 +1511,17 @@ line-height: 23px;
   position: relative;
   left: 1px;
 }
+
+.ven-all-pdf .btn-all-sec {
+  max-width: 112px !important;
+  padding: 9px 0px !important;
 }
+.btn-all-bank{
+  max-width: 124px !important;
+}
+}
+
+
 @media (max-width: 1350px) {
   .vebdor-details-left {
     margin-bottom: 1px;
@@ -1588,6 +1618,14 @@ line-height: 23px;
 }
 
 @media (max-width: 1300px) {
+  .back-sec .back-btn-sec{
+    font-size: 18px !important;
+    top: -23px;
+  }
+  .ven-all-pdf .print-icon svg {
+    top: -4px;
+    font-size: 25px;  
+}
   .view-sec img {
     height: 13px !important;}  
   .emp-table-inner .table-main-sec .table-sech-list .chk-date-widh {
@@ -2547,3 +2585,53 @@ width:225px !important;
   }
 }
 
+.emp-main-heading-emp .head-inner .new-vend-all{
+  width: 100%;
+  max-width: 340px;
+}
+.btn-all-po{
+  margin-right: 0px !important;
+}
+.btn-all-sec{
+  max-width: 119px !important;
+}
+.btn-all-bank{
+  background-color: $whitecolor !important;
+  color: $orangecolor !important;
+  max-width: 141px !important;
+  &:hover{
+    background-color: $orangecolor !important;
+    color: $whitecolor !important;
+  }
+}
+.ven-all-pdf .print-icon svg {
+  top: -3px;}
+  .ven-all-pdf {
+    top: -6px !important;
+  }
+.ven-all-pdf{
+  .print-icon{
+    svg{
+      margin-right: 13px;
+    }
+  }
+}
+
+.po-show-print {
+  svg{
+    position: relative;
+    top:9px;
+  }
+}
+
+.pdf-ven-no{
+  width:17%;
+}
+
+.emp-main-heading-emp .head-inner .ven-all-pdf{
+  gap: 12px;
+}
+.btn-all-bank{
+  max-width: 128px !important;
+  padding: 10px 0px !important;
+}

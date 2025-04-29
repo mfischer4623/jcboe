@@ -38,6 +38,7 @@ const Vendorsearch = () => {
     secureLocalStorage.removeItem('vendorNumberData');
     secureLocalStorage.removeItem('showPOData');
     secureLocalStorage.removeItem('checkforsh');
+    secureLocalStorage.removeItem('bankDetailsData');
 
 
   }, []);

@@ -6,7 +6,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import { Link } from 'react-router-dom';
 import secureLocalStorage from "react-secure-storage";
-import { pofromvendorSearch } from '../actions/admin.actions';
+import { pofromvendorSearch, showBank } from '../actions/admin.actions';
 import {
     useNavigate
 } from "react-router-dom";
@@ -21,20 +21,20 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
 }));
 const Vendordetails = () => {
     const [employeeData, setEmployeeData] = useState({});
     const [VendorData, setVendorData] = useState({});
 
-  const [opendraft, setOpendraft] = React.useState(false);
-  const handleOpendraft = () => setOpendraft(true);
-  const handleClosedraft = () => setOpendraft(false);
+    const [opendraft, setOpendraft] = React.useState(false);
+    const handleOpendraft = () => setOpendraft(true);
+    const handleClosedraft = () => setOpendraft(false);
     let navigate = useNavigate();
     useEffect(() => {
         var userid = secureLocalStorage.getItem('vendorNumberData');
@@ -80,28 +80,49 @@ const Vendordetails = () => {
 
 
     };
-      const [errormsgform, setErrorMsgForm] = useState('');
+    const [errormsgform, setErrorMsgForm] = useState('');
     const checkSelected = (VNNO) => {
         pofromvendorSearch(VNNO).then((res) => {
-          console.log('add-user res=====>>>>', res.data);
-          if (res.data == '' || res.data == null || res.data.length==0) {
-            setErrorMsgForm(`No PO's found with vendor number ` + VendorData.VNNO);
-            setOpendraft(true);
-            return;
-          } else {
-    
-            secureLocalStorage.setItem("showPOData", res.data);
-    
-    
-    
-            navigate("/showPO");
-          }
-    
+            console.log('add-user res=====>>>>', res.data);
+            if (res.data == '' || res.data == null || res.data.length == 0) {
+                setErrorMsgForm(`No PO's found with vendor number ` + VendorData.VNNO);
+                setOpendraft(true);
+                return;
+            } else {
+
+                secureLocalStorage.setItem("showPOData", res.data);
+
+
+
+                navigate("/showPO");
+            }
+
         }).catch((error) => {
-    
-          console.log('error occurs while registring the user', error);
+
+            console.log('error occurs while registring the user', error);
         });
-      };
+    };
+    const checkSelectedBank = (VNNO) => {
+        showBank(VNNO).then((res) => {
+            console.log('add-user res=====>>>>', res.data);
+            if (res.data == '' || res.data == null || res.data.length == 0) {
+                setErrorMsgForm(`No PO's found with vendor number ` + VendorData.VNNO);
+                setOpendraft(true);
+                return;
+            } else {
+
+                secureLocalStorage.setItem("bankDetailsData", res.data);
+
+
+
+                navigate("/checksearchlist");
+            }
+
+        }).catch((error) => {
+
+            console.log('error occurs while registring the user', error);
+        });
+    };
     return (
         <>
             <Header />
@@ -116,11 +137,13 @@ const Vendordetails = () => {
                             <div class="head-inner head-inner-main">
                                 <h2>Vendor Data</h2>
 
-                                <div class="head-right print-right vendor-print">
+                                <div class="head-right print-right vendor-print new-vend-all ven-all-pdf">
                                     {VendorData != null &&
                                         <>
                                             <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
-                                            <button class="btn btn-submit btn-clear btn-show-po"    onClick={(e) => { e.preventDefault(); checkSelected(VendorData.VNNO); }}>Show PO</button>
+                                            <button class="btn btn-submit btn-clear btn-show-po btn-all-po btn-all-sec" onClick={(e) => { e.preventDefault(); checkSelected(VendorData.VNNO); }}>Show PO</button>
+                                            <button class="btn btn-submit btn-clear btn-show-po btn-all-sec btn-all-bank" onClick={(e) => { e.preventDefault(); checkSelectedBank(VendorData.VNNO); }}>Check Search</button>
+
                                         </>
 
                                     }
@@ -436,7 +459,7 @@ const Vendordetails = () => {
 
                                                 </div>
                                             </div> */}
-                                          
+
                                             <div className='row'>
                                                 <div className='form-detail-left-innerss vebdor-details-left'>
                                                     <div className='form-details-label'>
@@ -480,7 +503,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {VendorData.VNRMAT}
+                                                            {VendorData.VNRMAT}
                                                         </p>
                                                     </div>
 
@@ -497,7 +520,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {VendorData.VNRMA1} {VendorData.VNRMA2}
+                                                            {VendorData.VNRMA1} {VendorData.VNRMA2}
                                                         </p>
                                                     </div>
 
@@ -514,7 +537,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {VendorData.VNRMCT}, {VendorData.VNRMST} {VendorData.VNRMZ1}
+                                                            {VendorData.VNRMCT}, {VendorData.VNRMST} {VendorData.VNRMZ1}
                                                         </p>
                                                     </div>
 
@@ -531,7 +554,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {VendorData.VNRMPR} <strong>P/C</strong> {VendorData.VNRMPC}
+                                                            {VendorData.VNRMPR} <strong>P/C</strong> {VendorData.VNRMPC}
                                                         </p>
                                                     </div>
 
@@ -548,7 +571,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {VendorData.VNSHIP}
+                                                            {VendorData.VNSHIP}
                                                         </p>
                                                     </div>
 
@@ -566,7 +589,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {VendorData.VNPMT}
+                                                            {VendorData.VNPMT}
                                                         </p>
                                                     </div>
 
@@ -584,7 +607,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {VendorData.VN10RF}
+                                                            {VendorData.VN10RF}
                                                         </p>
                                                     </div>
 
@@ -602,7 +625,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {dollarUS.format(VendorData.VNENC)}
+                                                            {dollarUS.format(VendorData.VNENC)}
                                                         </p>
                                                     </div>
 
@@ -620,7 +643,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {dollarUS.format(VendorData.VNACCR)}
+                                                            {dollarUS.format(VendorData.VNACCR)}
                                                         </p>
                                                     </div>
 
@@ -638,7 +661,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {dollarUS.format(VendorData.VNCUR)}
+                                                            {dollarUS.format(VendorData.VNCUR)}
                                                         </p>
                                                     </div>
 
@@ -656,7 +679,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {dollarUS.format(VendorData.VNPRI)}
+                                                            {dollarUS.format(VendorData.VNPRI)}
                                                         </p>
                                                     </div>
 
@@ -674,7 +697,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                            
+
                                                         </p>
                                                     </div>
 
@@ -692,7 +715,7 @@ const Vendordetails = () => {
                                                 <div className='form-detail-right-innerss'>
                                                     <div className='form-details-value'>
                                                         <p>
-                                                        {dollarUS.format(VendorData.VNCR10)}
+                                                            {dollarUS.format(VendorData.VNCR10)}
                                                         </p>
                                                     </div>
 
@@ -715,30 +738,30 @@ const Vendordetails = () => {
 
             </div>
             <BootstrapDialog
-        onClose={handleClosedraft}
-        aria-labelledby="customized-dialog-title"
-        open={opendraft} className='formdetails-sec form-status approve-modal error-selct-msg modal-check-box'
-      >
-        <IconButton
-          aria-label="close"
-          onClick={handleClosedraft}
-          sx={(theme) => ({
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: theme.palette.grey[500],
-          })}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            <div className='form-details-inner form-details-apprv'>
-              <p className='succ-val-sec select-frm-sec'>{errormsgform}</p>
-            </div>
-          </Typography>
-        </DialogContent>
-      </BootstrapDialog>
+                onClose={handleClosedraft}
+                aria-labelledby="customized-dialog-title"
+                open={opendraft} className='formdetails-sec form-status approve-modal error-selct-msg modal-check-box'
+            >
+                <IconButton
+                    aria-label="close"
+                    onClick={handleClosedraft}
+                    sx={(theme) => ({
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: theme.palette.grey[500],
+                    })}
+                >
+                    <CloseIcon />
+                </IconButton>
+                <DialogContent dividers>
+                    <Typography gutterBottom>
+                        <div className='form-details-inner form-details-apprv'>
+                            <p className='succ-val-sec select-frm-sec'>{errormsgform}</p>
+                        </div>
+                    </Typography>
+                </DialogContent>
+            </BootstrapDialog>
 
         </>
     )

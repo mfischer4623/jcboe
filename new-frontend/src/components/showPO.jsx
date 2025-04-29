@@ -320,7 +320,7 @@ const Vendorsearchlist = () => {
               <div class="head-inner">
                 <h2>Purchase Orders</h2>
                 <div class="head-right po-print-right">
-                  <span className='print-icon ' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                  <span className='print-icon po-show-print ' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                   {/* <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button> */}
                 </div>
               </div>

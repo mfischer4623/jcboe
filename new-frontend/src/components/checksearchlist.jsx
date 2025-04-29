@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Header from './header';
-import Sidebar from './sidebar';
+// import Header from './header';
+// import Sidebar from './sidebar';
 import PrintIcon from '@mui/icons-material/Print';
 import SearchIcon from '@mui/icons-material/Search';
 import FormGroup from '@mui/material/FormGroup';
@@ -20,7 +20,7 @@ import secureLocalStorage from "react-secure-storage";
 import { AppContext } from '../context';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 const Checksearchlist = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
@@ -50,7 +50,7 @@ const Checksearchlist = () => {
     if ((userid) == null || (userid) == undefined) {
 
 
-      navigate(`/checkSearch`);
+      navigate(`/vendorsearch`);
 
     } else {
       setFirstLoading(true);
@@ -304,11 +304,20 @@ const Checksearchlist = () => {
 
     return totAmt;
   }
+  const exportTopdf = (e) => {
 
+
+    window.open('printshowBank/', '_blank', 'noopener,noreferrer');
+
+
+
+
+
+};
   return (
     <>
-      <Header />
-      <Sidebar />
+      {/* <Header />
+      <Sidebar /> */}
 
       <div className='main-inner-sec content-main'>
         {/* <div className='main-inner-heading'>
@@ -330,9 +339,12 @@ const Checksearchlist = () => {
               <div class="head-inner">
                 <h2>Check Search</h2>
                 <div class="head-right">
-                  {/* <span className='print-icon' ><PrintIcon /></span> */}
+                  <span className='print-icon print-check-icon' onClick={(e) => exportTopdf()} ><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
+              </div>
+              <div className='back-sec'>
+                <Link to="/vendordetails" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
               </div>
             </div>
           </div>

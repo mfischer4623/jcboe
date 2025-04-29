@@ -74,7 +74,7 @@ React.useEffect(() => {
     }
     else if (window.location.pathname == '/posearch' || window.location.pathname == '/podetails') {
       setActiveMenus('posearch');
-      setActiveSubMenus('posearch');
+      setActiveSubMenus('podetails');
     }
 else if (window.location.pathname == '/vendorsearch' || window.location.pathname == '/vendorsearchlist' || window.location.pathname == '/vendordetails') {
       setActiveMenus('vendor');
@@ -87,6 +87,9 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
     else if (window.location.pathname == '/checksearchlist') {
       setActiveMenus('serach');
       setActiveSubMenus('checksearchlist');
+    }else if (window.location.pathname == '/showPO') {
+      setActiveMenus('serach');
+      setActiveSubMenus('showPO');
     }
     else if (window.location.pathname == '/absence') {
       setActiveMenus('payroll');
@@ -197,6 +200,10 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
       //console.log(e);
       navigate(`/checksearchlist`);
     }
+    if (e == 'showPO') {
+      //console.log(e);
+      navigate(`/showPO`);
+    }
     if (e == 'absence') {
           //console.log(e);
           // alert('absence');
@@ -303,9 +310,9 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
                 <li className={`menu-sec ${activeSubMenus == 'W2s' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('W2s')}>W2s  {activeSubMenus == 'W2s' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
               </ul>
             </li>
-            <li><a href="#"  onClick={(e) => handleclickmenus('posearch')}  className={`nav-link-menu nav-disply ${ (activeSubMenus == 'posearch' || activeSubMenus == 'podetails') ? 'activeapprove' : ''}`}><DescriptionIcon /><span>PO Search</span></a></li>
-            <li><a href="#"  onClick={(e) => handleclickmenus('vendorsearch')} className={`nav-link-menu  ${ (activeSubMenus == 'vendorsearch' || activeSubMenus == 'vendorsearchlist' || activeSubMenus == 'vendordetails') ? 'activeapprove' : ''}`}><img src={vendorsrchimg} className='vendor-img' /><span>Vendor Search</span></a></li>
-            <li><a href="#"  onClick={(e) => handleclickmenus('checksearch')} className={`nav-link-menu ${(activeSubMenus == 'checksearch' || activeSubMenus == 'checksearchlist') ? 'activeapprove' : ''}`}><CheckCircleIcon /><span>Check Search</span></a></li>
+            {/* <li><a href="#"  onClick={(e) => handleclickmenus('posearch')}  className={`nav-link-menu nav-disply ${ (activeSubMenus == 'posearch' || activeSubMenus == 'podetails') ? 'activeapprove' : ''}`}><DescriptionIcon /><span>PO Search</span></a></li> */}
+            <li><a href="#"  onClick={(e) => handleclickmenus('vendorsearch')} className={`nav-link-menu  ${ (activeSubMenus == 'vendorsearch'  || activeSubMenus == 'checksearchlist' || activeSubMenus == 'podetails' || activeSubMenus == 'showPO' || activeSubMenus == 'vendorsearchlist' || activeSubMenus == 'vendordetails') ? 'activeapprove' : ''}`}><img src={vendorsrchimg} className='vendor-img' /><span>Vendor Search</span></a></li>
+            {/* <li><a href="#"  onClick={(e) => handleclickmenus('checksearch')} className={`nav-link-menu ${(activeSubMenus == 'checksearch' || activeSubMenus == 'checksearchlist') ? 'activeapprove' : ''}`}><CheckCircleIcon /><span>Check Search</span></a></li> */}
             
             <li className='menu-sec'>
               {/* <NavLink to="/" className={({ isActive }) => `nav-link-menu ${isActive ? 'activeapprove' : ''}`}><img src={payrollcodeimg} /><span>Payroll Codes <span className='arrow-right'><NavigateNextIcon /></span></span></NavLink> */}

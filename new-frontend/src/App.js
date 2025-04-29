@@ -43,6 +43,7 @@ import Pdfvendordetails from "./components/pdfvendordetails";
 import ShowPO  from "./components/showPO";
 
 import Pdfpo from "./components/pdfpo";
+import PdfBank from "./components/pdfbank";
 
 import PdfprintshowPO from "./components/pdfprintshowPO";
  import AdminLayout from "./ui-components/AdminLayout";
@@ -84,7 +85,7 @@ function App() {
         <Route path="/vendorsearchlist" element={<Vendorsearchlist />} />
         <Route path="/vendordetails" element={<Vendordetails />} />
         <Route path="/checksearch" element={<Checksearch />} />
-        <Route path="/checksearchlist" element={<Checksearchlist />} />
+    
         <Route path="/printshowPO" element={<PdfprintshowPO />} />
         <Route path="/Pdfpo" element={<Pdfpo />} />
         <Route path="/printpayroll" element={<Payrollcheckprint />} />
@@ -92,8 +93,9 @@ function App() {
         <Route path="/printattende" element={<Pdfattnedetails />} />
         <Route path="/printvendornamre" element={<Pdfvendoename />} />
         <Route path="/Pdfvendordeta" element={<Pdfvendordetails />} />
+        <Route path="/printshowBank" element={<PdfBank />} />
             <Route element={<AdminLayout />}>
-      
+            <Route path="/checksearchlist" element={<Checksearchlist />} />
       
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/attendancedetails" element={<AttendanceDetails />} />
