@@ -106,7 +106,7 @@ const Vendordetails = () => {
         showBank(VNNO).then((res) => {
             console.log('add-user res=====>>>>', res.data);
             if (res.data == '' || res.data == null || res.data.length == 0) {
-                setErrorMsgForm(`No PO's found with vendor number ` + VendorData.VNNO);
+                setErrorMsgForm(`No Check found with vendor number ` + VendorData.VNNO);
                 setOpendraft(true);
                 return;
             } else {
