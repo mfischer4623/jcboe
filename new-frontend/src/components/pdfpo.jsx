@@ -169,7 +169,7 @@ function Pdf() {
             <div class="head-inner head-inner-main reqid-sec reqid-sec-pdf padding-top-pdf pdf-po">
               {poData != null &&
                 <>
-                  {/* <h2>Purchase Order Search</h2> */}
+                  <h2 className='po-doc-pdf'>Purchase Order Search</h2>
                   <h2 className='po-doc-pdf'>PO Document: {poData.podoc}</h2>
                   <h3 className='po-num-pdf'>PO Number: {poData.ponum}</h3>
                  

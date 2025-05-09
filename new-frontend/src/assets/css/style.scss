@@ -14,6 +14,8 @@ $greencolor:#058227;
 $accbordercolor:#C1C1C1;
 $greyshade:#d2d2d2;
 $redcolor:#d32f2f;
+$wagescolr:#058813;
+$wihlecolr:#E36705;
 
 
 
@@ -1366,6 +1368,16 @@ $redcolor:#d32f2f;
 }
 }
 @media (max-width: 1450px) {
+  .table-main-sec .table .tax-yaer-widh{
+    width:130px !important;
+  }
+  .table-main-sec .table .actin-ws-widh{
+    width:120px !important
+  }
+ body .main-inner-sec .accordian-margin-new {
+    margin: 1px 35px 0px 35px !important;
+    padding-top: 20px;
+}
 .diff-po-table .table .tbody-po-light tr th {
   width: 254px !important;
 }
@@ -1460,6 +1472,12 @@ body .tab-sec-main .backg-shaw-botm{
 }
 }
 @media (max-width: 1500px) {
+  .table .tax-yaer-widh{
+    width:140px !important;
+  }
+  .table .actin-ws-widh{
+    width:140px !important
+  }
   .emp-data-sec .emp-data-value-sec .form-newsss-pure {
     width: 44% !important;
 }
@@ -1618,6 +1636,16 @@ line-height: 23px;
 }
 
 @media (max-width: 1300px) {
+  .table-main-sec .table .tax-yaer-widh{
+    width:115px !important;
+  }
+  .table-main-sec .table .actin-ws-widh{
+    width:110px !important
+  }
+  body .main-inner-sec .accordian-margin-new {
+    margin: 1px 25px 0px 25px !important;
+    padding-top: 20px;
+}
   .back-sec .back-btn-sec{
     font-size: 18px !important;
     top: -23px;
@@ -1788,6 +1816,15 @@ font-size: 16px !important;
 
 
 @media(max-width:1800px){
+  .main-inner-sec  .accordian-margin-new {
+    margin: 1px 50px 0px 50px !important;
+    padding-top: 20px;
+}
+.form-detail-right .form-detail-right-innerss-ws{
+  width: 42%;
+}
+.form-detail-right .form-detail-left-innerss-ws {
+  width: 58%;}
   .emp-data-value-sec .form-newsss-pure {
     width: 38% !important;
 }
@@ -1978,19 +2015,38 @@ font-size: 16px !important;
   
     page-break-before: always;
   }
-  @page {
+ 
+ 
+  body 
+  {
+     
     margin: 0;
-  }
-
-  body {
-    margin: 0;
-  }
+      -webkit-print-color-adjust: exact;
+ }
 
   /* Optional: Hide anything not needed */
   header, footer, nav, .no-print {
     display: none !important;
   }
 
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+   
+    // padding: 4px;
+    page-break-inside: avoid;
+  }
 
 
 }
@@ -2634,4 +2690,96 @@ width:225px !important;
 .btn-all-bank{
   max-width: 128px !important;
   padding: 10px 0px !important;
+}
+.action-ws-widh{
+  width:100px;
+}
+.back-ws-below{
+  margin-bottom: 50px !important;
+  margin-top: 30px !important;
+}
+.accordian-margin-new{
+  margin: 1px 70px 0px 70px !important;
+  padding-top: 20px;
+}
+
+.form-detail-inner .form-detail-left-innerss-ws .form-details-label{
+  margin-bottom: 19px !important;
+}
+
+.form-table-sec .table-sec .new-ws-theade{
+  tr{
+    .thead-main{
+      background-color: $bluecolor;
+      color:$whitecolor !important;
+      }
+  }
+}
+
+.thead-left{
+  border-left: 2px solid $bluecolor !important;
+  border-bottom: 2px solid $bluecolor !important;
+  padding:0px .5rem !important;
+}
+.theade-right{
+  border-right: 2px solid $bluecolor !important;
+  border-bottom: 2px solid $bluecolor !important;
+  padding:0px .5rem !important;
+}
+.table-main-sec .tbody-light .tbody-left{
+  border-left: 2px solid $whitecolor !important;
+}
+.table-main-sec .tbody-light .tbody-right{
+  border-right: 2px solid $whitecolor !important;
+}
+
+.tbody-light-ws tr{border-bottom: 2px solid $accbordercolor !important;}
+.table-main-sec .table-sec .tbody-light-ws tr td{
+border:none !important;
+border-right: 2px solid $accbordercolor !important;
+color:$inputcolorgrey !important;
+font-weight: 500;
+}
+.table .new-ws-theade tr .wages-color{
+  color:$wagescolr !important;
+}
+.table .new-ws-theade tr  .wiheld-color{
+color:$wihlecolr !important;
+}
+.table-main-sec .table-sec .tbody-light-ws tr .eye-new-ws{
+border-right:2px solid $whitecolor !important;
+}
+.table-ws-new tr:last-child  {
+  border-bottom: none !important;
+}
+.table-main-sec .table-ws-new .table-sec thead tr th{
+  font-weight:500;
+}
+
+.cursorjob{
+  cursor: pointer;
+
+}
+.tax-yaer-widh{
+  width:150px !important;
+}
+.actin-ws-widh{
+  width:150px !important
+}
+
+.emp-main-heading-emp .head-inner .ws-head-right {
+  top: -3px;
+}
+.table-sts-ws td{
+  padding: 8px 5px !important;
+}
+.table-sts-ws  .thead-subhead th{
+  border-top:none !important;
+}
+.thead-main-pdf{
+  background-color: #474747 !important;
+  color: $whitecolor;
+}
+.table-sts-ws th{
+  border-top: 2px solid #474747 !important;
 }

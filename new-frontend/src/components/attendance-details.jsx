@@ -25,7 +25,7 @@ const Attendancedetails = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -192,6 +192,12 @@ const Attendancedetails = () => {
     setFirstLoading(false);
 
   }
+  const exportTopdf = (e) => {
+
+    localStorage.setItem("allattendeatnew", JSON.stringify(allattendataextac));
+    window.open('printattendancedetails/', '_blank', 'noopener,noreferrer');
+  
+  };
   return (
     <>
       {/* <Header />
@@ -224,7 +230,7 @@ const Attendancedetails = () => {
                     <div class="head-inner">
                         <h2>Attendance Details</h2>
                         <div class="head-right">
-                            {/* <span className='print-icon'><PrintIcon /></span> */}
+                        <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                             <button class="btn btn-submit btn-clear"  onClick={(e) => handleClearFilter()}>Clear Filter</button>
                         </div>
                     </div>
@@ -257,9 +263,9 @@ const Attendancedetails = () => {
                                       <FormControlLabel  control={<Checkbox />} label="" />
                                     </FormGroup>
                                   </th> */}
-                                  <th className='job-width loc-code-width' onClick={() => handleColumnClick('loc_code')}>Location Code <span className='filt-icon'><img src={filticon} /></span></th>
-                                  <th className='abse-type-width absen-date'  onClick={() => handleColumnClick('absence_date')}>Absence Date <span className='filt-icon'><img src={filticon} /></span></th>
-                                  <th className='abse-type-width absen-code'  onClick={() => handleColumnClick('absence_code')}>Absence Code <span className='filt-icon'><img src={filticon} /></span> </th>
+                                  <th className='job-width loc-code-width cursorjob' onClick={() => handleColumnClick('loc_code')}>Location Code <span className='filt-icon'><img src={filticon} /></span></th>
+                                  <th className='abse-type-width absen-date cursorjob'  onClick={() => handleColumnClick('absence_date')}>Absence Date <span className='filt-icon'><img src={filticon} /></span></th>
+                                  <th className='abse-type-width absen-code cursorjob'  onClick={() => handleColumnClick('absence_code')}>Absence Code <span className='filt-icon'><img src={filticon} /></span> </th>
                                   <th className='used-width unit-width'>Unit </th>
                                 </tr>
                             </thead>

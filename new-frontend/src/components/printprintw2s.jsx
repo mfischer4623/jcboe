@@ -76,7 +76,9 @@ function Pdf() {
       navigate(`/employeedata`);
 
     } else {
-      var allprintnew = JSON.parse(window.localStorage.getItem('allprintnew'));;
+
+      var allprintnew = JSON.parse(window.localStorage.getItem('allprintw2s'));;
+
       console.log(allprintnew);
       setEmployeeData(userid);
       setViewDataForm(allprintnew);
@@ -90,7 +92,7 @@ function Pdf() {
 
 
 
-    document.title = 'Attendance Data';
+    document.title = 'W2S Details';
 
 
     setTimeout(function () {
@@ -100,87 +102,16 @@ function Pdf() {
     }, 500);
     ;
   }
-  const formatDate = (date, format = null) => {
-    const myArray = date.split("-");
-    var d = new Date(date);
-    var month = myArray[1];
-    var day = myArray[2];
-    var year = myArray[0];
-    var daten = month + '/' + day + '/' + year;
-    // if (month.length < 2) month = '0' + month;
-    // if (day.length < 2) day = '0' + day;
+  let dollarUS = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 
-    // if (format && format == 'Y-m-d') return [month, day, year].join('-');
-    // else return [month, day, year].join('-');
-    return daten;
-  }
-  function normalize(phone) {
-    phone = phone.toString();
-    //normalize string and remove all unnecessary characters
-    phone = phone.replace(/[^\d]/g, "");
+  const W2CLYRdat = (W2CLYR) => {
+    let W2CLYRb = W2CLYR < 10 ? `200${W2CLYR}` : `20${W2CLYR}`;;
 
-    //check if number length equals to 10
-    if (phone.length === 7) {
-      //reformat and return phone number
-      return phone.replace(/(\d{3})(\d{4})/, "$1-$2");
-    }
-
-    return "";
-  }
-  function normalizezip(zipCode) {
-    var zipCode = zipCode.toString();
-    if (zipCode.length !== 5) {
-      zipCode = '0' + zipCode;
-    }
-
-
-    return "";
-  }
-  function normalizezipnew(zipCode) {
-
-    var zipCodeP = zipCode.toString();
-    if (zipCodeP.length !== 5) {
-      zipCodeP = '0' + zipCodeP;
-    }
-    return "";
-  }
-  function formaDatenew(date) {
-    const rawDate = date;
-    const dateStr = rawDate.toString();
-
-    const year = dateStr.substring(0, 4);
-    const month = dateStr.substring(4, 6);
-    const day = dateStr.substring(6, 8);
-
-    const formattedDate = `${month}/${day}/${year}`;
-    // if (month.length < 2) month = '0' + month;
-    // if (day.length < 2) day = '0' + day;
-
-    // if (format && format == 'Y-m-d') return [month, day, year].join('-');
-    // else return [month, day, year].join('-');
-    return formattedDate;
-
-  }
-  function formaEMADAT(EMADAT) {
-    if (EMADAT !== 0) {
-      var dateString = EMADAT.toString();
-      var year = dateString.substring(0, 2);
-      if (year > '30') {
-        year = '19' + year
-      } else {
-        year = '20' + year
-      }
-      var month = dateString.substring(2, 4);
-      var day = dateString.substring(4, 6);
-      var EMADAT = month + '/' + day + '/' + year
-    } else {
-      EMADAT = ''
-    }
-    return EMADAT;
-
-  }
-
-
+    return W2CLYRb;
+  };
   const styles = {
     body: {
       WebkitPrintColorAdjust: "exact",
@@ -207,8 +138,8 @@ function Pdf() {
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
-                  
-                    Attendance Data
+
+                      W2S Details
                     </td>
 
                   </tr>
@@ -228,33 +159,76 @@ function Pdf() {
                 {/* general section start pdf code */}
 
                 <div className="pdf-section padf-sec-top">
-                  <table className="table-status" style={{ width: '100%' }}>
+                  <table className="table-status table-sts-ws" style={{ width: '100%' }}>
                     {viewDataForm.length > 0 ?
-                     <><thead>
-                      <tr>
-                        <th className='pf-sl pdf-job-cde'>Job Code	</th>
-                        <th className='pf-wl pdf-absne'>Absence Type</th>
-                        <th className='pf-date pdf-begn-bal'>Beginning Balance </th>
-                        <th className='pf-time pdf-earn'>Earned</th>
-                        <th className='pf-resn pdf-used'>Used</th>
-                        <th className='pf-wo pdf-end-bal'>Ending Balance</th>
-                        <th className='pf-wt pad-wrk-tpe'>Work Type</th>
-                      </tr>
-                      </thead>
+                      <>
+                        <thead>
+                          <tr>
+                            <th className="thead-main thead-main-pdf" rowspan='2' colspan="1">TAX YEAR</th>
+                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FEDERAL</th>
+                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FICA</th>
+                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">MEDICARE</th>
+
+                          </tr>
+                          <tr className="thead-subhead">
+                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
+                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
+                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
+                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
+                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
+                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
+                          </tr>
+                        </thead>
+
                       </>
                       :
                       null}
+
+
                     {viewDataForm.length > 0 ?
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {item?.HAJOB} </td>
-                          <td class="border-right">  {item?.HAABS}</td>
-                          <td class="border-right">  {item?.HAFBBL}</td>
-                          <td class="border-right">  {item?.HAFERN} </td>
-                          <td class="border-right">  {item?.HAFUSE} </td>
-                          <td class="border-right">  {item?.HABAL} </td>
-                          <td class="border-right">  {item?.MEMBER} </td>
+                          <td class="border-right">  {W2CLYRdat(item.W2CLYR)} </td>
+
+                          <td class="border-right">
+
+                            {dollarUS.format(item.W2WAGE)}
+
+                          </td>
+                          <td class="border-right">
+
+
+                            {dollarUS.format(item.W2FEDT)}
+
+
+                          </td>
+                          <td class="border-right">
+
+                            {dollarUS.format(item.W2FICW)}
+
+
+
+                          </td>
+
+                          <td class="border-right">
+
+
+                            {dollarUS.format(item.W2FTWH)}
+
+
+                          </td>
+                          <td class="border-right">
+
+                            {dollarUS.format(item.W2FICM)}
+
+                          </td>
+                          <td class="border-right">
+
+                            {dollarUS.format(item.W2FMWH)}
+
+                          </td>
+
                         </tr>
                       ) : ""}
 

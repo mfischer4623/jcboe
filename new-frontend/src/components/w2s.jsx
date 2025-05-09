@@ -25,7 +25,7 @@ const W2s = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -185,9 +185,34 @@ const W2s = () => {
 
   }
   const W2CLYRdat = (W2CLYR) => {
-    let W2CLYRb =W2CLYR < 10 ? `200${W2CLYR}` : `20${W2CLYR}`;;
-    
+    let W2CLYRb = W2CLYR < 10 ? `200${W2CLYR}` : `20${W2CLYR}`;;
+
     return W2CLYRb;
+  };
+  let dollarUS = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  const exportTopdf = (e) => {
+
+    localStorage.setItem("allprintw2s", JSON.stringify(allattendataextac));
+
+    window.open('printprintw2s/', '_blank', 'noopener,noreferrer');
+
+  };
+  const checkSelected = (W2CLYR, W2ESTB) => {
+    // ✅ Fix: Use let instead of const
+    let ckido = {
+      SSN: employeeData.EMPSSN,
+      YEAR: W2CLYR,
+      ESTB: W2ESTB,
+
+    };
+    localStorage.setItem("allw2deatisl", JSON.stringify(ckido));
+
+
+    navigate("/showW2Details");
   };
   return (
     <>
@@ -218,11 +243,13 @@ const W2s = () => {
         <div class=" emp-main-heading-emp">
           <div class="main-heading-sec ">
             <div class="col-md-12">
-              <div class="head-inner">
+              <div class="head-inner ws-head-inner">
                 <h2>W2s</h2>
-                <div class="head-right">
-                  <span className='print-icon'><PrintIcon /></span>
-                  <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
+                <div class="head-right ws-head-right">
+                  {allattendata.length > 0 &&
+                    <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                  }
+                  {/* <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button> */}
                 </div>
               </div>
             </div>
@@ -237,23 +264,19 @@ const W2s = () => {
 
               <div className='col-md-12 emp-serch-main' >
                 <div className='search-sec'>
-                  <input type='text' placeholder='' className='input-srch' />
-                  <button className='go-sec'>Go</button>
+                  {/* <input type='text' placeholder='' className='input-srch' />
+                  <button className='go-sec'>Go</button> */}
                 </div>
               </div>
 
             </div>
             <div className='row'>
               {/* table section start from here */}
-              <div class="table-main-sec">
+              {/* <div class="table-main-sec">
                 <table class="table table-sec">
                   <thead class="thead-before-sec thaed-colaps-sec">
                     <tr>
-                      <th className='check-width'>
-                        <FormGroup>
-                          <FormControlLabel control={<Checkbox />} label="" />
-                        </FormGroup>
-                      </th>
+                   
                       <th className='job-width check-date-width'>Tax </th>
                       <th className='abse-type-width federal-width'>Federal</th>
                       <th className='used-width fica-width'>FICA </th>
@@ -261,13 +284,12 @@ const W2s = () => {
                       <th className='abse-type-width federal-width'>Federal</th>
                       <th className='used-width fica-width'>FICA </th>
                       <th className='used-width medicare-width'>Medicare </th>
+                      <th className='action-ws-widh'>Action </th>
                     </tr>
                   </thead>
                   <tbody class="tbody-light">
                     <tr>
-                      <td class="check-width">
-
-                      </td>
+                   
                       <td class="value-table">
                         <p>Year</p>
                       </td>
@@ -289,7 +311,9 @@ const W2s = () => {
                       <td class="value-table">
                         <p>Withheld</p>
                       </td>
-
+                      <td class="value-table">
+                        
+                      </td>
 
                     </tr>
                     {
@@ -299,9 +323,7 @@ const W2s = () => {
                           allattendata.map((entry, index) => (
 
                             <tr>
-                              <td class="check-width">
-
-                              </td>
+                         
                               <td class="value-table">
                                 <p>
                                 {W2CLYRdat(entry.W2CLYR)}
@@ -310,37 +332,42 @@ const W2s = () => {
 
                               <td class="value-table">
                                 <p>
-                               $ {entry.W2WAGE}
+                                {dollarUS.format(entry.W2WAGE)}
                                 </p>
                               </td>
                               <td class="value-table">
                                 <p>
-                                $ {entry.W2FICW}
+                                {dollarUS.format(entry.W2FICW)}
                                 </p>
                               </td>
                               <td class="value-table">
                                 <p>
-                                $ {entry.W2FICM}
+                                {dollarUS.format(entry.W2FICM)}
                                 </p>
                               </td>
                               <td class="value-table">
                                 <p>
-                                $ {entry.W2FEDT}
+                                {dollarUS.format(entry.W2FEDT)}
                                 </p>
                               </td>
                               <td class="value-table">
                                 <p>
-                                $ {entry.W2FTWH}
+                                {dollarUS.format(entry.W2FTWH)}
                                 </p>
                               </td>
                               <td class="value-table">
                                 <p>
-                                $ {entry.W2FMWH}
+                                {dollarUS.format(entry.W2FMWH)}
                                 </p>
                               </td>
                              
 
-
+                              <td class="value-table pay-visi-sec">
+                               <VisibilityIcon 
+                               
+                                onClick={(e) => { e.preventDefault(); checkSelected(entry.W2CLYR, entry.W2ESTB); }}
+                                />
+                              </td>
                             </tr>
 
 
@@ -355,8 +382,104 @@ const W2s = () => {
 
                   </tbody>
                 </table>
-              </div>
+              </div> */}
+
+
               {/* table section end from here */}
+
+              {/* another way of table design start from here */}
+              <div class="table-main-sec">
+                <table class="table table-sec table-ws-new">
+                  <thead class="thead-before-sec thaed-colaps-sec new-ws-theade">
+
+                  
+                  <tr>
+                      <th className="thead-main thead-left tax-yaer-widh" rowspan='2' colspan="1">TAX YEAR</th>
+                      <th className="thead-main" rowspan='1' colspan="2">FEDERAL</th>
+                      <th className="thead-main" rowspan='1' colspan="2">FICA</th>
+                      <th className="thead-main" rowspan='1' colspan="2">MEDICARE</th>
+                      <th className="thead-main actin-ws-widh theade-right" rowspan='2' colspan="1">ACTION</th>
+                  </tr>
+                  <tr>
+
+                      <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
+                      <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
+                      <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
+                      <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
+                      <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
+                      <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tbody-light tbody-light-ws">
+                    {
+                      firstLoading ? <tr ><td colSpan={8}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
+                        {allattendata.length > 0 ?
+
+                          allattendata.map((entry, index) => (
+
+                            <tr className='tbody-left'>
+
+                              <td >
+
+                                {W2CLYRdat(entry.W2CLYR)}
+
+                              </td>
+
+                              <td >
+
+                                {dollarUS.format(entry.W2WAGE)}
+
+                              </td>
+                              <td >
+                              
+                              {dollarUS.format(entry.W2FEDT)}
+                                
+
+                              </td>
+                              <td >
+
+                                {dollarUS.format(entry.W2FICW)}
+
+                              </td>
+                              <td >
+
+                                {dollarUS.format(entry.W2FTWH)}
+
+                              </td>
+                              <td >
+
+                                {dollarUS.format(entry.W2FICM)}
+
+                              </td>
+                              <td >
+
+                                {dollarUS.format(entry.W2FMWH)}
+
+                              </td>
+
+
+                              <td class="value-table pay-visi-sec tbody-right eye-new-ws">
+                                <VisibilityIcon
+
+                                  onClick={(e) => { e.preventDefault(); checkSelected(entry.W2CLYR, entry.W2ESTB); }}
+                                />
+                              </td>
+                            </tr>
+
+
+
+                          ))
+                          : <tr className='tbody-left'><td colSpan={8}>No Data Found</td></tr>}
+                      </>
+                    }
+
+
+                                
+
+                  </tbody>
+                </table>
+              </div>
+              {/* another way of table design end from here */}
 
               {/* pagination section start here */}
               {totalPage > 1 ? <>

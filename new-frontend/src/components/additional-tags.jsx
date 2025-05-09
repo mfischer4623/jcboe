@@ -25,7 +25,7 @@ const Additionaltags = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -184,6 +184,12 @@ const Additionaltags = () => {
     setFirstLoading(false);
 
   }
+  const exportTopdf = (e) => {
+
+    localStorage.setItem("alladitionatags", JSON.stringify(allattendataextac));
+    window.open('printadditionaltags/', '_blank', 'noopener,noreferrer');
+  
+  };
   return (
     <>
       {/* <Header />
@@ -215,10 +221,13 @@ const Additionaltags = () => {
             <div class="col-md-12">
               <div class="head-inner">
                 <h2>Additional Tags</h2>
-                {/* <div class="head-right">
-                            <span className='print-icon'><PrintIcon /></span>
-                            <button class="btn btn-submit btn-clear">Clear Filter</button>
-                        </div> */}
+                <div class="head-right">
+                  {allattendata.length > 0 &&
+                    <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                  }
+
+
+                </div>
               </div>
             </div>
           </div>
@@ -226,9 +235,128 @@ const Additionaltags = () => {
 
 
         {/* table section start */}
-        <div className="emp-table-sec">
-          <p className='no-data'>No miscellaneous data available for this employee</p>
-        </div>
+        {(firstLoading == false && allattendata.length == 0)
+          &&
+          <div className="emp-table-sec">
+            <p className='no-data'>No miscellaneous data available for this employee</p>
+          </div>
+        }
+        {
+          (firstLoading == false && allattendata.length > 0) &&
+          <>
+            <div className="emp-table-sec">
+              <div className='form-table-sec emp-table-inner'>
+                <div className='row'>
+
+                  <div className='col-md-12 emp-serch-main' >
+                    <div className='search-sec'>
+                      {/* <input type='text' className='input-srch' placeholder={searchPlaceholder} onChange={handleSearchInput} value={searchValue} onKeyPress={handleKeypress} />
+                      <button className='go-sec' onClick={(e) => gosubmit()}>Go</button> */}
+                    </div>
+                  </div>
+
+                </div>
+                <div className='row'>
+                  {/* table section start from here */}
+                  <div class="table-main-sec">
+                    <table class="table table-sec">
+                      <thead class="thead-before-sec thaed-colaps-sec">
+                        <tr>
+                          {/* <th className='check-width'>
+                        <FormGroup>
+                          <FormControlLabel control={<Checkbox />} label="" />
+                        </FormGroup>
+                      </th> */}
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                          <th className='job-width schol-yaer-widh cursorjob'></th>
+                        </tr>
+                      </thead>
+                      <tbody class="tbody-light">
+                        {
+                          firstLoading ? <tr ><td colSpan={6}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
+                            {allattendata.length > 0 ?
+                              allattendata.map((entry, index) => (
+
+                                <tr>
+                                  {/* <td class="check-width">
+                                <FormGroup>
+                                  <FormControlLabel control={<Checkbox />} label="" />
+                                </FormGroup>
+                              </td> */}
+                                  <td class="value-table">
+                                    <p>{entry.PCTID} </p>
+                                  </td>
+                                  <td class="value-table">
+                                    <p>{entry.PCCOL1} </p>
+                                  </td>
+                                  <td class="value-table">
+                                    <p>{entry.PCCOL2}</p>
+                                  </td>
+
+
+                                  <td class="value-table">
+                                    <p>{entry.PCCOL3}</p>
+                                  </td>
+
+                                  <td class="value-table">
+                                    <p>{entry.PCCOL4}</p>
+                                  </td>
+
+                                  <td class="value-table">
+                                    <p>{entry.PCCOL5}</p>
+                                  </td>
+
+
+                                  <td class="value-table">
+                                    <p>{entry.PCCOL6}</p>
+                                  </td>
+
+                                  <td class="value-table">
+                                    <p>{entry.PCCOL7}</p>
+                                  </td>
+
+                                </tr>
+
+
+                              ))
+                              : <tr><td colSpan={5}>No miscellaneous data available for this employee</td></tr>}
+                          </>
+                        }
+
+
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                  {/* table section end from here */}
+
+                  {/* pagination section start here */}
+                  {totalPage > 1 ? <>
+                    <div className='pagination-sec'>
+                      <div className='page-left'>
+                        <p><span><NavigateBeforeIcon onClick={(e) => changePage(pageNo - 1)} /></span><p><span className='page-name'>Page</span> <input type="text" value={pageNo} onChange={(e) => {
+                          !isNaN(parseInt(e.target.value)) && parseInt(e.target.value) > 0 ? changePage(parseInt(e.target.value)) : changePage(1)
+                        }} /> of {totalPage}</p><span><NavigateNextIcon onClick={(e) => changePage(pageNo + 1)} /></span></p>
+                      </div>
+                    </div>
+                  </> : ''
+                  }
+
+                  {/* pagination section end here */}
+
+                </div>
+              </div>
+            </div>
+          </>
+
+        }
         {/* table section end */}
 
 

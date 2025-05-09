@@ -24,7 +24,7 @@ const Certificates = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -183,6 +183,12 @@ const Certificates = () => {
     setFirstLoading(false);
 
   }
+  const exportTopdf = (e) => {
+
+    localStorage.setItem("allprintCertificates", JSON.stringify(allattendataextac));
+    window.open('printcertificates/', '_blank', 'noopener,noreferrer');
+  
+  };
   return (
     <>
       {/* <Header />
@@ -215,7 +221,7 @@ const Certificates = () => {
               <div class="head-inner">
                 <h2>Certificates</h2>
                 <div class="head-right">
-                  {/* <span className='print-icon'><PrintIcon /></span> */}
+                <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
@@ -248,11 +254,11 @@ const Certificates = () => {
                           <FormControlLabel control={<Checkbox />} label="" />
                         </FormGroup>
                       </th> */}
-                      <th className='job-width certi-width' onClick={() => handleColumnClick('certificates')}>Certificate <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width certi-width cursorjob' onClick={() => handleColumnClick('certificates')}>Certificate <span className='filt-icon'><img src={filticon} /></span></th>
                       <th className='abse-type-width cert-desc-width'>Cert Description </th>
-                      <th className='abse-type-width type-width' onClick={() => handleColumnClick('type')}>Type <span className='filt-icon'><img src={filticon} /></span> </th>
+                      <th className='abse-type-width type-width cursorjob' onClick={() => handleColumnClick('type')}>Type <span className='filt-icon'><img src={filticon} /></span> </th>
                       <th className='used-width type-desc-width'>Type Description </th>
-                      <th className='abse-type-width level-width' onClick={() => handleColumnClick('level')}>Level <span className='filt-icon'><img src={filticon} /></span> </th>
+                      <th className='abse-type-width level-width cursorjob' onClick={() => handleColumnClick('level')}>Level <span className='filt-icon'><img src={filticon} /></span> </th>
                       <th className='used-width level-desc-width'>Level Description </th>
                     </tr>
                   </thead>

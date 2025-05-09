@@ -47,6 +47,15 @@ import PdfBank from "./components/pdfbank";
 
 import PdfprintshowPO from "./components/pdfprintshowPO";
  import AdminLayout from "./ui-components/AdminLayout";
+import Printvoluntary from "./components/printvoluntary";
+import Printprintw2s from "./components/printprintw2s";
+import ShowW2Details from "./components/showW2Details";
+import Printw2sdetails from "./components/printw2sdetails";
+import Printadditionaltags from "./components/printadditionaltags";
+import Printattendancedetails from "./components/printattendancedetails";
+import Printslary from "./components/printslary";
+import Printpayrollall from "./components/printpayrollall";
+import Printcertificates from "./components/printcertificates";
 function App() {
 
   var baseName = '/';
@@ -94,6 +103,16 @@ function App() {
         <Route path="/printvendornamre" element={<Pdfvendoename />} />
         <Route path="/Pdfvendordeta" element={<Pdfvendordetails />} />
         <Route path="/printshowBank" element={<PdfBank />} />
+        <Route path="/printvoluntary" element={<Printvoluntary />} />
+        <Route path="/printprintw2s" element={<Printprintw2s />} />
+        <Route path="/printw2sdetails" element={<Printw2sdetails />} />
+        <Route path="/printadditionaltags" element={<Printadditionaltags />} />
+        <Route path="/printattendancedetails" element={<Printattendancedetails />} />
+        <Route path="/printslary" element={<Printslary />} />
+        <Route path="/printpayrollall" element={<Printpayrollall />} />
+        <Route path="/printcertificates" element={<Printcertificates />} />
+        
+        
             <Route element={<AdminLayout />}>
             <Route path="/checksearchlist" element={<Checksearchlist />} />
       
@@ -107,6 +126,7 @@ function App() {
         <Route path="/w2s" element={<W2S />} />
     
         <Route path="/showPayrollCheck" element={<Payrollcheck />} />
+        <Route path="/showW2Details" element={<ShowW2Details />} />
       
       
      

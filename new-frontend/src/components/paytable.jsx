@@ -24,7 +24,7 @@ const Paytable = () => {
     const [allattendata, setAllattendata] = useState([]);
     const [allattendataextac, setAllattendataexta] = useState([]);
     const [pageNo, setPageNo] = useState(1);
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState(25);
   
   
     const [firstLoading, setFirstLoading] = useState(true);
@@ -204,7 +204,7 @@ const Paytable = () => {
                   <thead class="thead-before-sec thaed-colaps-sec">
                     <tr>
                      
-                      <th className='job-width vendor-widh code-widh' >Code<span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width vendor-widh code-widh cursorjob' >Code<span className='filt-icon'><img src={filticon} /></span></th>
                       <th className='abse-type-width desc-widh'>Description</th>
 
                     </tr>

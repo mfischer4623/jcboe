@@ -121,3 +121,8 @@ export const showBank = (aphven) => {
     return axios.get(`/employees/checksearch?aphven=${aphven}`);
 
 }
+export const showW2s = (W2CLYR,W2SSN,ESTB) => {
+    return axios.get(`/employees/pfrs860sdetails/data?W2CLYR=${W2CLYR}&W2SSN=${W2SSN}&W2ESTB=${ESTB}`);
+
+}
+

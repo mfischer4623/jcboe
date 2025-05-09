@@ -25,7 +25,7 @@ const Voluntarydeductions = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -164,6 +164,13 @@ const Voluntarydeductions = () => {
     style: "percent",
     maximumFractionDigits: 2
   });
+
+  const exportTopdf = (e) => {
+
+    localStorage.setItem("allprintvoluntary", JSON.stringify(allattendataextac));
+    window.open('printvoluntary/', '_blank', 'noopener,noreferrer');
+  
+  };
   return (
     <>
       {/* <Header />
@@ -196,7 +203,7 @@ const Voluntarydeductions = () => {
               <div class="head-inner">
                 <h2>Voluntary Deductions</h2>
                 <div class="head-right">
-                  {/* <span className='print-icon'><PrintIcon /></span> */}
+                <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
@@ -229,7 +236,7 @@ const Voluntarydeductions = () => {
                           <FormControlLabel control={<Checkbox />} label="" />
                         </FormGroup>
                       </th> */}
-                      <th className='job-width schol-yaer-widh'>School Year Ending <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width schol-yaer-widh cursorjob'>School Year Ending <span className='filt-icon'><img src={filticon} /></span></th>
                       <th className='abse-type-width deductn-width'>Deduction </th>
                       <th className='used-width juris-width'>Jurisdiction </th>
                       <th className='used-width duct-width'>Deduction Amount </th>

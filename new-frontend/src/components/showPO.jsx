@@ -43,7 +43,7 @@ const Vendorsearchlist = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
   const [vendeoda, setvendeoda] = useState(null);
 
   const [firstLoading, setFirstLoading] = useState(true);

@@ -24,7 +24,7 @@ const Payroll = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -229,6 +229,13 @@ const Payroll = () => {
  
     navigate("/showPayrollCheck");
 };
+
+const exportTopdf = (e) => {
+
+  localStorage.setItem("allprintpaytrollde", JSON.stringify(allattendataextac));
+  window.open('printpayrollall/', '_blank', 'noopener,noreferrer');
+
+};
   return (
     <>
       {/* <Header />
@@ -261,7 +268,7 @@ const Payroll = () => {
               <div class="head-inner">
                 <h2>Payroll</h2>
                 <div class="head-right">
-                  {/* <span className='print-icon'><PrintIcon /></span> */}
+                <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
@@ -294,9 +301,9 @@ const Payroll = () => {
                           <FormControlLabel control={<Checkbox />} label="" />
                         </FormGroup>
                       </th> */}
-                      <th className='job-width check-date-width' onClick={() => handleColumnClick('check_date')}>Check Date <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width check-width-hash' onClick={() => handleColumnClick('check_no')}>Check # <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='used-width form-width' onClick={() => handleColumnClick('form')}>Form <span className='filt-icon'><img src={filticon} /></span> </th>
+                      <th className='job-width check-date-width cursorjob' onClick={() => handleColumnClick('check_date')}>Check Date <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='abse-type-width check-width-hash cursorjob' onClick={() => handleColumnClick('check_no')}>Check # <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='used-width form-width cursorjob' onClick={() => handleColumnClick('form')}>Form <span className='filt-icon'><img src={filticon} /></span> </th>
                       <th className='used-width check-amt-width'>Check Amt </th>
                       <th className='used-width check-amt-width action-width-payroll'>Action </th>
                     </tr>

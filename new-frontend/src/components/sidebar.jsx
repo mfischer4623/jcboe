@@ -68,7 +68,7 @@ React.useEffect(() => {
       setActiveSubMenus('payroll');
     }
 
-    else if (window.location.pathname == '/W2s') {
+    else if (window.location.pathname == '/W2s' || window.location.pathname == '/showW2Details') {
       setActiveMenus('home');
       setActiveSubMenus('W2s');
     }

@@ -46,7 +46,7 @@ const Attendance = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -358,8 +358,8 @@ const exportTopdf = (e) => {
                         </FormGroup> */}
                         #
                       </th>
-                      <th className='job-width' onClick={() => handleColumnClick('job_code')}>Job Code <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width' onClick={() => handleColumnClick('type')}>Absence Type <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width cursorjob' onClick={() => handleColumnClick('job_code')}>Job Code <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='abse-type-width cursorjob' onClick={() => handleColumnClick('type')}>Absence Type <span className='filt-icon'><img src={filticon} /></span></th>
 
                       <th className='beg-bal-width' >Beginning Balance </th>
                       <th className='earnd-width'>Earned </th>

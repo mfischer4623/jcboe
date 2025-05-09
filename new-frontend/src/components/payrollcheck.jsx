@@ -28,7 +28,7 @@ const Salaries = () => {
   const [allpayroll, setAllpayroll] = useState([]);
   const [allpayrolldeduct, setAllpayrollDeduction] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
   const [grossPay, setGrossPay] = useState(0);
   const [deductions, setDeductions] = useState(0);
   const [netPay, setNetPay] = useState(0);

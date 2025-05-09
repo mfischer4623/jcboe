@@ -215,6 +215,13 @@ function Pdf() {
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
+                  
+                    Employee Details
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td colSpan="2" className="reqid-sec reqid-sec-pdf" >
                       Employee Name: {employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM}
                     </td>
 

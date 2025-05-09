@@ -25,7 +25,7 @@ const Checksearchlist = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -374,13 +374,13 @@ const Checksearchlist = () => {
                          
                            #
                          </th> */}
-                      <th className='job-width check-bank-widh' onClick={() => handleColumnClick('APHBNK')}>Bank<span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width bank-accont-widh bank-accont-widhss' onClick={() => handleColumnClick('APHBAC')}>Bank Account <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width check-bank-widh cursorjob' onClick={() => handleColumnClick('APHBNK')}>Bank<span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='abse-type-width bank-accont-widh bank-accont-widhss cursorjob' onClick={() => handleColumnClick('APHBAC')}>Bank Account <span className='filt-icon'><img src={filticon} /></span></th>
 
-                      <th className='beg-bal-width addrss-widh chk-form-widh' onClick={() => handleColumnClick('APHFRM')}>Form <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='earnd-width city-widh chk-ven-widh' onClick={() => handleColumnClick('APHVEN')}>Vendor No <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='beg-bal-width addrss-widh chk-no-widh' onClick={() => handleColumnClick('APHCHK')} >Check Number <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='earnd-width chk-date-widh' onClick={() => handleColumnClick('APHCDT')}>Check Date <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='beg-bal-width addrss-widh chk-form-widh cursorjob' onClick={() => handleColumnClick('APHFRM')}>Form <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='earnd-width city-widh chk-ven-widh cursorjob' onClick={() => handleColumnClick('APHVEN')}>Vendor No <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='beg-bal-width addrss-widh chk-no-widh cursorjob' onClick={() => handleColumnClick('APHCHK')} >Check Number <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='earnd-width chk-date-widh cursorjob' onClick={() => handleColumnClick('APHCDT')}>Check Date <span className='filt-icon'><img src={filticon} /></span></th>
                       <th className='earnd-width chk-recon-widh'>Reconciled?</th>
                       <th className='earnd-width  chk-recon-date-widh'>Reconciled Date </th>
                       <th className='earnd-width  chek-amt-widh'>Check Amount </th>

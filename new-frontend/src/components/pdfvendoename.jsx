@@ -225,6 +225,7 @@ function Pdf() {
                 <div className="pdf-section padf-sec-top">
                   <table className="table-status" style={{ width: '100%' }}>
                     {viewData.length > 0 ?
+                    <><thead>
                       <tr>
                         <th className='pf-sl pdf-job-cde pdf-ven-hash'>Vendor #	</th>
                         <th className='pf-wl pdf-absne pdf-ven-name'>Vendor Name </th>
@@ -232,6 +233,8 @@ function Pdf() {
                         <th className='pf-time pdf-earn pdf-ven-city'>City, State Zip </th>
 
                       </tr>
+                      </thead>
+                      </>
                       :
                       null}
                     {viewData.length > 0 ?

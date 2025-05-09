@@ -206,37 +206,39 @@ function Pdf() {
 
                 </table>
                 <div class=" ">
-        <div class="main-heading-sec ">
-          <div class="col-md-12">
-            <div class="head-inner head-inner-main reqid-sec reqid-sec-pdf padding-top-pdf pdf-po">
-              {viewData.length > 0 &&
-                <>
-                  {/* <h2>Purchase Order Search</h2> */}
-                  <h2 className='po-doc-pdf'>Purchase Orders</h2>
-                  <h3 className='po-num-pdf'>Vendor Number: {viewData[0].POVEND}</h3>
-                 
-                </>
-              }
+                  <div class="main-heading-sec ">
+                    <div class="col-md-12">
+                      <div class="head-inner head-inner-main reqid-sec reqid-sec-pdf padding-top-pdf pdf-po">
+                        {viewData.length > 0 &&
+                          <>
+                            {/* <h2>Purchase Order Search</h2> */}
+                            <h2 className='po-doc-pdf'>Purchase Orders</h2>
+                            <h3 className='po-num-pdf'>Vendor Number: {viewData[0].POVEND}</h3>
+
+                          </>
+                        }
 
 
-            </div>
+                      </div>
 
-          </div>
-        </div>
-      </div>
+                    </div>
+                  </div>
+                </div>
                 {/* general section start pdf code */}
 
                 <div className="pdf-section padf-sec-top">
                   <table className="table-status" style={{ width: '100%' }}>
                     {viewData.length > 0 ?
-                      <tr>
-                        <th className='pf-sl pdf-job-cde'>PO</th>
-                        <th className='pf-wl pdf-absne'>PODOC</th>
-                        <th className='pf-date pdf-begn-bal'>POATTN </th>
-                        <th className='pf-time pdf-earn'>POTOT </th>
-                        <th className='pf-time pdf-earn'>POIUSR </th>
-                        <th className='pf-time pdf-earn'>POAUSR </th>
-                      </tr>
+                      <><thead>
+                        <tr>
+                          <th className='pf-sl pdf-job-cde'>PO</th>
+                          <th className='pf-wl pdf-absne'>PODOC</th>
+                          <th className='pf-date pdf-begn-bal'>POATTN </th>
+                          <th className='pf-time pdf-earn'>POTOT </th>
+                          <th className='pf-time pdf-earn'>POIUSR </th>
+                          <th className='pf-time pdf-earn'>POAUSR </th>
+                        </tr>
+                      </thead></>
                       :
                       null}
                     {viewData.length > 0 ?
@@ -249,7 +251,7 @@ function Pdf() {
                           <td class="border-right">  {item?.POTOT}</td>
                           <td class="border-right">  {item?.POIUSR}</td>
                           <td class="border-right">  {item?.POAUSR}</td>
-                      
+
                         </tr>
                       ) : ""}
 

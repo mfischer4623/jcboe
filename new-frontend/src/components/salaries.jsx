@@ -25,7 +25,7 @@ const Salaries = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -121,9 +121,10 @@ const Salaries = () => {
   const gosubmit = (e) => {
 
     setFirstLoading(true);
+    
     if (searchBy == 'school_year') {
       const filteredData = allattendataextac.filter((item) =>
-        item.SCHYEAR.toLowerCase().includes(searchValue.toLowerCase())
+        item.SCHYEAR.toString().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -136,7 +137,7 @@ const Salaries = () => {
     }
     if (searchBy == 'loaction') {
       const filteredData = allattendataextac.filter((item) =>
-        item.EMLOC.toLowerCase().includes(searchValue.toLowerCase())
+        item.EMLOC.toString().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -170,6 +171,13 @@ const Salaries = () => {
     setFirstLoading(false);
 
   }
+  
+  const exportTopdf = (e) => {
+
+    localStorage.setItem("allprintsalarynew", JSON.stringify(allattendataextac));
+    window.open('printslary/', '_blank', 'noopener,noreferrer');
+  
+  };
   return (
     <>
       {/* <Header />
@@ -202,7 +210,7 @@ const Salaries = () => {
               <div class="head-inner">
                 <h2>Salaries</h2>
                 <div class="head-right">
-                  {/* <span className='print-icon'><PrintIcon /></span> */}
+                <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
@@ -235,9 +243,9 @@ const Salaries = () => {
                           <FormControlLabel control={<Checkbox />} label="" />
                         </FormGroup>
                       </th> */}
-                      <th className='job-width schol-yr-width' onClick={() => handleColumnClick('school_year')}>School Year <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width schol-yr-width cursorjob' onClick={() => handleColumnClick('school_year')}>School Year <span className='filt-icon'><img src={filticon} /></span></th>
 
-                      <th className='abse-type-width loc-width' onClick={() => handleColumnClick('loaction')}>Location <span className='filt-icon'><img src={filticon} /></span> </th>
+                      <th className='abse-type-width loc-width cursorjob' onClick={() => handleColumnClick('loaction')}>Location <span className='filt-icon'><img src={filticon} /></span> </th>
                       <th className='used-width salary-width'>Salary </th>
                     </tr>
                   </thead>

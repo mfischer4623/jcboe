@@ -244,6 +244,13 @@ function Pdf() {
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
+                  
+                    Payroll Check Details
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td colSpan="2" className="reqid-sec reqid-sec-pdf " >
                       Employee Name: {employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM}
                     </td>
 
@@ -336,6 +343,7 @@ function Pdf() {
                 <div className="pdf-section padf-sec-top">
                   <table className="table-status" style={{ width: '100%' }}>
                     {(viewDocumentForm.length > 0 || viewDataFormChild.length > 0) ?
+                     <><thead>
                       <tr>
                         <th className='pf-sl pdf-payroll-desc'>Description	</th>
                         <th className='pf-wl pdf-payroll-ref'>Ref 1 </th>
@@ -345,6 +353,8 @@ function Pdf() {
                         <th className='pf-wo pdf-payroll-chk-amt'>Check Amount</th>
 
                       </tr>
+                      </thead>
+                      </>
                       :
                       null}
                     {viewDocumentForm.length > 0 ?

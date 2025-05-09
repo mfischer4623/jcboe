@@ -76,7 +76,7 @@ function Pdf() {
       navigate(`/employeedata`);
 
     } else {
-      var allprintnew = JSON.parse(window.localStorage.getItem('allprintnew'));;
+      var allprintnew = JSON.parse(window.localStorage.getItem('allprintCertificates'));;
       console.log(allprintnew);
       setEmployeeData(userid);
       setViewDataForm(allprintnew);
@@ -90,7 +90,7 @@ function Pdf() {
 
 
 
-    document.title = 'Attendance Data';
+    document.title = 'Certificates  Details';
 
 
     setTimeout(function () {
@@ -100,86 +100,10 @@ function Pdf() {
     }, 500);
     ;
   }
-  const formatDate = (date, format = null) => {
-    const myArray = date.split("-");
-    var d = new Date(date);
-    var month = myArray[1];
-    var day = myArray[2];
-    var year = myArray[0];
-    var daten = month + '/' + day + '/' + year;
-    // if (month.length < 2) month = '0' + month;
-    // if (day.length < 2) day = '0' + day;
-
-    // if (format && format == 'Y-m-d') return [month, day, year].join('-');
-    // else return [month, day, year].join('-');
-    return daten;
-  }
-  function normalize(phone) {
-    phone = phone.toString();
-    //normalize string and remove all unnecessary characters
-    phone = phone.replace(/[^\d]/g, "");
-
-    //check if number length equals to 10
-    if (phone.length === 7) {
-      //reformat and return phone number
-      return phone.replace(/(\d{3})(\d{4})/, "$1-$2");
-    }
-
-    return "";
-  }
-  function normalizezip(zipCode) {
-    var zipCode = zipCode.toString();
-    if (zipCode.length !== 5) {
-      zipCode = '0' + zipCode;
-    }
-
-
-    return "";
-  }
-  function normalizezipnew(zipCode) {
-
-    var zipCodeP = zipCode.toString();
-    if (zipCodeP.length !== 5) {
-      zipCodeP = '0' + zipCodeP;
-    }
-    return "";
-  }
-  function formaDatenew(date) {
-    const rawDate = date;
-    const dateStr = rawDate.toString();
-
-    const year = dateStr.substring(0, 4);
-    const month = dateStr.substring(4, 6);
-    const day = dateStr.substring(6, 8);
-
-    const formattedDate = `${month}/${day}/${year}`;
-    // if (month.length < 2) month = '0' + month;
-    // if (day.length < 2) day = '0' + day;
-
-    // if (format && format == 'Y-m-d') return [month, day, year].join('-');
-    // else return [month, day, year].join('-');
-    return formattedDate;
-
-  }
-  function formaEMADAT(EMADAT) {
-    if (EMADAT !== 0) {
-      var dateString = EMADAT.toString();
-      var year = dateString.substring(0, 2);
-      if (year > '30') {
-        year = '19' + year
-      } else {
-        year = '20' + year
-      }
-      var month = dateString.substring(2, 4);
-      var day = dateString.substring(4, 6);
-      var EMADAT = month + '/' + day + '/' + year
-    } else {
-      EMADAT = ''
-    }
-    return EMADAT;
-
-  }
-
+  let percentageUS = Intl.NumberFormat("en-US", {
+    style: "percent",
+    maximumFractionDigits: 2
+  });
 
   const styles = {
     body: {
@@ -189,6 +113,39 @@ function Pdf() {
       pageBreakAfter: "always",
     },
   };
+  const formatDate = (dateStringji) => {
+    console.log('dateStringji', dateStringji);
+   let HRCKDT = dateStringji;
+   let dateString = HRCKDT ? HRCKDT.toString() : "";
+
+   let month, day, year;
+   if (dateString.length === 3) {
+     month = "0" + dateString.substring(0, 1);
+     day = dateString.substring(1, 3);
+     year = "2000";
+   } else if (dateString.length === 4) {
+     month = dateString.substring(0, 2);
+     day = dateString.substring(2, 4);
+     year = "2000";
+   } else if (dateString.length === 5) {
+     month = dateString.substring(1, 3);
+     day = dateString.substring(3, 5);
+     year = "200" + dateString.substring(0, 1);
+   } else if (dateString.length === 6) {
+     month = dateString.substring(2, 4);
+     day = dateString.substring(4, 6);
+     year = dateString.substring(0, 2);
+     year = year > "30" ? "19" + year : "20" + year;
+   } else {
+     month = "12";
+     day = "31";
+     year = "9999";
+   }
+   HRCKDT = `${month}/${day}/${year}`;
+    return HRCKDT
+ }
+ let dollarUS = Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+
   return (
     <>
       <div style={styles.body}>
@@ -207,8 +164,8 @@ function Pdf() {
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
-                  
-                    Attendance Data
+
+                    Certificates Details
                     </td>
 
                   </tr>
@@ -230,31 +187,35 @@ function Pdf() {
                 <div className="pdf-section padf-sec-top">
                   <table className="table-status" style={{ width: '100%' }}>
                     {viewDataForm.length > 0 ?
-                     <><thead>
-                      <tr>
-                        <th className='pf-sl pdf-job-cde'>Job Code	</th>
-                        <th className='pf-wl pdf-absne'>Absence Type</th>
-                        <th className='pf-date pdf-begn-bal'>Beginning Balance </th>
-                        <th className='pf-time pdf-earn'>Earned</th>
-                        <th className='pf-resn pdf-used'>Used</th>
-                        <th className='pf-wo pdf-end-bal'>Ending Balance</th>
-                        <th className='pf-wt pad-wrk-tpe'>Work Type</th>
-                      </tr>
+                      <><thead>
+                        <tr>
+                          <th className='pf-sl pdf-job-cde'>Certificate	</th>
+                          <th className='pf-wl pdf-absne'>Cert Description </th>
+                          <th className='pf-date pdf-begn-bal'>Type</th>
+                          <th className='pf-date pdf-begn-bal'>Type Description</th>
+                          <th className='pf-date pdf-begn-bal'>Level</th>
+                          <th className='pf-date pdf-begn-bal'>Level Description</th>
+
+                        </tr>
                       </thead>
                       </>
+
                       :
                       null}
                     {viewDataForm.length > 0 ?
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {item?.HAJOB} </td>
-                          <td class="border-right">  {item?.HAABS}</td>
-                          <td class="border-right">  {item?.HAFBBL}</td>
-                          <td class="border-right">  {item?.HAFERN} </td>
-                          <td class="border-right">  {item?.HAFUSE} </td>
-                          <td class="border-right">  {item?.HABAL} </td>
-                          <td class="border-right">  {item?.MEMBER} </td>
+                          <td class="border-right">  {(item.CTID)} </td>
+                          <td class="border-right">  {(item.CRTDES)}</td>
+                          <td class="border-right">  {item?.CTTYPE}</td>
+                          <td class="border-right">  {item?.TYDESC}</td>
+                         
+                          <td class="border-right">  {item?.CTLEVL}</td>
+                         
+                          <td class="border-right">  {item?.LVDESC}</td>
+                         
+
                         </tr>
                       ) : ""}
 

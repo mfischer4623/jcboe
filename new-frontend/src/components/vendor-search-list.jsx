@@ -43,7 +43,7 @@ const Vendorsearchlist = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(25);
 
 
   const [firstLoading, setFirstLoading] = useState(true);
@@ -367,11 +367,11 @@ const Vendorsearchlist = () => {
                         </FormGroup> */}
                         #
                       </th>
-                      <th className='job-width vendor-widh' onClick={() => handleColumnClick('VNNO')}>Vendor #<span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width vendo-name-width' onClick={() => handleColumnClick('VNNAME')}>Vendor Name <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width vendor-widh cursorjob' onClick={() => handleColumnClick('VNNO')}>Vendor #<span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='abse-type-width vendo-name-width cursorjob' onClick={() => handleColumnClick('VNNAME')}>Vendor Name <span className='filt-icon'><img src={filticon} /></span></th>
 
-                      <th className='beg-bal-width addrss-widh' onClick={() => handleColumnClick('VNADDR')} >Address <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='earnd-width city-widh' onClick={() => handleColumnClick('VNCITY')}>City, State Zip <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='beg-bal-width addrss-widh cursorjob' onClick={() => handleColumnClick('VNADDR')} >Address <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='earnd-width city-widh cursorjob' onClick={() => handleColumnClick('VNCITY')}>City, State Zip <span className='filt-icon'><img src={filticon} /></span></th>
 
                       <th className='used-width view-widh'>View </th>
                     </tr>
