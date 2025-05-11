@@ -171,7 +171,7 @@ const EmployeeData = () => {
                                         aria-controls="panel1-content"
                                         id="panel1-header"
                                     >
-                                        <Typography component="span">W2s Details</Typography>
+                                        <Typography component="span">W2 Details</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <Typography className='form-detail-main'>

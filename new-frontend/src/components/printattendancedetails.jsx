@@ -119,6 +119,7 @@ function Pdf() {
     const day = dateString.substring(6, 8);
     return `${month}/${day}/${year}`;
   };
+  
   return (
     <>
       <div style={styles.body}>

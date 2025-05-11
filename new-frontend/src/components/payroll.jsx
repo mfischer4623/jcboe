@@ -119,6 +119,24 @@ const Payroll = () => {
     setSearchValue(e.target.value);
 
   }
+   const perPageChange = (e) => {
+    setPerPage(e.target.value);
+    
+   
+     setFirstLoading(true);
+    const totalPages = Math.ceil(allattendataextac.length / e.target.value);
+    setTotalPage(totalPages);
+    const startIndex = (1 - 1) * e.target.value;
+    const endIndex = startIndex + e.target.value;
+    var customerList_temp = allattendataextac.slice(startIndex, endIndex);
+    for (let i = 0; i < customerList_temp.length; i++) { customerList_temp[i].check_status = false; }
+    console.log(customerList_temp);
+    setAllattendata(customerList_temp);
+
+    setPageNo(1);
+    setFirstLoading(false);
+
+  }
   const gosubmit = (e) => {
 
     setFirstLoading(true);
@@ -283,6 +301,19 @@ const exportTopdf = (e) => {
             <div className='row'>
 
               <div className='col-md-12 emp-serch-main' >
+                 <div className='show-entreies-sec'>
+                  <div className='show-entries'>
+                    <p className='show-content'>Show</p>
+                    <select className='select-sec' onChange={perPageChange} value={perPage} >
+                      <option value={10}>10</option>
+                      <option value={25}>25</option>
+                      <option value={50}>50</option>
+                      <option value={100}>100</option>
+                    </select>
+                    <p className='show-entris'>Entries</p>
+                  </div>
+
+                </div>
                 <div className='search-sec'>
                   <input type='text' className='input-srch' placeholder={searchPlaceholder} onChange={handleSearchInput} value={searchValue} onKeyPress={handleKeypress} />
                   <button className='go-sec' onClick={(e) => gosubmit()}>Go</button>

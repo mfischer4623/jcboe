@@ -57,12 +57,17 @@ const EmployeeData = () => {
         var day = myArray[2];
         var year = myArray[0];
         var daten = month + '/' + day + '/' + year;
+        if (month === "00" || day === "00") {
+            return ""; // Return blank if invalid
+        } else {
+            return daten;
+        }
         // if (month.length < 2) month = '0' + month;
         // if (day.length < 2) day = '0' + day;
 
         // if (format && format == 'Y-m-d') return [month, day, year].join('-');
         // else return [month, day, year].join('-');
-        return daten;
+
     }
     function normalize(phone) {
         phone = phone.toString();
@@ -143,6 +148,53 @@ const EmployeeData = () => {
 
 
     };
+
+    const formatDateemdt = (dateStringji) => {
+        console.log('dateStringji', dateStringji);
+        if (dateStringji !== 0) {
+            var dateString = dateStringji.toString();
+            if (dateString.length === 5) {
+                year = dateString.substring(3, 5)
+                month = '0' + dateString.substring(0, 1);
+                day = dateString.substring(1, 3);
+            } else {
+                var year = dateString.substring(4, 6)
+                var month = dateString.substring(0, 2);
+                var day = dateString.substring(2, 4);
+            }
+            if (year > '30') {
+                year = '19' + year
+            } else {
+                year = '20' + year
+            }
+            var ETMDAT = month + '/' + day + '/' + year
+        } else {
+            ETMDAT = ''
+        }
+        return ETMDAT
+    }
+      const formatDateemdtapplication = (dateStringji) => {
+    if (dateStringji !== 0) {
+        var dateString = dateStringji.toString();
+        var year = dateString.substring(0, 2);
+        if (year > '30') {
+            year = '19' + year
+        } else {
+            year = '20' + year
+        }
+        var month = dateString.substring(2, 4);
+        var day = dateString.substring(4, 6);
+        var EMADAT = month + '/' + day + '/' + year
+    } else {
+        EMADAT = ''
+    }
+     return EMADAT
+
+  }
+  const padValue = (value) => {
+  return value.toString().padStart(4, '0');
+};
+
     return (
         <>
             <Header />
@@ -190,7 +242,7 @@ const EmployeeData = () => {
                                         <Typography className='form-detail-main'>
                                             {employeeData != null &&
                                                 <>
-                                                      <div className='emp-data-value-sec form-detail-inner'>
+                                                    <div className='emp-data-value-sec form-detail-inner'>
                                                         <div className='row'>
                                                             <div className=' form-detail-left'>
                                                                 <div className='row'>
@@ -853,7 +905,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{(employeeData.HID)}</p>
+                                                                            <p> {employeeData.HID != '' && employeeData.HID != null && formatDate(employeeData.HID)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -870,7 +922,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.OHD}</p>
+                                                                            <p>{employeeData.OHD != '' && employeeData.OHD != null && formatDate(employeeData.OHD)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -887,7 +939,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.TRD}</p>
+                                                                            <p> {employeeData.TRD != '' && employeeData.TRD != null && formatDate(employeeData.TRD)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -904,7 +956,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.HID}</p>
+                                                                            <p>{employeeData.HID != '' && employeeData.HID != null && formatDate(employeeData.HID)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -959,7 +1011,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{formaEMADAT(employeeData.EMADAT)}</p>
+                                                                            <p>{formatDateemdtapplication(employeeData.EMADAT)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -976,7 +1028,10 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMSRDT}</p>
+                                                                            <p>
+
+                                                                                {employeeData.EMSRDT != '' && employeeData.EMSRDT != null && formatDate(employeeData.EMSRDT)}
+                                                                            </p>
                                                                         </div>
 
                                                                     </div>
@@ -993,7 +1048,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMSR != null && employeeData.EMSR != '' && formaDatenew(employeeData.EMSR)}</p>
+                                                                            <p>{employeeData.EMSR != null && employeeData.EMSR != '' && (employeeData.EMSR)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -1011,7 +1066,9 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{(employeeData.SCD)}</p>
+                                                                            <p>
+                                                                                 {employeeData.SCD != '' && employeeData.SCD != null && formatDate(employeeData.SCD)}
+                                                                            </p>
                                                                         </div>
 
                                                                     </div>
@@ -1128,7 +1185,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EXJOB}</p>
+                                                                            <p>{padValue(employeeData.EXJOB)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -1336,14 +1393,15 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Termination Code</h3>
+                                                                            <h3>Termination Date</h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p> {employeeData.ETMCDE && employeeData.TRMTTL && `${employeeData.ETMCDE} ${employeeData.TRMTTL}`}</p>
+                                                                            <p> {employeeData.ETMDAT != '' && employeeData.ETMDAT != null && formatDateemdt(employeeData.ETMDAT)}
+                                                                                {employeeData.ETMCDE && employeeData.TRMTTL && `${employeeData.ETMCDE} ${employeeData.TRMTTL}`}</p>
                                                                         </div>
 
                                                                     </div>

@@ -209,6 +209,26 @@ const Attendance = () => {
 
 
   }
+
+  const perPageChange = (e) => {
+    setPerPage(e.target.value);
+    
+   
+     setFirstLoading(true);
+    const totalPages = Math.ceil(allattendataextac.length / e.target.value);
+    setTotalPage(totalPages);
+    const startIndex = (1 - 1) * e.target.value;
+    const endIndex = startIndex + e.target.value;
+    var customerList_temp = allattendataextac.slice(startIndex, endIndex);
+    for (let i = 0; i < customerList_temp.length; i++) { customerList_temp[i].check_status = false; }
+    console.log(customerList_temp);
+    setAllattendata(customerList_temp);
+
+    setPageNo(1);
+    setFirstLoading(false);
+
+  }
+
   const handleClearFilter = () => {
     setSearchPlaceholder('Job Code');
     setSearchBy('job_code');
@@ -259,39 +279,42 @@ const Attendance = () => {
     setAllattendata(customerList_temp);
 
   };
-  
-const exportTopdf = (e) => {
+
+  const exportTopdf = (e) => {
 
 
-  setErrorMsgForm('');
-  // Headers for each column
+    setErrorMsgForm('');
+    // Headers for each column
 
-  // Convert users data to a csv
-  console.log(actionbulkallCsv);
-  console.log('actionbulkallCsv', actionbulkallCsv);
-  var temp_csv = Array(0);
-  console.log(actionbulkallCsv.length);
+    // Convert users data to a csv
+    console.log(actionbulkallCsv);
+    console.log('actionbulkallCsv', actionbulkallCsv);
+    var temp_csv = Array(0);
+    console.log(actionbulkallCsv.length);
 
-  if (actionbulkallCsv.length > 0) {
-    if (actionbulkallCsv.length < 26) {
-      let text = actionbulkallCsv.toString();
-      console.log(text);
-      localStorage.setItem("allprintnew", JSON.stringify(actionbulkallCsv));
-      window.open('printattende/', '_blank', 'noopener,noreferrer');
-    } else {
-      setErrorMsgForm('Maximum Limit of 25 forms reached!');
+    if (actionbulkallCsv.length > 0) {
+      if (actionbulkallCsv.length < 26) {
+        let text = actionbulkallCsv.toString();
+        console.log(text);
+        localStorage.setItem("allprintnew", JSON.stringify(actionbulkallCsv));
+        window.open('printattende/', '_blank', 'noopener,noreferrer');
+      } else {
+        setErrorMsgForm('Maximum Limit of 25 forms reached!');
+        setOpendraft(true);
+      }
+
+
+    }
+    else {
+      setErrorMsgForm('Please Select a Row');
       setOpendraft(true);
+
     }
 
-
-  }
-  else {
-    setErrorMsgForm('Please Select a Row');
-    setOpendraft(true);
-
-  }
-
-};
+  };
+  const padValue = (value) => {
+    return value.toString().padStart(4, '0');
+  };
   return (
     <>
       {/* <Header />
@@ -339,6 +362,20 @@ const exportTopdf = (e) => {
             <div className='row'>
 
               <div className='col-md-12 emp-serch-main' >
+                <div className='show-entreies-sec'>
+                  <div className='show-entries'>
+                    <p className='show-content'>Show</p>
+                    <select className='select-sec' onChange={perPageChange} value={perPage} >
+                      <option value={10}>10</option>
+                      <option value={25}>25</option>
+                      <option value={50}>50</option>
+                      <option value={100}>100</option>
+                    </select>
+                    <p className='show-entris'>Entries</p>
+                  </div>
+
+                </div>
+
                 <div className='search-sec'>
                   <input type='text' className='input-srch' placeholder={searchPlaceholder} onChange={handleSearchInput} value={searchValue} onKeyPress={handleKeypress} />
                   <button className='go-sec' onClick={(e) => gosubmit()}>Go</button>
@@ -389,7 +426,7 @@ const exportTopdf = (e) => {
                                 </FormGroup>
                               </td>
                               <td class="value-table">
-                                <p>{entry.HAJOB} </p>
+                                <p>{padValue(entry.HAJOB)} </p>
                               </td>
                               <td class="value-table">
                                 <p>{entry.HAABS}</p>

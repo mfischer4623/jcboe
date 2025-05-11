@@ -2783,3 +2783,50 @@ border-right:2px solid $whitecolor !important;
 .table-sts-ws th{
   border-top: 2px solid #474747 !important;
 }
+
+
+
+
+.show-entreies-sec{
+  float: left;
+  .show-entries{
+    float: left;
+    width: 190px;
+    position: relative;
+    top: 5px;
+    p{
+      float: left;
+    }
+    .select-sec{
+      float: left;
+    }
+  }
+
+}
+.show-content{
+  margin-right: 8px;
+  font-size: 15px;
+  margin-bottom: 0px;
+  position: relative;
+  top:7px;
+  font-weight: 500;
+}
+.select-sec{
+  color: $bluecolor;
+  background-color: $whitecolor;
+  padding: 4px 7px;
+  margin-right: 6px;
+  /* border-bottom: 2px solid #263EAC !important; */
+  border: none;
+  border-bottom: 2px solid $bluecolor !important;
+  outline:none;
+  font-weight: 500;
+  font-size: 15px;
+}
+.show-entris{
+  margin-bottom: 0px;
+  position: relative;
+  top:7px;
+  left: 5px;
+  font-weight: 500;
+}

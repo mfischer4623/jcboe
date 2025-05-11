@@ -307,7 +307,7 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
                 <li className={`menu-sec ${activeSubMenus == 'salaries' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('salaries')}>Salaries {activeSubMenus == 'salaries' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
                 <li className={`menu-sec ${activeSubMenus == 'voluntarydeductions' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('voluntarydeductions')}>Voluntary Deductions {activeSubMenus == 'voluntarydeductions' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
                 <li className={`menu-sec ${activeSubMenus == 'payroll' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('payroll')}>Payroll  {activeSubMenus == 'payroll' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
-                <li className={`menu-sec ${activeSubMenus == 'W2s' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('W2s')}>W2s  {activeSubMenus == 'W2s' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
+                <li className={`menu-sec ${activeSubMenus == 'W2s' ? 'submenu-active' : ''}`} onClick={(e) => handleclicksubmenus('W2s')}>W2  {activeSubMenus == 'W2s' && <span className='arrow-right'><NavigateNextIcon /></span>}</li>
               </ul>
             </li>
             {/* <li><a href="#"  onClick={(e) => handleclickmenus('posearch')}  className={`nav-link-menu nav-disply ${ (activeSubMenus == 'posearch' || activeSubMenus == 'podetails') ? 'activeapprove' : ''}`}><DescriptionIcon /><span>PO Search</span></a></li> */}

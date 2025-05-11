@@ -48,7 +48,51 @@ const formatDateTime = (dateString) => {
 
   return `${formattedDate} ${formattedTime}`;
 };
+const formatDateemdt = (dateStringji) => {
+  console.log('dateStringji', dateStringji);
+  if (dateStringji !== 0) {
+    var dateString = dateStringji.toString();
+    if (dateString.length === 5) {
+      year = dateString.substring(3, 5)
+      month = '0' + dateString.substring(0, 1);
+      day = dateString.substring(1, 3);
+    } else {
+      var year = dateString.substring(4, 6)
+      var month = dateString.substring(0, 2);
+      var day = dateString.substring(2, 4);
+    }
+    if (year > '30') {
+      year = '19' + year
+    } else {
+      year = '20' + year
+    }
+    var ETMDAT = month + '/' + day + '/' + year
+  } else {
+    ETMDAT = ''
+  }
+  return ETMDAT
+}
+const formatDateemdtapplication = (dateStringji) => {
+  if (dateStringji !== 0) {
+    var dateString = dateStringji.toString();
+    var year = dateString.substring(0, 2);
+    if (year > '30') {
+      year = '19' + year
+    } else {
+      year = '20' + year
+    }
+    var month = dateString.substring(2, 4);
+    var day = dateString.substring(4, 6);
+    var EMADAT = month + '/' + day + '/' + year
+  } else {
+    EMADAT = ''
+  }
+  return EMADAT
 
+}
+const padValue = (value) => {
+  return value.toString().padStart(4, '0');
+};
 function Pdf() {
   let navigate = useNavigate();
 
@@ -82,7 +126,7 @@ function Pdf() {
     }
 
     setTimeout(function () {
-       triggerPrint();
+      triggerPrint();
     }, 1000);
   }, []);
   const triggerPrint = () => {
@@ -106,12 +150,11 @@ function Pdf() {
     var day = myArray[2];
     var year = myArray[0];
     var daten = month + '/' + day + '/' + year;
-    // if (month.length < 2) month = '0' + month;
-    // if (day.length < 2) day = '0' + day;
-
-    // if (format && format == 'Y-m-d') return [month, day, year].join('-');
-    // else return [month, day, year].join('-');
-    return daten;
+    if (month === "00" || day === "00") {
+      return ""; // Return blank if invalid
+    } else {
+      return daten;
+    }
   }
   function normalize(phone) {
     phone = phone.toString();
@@ -189,24 +232,24 @@ function Pdf() {
       marginTop: '10px',
     },
   };
-   useEffect(() => {
-      document.body.className = 'bodycloor';
-      return () => {
-        document.body.className = ''; // clean up
-      };
-    }, []);
+  useEffect(() => {
+    document.body.className = 'bodycloor';
+    return () => {
+      document.body.className = ''; // clean up
+    };
+  }, []);
   return (
     <>
-  
+
       <div style={styles.body}>
-       
+
         {employeeData != null &&
           <>
 
 
             <div className="conatiner-pdf " style={styles.pageBreak}>
               <div className="pdf-section">
-                <table style={{ width: '100%', marginTop: '10px'}}>
+                <table style={{ width: '100%', marginTop: '10px' }}>
 
                   <tr>
                     <td colSpan="2" class="pdf-header">
@@ -215,8 +258,8 @@ function Pdf() {
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
-                  
-                    Employee Details
+
+                      Employee Details
                     </td>
 
                   </tr>
@@ -541,7 +584,7 @@ function Pdf() {
                                 <b>Termination Date:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.TRD != null && employeeData.TRD != '' && formatDate(employeeData.TRD)}
+                                {employeeData.TRD != '' && employeeData.TRD != null && formatDate(employeeData.TRD)}
                               </td>
                             </tr>
                           </table>
@@ -566,7 +609,7 @@ function Pdf() {
                                 <b>Seniority Date:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.EMSRDT != null && employeeData.EMSRDT != '' && formaDatenew(employeeData.EMSRDT)}
+                                {employeeData.EMSRDT != null && employeeData.EMSRDT != '' && formatDate(employeeData.EMSRDT)}
                               </td>
                             </tr>
                           </table>
@@ -698,7 +741,7 @@ function Pdf() {
                                 <b>Full Time Hire Date:</b></td>
                               <td className="pdf-data">
 
-                                {(employeeData.HID)}
+                                {employeeData.HID != '' && employeeData.HID != null && formatDate(employeeData.HID)}
                               </td>
                             </tr>
                           </table>
@@ -710,7 +753,7 @@ function Pdf() {
                                 <b>Original Hire Date:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.OHD}
+                                {employeeData.OHD != '' && employeeData.OHD != null && formatDate(employeeData.OHD)}
                               </td>
                             </tr>
                           </table>
@@ -728,7 +771,7 @@ function Pdf() {
                                 <b>Termination Date:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.TRD}
+                                {employeeData.TRD != '' && employeeData.TRD != null && formatDate(employeeData.TRD)}
                               </td>
                             </tr>
                           </table>
@@ -740,7 +783,7 @@ function Pdf() {
                               <td className="main-gen-width">
                                 <b>Title Change Date:</b>
                               </td>
-                              <td className="pdf-data">{employeeData.HID}</td>
+                              <td className="pdf-data">{employeeData.HID != '' && employeeData.HID != null && formatDate(employeeData.HID)}</td>
                             </tr>
                           </table>
                         </td>
@@ -782,8 +825,7 @@ function Pdf() {
                               <td className="main-gen-width">
                                 <b>Application Date:</b></td>
                               <td className="pdf-data">
-
-                                {formaEMADAT(employeeData.EMADAT)}
+                                {formatDateemdtapplication(employeeData.EMADAT)}
                               </td>
                             </tr>
                           </table>
@@ -795,7 +837,7 @@ function Pdf() {
                               <td className="main-gen-width">
                                 <b>Seniority Date:</b>
                               </td>
-                              <td className="pdf-data">{employeeData.EMSRDT}</td>
+                              <td className="pdf-data">  {employeeData.EMSRDT != '' && employeeData.EMSRDT != null && formatDate(employeeData.EMSRDT)}</td>
                             </tr>
                           </table>
                         </td>
@@ -814,7 +856,7 @@ function Pdf() {
                                 <b>Seniority Number:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.EMSR != null && employeeData.EMSR != '' && formaDatenew(employeeData.EMSR)}
+                                {employeeData.EMSR != null && employeeData.EMSR != '' && (employeeData.EMSR)}
                               </td>
                             </tr>
                           </table>
@@ -826,7 +868,7 @@ function Pdf() {
                               <td className="main-gen-width">
                                 <b>Salary Change Date:</b>
                               </td>
-                              <td className="pdf-data">{(employeeData.SCD)}</td>
+                              <td className="pdf-data">  {employeeData.SCD != '' && employeeData.SCD != null && formatDate(employeeData.SCD)}</td>
                             </tr>
                           </table>
                         </td>
@@ -905,7 +947,7 @@ function Pdf() {
                                 <b>Job Code for GTL Addenda:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.EXJOB}
+                                {padValue(employeeData.EXJOB)}
                               </td>
                             </tr>
                           </table>
@@ -1042,43 +1084,45 @@ function Pdf() {
                   </table>
                 </div>
 
-               
-                 
+
+
+                <table className="general-sec-pdf">
+                  <tbody>
+                    <tr>
+                      <td className="main-gen-width main-margin">
+                        <table style={{ width: '100%', marginBottom: '5px' }}>
+                          <tr>
+                            <td className="main-gen-width meaintot-diff-insure">
+                              <b>Employee Contribute to Cost of Life Insurance?:</b>
+                            </td>
+                            <td className="pdf-data">{employeeData.EXCNTB}</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div className="main-pdf-sec">
+                  <h2 className='pdf-main-heads'>Termination Information</h2>
                   <table className="general-sec-pdf">
                     <tbody>
                       <tr>
-                      <td className="main-gen-width main-margin">
-                          <table style={{ width: '100%', marginBottom: '5px' }}>
-                            <tr>
-                              <td className="main-gen-width meaintot-diff-insure">
-                                <b>Employee Contribute to Cost of Life Insurance?:</b>
-                              </td>
-                              <td className="pdf-data">{employeeData.EXCNTB}</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                    </table>
-            
-                    <div className="main-pdf-sec">
-                    <h2 className='pdf-main-heads'>Termination Information</h2>
-                    <table className="general-sec-pdf">
-                    <tbody>
-                      <tr>
-                      <td className="main-gen-width main-margin">
+                        <td className="main-gen-width main-margin">
                           <table style={{ width: '100%', marginBottom: '5px' }}>
                             <tr>
                               <td className="main-gen-width meaintot-diff-insure termin-width">
                                 <b>Termination Code:</b>
                               </td>
-                              <td className="pdf-data">{employeeData.ETMCDE && employeeData.TRMTTL && `${employeeData.ETMCDE} ${employeeData.TRMTTL}`}</td>
+                              <td className="pdf-data">
+                                {employeeData.ETMDAT != '' && employeeData.ETMDAT != null && formatDateemdt(employeeData.ETMDAT)}
+                                {employeeData.ETMCDE && employeeData.TRMTTL && `${employeeData.ETMCDE} ${employeeData.TRMTTL}`}</td>
                             </tr>
                           </table>
                         </td>
                       </tr>
                       <tr>
-                      <td className="main-gen-width main-margin">
+                        <td className="main-gen-width main-margin">
                           <table style={{ width: '100%', marginBottom: '5px' }}>
                             <tr>
                               <td className="main-gen-width meaintot-diff-insure termin-width">
@@ -1090,7 +1134,7 @@ function Pdf() {
                         </td>
                       </tr>
                       <tr>
-                      <td className="main-gen-width main-margin">
+                        <td className="main-gen-width main-margin">
                           <table style={{ width: '100%', marginBottom: '5px' }}>
                             <tr>
                               <td className="main-gen-width meaintot-diff-insure termin-width">
@@ -1102,9 +1146,9 @@ function Pdf() {
                         </td>
                       </tr>
                     </tbody>
-                    </table>
-                    </div>
-                
+                  </table>
+                </div>
+
 
 
                 {/* <div className="main-pdf-sec">
@@ -1168,7 +1212,7 @@ function Pdf() {
 
 
           </>}
-     
+
       </div>
     </>
   )

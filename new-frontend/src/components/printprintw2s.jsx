@@ -139,7 +139,7 @@ function Pdf() {
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
 
-                      W2S Details
+                      W2 Details
                     </td>
 
                   </tr>

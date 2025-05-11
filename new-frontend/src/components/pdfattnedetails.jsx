@@ -179,7 +179,9 @@ function Pdf() {
     return EMADAT;
 
   }
-
+  const padValue = (value) => {
+  return value.toString().padStart(4, '0');
+};
 
   const styles = {
     body: {
@@ -248,7 +250,7 @@ function Pdf() {
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {item?.HAJOB} </td>
+                          <td class="border-right">  {padValue(item.HAJOB)} </td>
                           <td class="border-right">  {item?.HAABS}</td>
                           <td class="border-right">  {item?.HAFBBL}</td>
                           <td class="border-right">  {item?.HAFERN} </td>
