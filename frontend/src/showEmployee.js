@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react"; // Added useCallback for completeness if needed locally
+import React, { useEffect, useState } from "react"; // Added useCallback for completeness if needed locally
 import { useNavigate } from "react-router-dom";
-import { Link, Element, scroller } from "react-scroll";
+import {  Element, scroller } from "react-scroll";
 import {
     Accordion,
     AccordionSummary,
@@ -221,10 +221,10 @@ const ShowEmployee = (props) => {
         GENDER = 'MALE';
     }
 
-    var EMVETC = null;
-    if (currentData.EMVETC === 'DSTSTM') {
-        EMVETC = 'DESERT STORM';
-    }
+    // var EMVETC = null;
+    // if (currentData.EMVETC === 'DSTSTM') {
+    //     EMVETC = 'DESERT STORM';
+    // }
     
     // Date formatting (ensure currentData is used)
     var trdDate = currentData.TRD;
@@ -289,11 +289,11 @@ const ShowEmployee = (props) => {
     const etmds6 = (currentData.ETMDS6 === null || currentData.ETMDS6 === undefined) ? '-' : currentData.ETMDS6;
 
 
-    const handleFieldChange = (fieldName, value) => {
-        // This function is not currently used as fields are read-only.
-        // If editable fields are introduced, ensure this updates state correctly.
-        // setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
-    };
+    // const handleFieldChange = (fieldName, value) => {
+    //     // This function is not currently used as fields are read-only.
+    //     // If editable fields are introduced, ensure this updates state correctly.
+    //     // setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
+    // };
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
