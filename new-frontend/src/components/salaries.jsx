@@ -155,7 +155,7 @@ const Salaries = () => {
     }
     if (searchBy == 'loaction') {
       const filteredData = allattendataextac.filter((item) =>
-        item.EMLOC.toString().includes(searchValue.toLowerCase())
+        item.EMLOC.toString().padStart(3, '0').includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -195,6 +195,9 @@ const Salaries = () => {
     localStorage.setItem("allprintsalarynew", JSON.stringify(allattendataextac));
     window.open('printslary/', '_blank', 'noopener,noreferrer');
   
+  };
+    const padValue = (value) => {
+    return value.toString().padStart(3, '0');
   };
   return (
     <>
@@ -293,10 +296,10 @@ const Salaries = () => {
                                 </FormGroup>
                               </td> */}
                               <td class="value-table">
-                                <p>{entry.SCHYEAR}</p>
+                                <p>{(entry.SCHYEAR)}</p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.EMLOC}</p>
+                                <p>{padValue(entry.EMLOC)}</p>
                               </td>
                               <td class="value-table">
                                 <p>$ {entry.SALARY} </p>

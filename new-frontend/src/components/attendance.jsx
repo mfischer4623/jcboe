@@ -158,7 +158,7 @@ const Attendance = () => {
     setFirstLoading(true);
     if (searchBy == 'job_code') {
       const filteredData = allattendataextac.filter((item) =>
-        item.HAJOB.toLowerCase().includes(searchValue.toLowerCase())
+        item.HAJOB.padStart(4, '0').toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);

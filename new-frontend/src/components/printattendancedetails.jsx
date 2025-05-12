@@ -119,7 +119,9 @@ function Pdf() {
     const day = dateString.substring(6, 8);
     return `${month}/${day}/${year}`;
   };
-  
+    const padValue = (value) => {
+    return value.toString().padStart(3, '0');
+  };
   return (
     <>
       <div style={styles.body}>
@@ -179,7 +181,7 @@ function Pdf() {
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {item?.TMLLOC} </td>
+                          <td class="border-right">  {padValue(item.TMLLOC)} </td>
                           <td class="border-right">  {formatDate(item.TMLDAT)}</td>
                           <td class="border-right">  {item?.TMLABS}</td>
                           <td class="border-right">  {item?.TMLQTY} </td>

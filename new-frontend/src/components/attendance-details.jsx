@@ -133,7 +133,7 @@ const Attendancedetails = () => {
     setFirstLoading(true);
     if (searchBy == 'loc_code') {
       const filteredData = allattendataextac.filter((item) =>
-        item.TMLLOC.toLowerCase().includes(searchValue.toLowerCase())
+        item.TMLLOC.padStart(3, '0').toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -216,6 +216,10 @@ const Attendancedetails = () => {
     localStorage.setItem("allattendeatnew", JSON.stringify(allattendataextac));
     window.open('printattendancedetails/', '_blank', 'noopener,noreferrer');
   
+  };
+
+   const padValue = (value) => {
+    return value.toString().padStart(3, '0');
   };
   return (
     <>
@@ -315,7 +319,7 @@ const Attendancedetails = () => {
                                     </FormGroup> 
                                     </td> */}
                                     <td class="value-table">
-                                      <p>{entry.TMLLOC}</p>
+                                      <p>{padValue(entry.TMLLOC)}</p>
                                     </td>
                                     <td class="value-table">
                                       <p>{formatDate(entry.TMLDAT)}</p>

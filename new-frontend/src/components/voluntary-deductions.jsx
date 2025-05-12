@@ -163,7 +163,7 @@ const Voluntarydeductions = () => {
 
   }
   const handleClearFilter = () => {
-    setSearchPlaceholder('Job Code');
+    setSearchPlaceholder('School Year Ending');
     setSearchBy('school_year');
     setSearchValue('');
     setFirstLoading(true);

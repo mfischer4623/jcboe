@@ -131,7 +131,7 @@ const Job = () => {
       setFirstLoading(true);
       if (searchBy == 'JDKEY') {
         const filteredData = allattendataextac.filter((item) =>
-          item.JDKEY.toLowerCase().includes(searchValue.toLowerCase())
+          item.JDKEY.padStart(4, '0').toLowerCase().includes(searchValue.toLowerCase())
         );
         const totalPages = Math.ceil(filteredData.length / perPage);
         setTotalPage(totalPages);
@@ -165,7 +165,9 @@ const Job = () => {
       setFirstLoading(false);
   
     }
-  
+   const padValue = (value) => {
+    return value.toString().padStart(4, '0');
+  };
   return (
     <>  
 
@@ -250,7 +252,7 @@ const Job = () => {
                             <tr>
                               
                               <td class="value-table">
-                                <p>{(entry.JDKEY)} </p>
+                                <p>{padValue(entry.JDKEY)} </p>
                               </td>
                               <td class="value-table">
                                 <p>{(entry.JDTITL)} </p>
