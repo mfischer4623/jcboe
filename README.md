@@ -12,6 +12,17 @@
 
 (3) cd frontend
     HTTPS=true SSL_CRT_FILE=\wildcard_jcboe_org.crt SSL_KEY_FILE=\wildcard_jcboe_org.key npm start
+__________________________________________________________________________________________________________________
+(3a)
+    cd frontend
+    PORT=8080 HTTPS=true SSL_CRT_FILE=../wildcard_jcboe_org.crt SSL_KEY_FILE=../wildcard_jcboe_org.key npm start
+
+    cd testfrontend
+    PORT=8081 HTTPS=true SSL_CRT_FILE=../wildcard_jcboe_org.crt SSL_KEY_FILE=../wildcard_jcboe_org.key npm start
+
+    cd ..
+    node frontend-server.js
+__________________________________________________________________________________________________________________
 
     website URL:   https://"IP Address":443
 
