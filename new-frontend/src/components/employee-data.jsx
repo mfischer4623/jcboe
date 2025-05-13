@@ -51,16 +51,28 @@ const EmployeeData = () => {
 
     }, []);
     const formatDate = (date, format = null) => {
-        const myArray = date.split("-");
-        var d = new Date(date);
-        var month = myArray[1];
-        var day = myArray[2];
-        var year = myArray[0];
-        var daten = month + '/' + day + '/' + year;
-        if (month === "00" || day === "00") {
-            return ""; // Return blank if invalid
-        } else {
-            return daten;
+        const hasSlash = date.includes("/");
+        const hasDash = date.includes("-");
+        if (hasDash == true) {
+            const myArray = date.split("-");
+            var d = new Date(date);
+            var month = myArray[1];
+            var day = myArray[2];
+            var year = myArray[0];
+            var daten = month + '/' + day + '/' + year;
+            if (month === "00" || day === "00") {
+                return ""; // Return blank if invalid
+            } else {
+                return daten;
+            }
+        }
+        if (hasSlash == true) {
+            if (date === '00/00/0000' || date === '00/00/1900' || date === '00/00/2000') {
+                return ""; // Return blank if invalid
+            } else {
+                return date;
+            }
+
         }
         // if (month.length < 2) month = '0' + month;
         // if (day.length < 2) day = '0' + day;
@@ -69,35 +81,58 @@ const EmployeeData = () => {
         // else return [month, day, year].join('-');
 
     }
-    function normalize(phone) {
-        phone = phone.toString();
-        //normalize string and remove all unnecessary characters
-        phone = phone.replace(/[^\d]/g, "");
-
-        //check if number length equals to 10
-        if (phone.length === 7) {
-            //reformat and return phone number
-            return phone.replace(/(\d{3})(\d{4})/, "$1-$2");
+    function normalize(phoneStr) {
+        if (typeof phoneStr !== 'string') phoneStr = String(phoneStr || "");
+        phoneStr = phoneStr.replace(/[^\d]/g, "");
+        if (phoneStr.length === 7) {
+            return phoneStr.replace(/(\d{3})(\d{4})/, "$1-$2");
         }
-
-        return "";
+        return ""; // Or return original if not 7 digits, depending on desired behavior
     }
-    function normalizezip(zipCode) {
-        var zipCode = zipCode.toString();
-        if (zipCode.length !== 5) {
-            zipCode = '0' + zipCode;
+    function normalizeophone(EMOTL2) {
+        var ophone = "";
+        if (EMOTL2 !== null && EMOTL2 !== undefined) {
+            ophone = normalize(EMOTL2.toString());
         }
-
-
-        return "";
+        return ophone;
     }
-    function normalizezipnew(zipCode) {
 
-        var zipCodeP = zipCode.toString();
-        if (zipCodeP.length !== 5) {
-            zipCodeP = '0' + zipCodeP;
+
+    function normalizehphone(EMHTL2) {
+        var hphone = "";
+        if (EMHTL2 !== null && EMHTL2 !== undefined) {
+            hphone = normalize(EMHTL2.toString());
         }
-        return "";
+        return hphone;
+    }
+
+
+    function normalizezip(EMZIP1) {
+        var zipCode = "";
+        if (EMZIP1 !== null && EMZIP1 !== undefined) {
+            zipCode = EMZIP1.toString();
+            if (zipCode.length > 0 && zipCode.length < 5) {
+                zipCode = '0'.repeat(5 - zipCode.length) + zipCode;
+            } else if (zipCode.length !== 5) {
+                zipCode = ""; // Or handle as invalid
+            }
+        }
+        return zipCode;
+
+
+    }
+    function normalizezipnew(EMPZP1) {
+
+        var zipCodeP = "";
+        if (EMPZP1 !== null && EMPZP1 !== undefined) {
+            zipCodeP = EMPZP1.toString();
+            if (zipCodeP.length > 0 && zipCodeP.length < 5) {
+                zipCodeP = '0'.repeat(5 - zipCodeP.length) + zipCodeP;
+            } else if (zipCodeP.length !== 5) {
+                zipCodeP = ""; // Or handle as invalid
+            }
+        }
+        return zipCodeP;
     }
     function formaDatenew(date) {
         const rawDate = date;
@@ -173,27 +208,69 @@ const EmployeeData = () => {
         }
         return ETMDAT
     }
-      const formatDateemdtapplication = (dateStringji) => {
-    if (dateStringji !== 0) {
-        var dateString = dateStringji.toString();
-        var year = dateString.substring(0, 2);
-        if (year > '30') {
-            year = '19' + year
-        } else {
-            year = '20' + year
+    const formatDateemdtapplication = (dateStringji) => {
+        var EMADAT_formatted = '';
+        if (dateStringji !== null && dateStringji !== undefined && dateStringji !== 0) {
+            let dateString = dateStringji.toString();
+            let year = dateString.substring(0, 2);
+            let month = dateString.substring(2, 4);
+            let day = dateString.substring(4, 6);
+            year = parseInt(year, 10) > 30 ? '19' + year : '20' + year;
+            EMADAT_formatted = `${month}/${day}/${year}`;
         }
-        var month = dateString.substring(2, 4);
-        var day = dateString.substring(4, 6);
-        var EMADAT = month + '/' + day + '/' + year
-    } else {
-        EMADAT = ''
-    }
-     return EMADAT
+        return EMADAT_formatted
 
-  }
-  const padValue = (value) => {
-  return value.toString().padStart(4, '0');
-};
+    }
+    const padValue = (value) => {
+        return value.toString().padStart(4, '0');
+    };
+    ;
+
+    const formatDateemdtsenior = (dateStringji) => {
+        var EMSRDT_formatted = '';
+        if (dateStringji !== null && dateStringji !== undefined && dateStringji !== 0) {
+            let dateString = dateStringji.toString();
+            let year = dateString.substring(0, 2);
+            let month = dateString.substring(2, 4);
+            let day = dateString.substring(4, 6);
+            year = parseInt(year, 10) > 30 ? '19' + year : '20' + year;
+            EMSRDT_formatted = `${month}/${day}/${year}`;
+        }
+        return EMSRDT_formatted
+
+    }
+
+
+
+
+    const formatDateemdttermisinfor = (dateStringji) => {
+        var ETMDAT_formatted = '';
+        if (dateStringji !== null && dateStringji !== undefined && dateStringji !== 0) {
+            let dateString = dateStringji.toString();
+            let year = '', month = '', day = '';
+            // Simplified logic assuming MMDDYY or similar 6-digit format from context
+            if (dateString.length === 6) { // MMDDYY
+                month = dateString.substring(0, 2);
+                day = dateString.substring(2, 4);
+                year = dateString.substring(4, 6);
+            } else if (dateString.length === 5) { // Attempt to handle M D D Y Y or M M D Y Y (less common for raw numbers)
+                // This part is tricky without knowing the exact 5-digit format.
+                // Assuming MMDDY => month = dateString.substring(0,2), day = dateString.substring(2,4), year = '0' + dateString.substring(4,5)
+                // For now, let's assume it's an error or needs specific parsing rules if it's 5 digits.
+                // Defaulting to an empty string or error for unexpected 5-digit formats.
+            } // Add more specific parsing if other formats are expected for ETMDAT
+
+            if (year && month && day) {
+                year = parseInt(year, 10) > 30 && parseInt(year, 10) <= 99 ? '19' + year : '20' + year;
+                ETMDAT_formatted = `${month}/${day}/${year}`;
+            } else {
+                ETMDAT_formatted = "Invalid Date";
+            }
+        }
+        return ETMDAT_formatted
+
+    }
+
 
     return (
         <>
@@ -287,7 +364,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMSEX}, {employeeData.EMSEX == 'F' && 'FEMALE'} {employeeData.EMSEX == 'M' && 'MALE'} </p>
+                                                                            <p>{employeeData.EMSEX}, {employeeData.EMSEX == 'F' && 'FEMALE'} {employeeData.EMSEX == 'M' && 'MALE'}  {(employeeData.EMSEX != 'F' && employeeData.EMSEX != 'M') && 'OTHER'} </p>
                                                                         </div>
 
                                                                     </div>
@@ -426,7 +503,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p> ({employeeData.EMOTL0}) {normalize(employeeData.EMOTL2)} ext. {employeeData.EMEXTN ? `${employeeData.EMEXTN}` : ''} {employeeData.EMOTLS ? `${employeeData.EMOTLS}` : ''} </p>
+                                                                            <p> ({employeeData.EMOTL0}) {normalizeophone(employeeData.EMOTL2)} ext. {employeeData.EMEXTN ? `${employeeData.EMEXTN}` : ''} {employeeData.EMOTLS ? `${employeeData.EMOTLS}` : ''} </p>
                                                                         </div>
 
                                                                     </div>
@@ -514,7 +591,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>({employeeData.EMHTL0}) {normalize(employeeData.EMHTL2)} {employeeData.EMHTLS ? `${employeeData.EMHTLS}` : ''}</p>
+                                                                            <p>({employeeData.EMHTL0}) {normalizehphone(employeeData.EMHTL2)} {employeeData.EMHTLS ? `${employeeData.EMHTLS}` : ''}</p>
                                                                         </div>
 
                                                                     </div>
@@ -581,7 +658,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMPZP1)}{employeeData.EMHDT}</p>
+                                                                            <p>{employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -701,7 +778,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p> {employeeData.EMSRDT != null && employeeData.EMSRDT != '' && formaDatenew(employeeData.EMSRDT)}</p>
+                                                                            <p> {employeeData.EMSRDT != null && employeeData.EMSRDT != '' && formatDateemdtsenior(employeeData.EMSRDT)}</p>
                                                                         </div>
 
                                                                     </div>
@@ -1030,7 +1107,7 @@ const EmployeeData = () => {
                                                                         <div className='form-details-value'>
                                                                             <p>
 
-                                                                                {employeeData.EMSRDT != '' && employeeData.EMSRDT != null && formatDate(employeeData.EMSRDT)}
+                                                                                {employeeData.EMSRDT != '' && employeeData.EMSRDT != null && formatDateemdtsenior(employeeData.EMSRDT)}
                                                                             </p>
                                                                         </div>
 
@@ -1067,7 +1144,7 @@ const EmployeeData = () => {
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
                                                                             <p>
-                                                                                 {employeeData.SCD != '' && employeeData.SCD != null && formatDate(employeeData.SCD)}
+                                                                                {employeeData.SCD != '' && employeeData.SCD != null && formatDate(employeeData.SCD)}
                                                                             </p>
                                                                         </div>
 
@@ -1400,13 +1477,30 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p> {employeeData.ETMDAT != '' && employeeData.ETMDAT != null && formatDateemdt(employeeData.ETMDAT)}
-                                                                                {employeeData.ETMCDE && employeeData.TRMTTL && `${employeeData.ETMCDE} ${employeeData.TRMTTL}`}</p>
+                                                                            <p> {employeeData.ETMDAT != '' && employeeData.ETMDAT != null && formatDateemdttermisinfor(employeeData.ETMDAT)}
+                                                                               </p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
+                                                                {(employeeData.ETMCDE && employeeData.TRMTTL) &&
+                                                                    <div className='row'>
+                                                                        <div className='form-detail-left-inner'>
+                                                                            <div className='form-details-label'>
+                                                                                <h3>Termination Code</h3>
+                                                                                <p className='semicolon'>:</p>
+                                                                            </div>
 
+                                                                        </div>
+                                                                        <div className='form-detail-right-inner'>
+                                                                            <div className='form-details-value'>
+                                                                                <p> 
+                                                                                   {employeeData.ETMCDE} {employeeData.TRMTTL}</p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                }
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
@@ -1417,7 +1511,11 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.ETMDS1}</p>
+                                                                            <p>{(employeeData.ETMDS1 === null || employeeData.ETMDS1 === undefined) ? '-' : employeeData.ETMDS1}
+
+
+
+                                                                            </p>
                                                                         </div>
 
                                                                     </div>
@@ -1436,7 +1534,15 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner  last-right-data'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.ETMDS2} {employeeData.ETMDS3}  {employeeData.ETMDS4}  {employeeData.ETMDS5}  {employeeData.ETMDS6}</p>
+                                                                            <p>
+                                                                                {/* {employeeData.ETMDS2} 
+                                                                                {employeeData.ETMDS3} 
+                                                                                 {employeeData.ETMDS4}  
+                                                                                 {employeeData.ETMDS5} 
+                                                                                  {employeeData.ETMDS6} */}
+                                                                                 {(employeeData.ETMDS2 === null || employeeData.ETMDS2 === undefined) ? '-' : employeeData.ETMDS2}  {(employeeData.ETMDS3 === null || employeeData.ETMDS3 === undefined) ? '-' : employeeData.ETMDS3} {(employeeData.ETMDS4 === null || employeeData.ETMDS4 === undefined) ? '-' : employeeData.ETMDS4} {(employeeData.ETMDS5 === null || employeeData.ETMDS5 === undefined) ? '-' : employeeData.ETMDS5} {(employeeData.ETMDS6 === null || employeeData.ETMDS6 === undefined) ? '-' : employeeData.ETMDS6}
+                                                                                
+                                                                                </p>
                                                                         </div>
 
                                                                     </div>

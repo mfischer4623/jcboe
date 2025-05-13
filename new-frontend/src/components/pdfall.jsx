@@ -11,20 +11,126 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import { AppContext } from '../context';
-function formatDate(date, format = null) {
-  const myArray = date.split("-");
-  var d = new Date(date);
-  var month = myArray[1];
-  var day = myArray[2];
-  var year = myArray[0];
-  var daten = month + '/' + day + '/' + year;
+const formatDate = (date, format = null) => {
+  const hasSlash = date.includes("/");
+  const hasDash = date.includes("-");
+  if (hasDash == true) {
+    const myArray = date.split("-");
+    var d = new Date(date);
+    var month = myArray[1];
+    var day = myArray[2];
+    var year = myArray[0];
+    var daten = month + '/' + day + '/' + year;
+    if (month === "00" || day === "00") {
+      return ""; // Return blank if invalid
+    } else {
+      return daten;
+    }
+  }
+  if (hasSlash == true) {
+    if (date === '00/00/0000' || date === '00/00/1900' || date === '00/00/2000') {
+      return ""; // Return blank if invalid
+    } else {
+      return date;
+    }
+
+  }
   // if (month.length < 2) month = '0' + month;
   // if (day.length < 2) day = '0' + day;
 
   // if (format && format == 'Y-m-d') return [month, day, year].join('-');
   // else return [month, day, year].join('-');
-  return daten;
+
 }
+function normalize(phoneStr) {
+  if (typeof phoneStr !== 'string') phoneStr = String(phoneStr || "");
+  phoneStr = phoneStr.replace(/[^\d]/g, "");
+  if (phoneStr.length === 7) {
+    return phoneStr.replace(/(\d{3})(\d{4})/, "$1-$2");
+  }
+  return ""; // Or return original if not 7 digits, depending on desired behavior
+}
+function normalizeophone(EMOTL2) {
+  var ophone = "";
+  if (EMOTL2 !== null && EMOTL2 !== undefined) {
+    ophone = normalize(EMOTL2.toString());
+  }
+  return ophone;
+}
+
+
+function normalizehphone(EMHTL2) {
+  var hphone = "";
+  if (EMHTL2 !== null && EMHTL2 !== undefined) {
+    hphone = normalize(EMHTL2.toString());
+  }
+  return hphone;
+}
+
+
+function normalizezip(EMZIP1) {
+  var zipCode = "";
+  if (EMZIP1 !== null && EMZIP1 !== undefined) {
+    zipCode = EMZIP1.toString();
+    if (zipCode.length > 0 && zipCode.length < 5) {
+      zipCode = '0'.repeat(5 - zipCode.length) + zipCode;
+    } else if (zipCode.length !== 5) {
+      zipCode = ""; // Or handle as invalid
+    }
+  }
+  return zipCode;
+
+
+}
+function normalizezipnew(EMPZP1) {
+
+  var zipCodeP = "";
+  if (EMPZP1 !== null && EMPZP1 !== undefined) {
+    zipCodeP = EMPZP1.toString();
+    if (zipCodeP.length > 0 && zipCodeP.length < 5) {
+      zipCodeP = '0'.repeat(5 - zipCodeP.length) + zipCodeP;
+    } else if (zipCodeP.length !== 5) {
+      zipCodeP = ""; // Or handle as invalid
+    }
+  }
+  return zipCodeP;
+}
+function formaDatenew(date) {
+  const rawDate = date;
+  const dateStr = rawDate.toString();
+
+  const year = dateStr.substring(0, 4);
+  const month = dateStr.substring(4, 6);
+  const day = dateStr.substring(6, 8);
+
+  const formattedDate = `${month}/${day}/${year}`;
+  // if (month.length < 2) month = '0' + month;
+  // if (day.length < 2) day = '0' + day;
+
+  // if (format && format == 'Y-m-d') return [month, day, year].join('-');
+  // else return [month, day, year].join('-');
+  return formattedDate;
+
+}
+function formaEMADAT(EMADAT) {
+  if (EMADAT !== 0) {
+    var dateString = EMADAT.toString();
+    var year = dateString.substring(0, 2);
+    if (year > '30') {
+      year = '19' + year
+    } else {
+      year = '20' + year
+    }
+    var month = dateString.substring(2, 4);
+    var day = dateString.substring(4, 6);
+    var EMADAT = month + '/' + day + '/' + year
+  } else {
+    EMADAT = ''
+  }
+  return EMADAT;
+
+}
+
 
 const formatDateTime = (dateString) => {
   if (!dateString) return ""; // Handle undefined or null values
@@ -48,51 +154,68 @@ const formatDateTime = (dateString) => {
 
   return `${formattedDate} ${formattedTime}`;
 };
-const formatDateemdt = (dateStringji) => {
-  console.log('dateStringji', dateStringji);
-  if (dateStringji !== 0) {
-    var dateString = dateStringji.toString();
-    if (dateString.length === 5) {
-      year = dateString.substring(3, 5)
-      month = '0' + dateString.substring(0, 1);
-      day = dateString.substring(1, 3);
-    } else {
-      var year = dateString.substring(4, 6)
-      var month = dateString.substring(0, 2);
-      var day = dateString.substring(2, 4);
-    }
-    if (year > '30') {
-      year = '19' + year
-    } else {
-      year = '20' + year
-    }
-    var ETMDAT = month + '/' + day + '/' + year
-  } else {
-    ETMDAT = ''
-  }
-  return ETMDAT
-}
 const formatDateemdtapplication = (dateStringji) => {
-  if (dateStringji !== 0) {
-    var dateString = dateStringji.toString();
-    var year = dateString.substring(0, 2);
-    if (year > '30') {
-      year = '19' + year
-    } else {
-      year = '20' + year
-    }
-    var month = dateString.substring(2, 4);
-    var day = dateString.substring(4, 6);
-    var EMADAT = month + '/' + day + '/' + year
-  } else {
-    EMADAT = ''
+  var EMADAT_formatted = '';
+  if (dateStringji !== null && dateStringji !== undefined && dateStringji !== 0) {
+    let dateString = dateStringji.toString();
+    let year = dateString.substring(0, 2);
+    let month = dateString.substring(2, 4);
+    let day = dateString.substring(4, 6);
+    year = parseInt(year, 10) > 30 ? '19' + year : '20' + year;
+    EMADAT_formatted = `${month}/${day}/${year}`;
   }
-  return EMADAT
+  return EMADAT_formatted
 
 }
 const padValue = (value) => {
   return value.toString().padStart(4, '0');
 };
+
+const formatDateemdtsenior = (dateStringji) => {
+  var EMSRDT_formatted = '';
+  if (dateStringji !== null && dateStringji !== undefined && dateStringji !== 0) {
+    let dateString = dateStringji.toString();
+    let year = dateString.substring(0, 2);
+    let month = dateString.substring(2, 4);
+    let day = dateString.substring(4, 6);
+    year = parseInt(year, 10) > 30 ? '19' + year : '20' + year;
+    EMSRDT_formatted = `${month}/${day}/${year}`;
+  }
+  return EMSRDT_formatted
+
+}
+
+
+
+
+const formatDateemdttermisinfor = (dateStringji) => {
+  var ETMDAT_formatted = '';
+  if (dateStringji !== null && dateStringji !== undefined && dateStringji !== 0) {
+    let dateString = dateStringji.toString();
+    let year = '', month = '', day = '';
+    // Simplified logic assuming MMDDYY or similar 6-digit format from context
+    if (dateString.length === 6) { // MMDDYY
+      month = dateString.substring(0, 2);
+      day = dateString.substring(2, 4);
+      year = dateString.substring(4, 6);
+    } else if (dateString.length === 5) { // Attempt to handle M D D Y Y or M M D Y Y (less common for raw numbers)
+      // This part is tricky without knowing the exact 5-digit format.
+      // Assuming MMDDY => month = dateString.substring(0,2), day = dateString.substring(2,4), year = '0' + dateString.substring(4,5)
+      // For now, let's assume it's an error or needs specific parsing rules if it's 5 digits.
+      // Defaulting to an empty string or error for unexpected 5-digit formats.
+    } // Add more specific parsing if other formats are expected for ETMDAT
+
+    if (year && month && day) {
+      year = parseInt(year, 10) > 30 && parseInt(year, 10) <= 99 ? '19' + year : '20' + year;
+      ETMDAT_formatted = `${month}/${day}/${year}`;
+    } else {
+      ETMDAT_formatted = "Invalid Date";
+    }
+  }
+  return ETMDAT_formatted
+
+}
+
 function Pdf() {
   let navigate = useNavigate();
 
@@ -143,49 +266,9 @@ function Pdf() {
     }, 500);
     ;
   }
-  const formatDate = (date, format = null) => {
-    const myArray = date.split("-");
-    var d = new Date(date);
-    var month = myArray[1];
-    var day = myArray[2];
-    var year = myArray[0];
-    var daten = month + '/' + day + '/' + year;
-    if (month === "00" || day === "00") {
-      return ""; // Return blank if invalid
-    } else {
-      return daten;
-    }
-  }
-  function normalize(phone) {
-    phone = phone.toString();
-    //normalize string and remove all unnecessary characters
-    phone = phone.replace(/[^\d]/g, "");
-
-    //check if number length equals to 10
-    if (phone.length === 7) {
-      //reformat and return phone number
-      return phone.replace(/(\d{3})(\d{4})/, "$1-$2");
-    }
-
-    return "";
-  }
-  function normalizezip(zipCode) {
-    var zipCode = zipCode.toString();
-    if (zipCode.length !== 5) {
-      zipCode = '0' + zipCode;
-    }
-
-
-    return "";
-  }
-  function normalizezipnew(zipCode) {
-
-    var zipCodeP = zipCode.toString();
-    if (zipCodeP.length !== 5) {
-      zipCodeP = '0' + zipCodeP;
-    }
-    return "";
-  }
+  
+ 
+ 
   function formaDatenew(date) {
     const rawDate = date;
     const dateStr = rawDate.toString();
@@ -203,25 +286,7 @@ function Pdf() {
     return formattedDate;
 
   }
-  function formaEMADAT(EMADAT) {
-    if (EMADAT !== 0) {
-      var dateString = EMADAT.toString();
-      var year = dateString.substring(0, 2);
-      if (year > '30') {
-        year = '19' + year
-      } else {
-        year = '20' + year
-      }
-      var month = dateString.substring(2, 4);
-      var day = dateString.substring(4, 6);
-      var EMADAT = month + '/' + day + '/' + year
-    } else {
-      EMADAT = ''
-    }
-    return EMADAT;
-
-  }
-
+  
 
   const styles = {
     body: {
@@ -313,7 +378,7 @@ function Pdf() {
                                 <b>Gender:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.EMSEX}, {employeeData.EMSEX == 'F' && 'FEMALE'} {employeeData.EMSEX == 'M' && 'MALE'}
+                                {employeeData.EMSEX}, {employeeData.EMSEX == 'F' && 'FEMALE'} {employeeData.EMSEX == 'M' && 'MALE'} {(employeeData.EMSEX != 'F' && employeeData.EMSEX != 'M') && 'OTHER'}
                               </td>
                             </tr>
                           </table>
@@ -397,7 +462,7 @@ function Pdf() {
                           <table style={{ width: '100%' }}>
                             <tbody><tr>
                               <td className="main-gen-width"><b>Office Phone:</b></td>
-                              <td className="pdf-data">  ({employeeData.EMOTL0}) {normalize(employeeData.EMOTL2)} ext. {employeeData.EMEXTN ? `${employeeData.EMEXTN}` : ''} {employeeData.EMOTLS ? `${employeeData.EMOTLS}` : ''}
+                              <td className="pdf-data">  ({employeeData.EMOTL0}) {normalizeophone(employeeData.EMOTL2)} ext. {employeeData.EMEXTN ? `${employeeData.EMEXTN}` : ''} {employeeData.EMOTLS ? `${employeeData.EMOTLS}` : ''}
                               </td>
                             </tr>
                             </tbody></table>
@@ -461,7 +526,7 @@ function Pdf() {
                               <td className="main-gen-width">
                                 <b>Home Phone:</b>
                               </td>
-                              <td className="pdf-data"> ({employeeData.EMHTL0}) {normalize(employeeData.EMHTL2)} {employeeData.EMHTLS ? `${employeeData.EMHTLS}` : ''}</td>
+                              <td className="pdf-data"> ({employeeData.EMHTL0}) {normalizehphone(employeeData.EMHTL2)} {employeeData.EMHTLS ? `${employeeData.EMHTLS}` : ''}</td>
                             </tr>
                           </table>
                         </td>
@@ -511,7 +576,7 @@ function Pdf() {
                               <td className="main-gen-width">
                                 <b>City/State/Zip:</b>
                               </td>
-                              <td className="pdf-data"> {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMPZP1)}{employeeData.EMHDT}</td>
+                              <td className="pdf-data"> {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</td>
                             </tr>
                           </table>
                         </td>
@@ -609,7 +674,7 @@ function Pdf() {
                                 <b>Seniority Date:</b></td>
                               <td className="pdf-data">
 
-                                {employeeData.EMSRDT != null && employeeData.EMSRDT != '' && formatDate(employeeData.EMSRDT)}
+                                {employeeData.EMSRDT != null && employeeData.EMSRDT != '' && formatDateemdtsenior(employeeData.EMSRDT)}
                               </td>
                             </tr>
                           </table>
@@ -837,7 +902,7 @@ function Pdf() {
                               <td className="main-gen-width">
                                 <b>Seniority Date:</b>
                               </td>
-                              <td className="pdf-data">  {employeeData.EMSRDT != '' && employeeData.EMSRDT != null && formatDate(employeeData.EMSRDT)}</td>
+                              <td className="pdf-data">  {employeeData.EMSRDT != '' && employeeData.EMSRDT != null && formatDateemdtsenior(employeeData.EMSRDT)}</td>
                             </tr>
                           </table>
                         </td>
@@ -1112,15 +1177,31 @@ function Pdf() {
                           <table style={{ width: '100%', marginBottom: '5px' }}>
                             <tr>
                               <td className="main-gen-width meaintot-diff-insure termin-width">
-                                <b>Termination Code:</b>
+                                <b>Termination Date:</b>
                               </td>
                               <td className="pdf-data">
-                                {employeeData.ETMDAT != '' && employeeData.ETMDAT != null && formatDateemdt(employeeData.ETMDAT)}
-                                {employeeData.ETMCDE && employeeData.TRMTTL && `${employeeData.ETMCDE} ${employeeData.TRMTTL}`}</td>
+                                {employeeData.ETMDAT != '' && employeeData.ETMDAT != null && formatDateemdttermisinfor(employeeData.ETMDAT)}
+                              </td>
                             </tr>
                           </table>
                         </td>
                       </tr>
+                      {(employeeData.ETMCDE && employeeData.TRMTTL) &&
+                        <tr>
+                          <td className="main-gen-width main-margin">
+                            <table style={{ width: '100%', marginBottom: '5px' }}>
+                              <tr>
+                                <td className="main-gen-width meaintot-diff-insure termin-width">
+                                  <b>Termination Code:</b>
+                                </td>
+                                <td className="pdf-data">
+
+                                  {employeeData.ETMCDE} {employeeData.TRMTTL}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      }
                       <tr>
                         <td className="main-gen-width main-margin">
                           <table style={{ width: '100%', marginBottom: '5px' }}>
@@ -1128,7 +1209,7 @@ function Pdf() {
                               <td className="main-gen-width meaintot-diff-insure termin-width">
                                 <b>Employee Details:</b>
                               </td>
-                              <td className="pdf-data">{employeeData.ETMDS1}</td>
+                              <td className="pdf-data">{(employeeData.ETMDS1 === null || employeeData.ETMDS1 === undefined) ? '-' : employeeData.ETMDS1}</td>
                             </tr>
                           </table>
                         </td>
@@ -1140,7 +1221,7 @@ function Pdf() {
                               <td className="main-gen-width meaintot-diff-insure termin-width">
                                 <b>Additional Details:</b>
                               </td>
-                              <td className="pdf-data">{employeeData.ETMDS2} {employeeData.ETMDS3}  {employeeData.ETMDS4}  {employeeData.ETMDS5}  {employeeData.ETMDS6}</td>
+                              <td className="pdf-data">  {(employeeData.ETMDS2 === null || employeeData.ETMDS2 === undefined) ? '-' : employeeData.ETMDS2}  {(employeeData.ETMDS3 === null || employeeData.ETMDS3 === undefined) ? '-' : employeeData.ETMDS3} {(employeeData.ETMDS4 === null || employeeData.ETMDS4 === undefined) ? '-' : employeeData.ETMDS4} {(employeeData.ETMDS5 === null || employeeData.ETMDS5 === undefined) ? '-' : employeeData.ETMDS5} {(employeeData.ETMDS6 === null || employeeData.ETMDS6 === undefined) ? '-' : employeeData.ETMDS6}</td>
                             </tr>
                           </table>
                         </td>
