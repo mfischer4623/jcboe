@@ -87,7 +87,7 @@ function Pdf() {
     }
 
     setTimeout(function () {
-       triggerPrint();
+      triggerPrint();
     }, 1000);
   }, []);
   const triggerPrint = () => {
@@ -158,7 +158,7 @@ function Pdf() {
                     </td>
                   </tr>
 
-                  <tr>
+                  {/* <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
                       Employee Name: {employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM}
                     </td>
@@ -169,301 +169,410 @@ function Pdf() {
                       Emp Id:  {employeeData.EMSSAN}
                     </td>
 
-                  </tr>
+                  </tr> */}
                   <tr>
-                    <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-bottom-pdf" >
+                    <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-bottom-pdf padding-top-pdf" >
                       W2 Details  Year:  {viewDataForm}
                     </td>
 
                   </tr>
                 </table>
-                <div className="main-pdf-sec pagebrpr">
+                <div className="main-pdf-sec pagebrpr ws-main-pdf-sec">
+                  <div className="emp-table-pdf pdf-ws-emp-table-pdf">
+                    <div className='po-details-sec pdf-po-details new-ws-pdf-po'>
+                      <div className="row">
+                        <div className='col-md-12  empoyee-detmd'>
+                          <div className='po-details-head pdf-details-headss empoyee-detpdfti'>
+                            <h2>Employer Details</h2>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <table className="general-sec-pdf">
                     <tbody>
-                      {employeeData != null &&
-                        <>
-                          {viewDocumentForm.length > 0 &&
-                            <>
-                              {/* {viewDocumentForm.map((entry, index) => (
+                      <tr>
+                        <td className="main-gen-inner main-gen-inner-ws">
+                          <table style={{ width: '100%' }}>
+                            <tbody><tr>
+                              <td className="main-gen-width main-gen-width-new   main-w2s-det"><b>Employer:</b></td>
+                              <td className="pdf-data">
+                              </td>
+                            </tr>
+                            </tbody></table>
+                        </td>
+                        {employeeData != null &&
+                          <>
+                            {viewDocumentForm.length > 0 &&
+                              <>
+                                {/* {viewDocumentForm.map((entry, index) => (
                                 <> */}
-                              <tr>
-                                <td className="main-gen-inner">
-                                  <table style={{ width: '100%' }}>
-                                    <tbody><tr>
-                                      <td className="main-gen-width main-gen-width-new"><b> Employee's SSN:</b></td>
-                                      <td className="pdf-data"> {viewDocumentForm[0].W2SSN}
-                                      </td>
-                                    </tr>
-                                    </tbody></table>
-                                </td>
-                                <td className="main-gen-inner">
+
+
+                                <td className="main-gen-inner main-gen-inner-ws">
                                   <table style={{ width: '100%' }}>
                                     <tbody>
                                       <tr>
-                                        <td className="main-gen-width main-gen-width-new">
+                                        <td className="main-gen-width main-gen-width-new   main-w2s-det">
                                           <b>Employer EIN:</b>
                                         </td>
-                                        <td className="pdf-data">  {viewDocumentForm[0].W2FEIN}</td>
+                                        <td className="pdf-data"> {viewDocumentForm[0].W2FEIN}</td>
                                       </tr>
                                     </tbody>
                                   </table>
                                 </td>
+
+                              </>
+
+
+                            }
+                          </>
+                        }
+                      </tr>
+                      <tr>
+
+                        <td className="main-gen-inner main-gen-inner-ws">
+                          <table style={{ width: '100%' }}>
+                            <tbody>
+                              <tr>
+                                <td className="main-gen-width  main-gen-width-new">
+                                  <b>Address:</b>
+                                </td>
+                                <td className="pdf-data"></td>
                               </tr>
-                              {/* </>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td className="main-gen-inner main-gen-inner-ws">
+                          <table style={{ width: '100%' }}>
+                            <tbody><tr>
+                              <td className="main-gen-width  main-gen-width-new"><b>City, State, Zip:</b></td>
+                              <td className="pdf-data">
+                              </td>
+                            </tr>
+                            </tbody></table>
+                        </td>
+                      </tr>
+
+                    
+
+
+
+
+
+
+                  </tbody>
+
+                </table>
+                <div className="emp-table-pdf pdf-ws-emp-table-pdf">
+                  <div className='po-details-sec pdf-po-details new-ws-pdf-po'>
+                    <div className="row">
+                      <div className='col-md-12 empoyee-detmd'>
+                        <div className='po-details-head pdf-details-headss empoyee-detpdfti'>
+                          <h2>Employee Details</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <table className="general-sec-pdf">
+                  <tbody>
+
+
+                    {employeeData != null &&
+                      <>
+                        {viewDocumentForm.length > 0 &&
+                          <>
+                            {/* {viewDocumentForm.map((entry, index) => (
+                                <> */}
+
+                                 <tr> 
+                              <td className="main-gen-inner main-gen-inner-ws">
+                                <table style={{ width: '100%' }}>
+                                  <tbody><tr>
+                                    <td className="main-gen-width main-gen-width-new   main-w2s-det"><b> Emp Id:</b></td>
+                                    <td className="pdf-data"> {employeeData.EMSSAN}
+                                    </td>
+                                  </tr>
+                                  </tbody></table>
+                              </td>
+                              <td className="main-gen-inner main-gen-inner-ws">
+                                <table style={{ width: '100%' }}>
+                                  <tbody><tr>
+                                    <td className="main-gen-width main-gen-width-new   main-w2s-det"><b> Name:</b></td>
+                                    <td className="pdf-data">  {employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM}
+                                    </td>
+                                  </tr>
+                                  </tbody></table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="main-gen-inner main-gen-inner-ws">
+                                <table style={{ width: '100%' }}>
+                                  <tbody><tr>
+                                    <td className="main-gen-width main-gen-width-new   main-w2s-det"><b> Employee's SSN:</b></td>
+                                    <td className="pdf-data"> {viewDocumentForm[0].W2SSN}
+                                    </td>
+                                  </tr>
+                                  </tbody></table>
+                              </td>
+                              <td className="main-gen-inner main-gen-inner-ws">
+                                <table style={{ width: '100%' }}>
+                                  <tbody><tr>
+                                    <td className="main-gen-width main-gen-width-new   main-w2s-det"><b>Address:</b></td>
+                                    <td className="pdf-data">  {employeeData.EMADD1}
+                                    </td>
+                                  </tr>
+                                  </tbody></table>
+                              </td>
+                            </tr>
+                            {/* </>
 
 
 
                               ))} */}
-                            </>
+                          </>
 
 
-                          }
-                          <tr>
-                            <td className="main-gen-inner">
-                              <table style={{ width: '100%' }}>
-                                <tbody><tr>
-                                  <td className="main-gen-width main-gen-width-new"><b>Address:</b></td>
-                                  <td className="pdf-data">  {employeeData.EMADD1}
+                        }
+                        <tr>
+
+                          <td className="main-gen-inner main-gen-inner-ws">
+                            <table style={{ width: '100%' }}>
+                              <tbody>
+                                <tr>
+                                  <td className="main-gen-width  main-gen-width-new">
+                                    <b>Address 1:</b>
                                   </td>
+                                  <td className="pdf-data"> {employeeData.EMADD2}</td>
                                 </tr>
-                                </tbody></table>
-                            </td>
-                            <td className="main-gen-inner">
-                              <table style={{ width: '100%' }}>
-                                <tbody>
-                                  <tr>
-                                    <td className="main-gen-width  main-gen-width-new">
-                                      <b>Address 1:</b>
-                                    </td>
-                                    <td className="pdf-data"> {employeeData.EMADD2}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="main-gen-inner">
-                              <table style={{ width: '100%' }}>
-                                <tbody><tr>
-                                  <td className="main-gen-width  main-gen-width-new"><b>  City, State,Zip:</b></td>
-                                  <td className="pdf-data"> {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}
-                                  </td>
-                                </tr>
-                                </tbody></table>
-                            </td>
+                              </tbody>
+                            </table>
+                          </td>
+                          <td className="main-gen-inner main-gen-inner-ws">
+                            <table style={{ width: '100%' }}>
+                              <tbody><tr>
+                                <td className="main-gen-width  main-gen-width-new"><b>  City, State, Zip:</b></td>
+                                <td className="pdf-data"> {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}
+                                </td>
+                              </tr>
+                              </tbody></table>
+                          </td>
+                        </tr>
 
-                          </tr>
-                        </>
-                      }
+                      </>
+                    }
 
 
 
 
 
 
-                    </tbody>
+                  </tbody>
 
-                  </table>
-                </div>
-                {/* general section start pdf code */}
-                {viewDocumentForm.length > 0 &&
-                  <>
-                    {viewDocumentForm.map((entry, index) => (
-                      <>
+                </table>
+              </div>
+              {/* general section start pdf code */}
+              {viewDocumentForm.length > 0 &&
+                <>
+                  {viewDocumentForm.map((entry, index) => (
+                    <>
 
-                        <div className="emp-table-pdf">
-                          <div className='po-details-sec pdf-po-details'>
+                      <div className="emp-table-pdf pdf-ws-emp-table-pdf">
+                        <div className='po-details-sec pdf-po-details'>
 
-                            <div className='row margin-top-po-table margin-top-po-pdf' style={{ paddingLeft: '0px',paddingRight: '0px' }}>
-                              {/* table section start from here */}
-                              <div className='col-md-12' style={{ paddingLeft: '0px',paddingRight: '0px' }}>
-                                <div class="table-main-sec diff-po-table diff-po-table-pdf">
-                                  <table className='table table-sec'>
-                                    <tbody class="tbody-light tbody-po-light">
-                                      <tr>
-                                        <th>1. Wages, tips</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2WAGE)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>2. Federal income tax withheld</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2FEDT)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>3. Social security wages</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2FICW)} </p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>4. Social security tax withheld</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2FTWH)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>5. Medicare wages and tips</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2FICM)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>6. Medicare tax withheld</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2FMWH)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>7. Social security tips</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2FICT)}
+                          <div className='row margin-top-po-table margin-top-po-pdf' style={{ paddingLeft: '0px', paddingRight: '0px',marginTop:'0px' }}>
+                            {/* table section start from here */}
+                            <div className='col-md-12' style={{ paddingLeft: '0px', paddingRight: '0px' }}>
+                              <div class="table-main-sec diff-po-table diff-po-table-pdf">
+                                <table className='table table-sec  table-sec-po-light'>
+                                  <tbody class="tbody-light tbody-po-light">
+                                    <tr>
+                                      <th>1. Wages, tips</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2WAGE)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>2. Federal income tax withheld</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2FEDT)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>3. Social security wages</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2FICW)} </p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>4. Social security tax withheld</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2FTWH)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>5. Medicare wages and tips</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2FICM)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>6. Medicare tax withheld</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2FMWH)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>7. Social security tips</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2FICT)}
 
-                                          </p>
-
-
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>8. Allocated tips</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2ALOT)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>10. Dependent care benefits</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2DCC)}</p>
+                                        </p>
 
 
-
-
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>11. Nonqualified plans</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2N457)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr className='pagebreakddnn'>
-                                        <th  className="top-space">12a. {entry.W2DMS1}</th>
-                                        <td class="value-table top-space">
-                                          <p>{dollarUS.format(entry.W2DAMT)}</p>
-                                        </td>
-                                      </tr>
-
-                                      <tr>
-                                        <th>12b. {entry.W2DMS2}</th>
-                                        <td class="value-table">
-                                          <p> {dollarUS.format(entry.W2DAM2)}</p>
-                                        </td>
-                                      </tr>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>8. Allocated tips</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2ALOT)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>10. Dependent care benefits</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2DCC)}</p>
 
 
 
-                                      <tr>
-                                        <th>12c. {entry.W2DMS3}</th>
-                                        <td class="value-table">
-                                          <p> {dollarUS.format(entry.W2DAM3)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>12d. {entry.W2DMS4}</th>
-                                        <td class="value-table">
-                                          <p> {dollarUS.format(entry.W2DAM4)}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>13. Retirement</th>
-                                        <td class="value-table">
-                                          <p>{(entry.W2RET)}</p>
-                                        </td>
-                                      </tr>
 
-                                      <tr>
-                                        <th>14. Other {entry.W2MSG1}</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2B181)}</p>
-                                        </td>
-                                      </tr>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>11. Nonqualified plans</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2N457)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr className='pagebreakddnn'>
+                                      <th className="top-space">12a. {entry.W2DMS1}</th>
+                                      <td class="value-table top-space">
+                                        <p>{dollarUS.format(entry.W2DAMT)}</p>
+                                      </td>
+                                    </tr>
 
-                                      <tr>
-                                        <th>14. Other {entry.W2MSG2}</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2B182)}</p>
-                                        </td>
-                                      </tr>
+                                    <tr>
+                                      <th>12b. {entry.W2DMS2}</th>
+                                      <td class="value-table">
+                                        <p> {dollarUS.format(entry.W2DAM2)}</p>
+                                      </td>
+                                    </tr>
 
 
 
-                                      <tr>
-                                        <th>14.  Other  {entry.W2MSG3}</th>
-                                        <td class="value-table">
-                                          <p> {dollarUS.format(entry.W2B183)}</p>
-                                        </td>
-                                      </tr>
+                                    <tr>
+                                      <th>12c. {entry.W2DMS3}</th>
+                                      <td class="value-table">
+                                        <p> {dollarUS.format(entry.W2DAM3)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>12d. {entry.W2DMS4}</th>
+                                      <td class="value-table">
+                                        <p> {dollarUS.format(entry.W2DAM4)}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>13. Retirement</th>
+                                      <td class="value-table">
+                                        <p>{(entry.W2RET)}</p>
+                                      </td>
+                                    </tr>
 
-                                      <tr>
-                                        <th>15. State</th>
-                                        <td class="value-table">
-                                          <p>{entry.W2SNAM}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>Employer's state Id no.</th>
-                                        <td class="value-table">
-                                          <p>  {entry.W2SEIN}</p>
-                                        </td>
-                                      </tr>
+                                    <tr>
+                                      <th>14. Other {entry.W2MSG1}</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2B181)}</p>
+                                      </td>
+                                    </tr>
 
-
-                                      <tr>
-                                        <th>16. State wages, tips, etc.</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2SWAG)}</p>
-                                        </td>
-                                      </tr>
-
-                                      <tr>
-                                        <th>17. State income tax</th>
-                                        <td class="value-table">
-                                          <p>  {dollarUS.format(entry.W2SITW)}</p>
-                                        </td>
-                                      </tr>
+                                    <tr>
+                                      <th>14. Other {entry.W2MSG2}</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2B182)}</p>
+                                      </td>
+                                    </tr>
 
 
-                                      <tr>
-                                        <th>18. Local wages, tips, etc.</th>
-                                        <td class="value-table">
-                                          <p>{dollarUS.format(entry.W2SWAG)}</p>
-                                        </td>
-                                      </tr>
 
-                                      <tr>
-                                        <th>19. Local income tax</th>
-                                        <td class="value-table">
-                                          <p> {dollarUS.format(entry.W2LITW)}</p>
-                                        </td>
-                                      </tr>
+                                    <tr>
+                                      <th>14.  Other  {entry.W2MSG3}</th>
+                                      <td class="value-table">
+                                        <p> {dollarUS.format(entry.W2B183)}</p>
+                                      </td>
+                                    </tr>
 
-                                      <tr>
-                                        <th>20. Local Name</th>
-                                        <td class="value-table">
-                                          <p>{entry.W2LNA2}</p>
-                                        </td>
-                                      </tr>
+                                    <tr>
+                                      <th>15. State</th>
+                                      <td class="value-table">
+                                        <p>{entry.W2SNAM}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>Employer's state Id no.</th>
+                                      <td class="value-table">
+                                        <p>  {entry.W2SEIN}</p>
+                                      </td>
+                                    </tr>
 
 
-                                    </tbody>
-                                  </table>
-                                </div>
+                                    <tr>
+                                      <th>16. State wages, tips, etc.</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2SWAG)}</p>
+                                      </td>
+                                    </tr>
+
+                                    <tr>
+                                      <th>17. State income tax</th>
+                                      <td class="value-table">
+                                        <p>  {dollarUS.format(entry.W2SITW)}</p>
+                                      </td>
+                                    </tr>
+
+
+                                    <tr>
+                                      <th>18. Local wages, tips, etc.</th>
+                                      <td class="value-table">
+                                        <p>{dollarUS.format(entry.W2SWAG)}</p>
+                                      </td>
+                                    </tr>
+
+                                    <tr>
+                                      <th>19. Local income tax</th>
+                                      <td class="value-table">
+                                        <p> {dollarUS.format(entry.W2LITW)}</p>
+                                      </td>
+                                    </tr>
+
+                                    <tr>
+                                      <th>20. Local Name</th>
+                                      <td class="value-table">
+                                        <p>{entry.W2LNA2}</p>
+                                      </td>
+                                    </tr>
+
+
+                                  </tbody>
+                                </table>
                               </div>
+                            </div>
 
-                              {/* <div className='col-md-12  pagebreakddnn' style={{ paddingLeft: '0px',paddingRight: '0px' }}>
+                            {/* <div className='col-md-12  pagebreakddnn' style={{ paddingLeft: '0px',paddingRight: '0px' }}>
                                 <div class="table-main-sec diff-po-table diff-po-table-pdf">
                                   <table className='table table-sec'>
                                     <tbody class="tbody-light tbody-po-light">
@@ -476,28 +585,28 @@ function Pdf() {
                                   </table>
                                 </div>
                               </div> */}
-                              {/* table section end from here */}
+                            {/* table section end from here */}
 
-                              {/* pagination section start here */}
+                            {/* pagination section start here */}
 
 
-                              {/* pagination section end here */}
+                            {/* pagination section end here */}
 
-                            </div>
                           </div>
                         </div>
+                      </div>
 
-                      </>
-
-
-
-                    ))}
-                  </>
+                    </>
 
 
-                }
 
-                {/* <div className="main-pdf-sec">
+                  ))}
+                </>
+
+
+              }
+
+              {/* <div className="main-pdf-sec">
                   <h2 className='pdf-main-heads'>Termination Information</h2>
                   <table className="general-sec-pdf">
                     <tbody>
@@ -548,18 +657,18 @@ function Pdf() {
 
                   </table>
                 </div> */}
-                {/* footer section add end*/}
+              {/* footer section add end*/}
 
-
-              </div>
 
             </div>
 
+          </div>
 
 
-          </>}
 
-      </div>
+      </>}
+
+    </div >
     </>
   )
 }

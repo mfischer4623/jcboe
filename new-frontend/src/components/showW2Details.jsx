@@ -133,7 +133,7 @@ const ShowW2Details = () => {
                         <div class="col-md-12">
                             <div class="head-inner">
                                 {w2sID != null &&
-                                    <h2>W2 Details <span style={{color:'#EC6800'}}>Year {w2sID}</span>  </h2>
+                                    <h2>W2 Details <span style={{ color: '#EC6800' }}>Year {w2sID}</span>  </h2>
                                 }
 
                                 <div class="head-right">
@@ -154,18 +154,55 @@ const ShowW2Details = () => {
                             <div className='row'>
 
 
+                                <div className='col-md-12' >
+                                    <div className='search-sec-pay payroll-deatil-inner show-ws-details mid-ws-details new-marg-ws'>
+
+                                        <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                            <h3>Employer</h3>
+                                            <p></p>
+                                        </div>
+                                        {w2sData.length > 0 &&
+                                            <>
+                                                <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                                    <h3>Employer EIN</h3>
+                                                    <p>{w2sData[0].W2FEIN}</p>
+                                                </div>
+                                            </>
+
+
+                                        }
+                                        <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                            <h3>Employer Address</h3>
+                                            <p> </p>
+                                        </div>
+                                        <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                            <h3>Employer City/State/Zip</h3>
+                                            <p></p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div className='form-table-sec emp-table-inner form-show-ws-main'>
+                            <div className='row'>
+
+
 
 
                                 <div className='col-md-12' >
-                                    <div className='search-sec-pay payroll-deatil-inner show-ws-details'>
+                                    <div className='search-sec-pay payroll-deatil-inner show-ws-details new-marg-ws'>
                                         {employeeData != null &&
                                             <>
 
-                                                <div className='payroll-details-data ws-details margin-ws'>
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>Employee Name</h3>
                                                     <p>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM}</p>
                                                 </div>
-                                                <div className='payroll-details-data ws-details margin-ws'>
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>Employee Id</h3>
                                                     <p> {employeeData.EMSSAN} </p>
                                                 </div>
@@ -175,17 +212,14 @@ const ShowW2Details = () => {
                                         {w2sData.length > 0 &&
                                             <>
                                                 {/* {w2sData.map((entry, index) => ( */}
-                                                    {/* <> */}
-                                                        <div className='payroll-details-data ws-details margin-ws'>
-                                                            <h3> Employee's SSN </h3>
-                                                            <p>{w2sData[0].W2SSN}</p>
-                                                        </div>
-                                                        <div className='payroll-details-data ws-details margin-ws'>
-                                                            <h3>Employer EIN</h3>
-                                                            <p>{w2sData[0].W2FEIN}</p>
-                                                        </div>
+                                                {/* <> */}
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                    <h3> Employee's SSN </h3>
+                                                    <p>{w2sData[0].W2SSN}</p>
+                                                </div>
 
-                                                    {/* </> */}
+
+                                                {/* </> */}
 
                                                 {/* ))} */}
                                             </>
@@ -195,20 +229,23 @@ const ShowW2Details = () => {
 
                                         {employeeData != null &&
                                             <>
-                                                <div className='payroll-details-data ws-details margin-ws'>
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>Address</h3>
                                                     <p>{employeeData.EMADD1}</p>
                                                 </div>
 
-                                                <div className='payroll-details-data ws-details margin-ws'>
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>Address 1</h3>
                                                     <p>{employeeData.EMADD2}</p>
                                                 </div>
 
-                                                <div className='payroll-details-data ws-details margin-ws'>
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>City, State,Zip</h3>
                                                     <p>{employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
                                                 </div>
+
+
+
 
                                             </>
                                         }

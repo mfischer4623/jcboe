@@ -1906,6 +1906,9 @@ body {
 }
 
 @media (max-width: 1300px) {
+  .square-sec {
+    width: 19px !important;
+    height: 19px !important;}
  body .diff-po-table .tabl-ws-details .tbody-po-light tr th{
     width:285px !important;
   }
@@ -2569,7 +2572,7 @@ body {
 
   @page {
     margin: 0;
-    margin: 60px 0px 20px 0px;
+    margin: 25px 0px 0px 0px;
 
   }
 
@@ -3579,20 +3582,81 @@ border-left: 4px solid $bluecolor !important;
   margin-bottom: 40px;
 }
 
+
+.search-sec-pay .ws-all-details{
+  width:25% !important;
+  float: left;
+}
+.search-sec-pay .ws-all-first-details{
+  width:100%;
+}
+
+.show-main-se{
+  text-align: center;
+    margin: 0 auto;
+}
+// .mid-ws-details{
+//   padding-top:0px !important;
+// }
+
 .diff-po-table-pdf .value-table{
       width:150px !important;
 }
 .diff-po-table-pdf .tbody-po-light tr th {
   
-    padding: 10px 15px 10px 15px;
-    font-size: 17px;
+      padding: 2px 15px 2px 15px;
+    font-size: 16px;
 }
 
 .diff-po-table-pdf .tbody-po-light tr td {
-    padding: 10px 15px 10px 15px;
+    padding:  2px 15px 2px 15px;
     p{
-  font-size: 16px;
+  font-size: 15px;
     }
    
 }
 .diff-po-table-pdf .tbody-po-light tr th{border-left: 2px solid #c1c1c1 !important;}
+.table-sec-po-light {
+  box-shadow: none !important;
+}
+
+
+.empoyee-detmd .empoyee-detpdfti{
+  padding: 15px 15px 13px 10px !important;
+}
+.empoyee-detmd .empoyee-detpdfti h2{
+font-size: 16px !important;
+}
+
+
+.empoyee-detmd{
+  
+    padding-left: 0px;
+    padding-right: 0px;
+
+}
+
+.new-marg-ws{
+  padding-top: 35px !important;
+}
+.margin-ws-more{
+  margin-bottom: 10px !important;
+}
+
+.ws-main-pdf-sec{
+margin:0px 0 3px 0px !important;
+}
+.pdf-ws-emp-table-pdf{
+  margin:0 12px !important
+}
+.new-ws-pdf-po{
+      margin: 15px 0px !important;
+}
+
+.main-w2s-det{
+  padding-bottom: 4px !important;
+}
+
+.main-gen-inner-ws{
+      padding: 1px 0;
+}
