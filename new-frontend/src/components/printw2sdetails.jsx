@@ -87,7 +87,7 @@ function Pdf() {
     }
 
     setTimeout(function () {
-      triggerPrint();
+       triggerPrint();
     }, 1000);
   }, []);
   const triggerPrint = () => {
@@ -124,6 +124,21 @@ function Pdf() {
       document.body.className = ''; // clean up
     };
   }, []);
+
+  function normalizezip(EMZIP1) {
+    var zipCode = "";
+    if (EMZIP1 !== null && EMZIP1 !== undefined) {
+      zipCode = EMZIP1.toString();
+      if (zipCode.length > 0 && zipCode.length < 5) {
+        zipCode = '0'.repeat(5 - zipCode.length) + zipCode;
+      } else if (zipCode.length !== 5) {
+        zipCode = ""; // Or handle as invalid
+      }
+    }
+    return zipCode;
+
+
+  }
   return (
     <>
 
@@ -157,424 +172,330 @@ function Pdf() {
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-bottom-pdf" >
-                      Year:  {viewDataForm}
+                      W2 Details  Year:  {viewDataForm}
                     </td>
 
                   </tr>
                 </table>
+                <div className="main-pdf-sec pagebrpr">
+
+                  <table className="general-sec-pdf">
+                    <tbody>
+                      {employeeData != null &&
+                        <>
+                          {viewDocumentForm.length > 0 &&
+                            <>
+                              {/* {viewDocumentForm.map((entry, index) => (
+                                <> */}
+                              <tr>
+                                <td className="main-gen-inner">
+                                  <table style={{ width: '100%' }}>
+                                    <tbody><tr>
+                                      <td className="main-gen-width main-gen-width-new"><b> Employee's SSN:</b></td>
+                                      <td className="pdf-data"> {viewDocumentForm[0].W2SSN}
+                                      </td>
+                                    </tr>
+                                    </tbody></table>
+                                </td>
+                                <td className="main-gen-inner">
+                                  <table style={{ width: '100%' }}>
+                                    <tbody>
+                                      <tr>
+                                        <td className="main-gen-width main-gen-width-new">
+                                          <b>Employer EIN:</b>
+                                        </td>
+                                        <td className="pdf-data">  {viewDocumentForm[0].W2FEIN}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                              {/* </>
+
+
+
+                              ))} */}
+                            </>
+
+
+                          }
+                          <tr>
+                            <td className="main-gen-inner">
+                              <table style={{ width: '100%' }}>
+                                <tbody><tr>
+                                  <td className="main-gen-width main-gen-width-new"><b>Address:</b></td>
+                                  <td className="pdf-data">  {employeeData.EMADD1}
+                                  </td>
+                                </tr>
+                                </tbody></table>
+                            </td>
+                            <td className="main-gen-inner">
+                              <table style={{ width: '100%' }}>
+                                <tbody>
+                                  <tr>
+                                    <td className="main-gen-width  main-gen-width-new">
+                                      <b>Address 1:</b>
+                                    </td>
+                                    <td className="pdf-data"> {employeeData.EMADD2}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="main-gen-inner">
+                              <table style={{ width: '100%' }}>
+                                <tbody><tr>
+                                  <td className="main-gen-width  main-gen-width-new"><b>  City, State,Zip:</b></td>
+                                  <td className="pdf-data"> {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}
+                                  </td>
+                                </tr>
+                                </tbody></table>
+                            </td>
+
+                          </tr>
+                        </>
+                      }
+
+
+
+
+
+
+                    </tbody>
+
+                  </table>
+                </div>
                 {/* general section start pdf code */}
                 {viewDocumentForm.length > 0 &&
                   <>
                     {viewDocumentForm.map((entry, index) => (
-                      <div className="main-pdf-sec pagebrpr">
-
-                        <table className="general-sec-pdf">
-                          <thead
-                          >
-                            <tr>
-                              <td colSpan="2" >
-                                <h2 className='pdf-main-heads'>W2 Details</h2>
-                              </td>
-
-                            </tr></thead>                          <tbody>
-                            <tr>
-                              <td className="main-gen-inner">
-                                <table style={{ width: '100%' }}>
-                                  <tbody><tr>
-                                    <td className="main-gen-width"><b>a Employee's SSN:</b></td>
-                                    <td className="pdf-data">{entry.W2SSN}
-                                    </td>
-                                  </tr>
-                                  </tbody></table>
-                              </td>
-                              <td className="main-gen-inner">
-                                <table style={{ width: '100%' }}>
-                                  <tbody>
-                                    <tr>
-                                      <td className="main-gen-width ">
-                                        <b>b Employer EIN:</b>
-                                      </td>
-                                      <td className="pdf-data">{entry.W2FEIN}</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>1 Wages, tips:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2WAGE)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>2 Federal income tax withheld:</b>
-                                    </td>
-                                    <td className="pdf-data">  {dollarUS.format(entry.W2FEDT)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>3 Social security wages:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2FICW)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>4 Social security tax withheld:</b>
-                                    </td>
-                                    <td className="pdf-data"> {dollarUS.format(entry.W2FTWH)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>5 Medicare wages and tips:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2FICM)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>6 Medicare tax withheld:</b>
-                                    </td>
-                                    <td className="pdf-data"> {dollarUS.format(entry.W2FMWH)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>7 Social security tips:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2FICT)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>8 Allocated tips:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2ALOT)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>10 Dependent care benefits:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2DCC)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>11 Nonqualified plans:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2N457)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>12a {entry.W2DMS1}:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2DAMT)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>12b {entry.W2DMS2}:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2DAM2)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>12c {entry.W2DMS3}:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2DAM3)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>12d {entry.W2DMS4}:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2DAM4)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>13 Retirement:</b></td>
-                                    <td className="pdf-data">
-
-                                      {entry.W2RET}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>14 Other {entry.W2MSG1}:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2B181)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>14 Other {entry.W2MSG2}:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2B182)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>14 Other {entry.W2MSG3}:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2B183)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>15 State:</b></td>
-                                    <td className="pdf-data">
-
-                                      {entry.W2SNAM}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>Employer's state Id no:</b>
-                                    </td>
-                                    <td className="pdf-data">{entry.W2SEIN}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>16 State wages, tips, etc:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2SWAG)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>17 State income tax:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2SITW)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>18 Local wages, tips, etc.:</b></td>
-                                    <td className="pdf-data">
-
-                                      {dollarUS.format(entry.W2SWAG)}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>19 Local income tax:</b>
-                                    </td>
-                                    <td className="pdf-data">{dollarUS.format(entry.W2LITW)}</td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-
-
-
-
-
-
-                            <tr>
-                              <td className="main-gen-width main-margin">
-                                <table style={{ width: '100%', marginBottom: '5px' }}>
-                                  <tr>
-                                    <td className="main-gen-width">
-                                      <b>20 Local name:</b></td>
-                                    <td className="pdf-data">
-
-                                      {entry.W2LNA2}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-
-                            </tr>
-                          </tbody>
-
-                        </table>
-                      </div>
+                      <>
+
+                        <div className="emp-table-pdf">
+                          <div className='po-details-sec pdf-po-details'>
+
+                            <div className='row margin-top-po-table margin-top-po-pdf' style={{ paddingLeft: '0px',paddingRight: '0px' }}>
+                              {/* table section start from here */}
+                              <div className='col-md-12' style={{ paddingLeft: '0px',paddingRight: '0px' }}>
+                                <div class="table-main-sec diff-po-table diff-po-table-pdf">
+                                  <table className='table table-sec'>
+                                    <tbody class="tbody-light tbody-po-light">
+                                      <tr>
+                                        <th>1. Wages, tips</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2WAGE)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>2. Federal income tax withheld</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2FEDT)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>3. Social security wages</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2FICW)} </p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>4. Social security tax withheld</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2FTWH)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>5. Medicare wages and tips</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2FICM)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>6. Medicare tax withheld</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2FMWH)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>7. Social security tips</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2FICT)}
+
+                                          </p>
+
+
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>8. Allocated tips</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2ALOT)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>10. Dependent care benefits</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2DCC)}</p>
+
+
+
+
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>11. Nonqualified plans</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2N457)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr className='pagebreakddnn'>
+                                        <th  className="top-space">12a. {entry.W2DMS1}</th>
+                                        <td class="value-table top-space">
+                                          <p>{dollarUS.format(entry.W2DAMT)}</p>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <th>12b. {entry.W2DMS2}</th>
+                                        <td class="value-table">
+                                          <p> {dollarUS.format(entry.W2DAM2)}</p>
+                                        </td>
+                                      </tr>
+
+
+
+                                      <tr>
+                                        <th>12c. {entry.W2DMS3}</th>
+                                        <td class="value-table">
+                                          <p> {dollarUS.format(entry.W2DAM3)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>12d. {entry.W2DMS4}</th>
+                                        <td class="value-table">
+                                          <p> {dollarUS.format(entry.W2DAM4)}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>13. Retirement</th>
+                                        <td class="value-table">
+                                          <p>{(entry.W2RET)}</p>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <th>14. Other {entry.W2MSG1}</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2B181)}</p>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <th>14. Other {entry.W2MSG2}</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2B182)}</p>
+                                        </td>
+                                      </tr>
+
+
+
+                                      <tr>
+                                        <th>14.  Other  {entry.W2MSG3}</th>
+                                        <td class="value-table">
+                                          <p> {dollarUS.format(entry.W2B183)}</p>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <th>15. State</th>
+                                        <td class="value-table">
+                                          <p>{entry.W2SNAM}</p>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th>Employer's state Id no.</th>
+                                        <td class="value-table">
+                                          <p>  {entry.W2SEIN}</p>
+                                        </td>
+                                      </tr>
+
+
+                                      <tr>
+                                        <th>16. State wages, tips, etc.</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2SWAG)}</p>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <th>17. State income tax</th>
+                                        <td class="value-table">
+                                          <p>  {dollarUS.format(entry.W2SITW)}</p>
+                                        </td>
+                                      </tr>
+
+
+                                      <tr>
+                                        <th>18. Local wages, tips, etc.</th>
+                                        <td class="value-table">
+                                          <p>{dollarUS.format(entry.W2SWAG)}</p>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <th>19. Local income tax</th>
+                                        <td class="value-table">
+                                          <p> {dollarUS.format(entry.W2LITW)}</p>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <th>20. Local Name</th>
+                                        <td class="value-table">
+                                          <p>{entry.W2LNA2}</p>
+                                        </td>
+                                      </tr>
+
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+
+                              {/* <div className='col-md-12  pagebreakddnn' style={{ paddingLeft: '0px',paddingRight: '0px' }}>
+                                <div class="table-main-sec diff-po-table diff-po-table-pdf">
+                                  <table className='table table-sec'>
+                                    <tbody class="tbody-light tbody-po-light">
+
+
+
+
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div> */}
+                              {/* table section end from here */}
+
+                              {/* pagination section start here */}
+
+
+                              {/* pagination section end here */}
+
+                            </div>
+                          </div>
+                        </div>
+
+                      </>
+
+
 
                     ))}
-
                   </>
-                }
 
+
+                }
 
                 {/* <div className="main-pdf-sec">
                   <h2 className='pdf-main-heads'>Termination Information</h2>

@@ -1539,6 +1539,18 @@ body {
 }
 
 @media (max-width: 1450px) {
+  .diff-po-table .tabl-ws-details .tbody-po-light tr th {
+        width: 280px !important;
+    }
+  .form-show-ws-main .search-sec-pay .ws-details {
+    width: 25% !important;
+}
+    .diff-po-table .tabl-ws-details .tbody-po-light tr th{
+    width:300px !important;
+  }
+  .diff-po-table .show-right-po .tbody-po-light tr th{
+    width:300px !important;
+  }
   .table-main-sec .table .tax-yaer-widh {
     width: 130px !important;
   }
@@ -1673,6 +1685,12 @@ body {
 }
 
 @media (max-width: 1500px) {
+  .diff-po-table .tabl-ws-details .tbody-po-light tr th{
+    width:300px !important;
+  }
+  .diff-po-table .show-right-po .tbody-po-light tr th{
+    width:300px !important;
+  }
   .table .tax-yaer-widh {
     width: 140px !important;
   }
@@ -1760,6 +1778,9 @@ body {
 
 
 @media (max-width: 1350px) {
+      .diff-po-table .tabl-ws-details .tbody-po-light tr th {
+        width: 280px !important;
+    }
   .vebdor-details-left {
     margin-bottom: 1px;
   }
@@ -1885,9 +1906,17 @@ body {
 }
 
 @media (max-width: 1300px) {
+ body .diff-po-table .tabl-ws-details .tbody-po-light tr th{
+    width:285px !important;
+  }
+   body .diff-po-table .show-right-po .tbody-po-light tr th{
+    width:280px !important;
+  }
   .table-main-sec .table .tax-yaer-widh {
     width: 115px !important;
   }
+  .num-valu {
+    margin-left: 24px !important;}
 
   .table-main-sec .table .actin-ws-widh {
     width: 110px !important
@@ -2540,7 +2569,8 @@ body {
 
   @page {
     margin: 0;
-    margin: 10px 0px;
+    margin: 60px 0px 20px 0px;
+
   }
 
  
@@ -2579,7 +2609,13 @@ body {
 
     page-break-inside: avoid;
   }
+  .diff-po-table-pdf table tbody tr th{
+      width: 380px !important;
+}
 
+
+
+ 
 
 }
 
@@ -3394,7 +3430,6 @@ body {
 
 .cursorjob {
   cursor: pointer;
-
 }
 
 .tax-yaer-widh {
@@ -3478,3 +3513,86 @@ body {
   left: 5px;
   font-weight: 500;
 }
+
+.show-margn-more{
+  margin-top: 50px;
+}
+.show-prnt{
+  svg{
+position: relative;
+top:7px;
+  }
+}
+.back-sec .back-news{
+  top:-25px !important;
+}
+
+.form-show-ws-main{
+border-left: 4px solid $bluecolor !important;
+}
+.margin-ws{
+  margin-bottom: 20px;
+}
+.emp-table-sec .form-show-ws-main{
+  padding-bottom: 0px !important;
+}
+.show-ws-details{
+  padding-bottom: 0px !important;
+}
+.search-sec-pay .ws-details{
+  width:20% !important;
+}
+.year-show-data{
+  p{
+    color:$orangecolor;
+  font-size: 19px;
+    font-weight: 600;
+    margin-top: 40px;
+  }
+}
+
+.num-sec{
+  float:left;
+  margin-bottom: 0px;
+}
+.num-valu{
+  margin-left: 35px;
+  margin-bottom: 0px;
+}
+
+.diff-po-table .tabl-ws-details .tbody-po-light tr th{
+    width: 380px;
+}
+.square-sec{
+      width: 22px;
+    height: 22px;
+    background-color: $bluecolor;
+    position: relative;
+    top: 3px;
+}
+
+.diff-po-table .show-right-po .tbody-po-light tr th{
+    width: 380px;
+}
+
+.margin-top-ws-main{
+  margin-bottom: 40px;
+}
+
+.diff-po-table-pdf .value-table{
+      width:150px !important;
+}
+.diff-po-table-pdf .tbody-po-light tr th {
+  
+    padding: 10px 15px 10px 15px;
+    font-size: 17px;
+}
+
+.diff-po-table-pdf .tbody-po-light tr td {
+    padding: 10px 15px 10px 15px;
+    p{
+  font-size: 16px;
+    }
+   
+}
+.diff-po-table-pdf .tbody-po-light tr th{border-left: 2px solid #c1c1c1 !important;}
