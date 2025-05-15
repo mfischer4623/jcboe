@@ -172,7 +172,7 @@ const ShowW2Details = () => {
 
                                         }
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
-                                            <h3>Employer Address</h3>
+                                            <h3>Employer Address and Zipcode</h3>
                                             <p style={{visibility:'hidden'}}>fbgn</p>
                                         </div>
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
@@ -231,19 +231,19 @@ const ShowW2Details = () => {
                                         {employeeData != null &&
                                             <>
                                                 <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
-                                                    <h3>Address</h3>
-                                                    <p>{employeeData.EMADD1}</p>
+                                                    <h3>Address and Zipcode</h3>
+                                                    <p>{employeeData.EMADD1}, {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
                                                 </div>
 
-                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                {/* <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>Address 1</h3>
                                                     <p>{employeeData.EMADD2}</p>
-                                                </div>
-
+                                                </div> */}
+{/* 
                                                 <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>City, State,Zip</h3>
                                                     <p>{employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
-                                                </div>
+                                                </div> */}
 
 
 
