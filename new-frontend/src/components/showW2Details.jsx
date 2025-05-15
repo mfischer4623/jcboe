@@ -457,7 +457,7 @@ const ShowW2Details = () => {
                                                             </tr>
 
                                                             <tr>
-                                                                <th><p className='num-sec'>20.</p><p className='num-valu'>Local Name</p></th>
+                                                                <th><p className='num-sec'>20.</p><p className='num-valu'>Locality Name</p></th>
                                                                 <td class="value-table">
                                                                     <p>{entry.W2LNA2}</p>
                                                                 </td>
