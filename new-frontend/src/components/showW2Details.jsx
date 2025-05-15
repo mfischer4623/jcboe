@@ -159,7 +159,7 @@ const ShowW2Details = () => {
 
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
                                             <h3>Employer</h3>
-                                            <p></p>
+                                            <p style={{visibility:'hidden'}}>fbgn</p>
                                         </div>
                                         {w2sData.length > 0 &&
                                             <>
@@ -173,12 +173,13 @@ const ShowW2Details = () => {
                                         }
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
                                             <h3>Employer Address</h3>
-                                            <p> </p>
+                                            <p style={{visibility:'hidden'}}>fbgn</p>
                                         </div>
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
-                                            <h3>Employer City/State/Zip</h3>
-                                            <p></p>
+                                            <h3> Control number</h3>
+                                             <p style={{visibility:'hidden'}}>fbgn</p>
                                         </div>
+                                        
 
                                     </div>
 
@@ -304,7 +305,102 @@ const ShowW2Details = () => {
 
                                                                 </td>
                                                             </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>9.</p><p className='num-valu'>Advance EIC Payement</p></th>
+                                                                <td class="value-table">
+                                                                    <p></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>11.</p><p className='num-valu'>Nonqualified plans</p></th>
+                                                                <td class="value-table">
+                                                                    <p> {dollarUS.format(entry.W2N457)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>12b.</p><p className='num-valu'>{entry.W2DMS2}</p></th>
+                                                                <td class="value-table">
+                                                                    <p>  {dollarUS.format(entry.W2DAM2)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>12d.</p><p className='num-valu'> {entry.W2DMS4}</p></th>
+                                                                <td class="value-table">
+                                                                    <p>   {dollarUS.format(entry.W2DAM4)}</p>
+                                                                </td>
+                                                            </tr>
 
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other {entry.W2MSG1}</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2B181)} </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other  {entry.W2MSG3} </p></th>
+                                                                <td class="value-table">
+                                                                    <p> {dollarUS.format(entry.W2B183)}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec square-sec'></p><p className='num-valu'>Employer's state Id no.</p></th>
+                                                                <td class="value-table">
+                                                                    <p>  {entry.W2SEIN} </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>17.</p><p className='num-valu'>State income tax</p></th>
+                                                                <td class="value-table">
+                                                                    <p>  {dollarUS.format(entry.W2SITW)}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>19.</p><p className='num-valu'>Local income tax</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2LITW)}</p>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div className='col-md-6'>
+                                                <div class="table-main-sec diff-po-table">
+                                                    <table className='table table-sec show-right-po'>
+                                                        <tbody class="tbody-light tbody-po-light">
+                                                            <tr>
+                                                                <th><p className='num-sec'>2.</p><p className='num-valu'>Federal income tax withheld</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FEDT)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>4.</p><p className='num-valu'>Social security tax withheld</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FTWH)}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>6.</p><p className='num-valu'>Medicare tax withheld</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FMWH)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>8.</p><p className='num-valu'>Allocated tips</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2ALOT)}</p>
+                                                                </td>
+                                                            </tr>
                                                             <tr>
                                                                 <th><p className='num-sec'>10.</p><p className='num-valu'>Dependent care benefits</p></th>
                                                                 <td class="value-table">
@@ -324,6 +420,7 @@ const ShowW2Details = () => {
                                                                     <p>{dollarUS.format(entry.W2DAM3)}</p>
                                                                 </td>
                                                             </tr>
+
                                                             <tr>
                                                                 <th><p className='num-sec'>13.</p><p className='num-valu'>Retirement</p></th>
                                                                 <td class="value-table">
@@ -366,94 +463,6 @@ const ShowW2Details = () => {
                                                                 </td>
                                                             </tr>
 
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                            <div className='col-md-6'>
-                                                <div class="table-main-sec diff-po-table">
-                                                    <table className='table table-sec show-right-po'>
-                                                        <tbody class="tbody-light tbody-po-light">
-                                                            <tr>
-                                                                <th><p className='num-sec'>2.</p><p className='num-valu'>Federal income tax withheld</p></th>
-                                                                <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2FEDT)}</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><p className='num-sec'>4.</p><p className='num-valu'>Social security tax withheld</p></th>
-                                                                <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2FTWH)}</p>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th><p className='num-sec'>6.</p><p className='num-valu'>Medicare tax withheld</p></th>
-                                                                <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2FMWH)}</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><p className='num-sec'>8.</p><p className='num-valu'>Allocated tips</p></th>
-                                                                <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2ALOT)}</p>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th><p className='num-sec'>11.</p><p className='num-valu'>Nonqualified plans</p></th>
-                                                                <td class="value-table">
-                                                                    <p> {dollarUS.format(entry.W2N457)}</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><p className='num-sec'>12b.</p><p className='num-valu'>{entry.W2DMS2}</p></th>
-                                                                <td class="value-table">
-                                                                    <p>  {dollarUS.format(entry.W2DAM2)}</p>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th><p className='num-sec'>12d.</p><p className='num-valu'> {entry.W2DMS4}</p></th>
-                                                                <td class="value-table">
-                                                                    <p>   {dollarUS.format(entry.W2DAM4)}</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other {entry.W2MSG1}</p></th>
-                                                                <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2B181)} </p>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other  {entry.W2MSG3} </p></th>
-                                                                <td class="value-table">
-                                                                    <p> {dollarUS.format(entry.W2B183)}</p>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th><p className='num-sec square-sec'></p><p className='num-valu'>Employer's state Id no.</p></th>
-                                                                <td class="value-table">
-                                                                    <p>  {entry.W2SEIN} </p>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th><p className='num-sec'>17.</p><p className='num-valu'>State income tax</p></th>
-                                                                <td class="value-table">
-                                                                    <p>  {dollarUS.format(entry.W2SITW)}</p>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th><p className='num-sec'>19.</p><p className='num-valu'>Local income tax</p></th>
-                                                                <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2LITW)}</p>
-                                                                </td>
-                                                            </tr>
 
 
 

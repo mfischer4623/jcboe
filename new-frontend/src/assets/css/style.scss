@@ -2629,7 +2629,14 @@ body {
     page-break-before: always;
     margin-top: 20px;
   }
-
+.page-breaknewsw {
+    page-break-before: always;
+    //margin-top: 50px; /* Adds 50px space on each new page */
+    display: block;
+  }
+  .marginws-border-grey-pdf{
+    border-top:2px solid $greyshade !important;
+  }
 }
 
 .pdf-job-cde {
@@ -3659,4 +3666,24 @@ margin:0px 0 3px 0px !important;
 
 .main-gen-inner-ws{
       padding: 1px 0;
+
 }
+
+.new-ws-pdf-po{
+      margin: 15px 0px !important;
+}
+.new-tablews{
+margin-bottom: 0px !important;
+}
+.tbody-po-light-ws{
+border-top:0px !important;
+}
+
+.margin-top-po-pdf .diff-po-table .tbody-po-light-ws{
+border-top: 0px !important;
+
+}
+
+  .pageBreakwsd{
+    margin: 20px !important;
+  }
