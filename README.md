@@ -18,7 +18,7 @@ ________________________________________________________________________________
     PORT=443 HTTPS=true SSL_CRT_FILE=wildcard_jcboe_org.crt SSL_KEY_FILE=wildcard_jcboe_org.key npm start
 
     cd testfrontend
-    PORT=8444 HTTPS=true SSL_CRT_FILE=wildcard_jcboe_org.crt SSL_KEY_FILE=wildcard_jcboe_org.key npm start
+    HOST=10.0.0.43 PORT=8444 HTTPS=true SSL_CRT_FILE=wildcard_jcboe_org.crt SSL_KEY_FILE=wildcard_jcboe_org.key npm start
 
     cd ..
     node frontend-server.js
