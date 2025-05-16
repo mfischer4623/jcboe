@@ -521,7 +521,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    'Employee#2': {
+    'Employee#_1': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
@@ -617,7 +617,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    'Employee#3': {
+    'Employee#_2': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
@@ -629,7 +629,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    'Active?4': {
+    'Active?_3': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
@@ -641,7 +641,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    'Job Title5': {
+    'Job Title_4': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
@@ -762,10 +762,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     PRIM_UDESC: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    SMID: {
       type: DataTypes.STRING(50),
       allowNull: true
     }

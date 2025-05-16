@@ -1,350 +1,311 @@
-module.exports = (sequelize, DataTypes) => {
-
-  const S3000checkReports = sequelize.define("S3000checkReports", {
-    chknum: {
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('S3_W22021', {
+    SSN: {
       type: DataTypes.STRING(50),
-      allowNull: false,          // ✅ Primary keys should not be NULL
-      primaryKey: true           // ✅ Explicitly mark as primary key
-    },
-    chkdate: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    chkvdate: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    chkrun: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    status: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    employeenum: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    lname: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    fname: {
-      type: DataTypes.STRING(50),
       allowNull: true
     },
-    mi: {
+    'Fisrt Name': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    emptype: {
+    Middle: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    workingmonth: {
+    'Last Name': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    totalpays: {
+    Address: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    bldglocation: {
+    Address_1: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    department: {
+    'Ciy , State, Zip': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    checklocation: {
+    'ID#': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    statuscode: {
+    'LIN#': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    employmenttype: {
+    EIN: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    refunds: {
+    Employer: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dockage: {
+    'Employer Address': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    gwages: {
+    'Employer City State Zip': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    cgwages: {
+    'Column 13': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    taxes: {
+    'BOX 1': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    deductions: {
+    'BOX 2': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    netpayadj: {
+    'BOX 3': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    newwages: {
+    'BOX 4': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    cnetwages: {
+    'BOX 5': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dirdepositamt: {
+    'BOX 6': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    paycode: {
+    'BOX 7': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode1: {
+    'BOX 8': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc1: {
+    'BOX 9': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt1: {
+    'BOX 10': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode2: {
+    'BOX 11': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc2: {
+    'BOX 12A CODE': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt2: {
+    'BOX 12A AMOUNT': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode3: {
+    'BOX 12B CODE': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc3: {
+    'BOX 12B AMOUNT': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt3: {
+    'BOX 12 C CODE': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode4: {
+    'BOX 12 C AMOUNT': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc4: {
+    'BOX 12 D CODE': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt4: {
+    'BOX 12 D AMOUNT': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode5: {
+    'Column 33': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc5: {
+    'Column 34': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt5: {
+    'Column 35': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode6: {
+    'BOX 14 CODE-1': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc6: {
+    'BOX 14 AMOUNT-1': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt6: {
+    'BOX 14 CODE-2': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode7: {
+    'BOX 14 AMOUNT-2': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc7: {
+    'BOX 14 CODE-3': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt7: {
+    'BOX 14 AMOUNT-3': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode8: {
+    'BOX 14 CODE-4': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc8: {
+    'BOX 14 AMOUNT-4': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt8: {
+    'Column 44': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcode9: {
+    'Column 45': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ckdesc9: {
+    'Box 15 state': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    amt9: {
+    'State ID': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    cdistrict: {
+    'BOX 16': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    chkcnt: {
+    'BOX 17': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    empcnt: {
+    'Box 15 STATE-2': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tpafcnt: {
+    'BOX 15 STATE ID': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    perscnt: {
+    'BOX 16 A AMOUNT': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    dcrpnt: {
+    'BOX 17 A AMOUNT': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    othercnt: {
+    'Column 54': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    malecnt: {
+    'Column 55': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    femalecnt: {
+    'Column 56': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    undesigcnt: {
+    'Column 57': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    nogendcnt: {
+    'Column 58': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    singlecnt: {
+    'Column 59': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    marriedcnt: {
+    'Column 60': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ftcnt: {
+    'Column 61': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ptcnt: {
+    'Column 62': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ltsubcnt: {
+    'Column 63': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    pdsubcnt: {
+    'Column 64': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    nostatcnt: {
+    'Column 65': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    trefunds: {
+    'Column 66': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tdockage: {
+    'Column 67': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tgwages: {
+    'Column 68': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tcgwages: {
+    'Column 69': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    ttaxes: {
+    'Column 70': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tded: {
+    'Column 71': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tnetpayadj: {
+    'Column 72': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tnetwages: {
+    'Column 73': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    tcnetwages: {
+    'Column 74': {
       type: DataTypes.STRING(50),
       allowNull: true
-    },
-    tddep: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    empadj: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    // (Other fields remain unchanged)
+    }
   }, {
-    freezeTableName: true, // 👈 Prevents Sequelize from pluralizing the table name
-    tableName: "s3000checkReports",  // ✅ Ensure Sequelize uses the correct table name
-    timestamps: false,  // ✅ Disables auto `createdAt` and `updatedAt` columns
-    id: false  // ✅ Prevents Sequelize from expecting an `id` column
+    sequelize,
+    tableName: 'S3_W22021',
+    schema: 'dbo',
+    timestamps: false,
+    underscored: true
   });
-
-  return S3000checkReports;
 };
