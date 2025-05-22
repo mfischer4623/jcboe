@@ -159,7 +159,7 @@ const ShowW2Details = () => {
 
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
                                             <h3>Employer</h3>
-                                            <p style={{visibility:'hidden'}}>fbgn</p>
+                                            <p >Jersey City Board of Education</p>
                                         </div>
                                         {w2sData.length > 0 &&
                                             <>
@@ -173,7 +173,7 @@ const ShowW2Details = () => {
                                         }
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
                                             <h3>Employer Address and Zipcode</h3>
-                                            <p style={{visibility:'hidden'}}>fbgn</p>
+                                            <p >346 Claremont Avenue, Jersey City, NJ 073051634</p>
                                         </div>
                                         <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
                                             <h3> Control number</h3>
@@ -232,7 +232,7 @@ const ShowW2Details = () => {
                                             <>
                                                 <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
                                                     <h3>Address and Zipcode</h3>
-                                                    <p>{employeeData.EMADD1}, {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
+                                                    <p>{employeeData.EMADD1},   {employeeData.EMADD2}, {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
                                                 </div>
 
                                                 {/* <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
@@ -300,7 +300,7 @@ const ShowW2Details = () => {
                                                             <tr>
                                                                 <th><p className='num-sec'>7.</p><p className='num-valu'>Social security tips</p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2FICT)}</p>
+                                                                    <p>  {(entry.W2FICT!='' && entry.W2FICT!=null && entry.W2FICT!=0 ) ? dollarUS.format(entry.W2FICT) : ''}</p>
 
 
                                                                 </td>
@@ -314,34 +314,57 @@ const ShowW2Details = () => {
                                                             <tr>
                                                                 <th><p className='num-sec'>11.</p><p className='num-valu'>Nonqualified plans</p></th>
                                                                 <td class="value-table">
-                                                                    <p> {dollarUS.format(entry.W2N457)}</p>
+                                                                    <p>  {(entry.W2N457!='' && entry.W2N457!=null && entry.W2N457!=0 ) ? dollarUS.format(entry.W2N457) : ''} 
+                                                                        {/* {dollarUS.format(entry.W2N457)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <th><p className='num-sec'>12b.</p><p className='num-valu'>{entry.W2DMS2}</p></th>
+                                                                <th><p className='num-sec'>12b.</p><p className='num-valu'>{(entry.W2DAM2!='' && entry.W2DAM2!=null && entry.W2DAM2!=0 ) ? entry.W2DMS2 : ''} </p></th>
                                                                 <td class="value-table">
-                                                                    <p>  {dollarUS.format(entry.W2DAM2)}</p>
+                                                                    <p>   {(entry.W2DAM2!='' && entry.W2DAM2!=null && entry.W2DAM2!=0 ) ? dollarUS.format(entry.W2DAM2) : ''} 
+                                                                        
+                                                                         {/* {dollarUS.format(entry.W2DAM2)} */}
+                                                                         </p>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <th><p className='num-sec'>12d.</p><p className='num-valu'> {entry.W2DMS4}</p></th>
+                                                                <th><p className='num-sec'>12d.</p><p className='num-valu'> 
+                                                                    {/* {entry.W2DMS4} */}
+                                                                     {(entry.W2DAM4!='' && entry.W2DAM4!=null && entry.W2DAM4!=0 ) ?  entry.W2DMS4 : ''}  
+                                                                    </p></th>
                                                                 <td class="value-table">
-                                                                    <p>   {dollarUS.format(entry.W2DAM4)}</p>
+                                                                    <p> {(entry.W2DAM4!='' && entry.W2DAM4!=null && entry.W2DAM4!=0 ) ? dollarUS.format(entry.W2DAM4) : ''}  
+                                                                          {/* {dollarUS.format(entry.W2DAM4)} */}
+
+                                                                        
+                                                                    </p>
                                                                 </td>
                                                             </tr>
 
 
                                                             <tr>
-                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other {entry.W2MSG1}</p></th>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other  {(entry.W2B181!='' && entry.W2B181!=null && entry.W2B181!=0 ) ?  entry.W2MSG1 : ''}  
+                                                                    {/* {entry.W2MSG1} */}
+                                                                    
+                                                                    </p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2B181)} </p>
+                                                                    <p> {(entry.W2B181!='' && entry.W2B181!=null && entry.W2B181!=0 ) ? dollarUS.format(entry.W2B181) : ''}  
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2B181)}  */}
+                                                                        
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
                                                             <tr>
-                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other  {entry.W2MSG3} </p></th>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other   {(entry.W2B183!='' && entry.W2B183!=null && entry.W2B183!=0 ) ?  entry.W2MSG3 : ''}  
+                                                                     {/* {entry.W2MSG3}  */}
+                                                                     </p></th>
                                                                 <td class="value-table">
-                                                                    <p> {dollarUS.format(entry.W2B183)}</p>
+                                                                    <p> {(entry.W2B183!='' && entry.W2B183!=null && entry.W2B183!=0 ) ? dollarUS.format(entry.W2B183) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2B183)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
@@ -362,7 +385,9 @@ const ShowW2Details = () => {
                                                             <tr>
                                                                 <th><p className='num-sec'>19.</p><p className='num-valu'>Local income tax</p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2LITW)}</p>
+                                                                    <p> {(entry.W2LITW!='' && entry.W2LITW!=null && entry.W2LITW!=0 ) ? dollarUS.format(entry.W2LITW) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2LITW)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
@@ -398,26 +423,45 @@ const ShowW2Details = () => {
                                                             <tr>
                                                                 <th><p className='num-sec'>8.</p><p className='num-valu'>Allocated tips</p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2ALOT)}</p>
+                                                                    <p> {(entry.W2ALOT!='' && entry.W2ALOT!=null && entry.W2ALOT!=0 ) ? dollarUS.format(entry.W2ALOT) : ''} 
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2ALOT)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th><p className='num-sec'>10.</p><p className='num-valu'>Dependent care benefits</p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2DCC)}</p>
+                                                                    <p> {(entry.W2DCC!='' && entry.W2DCC!=null && entry.W2DCC!=0 ) ? dollarUS.format(entry.W2DCC) : ''} 
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2DCC)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <th><p className='num-sec'>12a.</p><p className='num-valu'> {entry.W2DMS1}</p></th>
+                                                                <th><p className='num-sec'>12a.</p><p className='num-valu'>
+                                                                     {/* {entry.W2DMS1} */}
+                                                                      {(entry.W2DAMT!='' && entry.W2DAMT!=null && entry.W2DAMT!=0 ) ? (entry.W2DMS1) : ''}  
+                                                                     </p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2DAMT)}</p>
+                                                                    <p> {(entry.W2DAMT!='' && entry.W2DAMT!=null && entry.W2DAMT!=0 ) ? dollarUS.format(entry.W2DAMT) : ''}  
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2DAMT)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
                                                             <tr>
-                                                                <th><p className='num-sec'>12c.</p><p className='num-valu'>{entry.W2DMS3}</p></th>
+                                                                <th><p className='num-sec'>12c.</p><p className='num-valu'>
+                                                                    
+                                                                    {/* {entry.W2DMS3} */}
+                                                                      {(entry.W2DAM3!='' && entry.W2DAM3!=null && entry.W2DAM3!=0 ) ? (entry.W2DMS3) : ''}  
+                                                                    </p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2DAM3)}</p>
+                                                                    <p>{(entry.W2DAM3!='' && entry.W2DAM3!=null && entry.W2DAM3!=0 ) ? dollarUS.format(entry.W2DAM3) : ''}  
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2DAM3)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
@@ -429,9 +473,13 @@ const ShowW2Details = () => {
                                                             </tr>
 
                                                             <tr>
-                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other {entry.W2MSG2}</p></th>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other   {(entry.W2B182!='' && entry.W2B182!=null && entry.W2B182!=0 ) ? (entry.W2MSG2) : ''}  
+                                                                     {/* {entry.W2MSG2} */}
+                                                                     </p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2B182)}</p>
+                                                                    <p>{(entry.W2B182!='' && entry.W2B182!=null && entry.W2B182!=0 ) ? dollarUS.format(entry.W2B182) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2B182)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
@@ -452,14 +500,18 @@ const ShowW2Details = () => {
                                                             <tr>
                                                                 <th><p className='num-sec'>18.</p><p className='num-valu'>Local wages, tips, etc.</p></th>
                                                                 <td class="value-table">
-                                                                    <p>{dollarUS.format(entry.W2SWAG)}</p>
+                                                                    <p>{(entry.W2SWAG!='' && entry.W2SWAG!=null && entry.W2SWAG!=0 ) ? dollarUS.format(entry.W2SWAG) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2SWAG)} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
                                                             <tr>
                                                                 <th><p className='num-sec'>20.</p><p className='num-valu'>Locality Name</p></th>
                                                                 <td class="value-table">
-                                                                    <p>{entry.W2LNA2}</p>
+                                                                    <p>{(entry.W2LNA2!='' && entry.W2LNA2!=null && entry.W2LNA2!=0 ) ? (entry.W2LNA2) : ''}  
+                                                                        {/* {entry.W2LNA2} */}
+                                                                        </p>
                                                                 </td>
                                                             </tr>
 
