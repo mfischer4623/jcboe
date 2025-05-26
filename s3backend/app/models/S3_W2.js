@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('S3_W22021', {
+  return sequelize.define('S3_W2', {
     SSN: {
       type: DataTypes.STRING(50),
       allowNull: true
@@ -177,11 +177,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    'Column 44': {
+    'BOX 14 CODE-5': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    'Column 45': {
+    'BOX 14 AMOUNT-5': {
       type: DataTypes.STRING(50),
       allowNull: true
     },
@@ -301,9 +301,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     }
+    ,
+    'year': {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    }
   }, {
     sequelize,
-    tableName: 'S3_W22021',
+    tableName: 'S3_W22019',
     schema: 'dbo',
     timestamps: false,
     underscored: true

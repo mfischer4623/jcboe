@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('CR-Staging-2021-1', {
+  return sequelize.define('CR-Staging', {
     CHKNO: {
       type: DataTypes.STRING(50),
       allowNull: true
@@ -336,10 +336,14 @@ module.exports = function(sequelize, DataTypes) {
     EMPADJ: {
       type: DataTypes.STRING(50),
       allowNull: true
+    },
+    year: {
+      type: DataTypes.STRING(50),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'CR-Staging-2021-1',
+    tableName: 'CR-Staging-2016-1',
     schema: 'dbo',
     timestamps: false,
     underscored: true
