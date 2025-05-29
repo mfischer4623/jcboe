@@ -300,15 +300,14 @@ module.exports = function(sequelize, DataTypes) {
     'Column 74': {
       type: DataTypes.STRING(50),
       allowNull: true
-    }
-    ,
-    'year': {
-      type: DataTypes.STRING(50),
+    },
+    year: {
+      type: DataTypes.SMALLINT,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'S3_W22019',
+    tableName: 'S3_W2',
     schema: 'dbo',
     timestamps: false,
     underscored: true

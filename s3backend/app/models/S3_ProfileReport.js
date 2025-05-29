@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('S3-ProfileReport-Mar2025', {
+  return sequelize.define('S3_ProfileReport', {
     'Employee#': {
       type: DataTypes.STRING(50),
       allowNull: true
@@ -767,7 +767,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'S3-ProfileReport-Mar2025',
+    tableName: 'S3_ProfileReport',
     schema: 'dbo',
     timestamps: false,
     underscored: true

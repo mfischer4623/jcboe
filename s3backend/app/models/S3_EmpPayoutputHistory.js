@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Emp-Payoutput-History', {
+  return sequelize.define('S3_EmpPayoutputHistory', {
     emp_num: {
       type: DataTypes.STRING(50),
       allowNull: true
@@ -216,10 +216,14 @@ module.exports = function(sequelize, DataTypes) {
     DownloadDate: {
       type: DataTypes.STRING(50),
       allowNull: true
+    },
+    SchoolYear: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'Emp-Payoutput-History',
+    tableName: 'S3_EmpPayoutputHistory',
     schema: 'dbo',
     timestamps: false,
     underscored: true

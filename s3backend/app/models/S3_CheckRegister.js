@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('CR-Staging', {
+  return sequelize.define('S3_CheckRegister', {
     CHKNO: {
       type: DataTypes.STRING(50),
       allowNull: true
@@ -338,12 +338,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     year: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(20),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'CR-Staging-2016-1',
+    tableName: 'S3_CheckRegister',
     schema: 'dbo',
     timestamps: false,
     underscored: true

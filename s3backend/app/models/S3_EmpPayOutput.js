@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Emp-PayOutput', {
+  return sequelize.define('S3_EmpPayOutput', {
     emp_num: {
       type: DataTypes.STRING(50),
       allowNull: true
@@ -219,7 +219,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'Emp-PayOutput',
+    tableName: 'S3_EmpPayOutput',
     schema: 'dbo',
     timestamps: false,
     underscored: true
