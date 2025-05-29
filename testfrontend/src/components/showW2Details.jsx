@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from './sidebar';
-import Header from './header';
-import {
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    Typography,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import PrintIcon from '@mui/icons-material/Print'; // Assuming you're using this
+import React, { useState, useEffect, } from 'react';
+import PrintIcon from '@mui/icons-material/Print';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import { Link, useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
-import {
-    useNavigate
-} from "react-router-dom";
-
-import { useSelector } from 'react-redux';
-import { updateNullOfObjectValues } from '../helpers/helper';
 import { showW2s } from '../actions/admin.actions';
 
-import { AppContext } from '../context';
-import { Link } from "react-router-dom";
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-const EmployeeData = () => {
+const ShowW2Details = () => {
+
 
     const [expandedPanels, setExpandedPanels] = useState({
         panel1: true,
@@ -86,7 +70,7 @@ const EmployeeData = () => {
         currency: "USD",
     });
 
-    
+
     const exportTopdf = (e) => {
 
 
@@ -100,635 +84,466 @@ const EmployeeData = () => {
 
 
     };
+    function normalize(phoneStr) {
+        if (typeof phoneStr !== 'string') phoneStr = String(phoneStr || "");
+        phoneStr = phoneStr.replace(/[^\d]/g, "");
+        if (phoneStr.length === 7) {
+            return phoneStr.replace(/(\d{3})(\d{4})/, "$1-$2");
+        }
+        return ""; // Or return original if not 7 digits, depending on desired behavior
+    }
+    function normalizeophone(EMOTL2) {
+        var ophone = "";
+        if (EMOTL2 !== null && EMOTL2 !== undefined) {
+            ophone = normalize(EMOTL2.toString());
+        }
+        return ophone;
+    }
+
+
+    function normalizehphone(EMHTL2) {
+        var hphone = "";
+        if (EMHTL2 !== null && EMHTL2 !== undefined) {
+            hphone = normalize(EMHTL2.toString());
+        }
+        return hphone;
+    }
+
+    function normalizezip(EMZIP1) {
+        var zipCode = "";
+        if (EMZIP1 !== null && EMZIP1 !== undefined) {
+            zipCode = EMZIP1.toString();
+            if (zipCode.length > 0 && zipCode.length < 5) {
+                zipCode = '0'.repeat(5 - zipCode.length) + zipCode;
+            } else if (zipCode.length !== 5) {
+                zipCode = ""; // Or handle as invalid
+            }
+        }
+        return zipCode;
+
+
+    }
     return (
         <>
-            {/* <Header />
-            <Sidebar /> */}
-
             <div className='main-inner-sec content-main'>
-                <div className='main-inner-heading'>
-                    <div className='col-md-12'>
-                        <div className='emp-main-serach'>
-                            <div className='emp-serach emp-data-head'>
 
-                                {employeeData != null &&
-                                    <>
-                                        <h2>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM} </h2>
-                                        <h3 style={{margin:'14px 0px'}}>Emp Id:- <span> {employeeData.EMSSAN}</span></h3>
-                                        {w2sID != null &&
-                                            <h3>Year:- <span> {w2sID}</span></h3>
-                                        }
+                <div class=" emp-main-heading-emp show-margn-more">
+                    <div class="main-heading-sec ">
 
-                                    </>
+                        <div class="col-md-12">
+                            <div class="head-inner">
+                                {w2sID != null &&
+                                    <h2>W2 Details <span style={{ color: '#EC6800' }}>Year {w2sID}</span>  </h2>
                                 }
 
-                                <div className='print-sec-inner emp-print'>
-                                    <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                                <div class="head-right">
+                                    <span className='print-icon show-prnt' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                                    {/* <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button> */}
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                {/* <div class=" emp-main-heading-emp">
-                    <div class="main-heading-sec ">
-                        <div class="col-md-12">
-                            <div class="head-inner">
-                                <h2>W2s Details</h2>
-
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-
-                 <div class=" emp-main-heading-emp accordion-margin back-ws-below  accordian-margin-new">
-                          <div class="main-heading-sec ">
-                            
-                            <div class="col-md-12">
-                              <div class="head-inner">
-                                
-                               
-                               
-                              </div>
-                            </div>
-                            <div className='back-sec'>
-                            <Link to="/W2s" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
-                            </div>
-                          </div>
-                        </div>
-                <div className="emp-data-inner margin-all-sec accordion-margin accordian-margin-new">
-                    <div className='row'>
-                        <div className='col-md-12'>
-                            <div className='emp-data-sec form-accor-sec'>
-                                {/* personal Information section */}
-                                <Accordion
-                                    expanded={expandedPanels.panel1}
-                                    // onChange={handleChange('panel1')}
-                                >
-                                    <AccordionSummary
-                                        // expandIcon={
-                                        //     expandedPanels.panel1 ? <RemoveIcon /> : <AddIcon />
-                                        // }
-                                        aria-controls="panel1-content"
-                                        id="panel1-header"
-                                    >
-                                        <Typography component="span">W2 Details</Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Typography className='form-detail-main'>
-                                            {w2sData.length > 0 &&
-                                                <>
-                                                    {w2sData.map((entry, index) => (
-
-                                                        <div className='emp-data-value-sec form-detail-inner'>
-                                                            <div className='row'>
-                                                                <div className=' form-detail-left'>
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>a Employee's SSN</h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{entry.W2SSN}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>1 Wages, tips</h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2WAGE) }</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>3 Social security wages
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2FICW)} </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>5 Medicare wages and tips
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2FICM)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>7 Social security tips
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2FICT)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>10 Dependent care benefits
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2DCC)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>12a {entry.W2DMS1}
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2DAMT)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>12c {entry.W2DMS3}
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2DAM3)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                   
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>13 Retirement
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{(entry.W2RET)}</p>
-                                                                               
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>14 Other {entry.W2MSG2}
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2B182)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>15 State
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{entry.W2SNAM}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>16 State wages, tips, etc.
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2SWAG)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-
-                                                                    
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner '>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>18 Local wages, tips, etc.
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2SWAG)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-inner last-right-data'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>20 Local name
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-inner'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{entry.W2LNA2}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-                                                                </div>
-                                                                <div className='form-detail-midle'>
-                                                                    <div className='border-after'></div>
-                                                                </div>
-                                                                <div className=' form-detail-right'>
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>b Employer EIN</h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{entry.W2FEIN}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>2 Federal income tax withheld	</h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2FEDT)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>	4 Social security tax withheld
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>{dollarUS.format(entry.W2FTWH)}</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>6 Medicare tax withheld
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                    {dollarUS.format(entry.W2FMWH)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>8 Allocated tips
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                    {dollarUS.format(entry.W2ALOT)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>11 Nonqualified plans
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                    {dollarUS.format(entry.W2N457)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>12b {entry.W2DMS2}
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                {dollarUS.format(entry.W2DAM2)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>12d {entry.W2DMS4}
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                {dollarUS.format(entry.W2DAM4)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>14 Other {entry.W2MSG1}
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                {dollarUS.format(entry.W2B181)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-                                                                    
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>14 Other {entry.W2MSG3}
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                {dollarUS.format(entry.W2B183)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-
-                                                                        
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>Employer's state Id no.
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                {entry.W2SEIN}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-
-
-                                                                        
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>17 State income tax
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                {dollarUS.format(entry.W2SITW)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                        
-                                                                    <div className='row'>
-                                                                        <div className='form-detail-left-innerss form-detail-left-innerss-ws'>
-                                                                            <div className='form-details-label'>
-                                                                                <h3>19 Local income tax
-
-                                                                                </h3>
-                                                                                <p className='semicolon'>:</p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div className='form-detail-right-innerss form-detail-right-innerss-ws'>
-                                                                            <div className='form-details-value'>
-                                                                                <p>
-                                                                                {dollarUS.format(entry.W2LITW)}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    ))}
-
-                                                </>
-                                            }
-
-                                        </Typography>
-                                    </AccordionDetails>
-                                </Accordion>
-
-
-
-
-
-
-
-
-                            </div>
+                        <div className='back-sec'>
+                            <Link to="/W2s" className="back-btn-sec back-news"><KeyboardDoubleArrowLeftIcon />Back</Link>
                         </div>
                     </div>
                 </div>
+
+                <div className='show-detail-sec'>
+                    <div className="emp-table-sec">
+                        <div className='form-table-sec emp-table-inner form-show-ws-main'>
+                            <div className='row'>
+
+
+                                <div className='col-md-12' >
+                                    <div className='search-sec-pay payroll-deatil-inner show-ws-details mid-ws-details new-marg-ws'>
+
+                                        <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                            <h3>Employer</h3>
+                                            <p >Jersey City Board of Education</p>
+                                        </div>
+                                        {w2sData.length > 0 &&
+                                            <>
+                                                <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                                    <h3>Employer EIN</h3>
+                                                    <p>{w2sData[0].W2FEIN}</p>
+                                                </div>
+                                            </>
+
+
+                                        }
+                                        <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                            <h3>Employer Address and Zipcode</h3>
+                                            <p >346 Claremont Avenue, Jersey City, NJ 073051634</p>
+                                        </div>
+                                        <div className='payroll-details-data ws-all-details margin-ws margin-ws-more'>
+                                            <h3> Control number</h3>
+                                             <p style={{visibility:'hidden'}}>fbgn</p>
+                                        </div>
+                                        
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div className='form-table-sec emp-table-inner form-show-ws-main'>
+                            <div className='row'>
+
+
+
+
+                                <div className='col-md-12' >
+                                    <div className='search-sec-pay payroll-deatil-inner show-ws-details new-marg-ws'>
+                                        {employeeData != null &&
+                                            <>
+
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                    <h3>Employee Name</h3>
+                                                    <p>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM}</p>
+                                                </div>
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                    <h3>Employee Id</h3>
+                                                    <p> {employeeData.EMSSAN} </p>
+                                                </div>
+
+                                            </>
+                                        }
+                                        {w2sData.length > 0 &&
+                                            <>
+                                                {/* {w2sData.map((entry, index) => ( */}
+                                                {/* <> */}
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                    <h3> Employee's SSN </h3>
+                                                    <p>{w2sData[0].W2SSN}</p>
+                                                </div>
+
+
+                                                {/* </> */}
+
+                                                {/* ))} */}
+                                            </>
+
+
+                                        }
+
+                                        {employeeData != null &&
+                                            <>
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                    <h3>Address and Zipcode</h3>
+                                                    <p>{employeeData.EMADD1},   {employeeData.EMADD2}, {employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
+                                                </div>
+
+                                                {/* <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                    <h3>Address 1</h3>
+                                                    <p>{employeeData.EMADD2}</p>
+                                                </div> */}
+{/* 
+                                                <div className='payroll-details-data  ws-all-details margin-ws margin-ws-more'>
+                                                    <h3>City, State,Zip</h3>
+                                                    <p>{employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
+                                                </div> */}
+
+
+
+
+                                            </>
+                                        }
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        {/* {w2sID != null &&
+                            <div className="year-show-data">
+                                <p>Year  {w2sID}</p>
+                            </div>
+                        } */}
+
+
+                        <div className='row margin-top-po-table margin-top-ws-main'>
+                            {/* table section start from here */}
+                            {w2sData.length > 0 &&
+                                <>
+                                    {w2sData.map((entry, index) => (
+                                        <>
+                                            <div className='col-md-6'>
+                                                <div class="table-main-sec diff-po-table">
+                                                    <table className='table table-sec tabl-ws-details'>
+                                                        <tbody class="tbody-light tbody-po-light tbody-left-po">
+                                                            <tr>
+                                                                <th><p className='num-sec'>1.</p><p className='num-valu'>Wages, tips</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2WAGE)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>3.</p><p className='num-valu'>Social security wages</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FICW)} </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>5.</p><p className='num-valu'>Medicare wages and tips</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FICM)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>7.</p><p className='num-valu'>Social security tips</p></th>
+                                                                <td class="value-table">
+                                                                    <p>  {(entry.W2FICT!='' && entry.W2FICT!=null && entry.W2FICT!=0 ) ? dollarUS.format(entry.W2FICT) : ''}</p>
+
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>9.</p><p className='num-valu'>Advance EIC Payement</p></th>
+                                                                <td class="value-table">
+                                                                    <p></p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>11.</p><p className='num-valu'>Nonqualified plans</p></th>
+                                                                <td class="value-table">
+                                                                    <p>  {(entry.W2N457!='' && entry.W2N457!=null && entry.W2N457!=0 ) ? dollarUS.format(entry.W2N457) : ''} 
+                                                                        {/* {dollarUS.format(entry.W2N457)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>12b.</p><p className='num-valu'>{(entry.W2DAM2!='' && entry.W2DAM2!=null && entry.W2DAM2!=0 ) ? entry.W2DMS2 : ''} </p></th>
+                                                                <td class="value-table">
+                                                                    <p>   {(entry.W2DAM2!='' && entry.W2DAM2!=null && entry.W2DAM2!=0 ) ? dollarUS.format(entry.W2DAM2) : ''} 
+                                                                        
+                                                                         {/* {dollarUS.format(entry.W2DAM2)} */}
+                                                                         </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>12d.</p><p className='num-valu'> 
+                                                                    {/* {entry.W2DMS4} */}
+                                                                     {(entry.W2DAM4!='' && entry.W2DAM4!=null && entry.W2DAM4!=0 ) ?  entry.W2DMS4 : ''}  
+                                                                    </p></th>
+                                                                <td class="value-table">
+                                                                    <p> {(entry.W2DAM4!='' && entry.W2DAM4!=null && entry.W2DAM4!=0 ) ? dollarUS.format(entry.W2DAM4) : ''}  
+                                                                          {/* {dollarUS.format(entry.W2DAM4)} */}
+
+                                                                        
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other  {(entry.W2B181!='' && entry.W2B181!=null && entry.W2B181!=0 ) ?  entry.W2MSG1 : ''}  
+                                                                    {/* {entry.W2MSG1} */}
+                                                                    
+                                                                    </p></th>
+                                                                <td class="value-table">
+                                                                    <p> {(entry.W2B181!='' && entry.W2B181!=null && entry.W2B181!=0 ) ? dollarUS.format(entry.W2B181) : ''}  
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2B181)}  */}
+                                                                        
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other   {(entry.W2B183!='' && entry.W2B183!=null && entry.W2B183!=0 ) ?  entry.W2MSG3 : ''}  
+                                                                     {/* {entry.W2MSG3}  */}
+                                                                     </p></th>
+                                                                <td class="value-table">
+                                                                    <p> {(entry.W2B183!='' && entry.W2B183!=null && entry.W2B183!=0 ) ? dollarUS.format(entry.W2B183) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2B183)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec square-sec'></p><p className='num-valu'>Employer's state Id no.</p></th>
+                                                                <td class="value-table">
+                                                                    <p>  {entry.W2SEIN} </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>17.</p><p className='num-valu'>State income tax</p></th>
+                                                                <td class="value-table">
+                                                                    <p>  {dollarUS.format(entry.W2SITW)}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>19.</p><p className='num-valu'>Local income tax</p></th>
+                                                                <td class="value-table">
+                                                                    <p> {(entry.W2LITW!='' && entry.W2LITW!=null && entry.W2LITW!=0 ) ? dollarUS.format(entry.W2LITW) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2LITW)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div className='col-md-6'>
+                                                <div class="table-main-sec diff-po-table">
+                                                    <table className='table table-sec show-right-po'>
+                                                        <tbody class="tbody-light tbody-po-light">
+                                                            <tr>
+                                                                <th><p className='num-sec'>2.</p><p className='num-valu'>Federal income tax withheld</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FEDT)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>4.</p><p className='num-valu'>Social security tax withheld</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FTWH)}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>6.</p><p className='num-valu'>Medicare tax withheld</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2FMWH)}</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>8.</p><p className='num-valu'>Allocated tips</p></th>
+                                                                <td class="value-table">
+                                                                    <p> {(entry.W2ALOT!='' && entry.W2ALOT!=null && entry.W2ALOT!=0 ) ? dollarUS.format(entry.W2ALOT) : ''} 
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2ALOT)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>10.</p><p className='num-valu'>Dependent care benefits</p></th>
+                                                                <td class="value-table">
+                                                                    <p> {(entry.W2DCC!='' && entry.W2DCC!=null && entry.W2DCC!=0 ) ? dollarUS.format(entry.W2DCC) : ''} 
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2DCC)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><p className='num-sec'>12a.</p><p className='num-valu'>
+                                                                     {/* {entry.W2DMS1} */}
+                                                                      {(entry.W2DAMT!='' && entry.W2DAMT!=null && entry.W2DAMT!=0 ) ? (entry.W2DMS1) : ''}  
+                                                                     </p></th>
+                                                                <td class="value-table">
+                                                                    <p> {(entry.W2DAMT!='' && entry.W2DAMT!=null && entry.W2DAMT!=0 ) ? dollarUS.format(entry.W2DAMT) : ''}  
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2DAMT)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>12c.</p><p className='num-valu'>
+                                                                    
+                                                                    {/* {entry.W2DMS3} */}
+                                                                      {(entry.W2DAM3!='' && entry.W2DAM3!=null && entry.W2DAM3!=0 ) ? (entry.W2DMS3) : ''}  
+                                                                    </p></th>
+                                                                <td class="value-table">
+                                                                    <p>{(entry.W2DAM3!='' && entry.W2DAM3!=null && entry.W2DAM3!=0 ) ? dollarUS.format(entry.W2DAM3) : ''}  
+                                                                        
+                                                                        {/* {dollarUS.format(entry.W2DAM3)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>13.</p><p className='num-valu'>Retirement</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{(entry.W2RET)}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>14.</p><p className='num-valu'>Other   {(entry.W2B182!='' && entry.W2B182!=null && entry.W2B182!=0 ) ? (entry.W2MSG2) : ''}  
+                                                                     {/* {entry.W2MSG2} */}
+                                                                     </p></th>
+                                                                <td class="value-table">
+                                                                    <p>{(entry.W2B182!='' && entry.W2B182!=null && entry.W2B182!=0 ) ? dollarUS.format(entry.W2B182) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2B182)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>15.</p><p className='num-valu'>State</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{entry.W2SNAM}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>16.</p><p className='num-valu'>State wages, tips, etc.</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{dollarUS.format(entry.W2SWAG)}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>18.</p><p className='num-valu'>Local wages, tips, etc.</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{(entry.W2SWAG!='' && entry.W2SWAG!=null && entry.W2SWAG!=0 ) ? dollarUS.format(entry.W2SWAG) : ''}  
+                                                                        {/* {dollarUS.format(entry.W2SWAG)} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th><p className='num-sec'>20.</p><p className='num-valu'>Locality Name</p></th>
+                                                                <td class="value-table">
+                                                                    <p>{(entry.W2LNA2!='' && entry.W2LNA2!=null && entry.W2LNA2!=0 ) ? (entry.W2LNA2) : ''}  
+                                                                        {/* {entry.W2LNA2} */}
+                                                                        </p>
+                                                                </td>
+                                                            </tr>
+
+
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ))}
+                                </>
+                            }
+                            {/* table section end from here */}
+
+                            {/* pagination section start here */}
+
+
+                            {/* pagination section end here */}
+
+                        </div>
+                    </div>
+
+
+                </div>
+
             </div>
-        </>
-    );
-};
 
-export default EmployeeData;
+        </>
+    )
+}
+
+export default ShowW2Details
+

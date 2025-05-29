@@ -76,9 +76,7 @@ function Pdf() {
       navigate(`/employeedata`);
 
     } else {
-
-      var allprintnew = JSON.parse(window.localStorage.getItem('allprintw2s'));;
-
+      var allprintnew = JSON.parse(window.localStorage.getItem('allattendeatnew'));;
       console.log(allprintnew);
       setEmployeeData(userid);
       setViewDataForm(allprintnew);
@@ -92,7 +90,7 @@ function Pdf() {
 
 
 
-    document.title = 'W2S Details';
+    document.title = 'Attendance  Details';
 
 
     setTimeout(function () {
@@ -102,16 +100,11 @@ function Pdf() {
     }, 500);
     ;
   }
-  let dollarUS = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  let percentageUS = Intl.NumberFormat("en-US", {
+    style: "percent",
+    maximumFractionDigits: 2
   });
 
-  const W2CLYRdat = (W2CLYR) => {
-    let W2CLYRb = W2CLYR < 10 ? `200${W2CLYR}` : `20${W2CLYR}`;;
-
-    return W2CLYRb;
-  };
   const styles = {
     body: {
       WebkitPrintColorAdjust: "exact",
@@ -119,6 +112,15 @@ function Pdf() {
     pageBreak: {
       pageBreakAfter: "always",
     },
+  };const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const year = dateString.substring(0, 4);
+    const month = dateString.substring(4, 6);
+    const day = dateString.substring(6, 8);
+    return `${month}/${day}/${year}`;
+  };
+    const padValue = (value) => {
+    return value.toString().padStart(3, '0');
   };
   return (
     <>
@@ -139,7 +141,7 @@ function Pdf() {
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
 
-                      W2 List
+                    Attendance Details
                     </td>
 
                   </tr>
@@ -159,75 +161,31 @@ function Pdf() {
                 {/* general section start pdf code */}
 
                 <div className="pdf-section padf-sec-top">
-                  <table className="table-status table-sts-ws" style={{ width: '100%' }}>
+                  <table className="table-status" style={{ width: '100%' }}>
                     {viewDataForm.length > 0 ?
-                      <>
-                        <thead>
-                          <tr>
-                            <th className="thead-main thead-main-pdf" rowspan='2' colspan="1">TAX YEAR</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FEDERAL</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FICA</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">MEDICARE</th>
+                      <><thead>
+                        <tr>
+                          <th className='pf-sl pdf-job-cde'>Location Code	</th>
+                          <th className='pf-wl pdf-absne'>Absence Date </th>
+                          <th className='pf-date pdf-begn-bal'>Absence Code </th>
+                          <th className='pf-date pdf-begn-bal'>Unit </th>
+                          
 
-                          </tr>
-                          <tr className="thead-subhead">
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                          </tr>
-                        </thead>
-
+                        </tr>
+                      </thead>
                       </>
+
                       :
                       null}
-
-
                     {viewDataForm.length > 0 ?
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {W2CLYRdat(item.W2CLYR)} </td>
-
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2WAGE)}
-
-                          </td>
-                          <td class="border-right">
-
-
-                            {dollarUS.format(item.W2FEDT)}
-
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FICW)}
-
-
-
-                          </td>
-
-                          <td class="border-right">
-
-
-                            {dollarUS.format(item.W2FTWH)}
-
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FICM)}
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FMWH)}
-
-                          </td>
+                          <td class="border-right">  {padValue(item.TMLLOC)} </td>
+                          <td class="border-right">  {formatDate(item.TMLDAT)}</td>
+                          <td class="border-right">  {item?.TMLABS}</td>
+                          <td class="border-right">  {item?.TMLQTY} </td>
+                       
 
                         </tr>
                       ) : ""}

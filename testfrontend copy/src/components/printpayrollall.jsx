@@ -76,9 +76,7 @@ function Pdf() {
       navigate(`/employeedata`);
 
     } else {
-
-      var allprintnew = JSON.parse(window.localStorage.getItem('allprintw2s'));;
-
+      var allprintnew = JSON.parse(window.localStorage.getItem('allprintpaytrollde'));;
       console.log(allprintnew);
       setEmployeeData(userid);
       setViewDataForm(allprintnew);
@@ -92,7 +90,7 @@ function Pdf() {
 
 
 
-    document.title = 'W2S Details';
+    document.title = 'Payroll  Details';
 
 
     setTimeout(function () {
@@ -102,16 +100,11 @@ function Pdf() {
     }, 500);
     ;
   }
-  let dollarUS = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  let percentageUS = Intl.NumberFormat("en-US", {
+    style: "percent",
+    maximumFractionDigits: 2
   });
 
-  const W2CLYRdat = (W2CLYR) => {
-    let W2CLYRb = W2CLYR < 10 ? `200${W2CLYR}` : `20${W2CLYR}`;;
-
-    return W2CLYRb;
-  };
   const styles = {
     body: {
       WebkitPrintColorAdjust: "exact",
@@ -120,6 +113,39 @@ function Pdf() {
       pageBreakAfter: "always",
     },
   };
+  const formatDate = (dateStringji) => {
+    console.log('dateStringji', dateStringji);
+   let HRCKDT = dateStringji;
+   let dateString = HRCKDT ? HRCKDT.toString() : "";
+
+   let month, day, year;
+   if (dateString.length === 3) {
+     month = "0" + dateString.substring(0, 1);
+     day = dateString.substring(1, 3);
+     year = "2000";
+   } else if (dateString.length === 4) {
+     month = dateString.substring(0, 2);
+     day = dateString.substring(2, 4);
+     year = "2000";
+   } else if (dateString.length === 5) {
+     month = dateString.substring(1, 3);
+     day = dateString.substring(3, 5);
+     year = "200" + dateString.substring(0, 1);
+   } else if (dateString.length === 6) {
+     month = dateString.substring(2, 4);
+     day = dateString.substring(4, 6);
+     year = dateString.substring(0, 2);
+     year = year > "30" ? "19" + year : "20" + year;
+   } else {
+     month = "12";
+     day = "31";
+     year = "9999";
+   }
+   HRCKDT = `${month}/${day}/${year}`;
+    return HRCKDT
+ }
+ let dollarUS = Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+
   return (
     <>
       <div style={styles.body}>
@@ -139,7 +165,7 @@ function Pdf() {
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
 
-                      W2 List
+                    Payroll Details
                     </td>
 
                   </tr>
@@ -159,75 +185,31 @@ function Pdf() {
                 {/* general section start pdf code */}
 
                 <div className="pdf-section padf-sec-top">
-                  <table className="table-status table-sts-ws" style={{ width: '100%' }}>
+                  <table className="table-status" style={{ width: '100%' }}>
                     {viewDataForm.length > 0 ?
-                      <>
-                        <thead>
-                          <tr>
-                            <th className="thead-main thead-main-pdf" rowspan='2' colspan="1">TAX YEAR</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FEDERAL</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FICA</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">MEDICARE</th>
+                      <><thead>
+                        <tr>
+                          <th className='pf-sl pdf-job-cde'>Check Date 	</th>
+                          <th className='pf-wl pdf-absne'>Check #  </th>
+                          <th className='pf-date pdf-begn-bal'>Form</th>
+                          <th className='pf-date pdf-begn-bal'>Check Amt </th>
+                          
 
-                          </tr>
-                          <tr className="thead-subhead">
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                          </tr>
-                        </thead>
-
+                        </tr>
+                      </thead>
                       </>
+
                       :
                       null}
-
-
                     {viewDataForm.length > 0 ?
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {W2CLYRdat(item.W2CLYR)} </td>
-
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2WAGE)}
-
-                          </td>
-                          <td class="border-right">
-
-
-                            {dollarUS.format(item.W2FEDT)}
-
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FICW)}
-
-
-
-                          </td>
-
-                          <td class="border-right">
-
-
-                            {dollarUS.format(item.W2FTWH)}
-
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FICM)}
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FMWH)}
-
-                          </td>
+                          <td class="border-right">  {formatDate(item.HRCKDT)} </td>
+                          <td class="border-right">  {(item.PCCK)}</td>
+                          <td class="border-right">  {item?.HRFRM2}</td>
+                          <td class="border-right"> {dollarUS.format(item.PCAMT)}</td>
+                       
 
                         </tr>
                       ) : ""}

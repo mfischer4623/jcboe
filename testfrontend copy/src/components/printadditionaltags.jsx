@@ -76,9 +76,7 @@ function Pdf() {
       navigate(`/employeedata`);
 
     } else {
-
-      var allprintnew = JSON.parse(window.localStorage.getItem('allprintw2s'));;
-
+      var allprintnew = JSON.parse(window.localStorage.getItem('alladitionatags'));;
       console.log(allprintnew);
       setEmployeeData(userid);
       setViewDataForm(allprintnew);
@@ -92,7 +90,7 @@ function Pdf() {
 
 
 
-    document.title = 'W2S Details';
+    document.title = 'Additional Tags Details';
 
 
     setTimeout(function () {
@@ -102,16 +100,11 @@ function Pdf() {
     }, 500);
     ;
   }
-  let dollarUS = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  let percentageUS = Intl.NumberFormat("en-US", {
+    style: "percent",
+    maximumFractionDigits: 2
   });
 
-  const W2CLYRdat = (W2CLYR) => {
-    let W2CLYRb = W2CLYR < 10 ? `200${W2CLYR}` : `20${W2CLYR}`;;
-
-    return W2CLYRb;
-  };
   const styles = {
     body: {
       WebkitPrintColorAdjust: "exact",
@@ -139,7 +132,7 @@ function Pdf() {
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
 
-                      W2 List
+                    Additional Tags Details
                     </td>
 
                   </tr>
@@ -159,76 +152,39 @@ function Pdf() {
                 {/* general section start pdf code */}
 
                 <div className="pdf-section padf-sec-top">
-                  <table className="table-status table-sts-ws" style={{ width: '100%' }}>
+                  <table className="table-status" style={{ width: '100%' }}>
                     {viewDataForm.length > 0 ?
-                      <>
-                        <thead>
-                          <tr>
-                            <th className="thead-main thead-main-pdf" rowspan='2' colspan="1">TAX YEAR</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FEDERAL</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">FICA</th>
-                            <th className="thead-main thead-main-pdf" rowspan='1' colspan="2">MEDICARE</th>
-
-                          </tr>
-                          <tr className="thead-subhead">
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                            <th rowspan='1' colspan="1" className='wages-color'>Wages</th>
-                            <th rowspan='1' colspan="1" className='wiheld-color'>Withheld</th>
-                          </tr>
-                        </thead>
-
+                      <><thead>
+                        <tr>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                          <th className='pf-sl pdf-job-cde'>	</th>
+                        </tr>
+                      </thead>
                       </>
+
                       :
                       null}
-
-
                     {viewDataForm.length > 0 ?
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {W2CLYRdat(item.W2CLYR)} </td>
+                          <td class="border-right">  {item?.PCTID} </td>
+                          <td class="border-right">  {item?.PCCOL1}</td>
+                          <td class="border-right">  {item?.PCCOL2}</td>
 
-                          <td class="border-right">
+                          <td class="border-right">  {item?.PCCOL3}</td>
+                          <td class="border-right">  {item?.PCCOL4}</td>
+                          <td class="border-right">  {item?.PCCOL5}</td>
 
-                            {dollarUS.format(item.W2WAGE)}
-
-                          </td>
-                          <td class="border-right">
-
-
-                            {dollarUS.format(item.W2FEDT)}
-
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FICW)}
-
-
-
-                          </td>
-
-                          <td class="border-right">
-
-
-                            {dollarUS.format(item.W2FTWH)}
-
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FICM)}
-
-                          </td>
-                          <td class="border-right">
-
-                            {dollarUS.format(item.W2FMWH)}
-
-                          </td>
-
+                          <td class="border-right">  {item?.PCCOL6}</td>
+                          <td class="border-right">  {item?.PCCOL7}</td>
+                      
                         </tr>
                       ) : ""}
 

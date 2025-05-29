@@ -262,7 +262,7 @@ const W2s = () => {
           <div class="main-heading-sec ">
             <div class="col-md-12">
               <div class="head-inner ws-head-inner">
-                <h2>W2 List</h2>
+                <h2>W2</h2>
                 <div class="head-right ws-head-right">
                   {allattendata.length > 0 &&
                     <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>

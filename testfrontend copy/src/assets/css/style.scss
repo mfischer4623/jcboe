@@ -1539,18 +1539,6 @@ body {
 }
 
 @media (max-width: 1450px) {
-  .diff-po-table .tabl-ws-details .tbody-po-light tr th {
-        width: 280px !important;
-    }
-  .form-show-ws-main .search-sec-pay .ws-details {
-    width: 25% !important;
-}
-    .diff-po-table .tabl-ws-details .tbody-po-light tr th{
-    width:300px !important;
-  }
-  .diff-po-table .show-right-po .tbody-po-light tr th{
-    width:300px !important;
-  }
   .table-main-sec .table .tax-yaer-widh {
     width: 130px !important;
   }
@@ -1685,12 +1673,6 @@ body {
 }
 
 @media (max-width: 1500px) {
-  .diff-po-table .tabl-ws-details .tbody-po-light tr th{
-    width:300px !important;
-  }
-  .diff-po-table .show-right-po .tbody-po-light tr th{
-    width:300px !important;
-  }
   .table .tax-yaer-widh {
     width: 140px !important;
   }
@@ -1778,9 +1760,6 @@ body {
 
 
 @media (max-width: 1350px) {
-      .diff-po-table .tabl-ws-details .tbody-po-light tr th {
-        width: 280px !important;
-    }
   .vebdor-details-left {
     margin-bottom: 1px;
   }
@@ -1906,20 +1885,9 @@ body {
 }
 
 @media (max-width: 1300px) {
-  .square-sec {
-    width: 19px !important;
-    height: 19px !important;}
- body .diff-po-table .tabl-ws-details .tbody-po-light tr th{
-    width:285px !important;
-  }
-   body .diff-po-table .show-right-po .tbody-po-light tr th{
-    width:280px !important;
-  }
   .table-main-sec .table .tax-yaer-widh {
     width: 115px !important;
   }
-  .num-valu {
-    margin-left: 24px !important;}
 
   .table-main-sec .table .actin-ws-widh {
     width: 110px !important
@@ -2572,8 +2540,7 @@ body {
 
   @page {
     margin: 0;
-    margin: 25px 0px 0px 0px;
-
+    margin: 10px 0px;
   }
 
  
@@ -2612,13 +2579,7 @@ body {
 
     page-break-inside: avoid;
   }
-  .diff-po-table-pdf table tbody tr th{
-      width: 380px !important;
-}
 
-
-
- 
 
 }
 
@@ -2629,14 +2590,7 @@ body {
     page-break-before: always;
     margin-top: 20px;
   }
-.page-breaknewsw {
-    page-break-before: always;
-    //margin-top: 50px; /* Adds 50px space on each new page */
-    display: block;
-  }
-  .marginws-border-grey-pdf{
-    border-top:2px solid $greyshade !important;
-  }
+
 }
 
 .pdf-job-cde {
@@ -3440,6 +3394,7 @@ body {
 
 .cursorjob {
   cursor: pointer;
+
 }
 
 .tax-yaer-widh {
@@ -3523,167 +3478,3 @@ body {
   left: 5px;
   font-weight: 500;
 }
-
-.show-margn-more{
-  margin-top: 50px;
-}
-.show-prnt{
-  svg{
-position: relative;
-top:7px;
-  }
-}
-.back-sec .back-news{
-  top:-25px !important;
-}
-
-.form-show-ws-main{
-border-left: 4px solid $bluecolor !important;
-}
-.margin-ws{
-  margin-bottom: 20px;
-}
-.emp-table-sec .form-show-ws-main{
-  padding-bottom: 0px !important;
-}
-.show-ws-details{
-  padding-bottom: 0px !important;
-}
-.search-sec-pay .ws-details{
-  width:20% !important;
-}
-.year-show-data{
-  p{
-    color:$orangecolor;
-  font-size: 19px;
-    font-weight: 600;
-    margin-top: 40px;
-  }
-}
-
-.num-sec{
-  float:left;
-  margin-bottom: 0px;
-}
-.num-valu{
-  margin-left: 35px;
-  margin-bottom: 0px;
-}
-
-.diff-po-table .tabl-ws-details .tbody-po-light tr th{
-    width: 380px;
-}
-.square-sec{
-      width: 22px;
-    height: 22px;
-    background-color: $bluecolor;
-    position: relative;
-    top: 3px;
-}
-
-.diff-po-table .show-right-po .tbody-po-light tr th{
-    width: 380px;
-}
-
-.margin-top-ws-main{
-  margin-bottom: 40px;
-}
-
-
-.search-sec-pay .ws-all-details{
-  width:25% !important;
-  float: left;
-}
-.search-sec-pay .ws-all-first-details{
-  width:100%;
-}
-
-.show-main-se{
-  text-align: center;
-    margin: 0 auto;
-}
-// .mid-ws-details{
-//   padding-top:0px !important;
-// }
-
-.diff-po-table-pdf .value-table{
-      width:150px !important;
-}
-.diff-po-table-pdf .tbody-po-light tr th {
-  
-      padding: 2px 15px 2px 15px;
-    font-size: 16px;
-}
-
-.diff-po-table-pdf .tbody-po-light tr td {
-    padding:  2px 15px 2px 15px;
-    p{
-  font-size: 15px;
-    }
-   
-}
-.diff-po-table-pdf .tbody-po-light tr th{border-left: 2px solid #c1c1c1 !important;}
-.table-sec-po-light {
-  box-shadow: none !important;
-}
-
-
-.empoyee-detmd .empoyee-detpdfti{
-  padding: 15px 15px 13px 10px !important;
-}
-.empoyee-detmd .empoyee-detpdfti h2{
-font-size: 16px !important;
-}
-
-
-.empoyee-detmd{
-  
-    padding-left: 0px;
-    padding-right: 0px;
-
-}
-
-.new-marg-ws{
-  padding-top: 35px !important;
-}
-.margin-ws-more{
-  margin-bottom: 10px !important;
-}
-
-.ws-main-pdf-sec{
-margin:0px 0 3px 0px !important;
-}
-.pdf-ws-emp-table-pdf{
-  margin:0 12px !important
-}
-.new-ws-pdf-po{
-      margin: 15px 0px !important;
-}
-
-.main-w2s-det{
-  padding-bottom: 4px !important;
-}
-
-.main-gen-inner-ws{
-      padding: 1px 0;
-
-}
-
-.new-ws-pdf-po{
-      margin: 15px 0px !important;
-}
-.new-tablews{
-margin-bottom: 0px !important;
-}
-.tbody-po-light-ws{
-border-top:0px !important;
-}
-
-.margin-top-po-pdf .diff-po-table .tbody-po-light-ws{
-border-top: 0px !important;
-
-}
-
-  .pageBreakwsd{
-    margin: 20px !important;
-  }
