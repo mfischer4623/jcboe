@@ -1,7 +1,11 @@
 db.config.js
 
 config.json
+
 migrations/
+generate-migration.js
+migrate.js
+
 .env
 
 node_modules/
