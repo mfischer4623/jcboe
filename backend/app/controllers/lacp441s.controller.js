@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../../models");
 const Lacp441s = db.lacp441s;
 const Op = db.Sequelize.Op;
 
@@ -37,7 +37,9 @@ exports.findAll = (req, res) => {
         });
 };;
 
-// CheckSearch API 
+
+
+// Retrieve all lacp441s from the database.
 
 exports.checkSearch = (req, res) => {
     console.log(req.query)

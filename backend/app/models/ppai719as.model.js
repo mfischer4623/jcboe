@@ -2,12 +2,13 @@ module.exports = (sequelize, Sequelize) => {
   const Ppai719as = sequelize.define("ppai719as", {
     USG: {
       type: Sequelize.STRING(1),
-      allowNull: true,
-      primaryKey: true
+      allowNull: true  // ✅ Now it can be NULL,
+
     },
     BUSY: {
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: true,
+      defaultValue: 'X'
     },
     TMLRUN: {
       type: Sequelize.INTEGER,
@@ -114,6 +115,6 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: true
     }
   });
- 
-    return Ppai719as;
-  };
+
+  return Ppai719as;
+};

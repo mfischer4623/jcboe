@@ -25,10 +25,10 @@ const controllers = {
   ppur301s: require("../controllers/ppur301s.controller.js"),
   lacp441s: require("../controllers/lacp441s.controller.js"),
   pofromvendor: require("../controllers/pofromvendor.controller.js"),
+  checkSearch: require("../controllers/lacp441s.controller.js"),
   s3000EmpSrch: require("../controllers/s3000EmpSrch.controller.js"),
   s3000ShowPayments: require("../controllers/s3000ShowPayments.controller.js"),
-  s3000DisplayPayment: require("../controllers/s3000DisplayPayment.controller.js"),
-  checkSearch: require("../controllers/lacp441s.controller.js")
+  s3000DisplayPayment: require("../controllers/s3000DisplayPayment.controller.js")  // ✅ Import the new controller
 };
 
 // 🚀 Log missing controllers for debugging
@@ -55,8 +55,11 @@ safeRoute("get", "/auth", controllers.users.authenticate, "users.authenticate");
 // ✅ User Management Routes
 safeRoute("get", "/users", controllers.users.findAll, "users.findAll");
 safeRoute("post", "/users", controllers.users.create, "users.create");
-safeRoute("put", "/users/:email", controllers.users.update, "users.update");
-safeRoute("delete", "/users/:email", controllers.users.delete, "users.delete");
+safeRoute("put", "/users/:id", controllers.users.update, "users.update");
+safeRoute("delete", "/users/:id", controllers.users.delete, "users.delete");
+safeRoute("put",'/status/:id', controllers.users.updateStatus ,"users.updateStatus");
+safeRoute("post",'/login', controllers.users.login ,"users.login");
+
 
 // ✅ Payroll & Attendance Routes
 safeRoute("get", "/attendance/:id", controllers.ppay802s.findAll, "ppay802s.findAll");
@@ -90,12 +93,14 @@ safeRoute("get", "/pofromvendor/", controllers.pofromvendor.findAll, "pofromvend
 
 // ✅ Vendor Routes
 safeRoute("get", "/lacp441s/", controllers.lacp441s.findAll, "lacp441s.findAll");
+safeRoute("get", "/checksearch/", controllers.lacp441s.checkSearch, "lacp441s.checkSearch");
 safeRoute("get", "/ppur301s/", controllers.ppur301s.findAll, "ppur301s.findAll");
 safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOne");
-safeRoute("get", "/checksearch/", controllers.lacp441s.checkSearch, "lacp441s.checkSearch");
 
 // ✅ Employee Search Routes
+// GET /s3000EmpSrch/:emp_num - Fetch employee by number (returns 404 if not found)
 safeRoute("get", "/s3000EmpSrch/:emp_num", controllers.s3000EmpSrch.findOne, "s3000EmpSrch.findOne");
+// GET /s3000EmpSrch?name=lastname - Fetch employee(s) by last name (404 if none found)
 safeRoute("get", "/s3000EmpSrch", controllers.s3000EmpSrch.findAll, "s3000EmpSrch.findAll");
 safeRoute("get", "/s3000ShowPayments/:employeeNumber", controllers.s3000ShowPayments.findAll, "s3000ShowPayments.findAll");
 safeRoute("get", "/s3000DisplayPayment/:chknum/:chkdate", controllers.s3000DisplayPayment.findAllByCheck, "s3000DisplayPayment.findAllByCheck");

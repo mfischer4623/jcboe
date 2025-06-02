@@ -1,5 +1,9 @@
 db.config.js
 
+config.json
+migrations/
+.env
+
 node_modules/
 
 # certificates
