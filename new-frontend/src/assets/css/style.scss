@@ -16,6 +16,8 @@ $greyshade: #d2d2d2;
 $redcolor: #d32f2f;
 $wagescolr: #058813;
 $wihlecolr: #E36705;
+$editcolor:#058813;
+$deletcolor: #cf0000;
 
 
 
@@ -1433,6 +1435,29 @@ body {
 }
 
 @media (max-width: 1400px) {
+  .table-user-sec{
+    .tbody-light{
+      tr{
+        .value-table{
+          p{
+            font-size: 16px !important;
+          }
+        }
+      }
+  }
+}
+#model-20 .toggle label:after{
+      top: -11px !important;
+    width: 29px !important;
+    height: 29px !important;
+}
+
+  .access-sec .access-right-assign h2{
+  font-size: 18px !important;
+}
+  .tab-sec-main-inner .tab-superadm-sec .access-right-cate-sec .check-cate-sec {
+        width: 28% !important;
+    }
   .backg-shaw-botm {
     padding: 90px 50px 60px 50px !important;
   }
@@ -1503,6 +1528,15 @@ body {
 }
 
 @media (max-width: 1400px) {
+  #model-20 .toggle input[type=checkbox]:checked + label:after{
+        left: 26px !important;
+  }
+  #model-20 .toggle label:before{
+    width:44px !important;
+  }
+  #model-20 .toggle label:after{
+  left: -7px !important;
+  }
   .schol-yaer-widh {
     width: 248px;
   }
@@ -1539,6 +1573,18 @@ body {
 }
 
 @media (max-width: 1450px) {
+  .adm-user-psd{
+    width:160px !important;
+  }
+  .adm-user-access{
+    width:330px !important;
+  }
+  .adm-user-stus{
+    width:150px !important;
+  }
+  .adm-user-actn{
+    width:90px !important;
+  }
   .diff-po-table .tabl-ws-details .tbody-po-light tr th {
         width: 280px !important;
     }
@@ -1631,6 +1677,13 @@ body {
 }
 
 @media (max-width: 1600px) {
+   .access-right-cate-sec .check-cate-sec{
+    width:24% !important;
+  }
+  .access-right-cate-sec .check-cate-sec p{
+    font-size: 17px !important;
+    top:7px !important;
+  }
   .head-inner-main .ven-all-pdf .btn-all-bank {
     max-width: 124px !important;
   }
@@ -1685,11 +1738,14 @@ body {
 }
 
 @media (max-width: 1500px) {
+      .tab-superadm-sec .access-right-cate-sec .check-cate-sec {
+        width: 27% !important;
+    }
   .diff-po-table .tabl-ws-details .tbody-po-light tr th{
     width:300px !important;
   }
   .diff-po-table .show-right-po .tbody-po-light tr th{
-    width:300px !important;
+    width:307px !important;
   }
   .table .tax-yaer-widh {
     width: 140px !important;
@@ -1906,6 +1962,21 @@ body {
 }
 
 @media (max-width: 1300px) {
+  .dele-user-modle .MuiDialog-scrollPaper .MuiPaper-elevation .MuiTypography-root{
+  font-size: 18px !important;
+}
+  .submit-sec {
+    margin-top: 40px !important;
+}
+  .access-sec .access-right-assign h2{
+        margin: 40px 0px 15px 0px !important;
+  }
+  .tab-sec-emp .tab-sec-main-add {
+    padding: 60px 45px 75px 45px !important;
+}
+.access-sec .access-right-assign h2{
+         font-size: 17px !important;
+}
   .square-sec {
     width: 19px !important;
     height: 19px !important;}
@@ -2197,9 +2268,15 @@ body {
   .vedor-detail-right .form-detail-right-innerss {
     width: 44%;
   }
+  .access-right-cate-sec .check-cate-sec{
+    width:22% !important;
+  }
 }
 
 @media(max-width:1700px) {
+   .access-right-cate-sec .check-cate-sec{
+    width:24% !important;
+  }
   .emp-data-value-sec .form-newsss-pure {
     width: 40% !important;
   }
@@ -3687,3 +3764,291 @@ border-top: 0px !important;
   .pageBreakwsd{
     margin: 20px !important;
   }
+
+  .tab-superadm-sec {
+    .row{
+      justify-content: left !important;
+    }
+  }
+  .access-sec{
+    width: 100%;
+    position: relative;
+    display: block;
+    .access-right-assign{
+          width: 100%;
+          position: relative;
+          display: block;
+          h2{
+              color: #263EAC;
+              font-size: 19px;
+              text-align: left;
+              margin: 50px 0px 25px 0px;
+              font-weight: 600;
+          }
+    }
+  }
+  .access-right-cate-sec{
+    width:100%;
+    position: relative;
+    display: block;
+  }
+  .access-right-cate-sec{
+        width: 100%;
+    position: relative;
+    display: inline-block;
+    .check-cate-sec{
+        width: 19%;
+        background-color: $whitecolor !important;
+        box-shadow: 1px 1px 8px rgb(0 0 0 / 20%) !important;
+        padding: 16px 11px;
+        border-left: 3px solid $bluecolor !important;
+        float: left;
+    .MuiFormGroup-root {
+          float: left;
+          .MuiFormControlLabel-root{
+            .MuiCheckbox-root{
+                  padding: 8px 0px;
+                  margin-right: 8px;
+                  color:$orangecolor !important;
+            }
+          }
+    }
+    p{
+      text-align: left;
+      position: relative;
+      top: 6px;
+      color: rgba(0, 0, 0, 0.6);
+      font-weight: 500;
+          font-size: 18px;
+          margin-bottom: 0px;
+    }
+    }
+  }
+  .check-mid-marg{
+        margin: 0px 40px;
+  }
+
+  .submit-sec{
+    margin-top: 50px;
+  }
+  .btn-reset{
+    background-color: $whitecolor !important;
+    color: $orangecolor !important;
+    border:2px solid $orangecolor !important;
+    &:hover {
+      background-color: $orangecolor !important;
+      color: $whitecolor !important;
+    }
+  }
+  .tab-sec-main-inner-user{
+    padding: 90px 50px 110px 50px !important;
+  }
+  .btn-sub{
+    max-width: 110px !important;
+  }
+  .btn-reset{
+    max-width: 110px !important;
+    margin-left: 8px !important;
+  }
+  .tab-sec-manage{
+    padding: 10px 10px 10px 10px !important;
+    .main-inner-sec{
+      .emp-table-sec{
+        padding: 0px 10px !important;;
+      }
+    }
+  }
+  .tab-sec-main-add {
+    padding: 80px 80px 80px 80px !important;
+  }
+  .head-user-filt{
+    top: -105px !important;
+    right: -10px;
+      .btn-clear{
+          margin-right: 0px !important;
+      }
+  }
+
+  .edit-sec{
+    cursor: pointer;
+    .edit-icon{
+      color: $editcolor !important;
+    }
+    .delt-icon{
+      color:$deletcolor !important;
+    }
+  }
+
+  #model-20 {
+	.toggle {
+		position: relative;
+		input[type="checkbox"] {
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 10;
+			width: 100%;
+			height: 100%;
+			cursor: pointer;
+			opacity: 0;
+			&:hover {
+				+ {
+					label {
+						&:after {
+							box-shadow: 0 2px 15px 0 #0002, 0 3px 8px 0 #0001;
+						}
+					}
+				}
+			}
+			&:checked {
+				+ {
+					label {
+						&:before {
+							background: #0588138a;
+						}
+						&:after {
+							background: $editcolor;
+							left: 31px;
+						}
+					}
+				}
+			}
+		}
+		label {
+			position: relative;
+			display: flex;
+			align-items: center;
+			&:before {
+				content: '';
+				background: #bbb;
+				height: 10px;
+				width: 60px;
+				position: relative;
+				display: inline-block;
+				border-radius: 46px;
+				transition: 0.2s ease-in;
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				background: $whitecolor;
+				top: -12px;
+        width: 31px;
+        height: 31px;
+				left: 0;
+				border-radius: 50%;
+				z-index: 2;
+				box-shadow: 0 0 5px #0002;
+				transition: 0.2s ease-in;
+			}
+		}
+	}
+}
+
+.modal-check-new{
+  margin: 0 auto;
+  display: inline-block;
+  position: relative;
+  top: 4px;
+}
+
+.table-user-sec{
+
+}
+.table-main-sec .table-user-sec tbody tr td{
+  padding: 15px 0px !important;
+}
+.adm-user-widh{
+      width: 310px;
+}
+.adm-user-email{
+  width: 350px;
+}
+.adm-user-psd{
+  width:200px;
+}
+.adm-user-access{
+  width:260px;
+}
+.adm-user-stus{
+  width:170px;
+}
+.adm-user-actn{
+  width:120px;
+}
+
+.form-user{
+  form{
+    .MuiTextField-root{
+      .MuiFormHelperText-root{
+        font-family: $main-font !important;
+        position: absolute;
+        top: 53px;
+        color: #d32f2f;
+        font-size: 13px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+.access-errro{
+    width: 100%;
+    position: relative;
+    .uplod-error-sec{
+    text-align: left;
+    font-family: $main-font !important;
+    position: absolute;
+    color: #d32f2f;
+    font-size: 13px;
+    font-weight: 500;
+    top:7px;
+    }
+}
+
+.error-user-not{
+  top:10px;
+}
+.success-user-sec{
+  top:10px;
+}
+
+.dele-user-modle{
+  .MuiDialog-scrollPaper{
+    .MuiPaper-elevation{
+      .MuiTypography-root {
+            font-family: $main-font !important;
+            text-align: center;
+      }
+    }
+  }
+}
+.btn-user-yes{
+      max-width: 80px !important;
+    padding: 8px 0px;
+}
+.btn-user-no{
+  max-width: 80px !important;
+    padding: 8px 0px;
+}
+.btn-user-noo{
+    max-width: 80px !important;
+    padding: 8px 0px;
+    background-color: $whitecolor !important;
+    color: $orangecolor !important;
+    border:2px solid $orangecolor !important;
+    &:hover{
+      background-color: $orangecolor !important;
+      color: $whitecolor !important;
+    }
+}
+.dele-user-modle{
+  .MuiDialog-container{
+    .MuiPaper-root{
+      padding: 20px 20px !important;
+      max-width: 450px !important;
+    }
+  }
+}
+.dele-user-modle .MuiDialog-scrollPaper .MuiPaper-elevation .MuiTypography-root{
+  font-size: 19px !important;
+}

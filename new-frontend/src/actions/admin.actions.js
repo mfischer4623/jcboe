@@ -1,7 +1,7 @@
 import axios from "./axios";
 
 export const login = (data) => {
-    return axios.post(`/login`, data);
+    return axios.post(`/employees/login`, data);
 }
 
 export const logout = () => {
@@ -126,3 +126,28 @@ export const showW2s = (W2CLYR,W2SSN,ESTB) => {
 
 }
 
+
+
+
+export const createuser = (data) => {
+    return axios.post(`/employees/users`, data);
+}
+
+
+export const getusers = () => {
+    return axios.get(`/employees/users`);
+
+}
+
+export const edituser = (data,userId) => {
+    return axios.put(`/employees/users/${userId}`, data);
+}
+
+export const deleteuser = (userId) => {
+    return axios.delete(`/employees/users/${userId}`);
+}
+
+
+export const updateuser = (data,userId) => {
+    return axios.put(`/employees/status/${userId}`, data);
+}

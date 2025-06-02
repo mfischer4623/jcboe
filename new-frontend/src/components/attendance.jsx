@@ -212,9 +212,9 @@ const Attendance = () => {
 
   const perPageChange = (e) => {
     setPerPage(e.target.value);
-    
-   
-     setFirstLoading(true);
+
+
+    setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / e.target.value);
     setTotalPage(totalPages);
     const startIndex = (1 - 1) * e.target.value;
@@ -350,6 +350,7 @@ const Attendance = () => {
                   <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
+             
               </div>
             </div>
           </div>
