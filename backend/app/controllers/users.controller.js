@@ -38,7 +38,7 @@ try {
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ message: "Invalid credentials." });
-
+     if(user.status=='Inactive') return res.status(401).json({ message: "User is not active." });
   
   // Generate JWT Token
     const token = jwt.sign({ email: user.email, admin: user.admin }, SECRET_KEY, { expiresIn: "1h" });
@@ -93,9 +93,11 @@ exports.update = async (req, res) => {
 try {
     const id = req.params.id;
     const updatedData = { ...req.body, updatedAt: new Date() };
-
-    if (updatedData.password) {
+  const user = await User.findOne({ where: { id } });
+    if (updatedData.password!='') {
       updatedData.password = await bcrypt.hash(updatedData.password, 10);
+    }else{
+      updatedData.password = user.password; // Keep the old password if not provided
     }
 
     await User.update(updatedData, { where: { id } });
