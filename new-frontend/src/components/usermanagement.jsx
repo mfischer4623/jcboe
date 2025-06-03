@@ -807,7 +807,7 @@ const Usermanagement = () => {
 
                               <th className='adm-user-widh' onClick={() => handleColumnClick('username')}>User Name <span className='filt-icon'><img src={filticon} /></span></th>
                               <th className='adm-user-email' onClick={() => handleColumnClick('email')}>Email Id <span className='filt-icon'><img src={filticon} /></span></th>
-                              <th className='adm-user-psd'>Password  </th>
+                              {/* <th className='adm-user-psd'>Password  </th> */}
                               <th className='adm-user-access'>Access Rights </th>
                               <th className='adm-user-stus'>Status </th>
                               <th className='adm-user-actn'>Action</th>
@@ -845,9 +845,9 @@ const Usermanagement = () => {
                                           <td class="value-table">
                                             <p>{entry.email}</p>
                                           </td>
-                                          <td class="value-table">
+                                          {/* <td class="value-table">
                                             <p>**** </p>
-                                          </td>
+                                          </td> */}
                                           <td class="value-table">
                                             <p>{labels.join(", ")}</p>
                                           </td>
