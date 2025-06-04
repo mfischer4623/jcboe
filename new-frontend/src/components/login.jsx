@@ -83,6 +83,7 @@ const Login = () => {
                     //storage[0].userdata = res.data.data.user;
                     //secureLocalStorage.setItem("admindata", JSON.stringify(res.data.data.user));
                     secureLocalStorage.setItem("token", res.data.token);
+                      secureLocalStorage.setItem("user", res.data.data);
                     setLoader(false);
                     //dispatchStorageEvent(storage);
                     setSuccessMsg('Admin Login Successfully!');

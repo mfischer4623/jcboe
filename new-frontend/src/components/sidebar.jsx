@@ -24,6 +24,7 @@ const Sidebar = () => {
   const [formDate, setformDate] = useState("");
   const [activeMenus, setActiveMenus] = useState('home');
   const [activeSubMenus, setActiveSubMenus] = useState();
+    const [user, setUser] = useState(null);
     const dispatch = useDispatch();
 React.useEffect(() => {
 
@@ -132,6 +133,8 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
     let fDate = `${monthj}-${dayj}-${year}`; // Format: MM-DD-YYYY
 
     setformDate(fDate);
+   var userf= secureLocalStorage.getItem("user");
+   setUser(userf);
   }, []);
 
   const handleclicksubmenus = (e) => {
@@ -289,7 +292,7 @@ else if (window.location.pathname == '/vendorsearch' || window.location.pathname
         <div className='user-details'>
 
           <AccountCircleIcon />
-          <p>Admin</p>
+          <p>{user!=null && user.username}</p>
           <p>Last Login: {formDate}</p>
         </div>
 
