@@ -1,0 +1,16 @@
+@media print {
+    table tbody tr:first-of-type td {
+        font-weight: normal !important; /* Reset font weight */
+    }
+  
+ .MuiTableSortLabel-root {
+    color: black !important; /* Ensure text color is visible */
+    font-weight: bold; /* Optional: make it bold for better visibility */
+}
+
+.MuiTableSortLabel-icon {
+    display: none !important; /* Hide sort icon during print */
+}
+
+}
+

@@ -1,3 +1,0 @@
-const bcrypt = require("bcryptjs");
-const hashedPassword = "$2a$10$bJkMOR4u8UZVzPQskB/irO2JsqNoK3D86Lb/cxJsyWZodznrY/P6q";
-bcrypt.compare("abcd1234", hashedPassword).then(console.log);

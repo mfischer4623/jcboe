@@ -1,0 +1,41 @@
+/* General styles */
+.print-button {
+    background-color: #865d36; /* Default color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    /* margin-bottom: "60px"; */
+}
+
+.print-button:hover {
+    background-color: black; /* Hover color */
+}
+
+.search-po-button {
+    /* margin-top:"20px"; */
+    background-color: #865d36;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 4px;
+}
+
+.search-po-button:hover {
+    background-color: black;
+}
+
+
+
+/* Hide elements during print */
+@media print {
+    .hide-on-print {
+        display: none;
+    }
+}

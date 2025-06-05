@@ -1,0 +1,32 @@
+@media print {
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: left;
+    }
+
+    button {
+        display: none; /* Hide the print button during print */
+    }
+
+    .mainContainer {
+        margin: 0 auto;
+        padding: 0;
+    }
+
+}
+
+.print-button {
+    background-color: #865d36;
+    color: white;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.print-button:hover {
+    background-color: black; /* Change background color on hover */
+}

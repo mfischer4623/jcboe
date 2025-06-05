@@ -1,0 +1,12 @@
+.hoverable-row {
+    background-color: #AC8968;
+    transition: background-color 0.3s;
+}
+
+.hoverable-row:nth-of-type(odd) {
+    background-color: white;
+}
+
+.hoverable-row:hover {
+    background-color: #D3B9A3 !important;
+}
