@@ -5,7 +5,6 @@ const options = {
   host: '10.0.0.42',
   port: '1433', // Replace with your database port
   database: 'as400data', // Replace with your database name
-  // database: 's3data', // Replace with your database name
   username: 'sa', // Replace with your database username
   password: 'JCBOE456', // Replace with your database password
   directory: path.resolve(__dirname, './'), // Replace with the desired output directory for models

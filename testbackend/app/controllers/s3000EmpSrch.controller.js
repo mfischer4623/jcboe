@@ -1,4 +1,4 @@
-const db = require("../models"); 
+const db = require("../../models"); 
 const S3000payOutput = db.s3000payOutput; 
 
 // ✅ Find Employee by Employee Number
