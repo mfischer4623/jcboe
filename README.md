@@ -4,6 +4,7 @@
     node server.js
 
     Server is running on port 5000
+__________________________________________________________________________________________________________________
 
 (2) cd backend
     node server.js
@@ -12,6 +13,15 @@
 
 (3) cd frontend
     HTTPS=true SSL_CRT_FILE=\wildcard_jcboe_org.crt SSL_KEY_FILE=\wildcard_jcboe_org.key npm start
+__________________________________________________________________________________________________________________
+
+(2a) cd backend
+     node server.js
+
+     Server is running on port 8080
+
+     cd testbackend
+
 __________________________________________________________________________________________________________________
 (3a)
     cd frontend
