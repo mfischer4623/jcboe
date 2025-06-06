@@ -1,10 +1,10 @@
 var fs = require('fs');
 var https = require('https');
-// var privateKey  = fs.readFileSync('./wildcard_jcboe_org.key', 'utf8');
-// var certificate = fs.readFileSync('./wildcard_jcboe_org.crt', 'utf8');
+var privateKey  = fs.readFileSync('./wildcard_jcboe_org.key', 'utf8');
+var certificate = fs.readFileSync('./wildcard_jcboe_org.crt', 'utf8');
 
 // Initialize Express app
-// var credentials = {key: privateKey, cert: certificate};
+var credentials = {key: privateKey, cert: certificate};
 var express = require('express');
 const app = express()
 
@@ -33,13 +33,11 @@ require("./app/routes/app.routes")(app);
 
 // set port, listen for requests
 
-// var httpsServer = https.createServer(credentials, app);
-// httpsServer.listen(8080)
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(8081, '10.0.0.43', () => {
+    console.log('Server is running on https://10.0.0.43:8081');
+});
 
-const HOST = '10.0.0.43';
-const PORT = 8081;
-
-app.listen(PORT, HOST, () => {
-    console.log(`Server is running on http://${HOST}:${PORT}`);
-})
-
+// app.listen(8080, () => {
+//     console.log(`Server is running on port 8080.`);
+// })

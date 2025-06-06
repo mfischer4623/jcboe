@@ -89,7 +89,7 @@ const AdminLogin = () => {
                 
                     const username = res.data.data.username; // "as,sys"
               
-                    if (username == 'superaadmin') {
+                    if (username == 'superadmin') {
                             setSuccessMsg('Super Admin Login Successfully!');
                         setTimeout(function () {
 
