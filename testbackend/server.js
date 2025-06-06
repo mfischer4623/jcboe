@@ -36,7 +36,10 @@ require("./app/routes/app.routes")(app);
 // var httpsServer = https.createServer(credentials, app);
 // httpsServer.listen(8080)
 
-app.listen(8081, () => {
-    console.log(`Server is running on port 8081.`);
+const HOST = '10.0.0.43';
+const PORT = 8081;
+
+app.listen(PORT, HOST, () => {
+    console.log(`Server is running on http://${HOST}:${PORT}`);
 })
 
