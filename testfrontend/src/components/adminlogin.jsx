@@ -37,6 +37,10 @@ const AdminLogin = () => {
     const Axios = axios.create({
         baseURL: storage[0].nodeEndUrl
     });
+
+    // console.log(AppContext)
+    // console.log(storage)
+
     let navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -78,6 +82,7 @@ const AdminLogin = () => {
         setLoader(true);
         login({ email: user.email, password: user.password })
             .then(res => {
+                console.log(res)
                 console.log(res.data);
                 if (res.data.status == true) {
                     dispatch(loginSuccess({ user: { email: user.email, password: user.password, token: res.data.token }, token: res.data.token }));
