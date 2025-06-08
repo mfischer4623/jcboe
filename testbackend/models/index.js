@@ -1,26 +1,16 @@
 const Sequelize = require("sequelize");
 const dbConfig = require("../app/config/db.config.js");
 
-// This line can be removed now that we've found the issue, but it's fine to leave.
-console.log(">>> Configuration loaded by models/index.js:", dbConfig.HOST, dbConfig.dialect);
-
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  port: dbConfig.PORT,
-  dialect: dbConfig.dialect,
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle,
-  },
-});
+// This single line passes the entire configuration object to Sequelize.
+// It works because we corrected the key names (username, password, etc.) in the db.config.js file.
+const sequelize = new Sequelize(dbConfig);
 
 const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+// Load all of your project's models
 db.employees = require("../models/employee.model.js")(sequelize, Sequelize);
 db.ppay802s = require("../models/ppay802s.model.js")(sequelize, Sequelize);
 db.ppai719as = require("../models/ppai719as.model.js")(sequelize, Sequelize);
@@ -44,4 +34,5 @@ db.lacp441s = require("../models/lacp441s.model.js")(sequelize, Sequelize);
 db.s3000checkReports = require("../models/s3000checkReports.model.js")(sequelize, Sequelize);
 db.s3000payOutput = require("../models/s3000payOutput.model.js")(sequelize, Sequelize);
 db.users = require("../app/models/users.model.js")(sequelize, Sequelize);
+
 module.exports = db;

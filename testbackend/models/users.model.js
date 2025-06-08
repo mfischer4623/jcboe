@@ -28,12 +28,14 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     createdAt: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: 'created_at'  // map to actual DB column
     },
     updatedAt: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: 'updated_at'  // map to actual DB column
     }
   }, {
     sequelize,
