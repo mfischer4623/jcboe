@@ -47,7 +47,11 @@ try {
 
     res.json({ message: "Login successful",token:token, data:user,status: true });
   } catch (err) {
-    res.status(201).json({ error: err.message });
+    console.error("Login error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+    });
   }
 };
 
@@ -85,8 +89,14 @@ exports.create = async (req, res) => {
     });
 
     res.status(201).json({user:user,  status: true, message: "User addede successfully."});
-  } catch (err) {
-    res.status(500).json({ error: err.message  ,status: false});
+  } 
+  catch (err) {
+    console.error("create error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      ,status: false
+    });
   }
 };
 exports.update = async (req, res) => {
@@ -102,8 +112,13 @@ try {
 
     await User.update(updatedData, { where: { id } });
     res.json({ message: "User updated successfully." , status: true,});
-  } catch (err) {
-    res.status(201).json({ error: err.message });
+  }  catch (err) {
+    console.error("upadate error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      ,status: false
+    });
   }
 };
 
@@ -114,7 +129,12 @@ try {
     await User.destroy({ where: { id } });
     res.json({ message: "User deleted successfully.",status: true });
   } catch (err) {
-    res.status(201).json({ error: err.message });
+    console.error("delet error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      ,status: false
+    });
   }
 };
 
@@ -126,6 +146,11 @@ exports.updateStatus = async  (req, res) => {
     await User.update({ status, updatedAt: new Date() }, { where: { id } });
     res.json({ message: "Status updated successfully.",status: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("status error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      ,status: false
+    });
   }
 };
