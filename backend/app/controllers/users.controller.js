@@ -10,7 +10,7 @@ const SECRET_KEY = process.env.JWTSECRETKEY;
 
 exports.authenticate = async (req, res) => {
 
-try {
+  try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
 
@@ -18,19 +18,18 @@ try {
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ message: "Invalid credentials." });
-  // Generate JWT Token
-    const token = jwt.sign({ email: user.email, admin: user.admin }, SECRET_KEY, { expiresIn: "1h" });
+    // Generate JWT Token
+    const token = jwt.sign({ email: user.email, username: user.username }, SECRET_KEY, { expiresIn: "1h" });
 
-  
 
-    res.json({ message: "Login successful",token:token, data:user,status: true });
+    res.json({ message: "Login successful", token: token, data: user, status: true });
   } catch (err) {
     res.status(201).json({ error: err.message });
   }
 };
 exports.login = async (req, res) => {
 
-try {
+  try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
 
@@ -38,14 +37,14 @@ try {
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ message: "Invalid credentials." });
-     if(user.status=='Inactive') return res.status(401).json({ message: "User is not active." });
-  
-  // Generate JWT Token
-    const token = jwt.sign({ email: user.email, admin: user.admin }, SECRET_KEY, { expiresIn: "1h" });
+    if (user.status == 'Inactive') return res.status(401).json({ message: "User is not active." });
 
-  
+    // Generate JWT Token
+    const token = jwt.sign({ email: user.email, username: user.username }, SECRET_KEY, { expiresIn: "1h" });
 
-    res.json({ message: "Login successful",token:token, data:user,status: true });
+
+
+    res.json({ message: "Login successful", token: token, data: user, status: true });
   } catch (err) {
     console.error("Login error:", err); // This will show full stack in the terminal
     res.status(500).json({
@@ -56,10 +55,10 @@ try {
 };
 
 //  Get all users
-exports.findAll =async  (req, res) => {
+exports.findAll = async (req, res) => {
   try {
     const users = await User.findAll();
-    res.json({status: true, data:users });
+    res.json({ status: true, data: users });
   } catch (err) {
     res.status(201).json({ error: err.message });
   }
@@ -73,7 +72,7 @@ exports.create = async (req, res) => {
     //  Check for existing email
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(201).json({ error: 'Email already exists' ,status: false});
+      return res.status(201).json({ error: 'Email already exists', status: false });
     }
 
     //  Hash password and create user
@@ -88,69 +87,69 @@ exports.create = async (req, res) => {
       updatedAt: new Date()
     });
 
-    res.status(201).json({user:user,  status: true, message: "User addede successfully."});
-  } 
+    res.status(201).json({ user: user, status: true, message: "User addede successfully." });
+  }
   catch (err) {
     console.error("create error:", err); // This will show full stack in the terminal
     res.status(500).json({
       error: err?.message || "An unexpected error occurred",
       details: err
-      ,status: false
+      , status: false
     });
   }
 };
 exports.update = async (req, res) => {
-try {
+  try {
     const id = req.params.id;
     const updatedData = { ...req.body, updatedAt: new Date() };
-  const user = await User.findOne({ where: { id } });
-    if (updatedData.password!='') {
+    const user = await User.findOne({ where: { id } });
+    if (updatedData.password != '') {
       updatedData.password = await bcrypt.hash(updatedData.password, 10);
-    }else{
+    } else {
       updatedData.password = user.password; // Keep the old password if not provided
     }
 
     await User.update(updatedData, { where: { id } });
-    res.json({ message: "User updated successfully." , status: true,});
-  }  catch (err) {
+    res.json({ message: "User updated successfully.", status: true, });
+  } catch (err) {
     console.error("upadate error:", err); // This will show full stack in the terminal
     res.status(500).json({
       error: err?.message || "An unexpected error occurred",
       details: err
-      ,status: false
+      , status: false
     });
   }
 };
 
 //  Delete a user by id
-exports.delete = async  (req, res) => {
-try {
+exports.delete = async (req, res) => {
+  try {
     const id = req.params.id;
     await User.destroy({ where: { id } });
-    res.json({ message: "User deleted successfully.",status: true });
+    res.json({ message: "User deleted successfully.", status: true });
   } catch (err) {
     console.error("delet error:", err); // This will show full stack in the terminal
     res.status(500).json({
       error: err?.message || "An unexpected error occurred",
       details: err
-      ,status: false
+      , status: false
     });
   }
 };
 
 //  status update by id
-exports.updateStatus = async  (req, res) => {
+exports.updateStatus = async (req, res) => {
   try {
     const id = req.params.id;
     const { status } = req.body;
     await User.update({ status, updatedAt: new Date() }, { where: { id } });
-    res.json({ message: "Status updated successfully.",status: true });
+    res.json({ message: "Status updated successfully.", status: true });
   } catch (err) {
     console.error("status error:", err); // This will show full stack in the terminal
     res.status(500).json({
       error: err?.message || "An unexpected error occurred",
       details: err
-      ,status: false
+      , status: false
     });
   }
 };
