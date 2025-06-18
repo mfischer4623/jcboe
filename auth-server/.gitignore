@@ -3,6 +3,7 @@ db.config.js
 node_modules/
 
 .env
+.csv
 
 database.json
 
