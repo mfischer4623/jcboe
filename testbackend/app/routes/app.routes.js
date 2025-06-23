@@ -91,7 +91,7 @@ safeRoute("get", "/ppay127s", controllers.ppay127s.findAll, "ppay127s.findAll");
 // ✅ Purchase Orders Routes
 safeRoute("get", "/purchaseOrders/", controllers.purchaseOrders.findAll, "purchaseOrders.findAll");
 safeRoute("get", "/pofromvendor/", controllers.pofromvendor.findAll, "pofromvendor.findAll");
-safeRoute("get", "/podescription/", controllers.ppur410lxs.findAll, "ppur410lxs.findAll");
+safeRoute("get", "/ppur410lxs/", controllers.ppur410lxs.findAll, "ppur410lxs.findAll");
 
 // ✅ Vendor Routes
 safeRoute("get", "/lacp441s/", controllers.lacp441s.findAll, "lacp441s.findAll");
