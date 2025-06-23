@@ -10,9 +10,13 @@
 
 __________________________________________________________________________________________________________________
 
-    website URL:   https://"IP Address":443
+    website URL:    https://as400.jcboe.org/
+                    https://as400.jcboe.org/adminlogin
+    
+    https://10.0.0.42:443       frontend
+    https://10.0.0.42:8080      backend
 
-SQL Server
+    10.0.0.42:1433              SQL Server
 
-    10.0.0.42:1433
+    
     
