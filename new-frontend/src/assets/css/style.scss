@@ -1570,6 +1570,9 @@ body {
   .diff-po-table .table .tbody-po-light tr th {
     width: 237px !important;
   }
+  body .margin-top-po-table .diff-po-table .table .left-tbody-hight tr th {
+      width: 177px !important;
+  }
 }
 
 @media (max-width: 1450px) {
@@ -1677,6 +1680,10 @@ body {
 }
 
 @media (max-width: 1600px) {
+
+    body .diff-po-table .table .left-tbody-hight tr th {
+      width: 177px !important;
+  }
    .access-right-cate-sec .check-cate-sec{
     width:24% !important;
   }
@@ -1738,6 +1745,10 @@ body {
 }
 
 @media (max-width: 1500px) {
+
+    body .diff-po-table .table .left-tbody-hight tr th {
+      width: 177px !important;
+  }
       .tab-superadm-sec .access-right-cate-sec .check-cate-sec {
         width: 27% !important;
     }
@@ -1834,6 +1845,9 @@ body {
 
 
 @media (max-width: 1350px) {
+      body .margin-top-po-table .diff-po-table .table .left-tbody-hight tr th {
+        width: 165px !important;
+    }
       .diff-po-table .tabl-ws-details .tbody-po-light tr th {
         width: 280px !important;
     }
@@ -2271,9 +2285,18 @@ body {
   .access-right-cate-sec .check-cate-sec{
     width:22% !important;
   }
+      .diff-po-table .table .tbody-maintain-high tr th {
+        width: 250px !important;
+    }
 }
 
 @media(max-width:1700px) {
+      .diff-po-table .table .tbody-maintain-high tr th {
+        width: 218px !important;
+    }
+    .diff-po-table .table .left-tbody-hight tr th {
+        width: 195px !important;
+    }
    .access-right-cate-sec .check-cate-sec{
     width:24% !important;
   }
@@ -4051,4 +4074,11 @@ border-top: 0px !important;
 }
 .dele-user-modle .MuiDialog-scrollPaper .MuiPaper-elevation .MuiTypography-root{
   font-size: 19px !important;
+}
+
+
+// new code added
+
+.diff-po-table .tbody-maintain-high tr th{
+width: 280px;
 }
