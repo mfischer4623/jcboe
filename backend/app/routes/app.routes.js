@@ -26,6 +26,7 @@ const controllers = {
   lacp441s: require("../controllers/lacp441s.controller.js"),
   pofromvendor: require("../controllers/pofromvendor.controller.js"),
   checkSearch: require("../controllers/lacp441s.controller.js"),
+  ppur410lxs: require("../controllers/ppur410lxs.controller.js"),
   s3000EmpSrch: require("../controllers/s3000EmpSrch.controller.js"),
   s3000ShowPayments: require("../controllers/s3000ShowPayments.controller.js"),
   s3000DisplayPayment: require("../controllers/s3000DisplayPayment.controller.js")  // ✅ Import the new controller
@@ -57,8 +58,8 @@ safeRoute("get", "/users", controllers.users.findAll, "users.findAll");
 safeRoute("post", "/users", controllers.users.create, "users.create");
 safeRoute("put", "/users/:id", controllers.users.update, "users.update");
 safeRoute("delete", "/users/:id", controllers.users.delete, "users.delete");
-safeRoute("put",'/status/:id', controllers.users.updateStatus ,"users.updateStatus");
-safeRoute("post",'/login', controllers.users.login ,"users.login");
+safeRoute("put", '/status/:id', controllers.users.updateStatus, "users.updateStatus");
+safeRoute("post", '/login', controllers.users.login, "users.login");
 
 
 // ✅ Payroll & Attendance Routes
@@ -90,6 +91,7 @@ safeRoute("get", "/ppay127s", controllers.ppay127s.findAll, "ppay127s.findAll");
 // ✅ Purchase Orders Routes
 safeRoute("get", "/purchaseOrders/", controllers.purchaseOrders.findAll, "purchaseOrders.findAll");
 safeRoute("get", "/pofromvendor/", controllers.pofromvendor.findAll, "pofromvendor.findAll");
+safeRoute("get", "/ppur410lxs/", controllers.ppur410lxs.findAll, "ppur410lxs.findAll");
 
 // ✅ Vendor Routes
 safeRoute("get", "/lacp441s/", controllers.lacp441s.findAll, "lacp441s.findAll");

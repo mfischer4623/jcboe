@@ -41,4 +41,5 @@ db.lacp441s = require("../models/lacp441s.model.js")(sequelize, Sequelize);
 db.s3000checkReports = require("../models/s3000checkReports.model.js")(sequelize, Sequelize);
 db.s3000payOutput = require("../models/s3000payOutput.model.js")(sequelize, Sequelize);
 db.users = require("../app/models/users.model.js")(sequelize, Sequelize);
+db.ppur410lxs = require("../models/ppur410lxs.model.js")(sequelize, Sequelize); 
 module.exports = db;
