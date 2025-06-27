@@ -20,21 +20,21 @@ const Podetails = () => {
 
         var poid = secureLocalStorage.getItem('pobasicData');
         var checkforsh = secureLocalStorage.getItem('checkforsh');
-        
+
         if ((userid) == null || (userid) == undefined) {
 
 
             navigate(`/posearch`);
 
         } else {
-        
+
             setEmployeeData(userid);
             setPoData(poid);
             console.log('poid', poid);
-        console.log('userid', userid);
-        if(checkforsh == 'yes' && checkforsh != null && checkforsh != undefined){
-            setLoader(true);
-        }
+            console.log('userid', userid);
+            if (checkforsh == 'yes' && checkforsh != null && checkforsh != undefined) {
+                setLoader(true);
+            }
             secureLocalStorage.setItem("poDataprint", userid);
             secureLocalStorage.setItem("pobasicDataprint", poid);
             secureLocalStorage.removeItem('pobasicData');
@@ -50,24 +50,34 @@ const Podetails = () => {
 
     const checkWinzip = (pVNZIP) => {
 
-
-        var VNZIP = pVNZIP.toString();
-        if (VNZIP.length === 4) {
-            VNZIP = "0" + VNZIP;
+        if (pVNZIP !== null && pVNZIP != undefined && pVNZIP != '') {
+            var VNZIP = pVNZIP.toString();
+            if (VNZIP.length === 4) {
+                VNZIP = "0" + VNZIP;
+            }
+            return VNZIP;
+        } else {
+            VNZIP = '';
+            return VNZIP;
         }
-        return VNZIP;
+
     };
 
     const checkshizip = (pVNZIP) => {
 
+        if (pVNZIP !== null && pVNZIP != undefined && pVNZIP != '') {
 
-
-        if (pVNZIP.length === 4) {
-            var SHZIP1 = "0" + pVNZIP;
+            if (pVNZIP.length === 4) {
+                var SHZIP1 = "0" + pVNZIP;
+            } else {
+                SHZIP1 = pVNZIP;
+            }
+            return SHZIP1;
         } else {
-            SHZIP1 = pVNZIP;
+            SHZIP1 = '';
+            return SHZIP1;
         }
-        return SHZIP1;
+
     };
 
 
@@ -96,7 +106,7 @@ const Podetails = () => {
         } else {
             PODAT = pPODAT;
         }
-
+    if(pPODAT!= null && pPODAT != undefined && pPODAT != ''){
         var ddd = PODAT.substring(2, 5);
         var m = Math.floor(Number(ddd) / 30) + 1;
         var d = Number(ddd) - 30 * (m - 1);
@@ -108,6 +118,7 @@ const Podetails = () => {
         }
 
         PODAT = String(m) + "/" + String(d) + "/" + String(y);
+    }
         return PODAT;
     };
 
@@ -165,19 +176,19 @@ const Podetails = () => {
 
 
                             </div>
-                            {loader==true ?
-                            
-                            <>
-                            <div className='back-sec'>
-                                <Link to="/showPO" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
-                            </div>
-                            </>:
-                            <>
-                            <div className='back-sec'>
-                                <Link to="/posearch" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
-                            </div>
-                            </>}
-                            
+                            {loader == true ?
+
+                                <>
+                                    <div className='back-sec'>
+                                        <Link to="/showPO" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
+                                    </div>
+                                </> :
+                                <>
+                                    <div className='back-sec'>
+                                        <Link to="/posearch" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
+                                    </div>
+                                </>}
+
                         </div>
                     </div>
                 </div>

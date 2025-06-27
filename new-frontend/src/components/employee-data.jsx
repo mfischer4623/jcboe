@@ -222,7 +222,9 @@ const EmployeeData = () => {
 
     }
     const padValue = (value) => {
+        if(value!== null && value !== undefined && value !== 0 && value !== '') {
         return value.toString().padStart(4, '0');
+        }
     };
     ;
 
