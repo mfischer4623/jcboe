@@ -381,13 +381,13 @@ function Pdf() {
                             <table className='table table-sec'>
                               <tbody class="tbody-light tbody-po-light">
                                 <tr>
-                                  <th>Purchase Order Quantity</th>
+                                  <th>Quantity</th>
                                   <td class="value-table">
                                     <p>{entry.POLQTY}</p>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <th>Purchase Order Description</th>
+                                  <th>Description</th>
                                   <td class="value-table">
                                     <p>{entry.POLDES}</p>
                                   </td>
@@ -407,7 +407,7 @@ function Pdf() {
                                 </tr>
 
                                 <tr>
-                                  <th>Purchase Order Line Cost</th>
+                                  <th>Line Cost</th>
                                   <td class="value-table">
                                     <p>{dollarUS.format(entry.POLCST)}</p>
                                   </td>

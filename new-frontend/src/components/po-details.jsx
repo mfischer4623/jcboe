@@ -364,9 +364,9 @@ const Podetails = () => {
 
                                                         < div class="table-main-sec diff-po-table">
                                                             <table className='table table-sec'>
-                                                                <tbody class={`tbody-light tbody-po-light ${(index % 2 !== 0) && 'tbody-po-light'}`}>
+                                                                <tbody class={`tbody-light tbody-po-light  tbody-left-po tbody-maintain-high left-tbody-hight ${(index % 2 !== 0) && 'tbody-po-light'}`}>
                                                                     <tr>
-                                                                        <th>Purchase Order Quantity</th>
+                                                                        <th>Quantity</th>
                                                                         <td class="value-table">
                                                                             <p>{entry.POLQTY}</p>
                                                                         </td>
@@ -374,7 +374,7 @@ const Podetails = () => {
 
 
                                                                     <tr>
-                                                                        <th>Purchase Order Description</th>
+                                                                        <th>Description</th>
                                                                         <td class="value-table">
                                                                             <p>{entry.POLDES}</p>
                                                                         </td>
@@ -401,7 +401,7 @@ const Podetails = () => {
 
 
                                                                     <tr>
-                                                                        <th>Purchase Order Line Cost</th>
+                                                                        <th>Line Cost</th>
                                                                         <td class="value-table">
                                                                             <p>{dollarUS.format(entry.POLCST)}</p>
                                                                         </td>
