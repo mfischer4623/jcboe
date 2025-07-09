@@ -1,8 +1,5 @@
 
 
-
-
-
       **  Please Do Not Close This App  **
 
 **  It is running the https://as400.jcboe.org website  **
@@ -12,4 +9,3 @@
                (610) 621-8813
           
           dfischer@fischerltd.com
-
