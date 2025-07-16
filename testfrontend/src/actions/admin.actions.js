@@ -151,3 +151,8 @@ export const deleteuser = (userId) => {
 export const updateuser = (data,userId) => {
     return axios.put(`/employees/status/${userId}`, data);
 }
+
+export const showpodeat = (poDoc,poNum) => {
+    return axios.get(`/employees/ppur410lxs?poDoc=${poDoc}&poNum=${poNum}`);
+
+}
