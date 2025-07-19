@@ -64,6 +64,9 @@ db.users = require("./users.model.js")(as400sequelize, Sequelize);
 db.ppur410lxs = require("./ppur410lxs.model.js")(as400sequelize, Sequelize);
 
 // S3DATA MODELS (models that use s3data database)
-// Future s3data models will be added here as needed 
+db.S3_PO_ShipToLocation = require("./S3_PO_ShipToLocation.js")(s3sequelize, Sequelize);
+db.S3_PurchaseOrders = require("./S3_PurchaseOrders.js")(s3sequelize, Sequelize);
+db.S3_VendorCheckRegister = require("./S3_VendorCheckRegister.js")(s3sequelize, Sequelize);
+db.S3_VendorMaster = require("./S3_VendorMaster.js")(s3sequelize, Sequelize); 
 
 module.exports = db;
