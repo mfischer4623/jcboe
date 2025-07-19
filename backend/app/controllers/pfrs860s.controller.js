@@ -1,4 +1,4 @@
-const db = require("../../models");
+const db = require("../models");
 const Pfrs860s = db.pfrs860s;
 
 // Retrieve W2 data for a specific employee by SSN

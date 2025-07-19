@@ -1,52 +1,69 @@
 const Sequelize = require("sequelize");
-// This path is wrong, it should be relative from app/models up to app/config
-const dbConfig = require("../config/db.config.js"); 
+// Database configurations
+const as400Config = require("../config/db.config.js"); 
+const s3Config = require("../config/db.config.s3data.js");
 
-// This constructor call is now likely incorrect because Sequelize v6+
-// prefers separate arguments over a single config object unless using a connection URI.
-// Let's stick to the more explicit and compatible way.
-const sequelize = new Sequelize(
-  dbConfig.database,
-  dbConfig.username,
-  dbConfig.password,
+// Create two separate Sequelize instances for each database
+const as400sequelize = new Sequelize(
+  as400Config.database,
+  as400Config.username,
+  as400Config.password,
   {
-    host: dbConfig.host,
-    dialect: dbConfig.dialect,
-    port: dbConfig.port,
-    pool: dbConfig.pool,
-    dialectOptions: dbConfig.dialectOptions
+    host: as400Config.host,
+    dialect: as400Config.dialect,
+    port: as400Config.port,
+    pool: as400Config.pool,
+    dialectOptions: as400Config.dialectOptions
+  }
+);
+
+const s3sequelize = new Sequelize(
+  s3Config.database,
+  s3Config.username,
+  s3Config.password,
+  {
+    host: s3Config.host,
+    dialect: s3Config.dialect,
+    port: s3Config.port,
+    pool: s3Config.pool,
+    dialectOptions: s3Config.dialectOptions
   }
 );
 
 const db = {};
 
 db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+// Keep original sequelize for backward compatibility (as400data)
+db.sequelize = as400sequelize;
+// Add new connections
+db.as400sequelize = as400sequelize;
+db.s3sequelize = s3sequelize;
 
-// CORRECTED PATHS: All paths should start with './' because they are in the same directory.
-db.employees = require("./employee.model.js")(sequelize, Sequelize);
-db.ppay802s = require("./ppay802s.model.js")(sequelize, Sequelize);
-db.ppai719as = require("./ppai719as.model.js")(sequelize, Sequelize);
-db.peis480ds = require("./peis480ds.model.js")(sequelize, Sequelize);
-db.certificates = require("./certificates.model.js")(sequelize, Sequelize);
-db.salaries = require("./salaries.model.js")(sequelize, Sequelize);
-db.ppay3403s = require("./ppay3403s.model.js")(sequelize, Sequelize);
-db.peis480hs = require("./peis480hs.model.js")(sequelize, Sequelize);
-db.ppai712s = require("./ppai712s.model.js")(sequelize, Sequelize);
-db.ppai713s = require("./ppai713s.model.js")(sequelize, Sequelize);
-db.ppai715s = require("./ppai715s.model.js")(sequelize, Sequelize);
-db.ppay121s = require("./ppay121s.model.js")(sequelize, Sequelize);
-db.ppay122s = require("./ppay122s.model.js")(sequelize, Sequelize);
-db.ppay125s = require("./ppay125s.model.js")(sequelize, Sequelize);
-db.ppay124s = require("./ppay124s.model.js")(sequelize, Sequelize);
-db.ppay127s = require("./ppay127s.model.js")(sequelize, Sequelize);
-db.pfrs860s = require("./pfrs860s.model.js")(sequelize, Sequelize);
-db.purchaseOrders = require("./purchaseOrders.model.js")(sequelize, Sequelize);
-db.ppur301s = require("./ppur301s.model.js")(sequelize, Sequelize);
-db.lacp441s = require("./lacp441s.model.js")(sequelize, Sequelize);
-db.s3000checkReports = require("./s3000checkReports.model.js")(sequelize, Sequelize);
-db.s3000payOutput = require("./s3000payOutput.model.js")(sequelize, Sequelize);
-db.users = require("./users.model.js")(sequelize, Sequelize); 
-db.ppur410lxs = require("./ppur410lxs.model.js")(sequelize, Sequelize); 
+// AS400DATA MODELS (existing models using as400data database)
+db.employees = require("./employee.model.js")(as400sequelize, Sequelize);
+db.ppay802s = require("./ppay802s.model.js")(as400sequelize, Sequelize);
+db.ppai719as = require("./ppai719as.model.js")(as400sequelize, Sequelize);
+db.peis480ds = require("./peis480ds.model.js")(as400sequelize, Sequelize);
+db.certificates = require("./certificates.model.js")(as400sequelize, Sequelize);
+db.salaries = require("./salaries.model.js")(as400sequelize, Sequelize);
+db.ppay3403s = require("./ppay3403s.model.js")(as400sequelize, Sequelize);
+db.peis480hs = require("./peis480hs.model.js")(as400sequelize, Sequelize);
+db.ppai712s = require("./ppai712s.model.js")(as400sequelize, Sequelize);
+db.ppai713s = require("./ppai713s.model.js")(as400sequelize, Sequelize);
+db.ppai715s = require("./ppai715s.model.js")(as400sequelize, Sequelize);
+db.ppay121s = require("./ppay121s.model.js")(as400sequelize, Sequelize);
+db.ppay122s = require("./ppay122s.model.js")(as400sequelize, Sequelize);
+db.ppay125s = require("./ppay125s.model.js")(as400sequelize, Sequelize);
+db.ppay124s = require("./ppay124s.model.js")(as400sequelize, Sequelize);
+db.ppay127s = require("./ppay127s.model.js")(as400sequelize, Sequelize);
+db.pfrs860s = require("./pfrs860s.model.js")(as400sequelize, Sequelize);
+db.purchaseOrders = require("./purchaseOrders.model.js")(as400sequelize, Sequelize);
+db.ppur301s = require("./ppur301s.model.js")(as400sequelize, Sequelize);
+db.lacp441s = require("./lacp441s.model.js")(as400sequelize, Sequelize);
+db.users = require("./users.model.js")(as400sequelize, Sequelize); 
+db.ppur410lxs = require("./ppur410lxs.model.js")(as400sequelize, Sequelize);
+
+// S3DATA MODELS (models that use s3data database)
+// Future s3data models will be added here as needed 
 
 module.exports = db;

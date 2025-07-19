@@ -6,3 +6,5 @@ node_modules
 \original_certs
 *.crt 
 *.key
+
+.claude

@@ -1,4 +1,4 @@
-const db = require("../../models");
+const db = require("../models");
 const Ppai719as = db.ppai719as;
 const Op = db.Sequelize.Op;
 
