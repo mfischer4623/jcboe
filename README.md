@@ -1,11 +1,11 @@
 # jcboe
 
-(1) cd testbackend
+(1) cd backend
     node server.js
 
     Server is running on port 10.0.0.42:8080
 
-(2) cd testfrontend
+(2) cd frontend
     HOST=10.0.0.42 PORT=443 HTTPS=true SSL_CRT_FILE=wildcard_jcboe_org.crt SSL_KEY_FILE=wildcard_jcboe_org.key npm start
 
 __________________________________________________________________________________________________________________

@@ -1,9 +1,0 @@
-db.config.js
-
-node_modules/
-
-# certificates
-
-\original_certs
-*.crt 
-*.key

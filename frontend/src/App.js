@@ -1,394 +1,176 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./home";
-import Login from "./login";
-import Main from "./main";
-import EmployeeSearch from "./employeeSearch";
-import ShowEmployee from "./showEmployee";
-import ShowW2s from "./showW2s";
-import ShowW2Details from "./showW2Details";
-import ShowPayroll from "./showPayroll";
-import ShowPayrollCheck from "./showPayrollCheck";
-import ShowAttendance from "./showAttendance";
-import ShowAttendanceDetail from "./showAttendanceDetail";
-import Salaries from "./salaries";
-import ShowVolDeductions from "./showVolDeductions";
-import Certificates from "./certificates";
-import MiscData from "./miscData";
-// import Tags from "./tags";
-// import PayrollTables from "./payrollTables";
-import AbsenceLeaveCodes from "./absenceLeaveCodes";
-import DeductionsContributionsCodes from "./deductionsContributionsCodes";
-import PayTableCodes from "./payTableCodes";
-import JobCodes from "./jobCodes";
-import AddendaCodes from "./addendaCodes";
-import TerminationCodes from "./terminationCodes";
-import Sidebar from "./navcomponents/Sidebar";
-import MaintainUser from "./maintainUser";
-import EmployeeName from "./employeeName";  // Import the appropriate component
-import PurchaseOrderSearch from "./purchaseOrderSearch";
-import VendorSearch from "./vendorSearch";
-import VendorName from "./vendorName";
-import ShowVendor from "./showVendor";
-import ShowPO from "./showPO";
-import ShowPurchaseOrder from "./showPurchaseOrder";
-import CheckSearch from "./checkSearch"
-import ShowCheck from "./showCheck";
-import S3000EmpSrch from "./s3000EmpSrch";
-import S3000EmpName from "./s3000EmpName";
-import S3000ShowEmployee from "./s3000ShowEmployee"
-import S3000ShowPayments from "./s3000ShowPayments"
-import S3000DisplayPayment from "./s3000DisplayPayment";  // ✅ Import the new component
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
 
-import "./App.css";
-import { useEffect, useState } from "react";
+import './App.css';
+import Login from "./components/login";
+import { AppContext } from './context';
+import EmployeeSearch from "./components/employee-search";
+import EmployeeData from "./components/employee-data";
+import { useSelector } from 'react-redux';
+import RequireAuth from './middleware/RequireAuth';
+import RequireAdminAuth from './middleware/RequireAdminAuth';
+import Attendance from "./components/attendance";
+import AttendanceDetails from "./components/attendance-details";
+import AdditionalTags from "./components/additional-tags";
+import Certificates from "./components/certificates";
+import Salaries from "./components/salaries";
+import Voluntarydeductions from "./components/voluntary-deductions";
+import Payroll from "./components/payroll";
+import W2S from "./components/w2s";
+import Pdfall from "./components/pdfall";
+import Pdfattnedetails from "./components/pdfattnedetails";
+import Payrollcheck from "./components/payrollcheck";
+import Payrollcheckprint from "./components/printpayroll";
+import Posearch from "./components/posearch";
+import Podetails from "./components/po-details";
+import Vendorsearch from "./components/vendor-search";
+import Vendorsearchlist from "./components/vendor-search-list";
+import Vendordetails from "./components/vendordetails";
+import Checksearch from "./components/checksearch";
+import Checksearchlist from "./components/checksearchlist";
+import Absence from "./components/absence";
+import Deduct from "./components/deduct";
+import Paytable from "./components/paytable";
+import Job from "./components/job";
+import Addenda from "./components/addenda";
+import Termination from "./components/termination";
+import Pdfvendoename from "./components/pdfvendoename";
+import Pdfvendordetails from "./components/pdfvendordetails";
+import ShowPO from "./components/showPO";
+
+import Pdfpo from "./components/pdfpo";
+import PdfBank from "./components/pdfbank";
+
+import PdfprintshowPO from "./components/pdfprintshowPO";
+import AdminLayout from "./ui-components/AdminLayout";
+import Printvoluntary from "./components/printvoluntary";
+import Printprintw2s from "./components/printprintw2s";
+import ShowW2Details from "./components/showW2Details";
+import Printw2sdetails from "./components/printw2sdetails";
+import Printadditionaltags from "./components/printadditionaltags";
+import Printattendancedetails from "./components/printattendancedetails";
+import Printslary from "./components/printslary";
+import Printpayrollall from "./components/printpayrollall";
+import Printcertificates from "./components/printcertificates";
+import Adminlogin from "./components/adminlogin";
+import Sidebaradmin from "./components/sidebaradmin";
+import SuperadminLayout from "./ui-components/SuperadminLayout";
+import Usermanagement from "./components/usermanagement";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
-  const [employeeNumber, setEmployeeNumber] = useState("");
-  const [empName, setEmpName] = useState("");
-  const [es, setEmployeeNames] = useState([]);
-  const [employeeName, setEmployeeName] = useState("")
-  const [w2ID, setW2ID] = useState({}); // ✅ W2 ID State
-  const [showPrintView, setShowPrintView] = useState(false);
-  const [pd, setPayrollData] = useState([]);
-  const [pcd, setPayrollCheckData] = useState([]);
-  const [pcddd, setPayrollDeductionData] = useState([]);
-  const [cid, setCheckID] = useState({});
-  const [alc, setAbsenceLeaveCodes] = useState([]);
-  const [employeeData, setEmployeeData] = useState(null);
-  const [ssn, setSsn] = useState("");
-  const [attendanceData, setAttendanceData] = useState([]);
-  const [attendanceDataDetail, setAttendanceDataDetail] = useState([]);
-  const [miscData, setMiscData] = useState([]);
-  const [certificatesData, setCertificates] = useState([]);
-  const [salariesData, setSalaries] = useState([]);
-  const [volDeductionsData, setVolDeductions] = useState([]);
-  const [w2sData, setW2s] = useState([]);
-  const [w2d, setW2Details] = useState([])
-  const [PODOC, setPODOC] = useState("");
-  const [PONUM, setPONUM] = useState("");
-  const [vendorNumber, setVendorNumber] = useState("");
-  const [vendorName, setVendorName] = useState("");
-  const [vendorNames, setVendorNames] = useState([]);
-  const [vendorData, setVendorData] = useState(null);
-  const [poFromVendor, setPoFromVendor] = useState([]);
-  const [pod, setShowPurchaseOrder] = useState([]);
 
-  const [aphbnk, setAphbnk] = useState("")
-  const [aphbac, setAphbac] = useState("")
-  const [aphfrm, setAphfrm] = useState("")
-  const [aphchk, setAphchk] = useState("")
-  const [aphven, setAphven] = useState("")
+  var baseName = '/';
+  var data = [];
+  data.tabName = 'Learnbyrole';
+  // data.imageUrl = process.env.REACT_APP_IMAGE_URL;
+  data.backEndUrl = process.env.REACT_APP_BACKEND_URL + 'api/';
+  data.imageEndUrl = process.env.REACT_APP_IMAGE_URL;
+  data.nodeEndUrl = process.env.REACT_APP_BACKEND_SEC_URL + '/';
 
-  const [dcc, setDeductionsContributionsCodes] = useState([]);
-  const [ptc, setPayTableCodes] = useState([]);
-  const [jcc, setJobCodes] = useState([]);
-  const [acc, setAddendaCodes] = useState([]);
-  const [scd, setCheckData] = useState([])
+  const [storage, setStorage] = React.useState([
+    data
+  ]);
 
-  const [s3000EmployeeName, setS3000EmployeeName] = useState("");
-  const [s3000EmployeeNames, setS3000EmployeeNames] = useState([]);
-  const [s3000EmployeeNumber, setS3000EmployeeNumber] = useState("");
+  const dispatchStorageEvent = (payload) => {
+    setStorage(payload);
 
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.token) {
-      setLoggedIn(false);
-      return;
-    }
-
-    fetch("https://as400.jcboe.org:5000/verify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "jwt-token": user.token },
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        setLoggedIn(r.message === "success");
-        setEmail(r.email || "");
-      })
-      .catch(() => setLoggedIn(false));
-
-  }, []);
+    return true;
+  };
+  const userdata = useSelector(state => state.userdata);
 
   return (
-    <div className="App" style={{ backgroundColor: '#C6B2A3' }}>
-      <BrowserRouter>
-        <Sidebar />
-        <Routes>
+    <>
+      <div className="App">
+        <AppContext.Provider value={{ storage, dispatchStorageEvent }}>
 
-          <Route path="/maintainUser" element={<MaintainUser loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-
-          {/* ✅ Authentication & Main Pages */}
-          <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/main" element={<Main loggedIn={loggedIn} />} />
-
-          <Route path="/s3000EmpSrch" element={
-            <S3000EmpSrch
-              setS3000EmployeeNames={setS3000EmployeeNames}
-              setS3000EmployeeNumber={setS3000EmployeeNumber}
-              setS3000EmployeeName={setS3000EmployeeName}
-            />}
-          />
-
-          <Route path="/s3000EmpName" element={
-            <S3000EmpName
-              setS3000EmployeeNumber={setS3000EmployeeNumber}
-              s3000EmployeeNames={s3000EmployeeNames}
-              s3000EmployeeName={s3000EmployeeName}
-            />}
-          />
-
-          {/* <Route path="/s3000showEmployee" element={<S3000ShowEmployee s3000EmployeeNumber={s3000EmployeeNumber} />} /> */}
-          {/* <Route path="/s3000ShowEmployee/:s3000EmployeeNumber" element={<S3000ShowEmployee />} /> */}
-          <Route path="/s3000ShowEmployee/:s3000EmployeeNumber" element={<S3000ShowEmployee />} />
-
-          <Route path="/s3000ShowPayments/:s3000EmployeeNumber" element={<S3000ShowPayments />} />
-          <Route path="/s3000DisplayPayment/:chknum/:chkdate" element={<S3000DisplayPayment />} />
-
-          {/* ✅ Employee Routes */}
-          <Route path="/employeeSearch" element={
-            <EmployeeSearch loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              employeeName={employeeName}
-              setEmployeeNumber={setEmployeeNumber} empName={empName} setEmployeeName={setEmployeeName}
-              setEmployeeNames={setEmployeeNames} // ✅ Pass it as a prop
-            />
-          } />
+          <BrowserRouter basename={baseName}>
+            <Routes>
+              <Route path="/" element={<Login />} />
 
 
-          <Route path="/employeeName" element={
-            <EmployeeName loggedIn={loggedIn} email={email} setEmployeeNumber={setEmployeeNumber} employeeName={employeeName} es={es}
-              setEmployeeNames={setEmployeeNames} />
-          } />
+              <Route path="/adminlogin" element={<Adminlogin />} />
+              <Route element={<RequireAuth userdata={userdata} />} >
+                <Route path="/sidebaradmin" element={<Sidebaradmin />} />
 
-          <Route path="/showEmployee" element={
-            <ShowEmployee loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              setLoggedIn={setLoggedIn} setEmail={setEmail} empName={empName} setEmpName={setEmpName}
-              setEmployeeData={setEmployeeData} ed={employeeData}
-              setSsn={setSsn} // ✅ Ensure this is passed
-            />
-          } />
 
-          {/* ✅ S3000 Employee Routes */}
-          <Route path="/s3000EmpSrch" element={<S3000EmpSrch />} />
 
-          {/* ✅ W2 Routes */}
-          <Route path="/showW2s" element={
-            <ShowW2s loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName}
-              ssn={ssn}  // ✅ Ensure SSN is passed
-              w2s={w2sData}
-              setW2s={setW2s}  // ✅ Pass setW2s
-              setW2ID={setW2ID}
-              w2ID={w2ID}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
-            />
-          } />
+                <Route path="/employee-search" element={<EmployeeSearch />} />
+                <Route path="/employeedata" element={<EmployeeData />} />
+                <Route path="/posearch" element={<Posearch />} />
+                <Route path="/podetails" element={<Podetails />} />
+                <Route path="/vendorsearch" element={<Vendorsearch />} />
+                <Route path="/vendorsearchlist" element={<Vendorsearchlist />} />
+                <Route path="/vendordetails" element={<Vendordetails />} />
+                <Route path="/checksearch" element={<Checksearch />} />
 
-          <Route path="/showW2Details" element={
-            <ShowW2Details loggedIn={loggedIn} email={email} w2ID={w2ID}
-              empName={empName} employeeNumber={employeeNumber}
-              w2d={w2d} setW2Details={setW2Details}
-            />
-          } />
+                <Route path="/printshowPO" element={<PdfprintshowPO />} />
+                <Route path="/Pdfpo" element={<Pdfpo />} />
+                <Route path="/printpayroll" element={<Payrollcheckprint />} />
+                <Route path="/printemployee" element={<Pdfall />} />
+                <Route path="/printattende" element={<Pdfattnedetails />} />
+                <Route path="/printvendornamre" element={<Pdfvendoename />} />
+                <Route path="/Pdfvendordeta" element={<Pdfvendordetails />} />
+                <Route path="/printshowBank" element={<PdfBank />} />
+                <Route path="/printvoluntary" element={<Printvoluntary />} />
+                <Route path="/printprintw2s" element={<Printprintw2s />} />
+                <Route path="/printw2sdetails" element={<Printw2sdetails />} />
+                <Route path="/printadditionaltags" element={<Printadditionaltags />} />
+                <Route path="/printattendancedetails" element={<Printattendancedetails />} />
+                <Route path="/printslary" element={<Printslary />} />
+                <Route path="/printpayrollall" element={<Printpayrollall />} />
+                <Route path="/printcertificates" element={<Printcertificates />} />
 
-          {/* ✅ Payroll Routes */}
-          <Route path="/showPayroll" element={
-            <ShowPayroll loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              pd={pd} cid={cid} setPayrollData={setPayrollData} setCheckID={setCheckID} empName={empName}
-            />
-          } />
 
-          <Route path="/showPayrollCheck" element={
-            <ShowPayrollCheck loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              pcd={pcd} setPayrollCheckData={setPayrollCheckData} cid={cid} empName={empName}
-              pcddd={pcddd} setPayrollDeductionData={setPayrollDeductionData} setShowPrintView={setShowPrintView}
-            />
-          } />
+                <Route element={<AdminLayout />}>
+                  <Route path="/checksearchlist" element={<Checksearchlist />} />
 
-          <Route path="/showAttendance" element={
-            <ShowAttendance
-              loggedIn={loggedIn}
-              email={email}
-              employeeNumber={employeeNumber}
-              adl={attendanceDataDetail}  // ✅ Pass this correctly
-              setAttendanceData={setAttendanceData}
-              empName={empName}
-              attendanceData={attendanceData}
-            />
-          } />
+                  <Route path="/attendance" element={<Attendance />} />
+                  <Route path="/attendancedetails" element={<AttendanceDetails />} />
+                  <Route path="/additionaltags" element={<AdditionalTags />} />
+                  <Route path="/certificates" element={<Certificates />} />
+                  <Route path="/salaries" element={<Salaries />} />
+                  <Route path="/voluntarydeductions" element={<Voluntarydeductions />} />
+                  <Route path="/payroll" element={<Payroll />} />
+                  <Route path="/w2s" element={<W2S />} />
 
-          <Route path="/showAttendanceDetail" element={
-            <ShowAttendanceDetail loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              adl={attendanceDataDetail}
-              setAttendanceDataDetail={setAttendanceDataDetail}
-              empName={empName}
-            />
-          } />
+                  <Route path="/showPayrollCheck" element={<Payrollcheck />} />
+                  <Route path="/showW2Details" element={<ShowW2Details />} />
 
-          {/* ✅ Salaries & Deductions */}
-          <Route path="/salaries" element={
-            <Salaries loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} showPrintView={showPrintView} setShowPrintView={setShowPrintView}
-              sd={salariesData}
-              setSalaries={setSalaries} // ✅ Ensure this is passed
-            />
-          } />
 
-          <Route path="/showVolDeductions" element={
-            <ShowVolDeductions loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} setShowPrintView={setShowPrintView}
-              vd={volDeductionsData}
-              setVolDeductions={setVolDeductions} // ✅ Ensure this is passed
-            />
-          } />
 
-          {/* ✅ Certificates & Miscellaneous Data */}
-          <Route path="/certificates" element={
-            <Certificates loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} setShowPrintView={setShowPrintView}
-              cd={certificatesData}
-              setCertificates={setCertificates} // ✅ Ensure this is passed
-            />
-          } />
+                  <Route path="/absence" element={<Absence />} />
+                  <Route path="/deduct" element={<Deduct />} />
+                  <Route path="/paytable" element={<Paytable />} />
+                  <Route path="/job" element={<Job />} />
+                  <Route path="/addenda" element={<Addenda />} />
+                  <Route path="/termination" element={<Termination />} />
 
-          <Route path="/miscData" element={
-            <MiscData loggedIn={loggedIn} email={email} employeeNumber={employeeNumber}
-              empName={empName} setShowPrintView={setShowPrintView}
-              md={miscData}
-              setMiscData={setMiscData} // ✅ Ensure this is passed
-              showPrintView={showPrintView}
-            />
-          } />
 
-          <Route path="/purchaseOrderSearch" element={
-            <PurchaseOrderSearch
-              loggedIn={loggedIn}
-              email={email}
-              PODOC={PODOC}
-              PONUM={PONUM}
-              setPODOC={setPODOC}
-              setPONUM={setPONUM}
-              setLoggedIn={setLoggedIn}
-            />
-          } />
+                  <Route path="/showPO" element={<ShowPO />} />
 
-          <Route path="/vendorSearch" element={
-            <VendorSearch
-              loggedIn={loggedIn}
-              email={email}
-              vendorNumber={vendorNumber}
-              vendorName={vendorName}
-              setVendorNumber={setVendorNumber}
-              setVendorName={setVendorName}
-              setVendorNames={setVendorNames}
-              setLoggedIn={setLoggedIn}
-            />
-          } />
 
-          <Route path="/vendorName" element={
-            <VendorName
-              loggedIn={loggedIn}
-              email={email}
-              setVendorNumber={setVendorNumber}
-              vendorName={vendorName}
-              vens={vendorNames}
-              setVendorNames={setVendorNames}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
-              setLoggedIn={setLoggedIn}
-            />
-          } />
 
-          <Route path="/showVendor" element={
-            <ShowVendor
-              loggedIn={loggedIn}
-              email={email}
-              vendorNumber={vendorNumber}
-              vend={vendorData}
-              setVendorData={setVendorData}
-              setShowPrintView={setShowPrintView}
-              showPrintView={showPrintView}
-              poFromVendor={poFromVendor}
-              setPoFromVendor={setPoFromVendor}
-              setLoggedIn={setLoggedIn}
-            />
-          } />
+                </Route>
 
-          <Route path="/showPO" element={
-            <ShowPO
-              loggedIn={loggedIn}
-              poFromVendor={poFromVendor}
-              setPoFromVendor={setPoFromVendor}
-              vendorNumber={vendorNumber}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
-              setPODOC={setPODOC}
-              setPONUM={setPONUM}
-              setLoggedIn={setLoggedIn}
-            />
-          } />
+              </Route>
 
-          <Route path="/showPurchaseOrder" element={
-            <ShowPurchaseOrder
-              loggedIn={loggedIn}
-              email={email}
-              PODOC={PODOC}
-              PONUM={PONUM}
-              pod={pod}
-              setShowPurchaseOrder={setShowPurchaseOrder}
-              showPrintView={showPrintView}
-              setShowPrintView={setShowPrintView}
-              setLoggedIn={setLoggedIn}
-            />
-          } />
+              <Route element={<RequireAdminAuth userdata={userdata} />} >
+                <Route element={<SuperadminLayout />}>
+                  <Route path="/usermanagement" element={<Usermanagement />} />
+                </Route>
 
-          <Route path="/checkSearch" element={
-            <CheckSearch
-              loggedIn={loggedIn}
-              email={email}
-              setAphbnk={setAphbnk}
-              setAphbac={setAphbac}
-              setAphfrm={setAphfrm}
-              setAphchk={setAphchk}
-              setAphven={setAphven}
-              aphbnk={aphbnk}
-              aphbac={aphbac}
-              aphfrm={aphfrm}
-              aphchk={aphchk}
-              aphven={aphven}
-              setLoggedIn={setLoggedIn}
-            />
-          } />
+              </Route>
 
-          <Route path="/showCheck" element={
-            <ShowCheck
-              loggedIn={loggedIn}
-              email={email}
-              aphbnk={aphbnk}
-              aphbac={aphbac}
-              aphfrm={aphfrm}
-              aphchk={aphchk}
-              aphven={aphven}
-              scd={scd}
-              setCheckData={setCheckData}
-            />
-          } />
-
-          {/* ✅ Codes */}
-          <Route path="/absenceLeaveCodes" element={<AbsenceLeaveCodes loggedIn={loggedIn} alc={alc} setAbsenceLeaveCodes={setAbsenceLeaveCodes} />} />
-          <Route path="/deductionsContributionsCodes" element={<DeductionsContributionsCodes loggedIn={loggedIn} email={email} dcc={dcc} setDeductionsContributionsCodes={setDeductionsContributionsCodes} />} />
-          <Route path="/payTableCodes" element={<PayTableCodes loggedIn={loggedIn} email={email} ptc={ptc} setPayTableCodes={setPayTableCodes} />} />
-          <Route path="/jobCodes" element={<JobCodes loggedIn={loggedIn} email={email} jcc={jcc} setJobCodes={setJobCodes} />} />
-          <Route path="/addendaCodes" element={<AddendaCodes loggedIn={loggedIn} email={email} acc={acc} setAddendaCodes={setAddendaCodes} />} />
-          <Route path="/terminationCodes" element={<TerminationCodes loggedIn={loggedIn} email={email} />} />
-
-        </Routes>
-      </BrowserRouter>
-    </div>
+            </Routes>
+          </BrowserRouter>
+        </AppContext.Provider>
+      </div>
+    </>
   );
 }
 

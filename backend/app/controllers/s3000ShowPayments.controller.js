@@ -1,5 +1,5 @@
 const { Op, Sequelize } = require("sequelize");
-const db = require("../models");
+const db = require("../../models");
 const S3000checkReports = db.s3000checkReports;
 
 exports.findAll = async (req, res) => {

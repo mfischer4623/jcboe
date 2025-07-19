@@ -1,184 +1,155 @@
-const fs = require("fs");
+const db = require("../../models");
+const User = db.users;
 const path = require("path");
 const bcrypt = require("bcryptjs");
-
-const DB_FILE = path.join(__dirname, "../../../auth-server/database.json");
-
-// ✅ Ensure database file exists
-if (!fs.existsSync(DB_FILE)) {
-  fs.writeFileSync(DB_FILE, JSON.stringify({ users: [] }, null, 2));
-}
-
-// ✅ Authenticate User (Login)
+const jwt = require("jsonwebtoken");
+require("dotenv").config(); // Load environment variables
+const Op = db.Sequelize.Op;
+// Load secret key from environment variables
+const SECRET_KEY = process.env.JWTSECRETKEY;
 
 exports.authenticate = async (req, res) => {
-  const { email, password } = req.body;
-  console.log("🔍 Login attempt for:", email);
-
-  fs.readFile(DB_FILE, "utf8", async (err, data) => {
-      if (err) {
-          console.error("❌ Error reading database file:", err);
-          return res.status(500).json({ error: "Error reading database file" });
-      }
-
-      try {
-          const db = JSON.parse(data);
-          const user = db.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-
-          if (!user) {
-              console.error("❌ User not found:", email);
-              return res.status(401).json({ error: "Invalid email or password" });
-          }
-
-          console.log("✅ Found user:", user);
-
-          if (!user.password) {
-              console.error("❌ No password stored for user:", email);
-              return res.status(401).json({ error: "Invalid email or password" });
-          }
-
-          console.log("🔍 Hashed password in database:", user.password);
-          console.log("🔍 Password entered by user:", password);
-
-          const match = await bcrypt.compare(password, user.password);
-          console.log("🔍 Password match result:", match);
-
-          if (!match) {
-              console.error("❌ Incorrect password for:", email);
-              return res.status(401).json({ error: "Invalid email or password" });
-          }
-
-          console.log("✅ Login successful:", email);
-
-          res.json({ message: "success", token: "your-jwt-token", admin: user.admin });
-      } catch (parseError) {
-          console.error("❌ Error parsing database file:", parseError);
-          return res.status(500).json({ error: "Invalid JSON format in database file" });
-      }
-  });
-};
-
-// ✅ Get all users
-exports.findAll = (req, res) => {
-  fs.readFile(DB_FILE, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading database file:", err);
-      return res.status(500).json({ error: "Error reading database file" });
-    }
-
-    try {
-      const db = JSON.parse(data);
-      res.json(db.users);
-    } catch (parseError) {
-      console.error("Error parsing database file:", parseError);
-      return res.status(500).json({ error: "Invalid JSON format in database file" });
-    }
-  });
-};
-
-// ✅ Create a new user (Hash password)
-exports.create = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ error: "Email is required" });
-  }
 
   try {
-    const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
 
-    fs.readFile(DB_FILE, "utf8", (err, data) => {
-      if (err) return res.status(500).json({ error: "Error reading database file" });
+    if (!user) return res.status(404).json({ message: "User not found." });
 
-      let db = JSON.parse(data);
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(401).json({ message: "Invalid credentials." });
+    // Generate JWT Token
+    const token = jwt.sign({ email: user.email, username: user.username }, SECRET_KEY, { expiresIn: "1h" });
 
-      if (db.users.some((user) => user.email === email)) {
-        return res.status(400).json({ error: "User already exists" });
-      }
 
-      db.users.push({ email, password: hashedPassword });
+    res.json({ message: "Login successful", token: token, data: user, status: true });
+  } catch (err) {
+    res.status(201).json({ error: err.message });
+  }
+};
+exports.login = async (req, res) => {
 
-      fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), (writeErr) => {
-        if (writeErr) return res.status(500).json({ error: "Error saving user" });
-        res.json({ success: true, user: { email } });
-      });
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) return res.status(404).json({ message: "User not found." });
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(401).json({ message: "Invalid credentials." });
+    if (user.status == 'Inactive') return res.status(401).json({ message: "User is not active." });
+
+    // Generate JWT Token
+    const token = jwt.sign({ email: user.email, username: user.username }, SECRET_KEY, { expiresIn: "1h" });
+
+
+
+    res.json({ message: "Login successful", token: token, data: user, status: true });
+  } catch (err) {
+    console.error("Login error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
     });
-  } catch (error) {
-    console.error("Error hashing password:", error);
-    res.status(500).json({ error: "Error processing request" });
   }
 };
 
-exports.update = async (req, res) => {
-  const { email } = req.params;
-  const { password, admin } = req.body;
-
-  console.log("Updating user:", email);
-
-  fs.readFile(DB_FILE, "utf8", async (err, data) => {
-    if (err) {
-      console.error("Error reading database file:", err);
-      return res.status(500).json({ error: "Error reading database file" });
-    }
-
-    try {
-      let db = JSON.parse(data);
-      const userIndex = db.users.findIndex(
-        (user) => user.email.toLowerCase() === email.toLowerCase()
-      );
-
-      if (userIndex === -1) {
-        console.error("User not found:", email);
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      if (password) {
-        db.users[userIndex].password = await bcrypt.hash(password, 10);
-      }
-
-      if (admin !== undefined) {
-        db.users[userIndex].admin = admin;
-      }
-
-      fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), (writeErr) => {
-        if (writeErr) {
-          console.error("Error updating user:", writeErr);
-          return res.status(500).json({ error: "Error updating user" });
-        }
-
-        console.log("User updated successfully:", email, "Admin:", admin);
-        res.json({ success: true, user: { email, admin } });
-      });
-    } catch (parseError) {
-      console.error("Error parsing database file:", parseError);
-      return res.status(500).json({ error: "Invalid JSON format in database file" });
-    }
-  });
+//  Get all users
+exports.findAll = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.json({ status: true, data: users });
+  } catch (err) {
+    res.status(201).json({ error: err.message });
+  }
 };
 
-// ✅ Delete a user by email
-exports.delete = (req, res) => {
-  const { email } = req.params;
+//  Create a new user (Hash password)
+exports.create = async (req, res) => {
+  try {
+    const { username, email, password, status, access } = req.body;
 
-  fs.readFile(DB_FILE, "utf8", (err, data) => {
-    if (err) return res.status(500).json({ error: "Error reading database file" });
-
-    try {
-      let db = JSON.parse(data);
-      const initialLength = db.users.length;
-      db.users = db.users.filter((user) => user.email !== email);
-
-      if (db.users.length === initialLength) {
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), (writeErr) => {
-        if (writeErr) return res.status(500).json({ error: "Error deleting user" });
-        res.json({ success: true });
-      });
-    } catch (parseError) {
-      console.error("Error parsing database file:", parseError);
-      return res.status(500).json({ error: "Invalid JSON format in database file" });
+    //  Check for existing email
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(201).json({ error: 'Email already exists', status: false });
     }
-  });
+
+    //  Hash password and create user
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      status,
+      access,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    res.status(201).json({ user: user, status: true, message: "User addede successfully." });
+  }
+  catch (err) {
+    console.error("create error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      , status: false
+    });
+  }
+};
+exports.update = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedData = { ...req.body, updatedAt: new Date() };
+    const user = await User.findOne({ where: { id } });
+    if (updatedData.password != '') {
+      updatedData.password = await bcrypt.hash(updatedData.password, 10);
+    } else {
+      updatedData.password = user.password; // Keep the old password if not provided
+    }
+
+    await User.update(updatedData, { where: { id } });
+    res.json({ message: "User updated successfully.", status: true, });
+  } catch (err) {
+    console.error("upadate error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      , status: false
+    });
+  }
+};
+
+//  Delete a user by id
+exports.delete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await User.destroy({ where: { id } });
+    res.json({ message: "User deleted successfully.", status: true });
+  } catch (err) {
+    console.error("delet error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      , status: false
+    });
+  }
+};
+
+//  status update by id
+exports.updateStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { status } = req.body;
+    await User.update({ status, updatedAt: new Date() }, { where: { id } });
+    res.json({ message: "Status updated successfully.", status: true });
+  } catch (err) {
+    console.error("status error:", err); // This will show full stack in the terminal
+    res.status(500).json({
+      error: err?.message || "An unexpected error occurred",
+      details: err
+      , status: false
+    });
+  }
 };
