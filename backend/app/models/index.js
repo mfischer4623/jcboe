@@ -26,7 +26,8 @@ const s3sequelize = new Sequelize(
     dialect: s3Config.dialect,
     port: s3Config.port,
     pool: s3Config.pool,
-    dialectOptions: s3Config.dialectOptions
+    dialectOptions: s3Config.dialectOptions,
+    attributeBehavior: 'escape'
   }
 );
 

@@ -3,7 +3,8 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('S3_VendorMaster', {
     'Vendor #': {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      primaryKey: true
     },
     'Remit to name': {
       type: DataTypes.STRING(100),
@@ -246,6 +247,6 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'S3_VendorMaster',
     schema: 'dbo',
     timestamps: false,
-    underscored: true
+    indexes: []
   });
 };

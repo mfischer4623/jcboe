@@ -27,6 +27,7 @@ const controllers = {
   pofromvendor: require("../controllers/pofromvendor.controller.js"),
   checkSearch: require("../controllers/lacp441s.controller.js"),
   ppur410lxs: require("../controllers/ppur410lxs.controller.js"),
+  s3VendorMaster: require("../controllers/S3_VendorMaster.controller.js"),
   };
 
 // 🚀 Log missing controllers for debugging
@@ -95,6 +96,10 @@ safeRoute("get", "/lacp441s/", controllers.lacp441s.findAll, "lacp441s.findAll")
 safeRoute("get", "/checksearch/", controllers.lacp441s.checkSearch, "lacp441s.checkSearch");
 safeRoute("get", "/ppur301s/", controllers.ppur301s.findAll, "ppur301s.findAll");
 safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOne");
+
+// ✅ S3 Vendor Master Routes
+safeRoute("get", "/s3-vendor/:vendorNumber", controllers.s3VendorMaster.findByVendorNumber, "s3VendorMaster.findByVendorNumber");
+safeRoute("get", "/s3-vendors", controllers.s3VendorMaster.findByIndexName, "s3VendorMaster.findByIndexName");
 
 // ✅ Employee Routes
 safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");
