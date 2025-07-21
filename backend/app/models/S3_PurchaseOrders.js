@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     'PO#': {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      primaryKey: true
     },
     OPENPO: {
       type: DataTypes.STRING(50),
@@ -282,6 +283,6 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'S3_PurchaseOrders',
     schema: 'dbo',
     timestamps: false,
-    underscored: true
+    indexes: []
   });
 };

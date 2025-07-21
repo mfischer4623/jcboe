@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     Code: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      primaryKey: true
     },
     'Addr 1': {
       type: DataTypes.STRING(100),
@@ -34,6 +35,6 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'S3_PO_ShipToLocation',
     schema: 'dbo',
     timestamps: false,
-    underscored: true
+    indexes: []
   });
 };

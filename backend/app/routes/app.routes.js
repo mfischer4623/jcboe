@@ -28,6 +28,9 @@ const controllers = {
   checkSearch: require("../controllers/lacp441s.controller.js"),
   ppur410lxs: require("../controllers/ppur410lxs.controller.js"),
   s3VendorMaster: require("../controllers/S3_VendorMaster.controller.js"),
+  s3PurchaseOrders: require("../controllers/S3_PurchaseOrders.controller.js"),
+  s3VendorCheckRegister: require("../controllers/S3_VendorCheckRegister.controller.js"),
+  s3POShipToLocation: require("../controllers/S3_PO_ShipToLocation.controller.js"),
   };
 
 // 🚀 Log missing controllers for debugging
@@ -100,6 +103,15 @@ safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOn
 // ✅ S3 Vendor Master Routes
 safeRoute("get", "/s3-vendor/:vendorNumber", controllers.s3VendorMaster.findByVendorNumber, "s3VendorMaster.findByVendorNumber");
 safeRoute("get", "/s3-vendors", controllers.s3VendorMaster.findByIndexName, "s3VendorMaster.findByIndexName");
+
+// ✅ S3 Purchase Orders Routes
+safeRoute("get", "/s3-purchase-orders/:vendorNumber", controllers.s3PurchaseOrders.findByVendorNumber, "s3PurchaseOrders.findByVendorNumber");
+
+// ✅ S3 Vendor Check Register Routes
+safeRoute("get", "/s3-vendor-checks/:vendorNumber", controllers.s3VendorCheckRegister.findByVendorNumber, "s3VendorCheckRegister.findByVendorNumber");
+
+// ✅ S3 PO Ship-To Location Routes
+safeRoute("get", "/s3-ship-location/:code", controllers.s3POShipToLocation.findByCode, "s3POShipToLocation.findByCode");
 
 // ✅ Employee Routes
 safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");

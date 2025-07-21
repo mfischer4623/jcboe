@@ -67,7 +67,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     'Check#': {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      primaryKey: true
     },
     'Hand Chk?': {
       type: DataTypes.STRING(50),
@@ -278,6 +279,6 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'S3_VendorCheckRegister',
     schema: 'dbo',
     timestamps: false,
-    underscored: true
+    indexes: []
   });
 };
