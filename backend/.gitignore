@@ -3,7 +3,7 @@ db.config.s3data.js
 
 node_modules/
 
-.env.sample
+.env
 
 # certificates
 
