@@ -10,25 +10,45 @@ import {
     useNavigate
 } from "react-router-dom";
 import { showpodeat } from '../actions/admin.actions';
+function formatDate(date, format = null) {
+    const myArray = date.split("-");
+    var d = new Date(date);
+    var month = myArray[1];
+    var day = myArray[2];
+    var year = myArray[0];
+    var daten = month + '/' + day + '/' + year;
+    // if (month.length < 2) month = '0' + month;
+    // if (day.length < 2) day = '0' + day;
+
+    // if (format && format == 'Y-m-d') return [month, day, year].join('-');
+    // else return [month, day, year].join('-');
+    return daten;
+}
+function formatValue(input) {
+    const str = input.toString();
+    return `${str.slice(0, 2)}-${str.slice(2, 5)}-${str.slice(5, 8)}-${str.slice(8, 11)}-${str.slice(11, 14)}-${str.slice(14, 16)}-${str.slice(16)}`;
+}
+
 const Podetails = () => {
     const [employeeData, setEmployeeData] = useState([]);
+    const [vendorData, setvendorData] = useState(null);
     const [poData, setPoData] = useState({});
     const [loader, setLoader] = useState(false);
     const [allpodeat, setAllpodeat] = useState([]);
     let navigate = useNavigate();
     useEffect(() => {
         var userid = secureLocalStorage.getItem('poData');
-
+        var vendordata = secureLocalStorage.getItem('vendorNumberData');
         var poid = secureLocalStorage.getItem('pobasicData');
         var checkforsh = secureLocalStorage.getItem('checkforsh');
 
         if ((userid) == null || (userid) == undefined) {
 
 
-            navigate(`/vendorsearch`);
+             navigate(`/vendorsearch`);
 
         } else {
-
+            setvendorData(vendordata[0]);
             setEmployeeData(userid);
             setPoData(poid);
             console.log('poid', poid);
@@ -223,7 +243,7 @@ const Podetails = () => {
                                 <div className="row">
                                     <div className='col-md-12'>
                                         <div className='po-details-head'>
-                                            <h2>Vendor Name: <span>{employeeData[0].VNNAME} ({employeeData[0].POVEND})</span></h2>
+                                            <h2>Vendor Name: <span>{vendorData.VNNAME} {vendorData.VNNAM2} ({employeeData[0].POVEND})</span></h2>
                                         </div>
                                     </div>
                                 </div>
@@ -236,29 +256,41 @@ const Podetails = () => {
                                                     <tr>
                                                         <th >Vendor Address</th>
                                                         <td class="value-table">
-                                                            <p>{employeeData[0].VNADDR}  ,{employeeData[0].VNCITY}, {employeeData[0].VNST} {checkWinzip(employeeData[0].VNZIP)}</p>
+                                                            <p>{vendorData.VNADDR} {vendorData.VNADD2 != '' && <>{',' + vendorData.VNADD2} </>} ,{vendorData.VNCITY}, {vendorData.VNST} {checkWinzip(vendorData.VNZIP)}</p>
                                                         </td>
                                                     </tr>
 
-                                                 
 
- <tr>
-                                                        <th>Ship Address</th>
+
+                                                    <tr>
+                                                        <th>P/O date</th>
                                                         <td class="value-table">
-                                                            <p>{employeeData[0].SHADR1}    {employeeData[0].SHCITY}, {employeeData[0].SHST} {checkshizip(employeeData[0].SHZIP1)}</p>
+                                                            <p>{((employeeData[0].PODATE != null &&
+                                                                employeeData[0].PODATE != undefined) ? formatDate(employeeData[0].PODATE) : '')}</p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Date Request</th>
                                                         <td class="value-table">
-                                                            <p>{employeeData[0].PODREQ === "00000" ?
-                                                                "" : checkpdat(employeeData[0].PODREQ)}</p>
+                                                            <p>{employeeData[0].POREDATE === "00000" ?
+                                                                "" : formatDate(employeeData[0].POREDATE)}</p>
 
 
 
 
                                                         </td>
                                                     </tr>
+                                                    {/* <tr>
+                                                        <th>PO Type</th>
+                                                        <td class="value-table">
+                                                            <p>{(employeeData[0].POTYPE)}</p>
+
+
+
+
+                                                        </td>
+                                                    </tr> */}
+
 
                                                     <tr>
                                                         <th>Reference</th>
@@ -284,18 +316,19 @@ const Podetails = () => {
                                         <div class="table-main-sec diff-po-table">
                                             <table className='table table-sec'>
                                                 <tbody class="tbody-light tbody-po-light tbody-maintain-high">
-                                                   
-   <tr>
-                                                        <th>Ship To <span className='po-data-td'>({employeeData[0].POSHIP})</span></th>
+
+                                                    <tr>
+                                                        <th>Ship To <span className='po-data-td'>({employeeData[0].POATTN})</span></th>
                                                         <td class="value-table">
-                                                            <p>{employeeData[0].SHNAME} </p>
+                                                            <p>{employeeData[0].SHNAME} {employeeData[0].SHATTN != '' && <>{',' + employeeData[0].SHATTN} </>} </p>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>P/O date</th>
+                                                        <th>Ship Address</th>
                                                         <td class="value-table">
-                                                            <p>{((employeeData[0].PODAT != null &&
-                                                                employeeData[0].PODAT != undefined) ? employeeData[0].PODAT : '')}
+                                                            <p>{employeeData[0].SHADR1}    {employeeData[0].SHCITY}, {employeeData[0].SHST} {checkshizip(employeeData[0].SHZIP1)}
+
+
 
                                                             </p>
 
@@ -304,12 +337,21 @@ const Podetails = () => {
                                                     </tr>
 
                                                     <tr>
-                                                        <th>Requision</th>
+                                                        <th>Requisition</th>
                                                         <td class="value-table">
                                                             <p>{employeeData[0].POREQ}</p>
                                                         </td>
                                                     </tr>
+                                                    {/* <tr>
+                                                        <th>Requested By</th>
+                                                        <td class="value-table">
+                                                            <p>{(employeeData[0].POTYPE)}</p>
 
+
+
+
+                                                        </td>
+                                                    </tr> */}
                                                     <tr>
                                                         <th>Created by</th>
                                                         <td class="value-table">
@@ -345,7 +387,7 @@ const Podetails = () => {
 
                                 <div className="row">
                                     <div className='col-md-12'>
-                                        <div className='po-details-head' style={{ marginTop: '40px' }}>
+                                        <div className='po-details-head' style={{ marginTop: '20px' }}>
                                             <h2>Purchase Order Details</h2>
                                         </div>
                                     </div>
@@ -355,6 +397,70 @@ const Podetails = () => {
                                     {
                                         allpodeat.length > 0 && (
                                             <>
+                                                <div className=''>
+
+                                                    <div class="table-main-sec">
+                                                        <table class="table table-sec">
+                                                            <thead class="thead-before-sec thaed-colaps-sec">
+                                                                <tr>
+
+                                                                    <th className='job-width schol-yr-width cursorjob qtn-details-widh' >Quantity</th>
+                                                                    <th className='abse-type-width loc-width cursorjob unit-details-widh' >Unit </th>
+                                                                    <th className='abse-type-width loc-width cursorjob desc-details-widh' >Description  </th>
+
+                                                                    <th className='used-width salary-width ac-no-details-widh'>Account Number </th>
+                                                                    <th className='used-width salary-width price-detail-widh'>Price</th>
+                                                                    <th className='used-width salary-width ex-peice-width'>Extended Price</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="tbody-light">
+                                                                {allpodeat.map((entry, index) => (
+                                                                    <tr>
+                                                                        <td class="value-table">
+                                                                            <p>{(entry.POLQTY)}</p>
+                                                                        </td>
+                                                                        <td class="value-table">
+                                                                            <p>{cleanedValue(entry.POLUM)}</p>
+                                                                        </td>
+                                                                        <td class="value-table">
+                                                                            <p>{(entry.POLDES)}</p>
+                                                                        </td>
+
+                                                                        <td class="value-table">
+                                                                            <p>{formatValue(cleanedValue((entry.POLACT)))}</p>
+                                                                        </td>
+                                                                        <td class="value-table">
+                                                                            <p>{dollarUS.format(entry.POLCST)}</p>
+                                                                        </td>
+                                                                        <td class="value-table">
+                                                                            <p>{dollarUS.format((entry.POLCST * entry.POLQTY))}</p>
+                                                                        </td>
+
+                                                                    </tr>
+
+
+                                                                ))}
+
+
+
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </>
+                                        )
+                                    }
+
+                                    {/* {
+                                        allpodeat.length > 0 && (
+                                            <>
+                                            
                                                 {allpodeat.map((entry, index) => (
 
                                                     <div className='col-md-6'>
@@ -416,7 +522,7 @@ const Podetails = () => {
 
                                             </>
                                         )
-                                    }
+                                    } */}
                                 </div>
 
                             </div>
