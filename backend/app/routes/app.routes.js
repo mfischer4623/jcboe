@@ -31,6 +31,10 @@ const controllers = {
   s3PurchaseOrders: require("../controllers/S3_PurchaseOrders.controller.js"),
   s3VendorCheckRegister: require("../controllers/S3_VendorCheckRegister.controller.js"),
   s3POShipToLocation: require("../controllers/S3_PO_ShipToLocation.controller.js"),
+  ProfileReport: require("../controllers/ProfileReport.controller.js"),
+  W2data: require("../controllers/W2data.controller.js"),
+  CheckRegister: require("../controllers/CheckRegister.controller.js"),
+  EmpPayoutputHistory: require("../controllers/EmpPayoutputHistory.controller.js"),
   };
 
 // 🚀 Log missing controllers for debugging
@@ -100,6 +104,12 @@ safeRoute("get", "/checksearch/", controllers.lacp441s.checkSearch, "lacp441s.ch
 safeRoute("get", "/ppur301s/", controllers.ppur301s.findAll, "ppur301s.findAll");
 safeRoute("get", "/ppur301s/:id", controllers.ppur301s.findOne, "ppur301s.findOne");
 
+// ✅ Employee Routes
+safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");
+safeRoute("get", "/:id", controllers.employees.findOne, "employees.findOne");
+
+// ----------- System 3000 Routes ------------------
+
 // ✅ S3 Vendor Master Routes
 safeRoute("get", "/s3-vendor/:vendorNumber", controllers.s3VendorMaster.findByVendorNumber, "s3VendorMaster.findByVendorNumber");
 safeRoute("get", "/s3-vendors", controllers.s3VendorMaster.findByIndexName, "s3VendorMaster.findByIndexName");
@@ -113,10 +123,23 @@ safeRoute("get", "/s3-vendor-checks/:vendorNumber", controllers.s3VendorCheckReg
 // ✅ S3 PO Ship-To Location Routes
 safeRoute("get", "/s3-ship-location/:code", controllers.s3POShipToLocation.findByCode, "s3POShipToLocation.findByCode");
 
-// ✅ Employee Routes
-safeRoute("get", "/", controllers.employees.findAll, "employees.findAll");
-safeRoute("get", "/:id", controllers.employees.findOne, "employees.findOne");
+// ✅ Employee W2 Routes
+safeRoute("get", "/w2data/:id", controllers.W2data.findAll, "W2data.findAll");
+safeRoute("get", "/w2datayr/details", controllers.W2data.findDetails, "W2data.findDetails");
 
+
+// ✅ Employee Check Register Routes
+safeRoute("get", "/checkregister/:id", controllers.CheckRegister.findAll, "CheckRegister.findAll");
+safeRoute("get", "/checkregisterch/details", controllers.CheckRegister.findDetails, "CheckRegister.findDetails");
+
+
+// ✅ Employee  salaries routes
+safeRoute("get", "/salariessystem/:id", controllers.EmpPayoutputHistory.findAll, "EmpPayoutputHistory.findAll");
+
+
+// ✅ Employee Routes
+safeRoute("get", "/empsys/s3data", controllers.ProfileReport.findAll, "ProfileReport.findAll");
+safeRoute("get", "/empsys/:id", controllers.ProfileReport.findOne, "ProfileReport.findOne");
 
 // ✅ Attach router to the app
 module.exports = (app) => {

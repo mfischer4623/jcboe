@@ -1,34 +1,41 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('S3_PO_ShipToLocation', {
-    Name: {
+    name: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: true,
+      field: 'Name'
     },
-    Code: {
+    code: {
       type: DataTypes.STRING(50),
       allowNull: true,
-      primaryKey: true
+      primaryKey: true,
+      field: 'Code'
     },
-    'Addr 1': {
+    addr1: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: true,
+      field: 'Addr 1'
     },
-    'Addr 2': {
+    addr2: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'Addr 2'
     },
-    City: {
+    city: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'City'
     },
-    State: {
+    state: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'State'
     },
-    Zip: {
+    zip: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'Zip'
     }
   }, {
     sequelize,
