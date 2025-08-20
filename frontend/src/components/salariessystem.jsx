@@ -13,7 +13,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { useSelector } from 'react-redux';
 import { updateNullOfObjectValues } from '../helpers/helper';
-import { salaries } from '../actions/admin.actions';
+import { salarysydtataemp } from '../actions/systemadmin.actions';
 import secureLocalStorage from "react-secure-storage";
 import { AppContext } from '../context';
 import {
@@ -33,24 +33,24 @@ const Salaries = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [searchPlaceholder, setSearchPlaceholder] = useState('School Year');
-  const [searchBy, setSearchBy] = useState('school_year');
+  const [searchBy, setSearchBy] = useState('schoolYear');
   const [searchValue, setSearchValue] = useState('');
   let navigate = useNavigate();
   useEffect(() => {
-    var userid = secureLocalStorage.getItem('employeeData');
+    var userid = secureLocalStorage.getItem('employeeSystemData');
 
 
 
     if (Object.keys(userid).length === 0) {
 
 
-      navigate(`/employeedata`);
+      navigate(`/employeesystemdata`);
 
     } else {
       setFirstLoading(true);
       console.log(userid);
-      setEmployeeData(userid);
-      salaries(userid.EMSSAN).then((res) => {
+      setEmployeeData(userid.data);
+      salarysydtataemp(userid.data.employee).then((res) => {
         console.log('get-attendence res====>>>', res.data);
         if (res.data.length > 0) {
           const totalPages = Math.ceil(res.data.length / perPage);
@@ -89,14 +89,16 @@ const Salaries = () => {
   const handleColumnClick = (type) => {
     let placeholder = '';
     switch (type) {
-      case 'school_year':
+      case 'schoolYear':
         placeholder = 'School Year';
         break;
 
-      case 'loaction':
+      case 'location':
         placeholder = 'Location';
         break;
-
+      case 'scname':
+        placeholder = 'Job title';
+        break;
       default:
         placeholder = 'School Year'
         break;
@@ -118,11 +120,11 @@ const Salaries = () => {
     setSearchValue(e.target.value);
 
   }
-   const perPageChange = (e) => {
+  const perPageChange = (e) => {
     setPerPage(e.target.value);
-    
-   
-     setFirstLoading(true);
+
+
+    setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / e.target.value);
     setTotalPage(totalPages);
     const startIndex = (1 - 1) * e.target.value;
@@ -139,23 +141,35 @@ const Salaries = () => {
   const gosubmit = (e) => {
 
     setFirstLoading(true);
-    
-    if (searchBy == 'school_year') {
-      const filteredData = allattendataextac.filter((item) =>
-        item.SCHYEAR.toString().includes(searchValue.toLowerCase())
-      );
+
+    if (searchBy === 'schoolYear') {
+      const input = searchValue.trim(); // e.g., "2019-2020"
+      let targetYear = null;
+
+      if (/^\d{4}-\d{4}$/.test(input)) {
+        const parts = input.split("-");
+        const start = parseInt(parts[0], 10);
+        const end = parseInt(parts[1], 10);
+        if (end - start === 1) {
+          targetYear = end; // schoolYear is stored as the second part
+        }
+      } else if (/^\d{4}$/.test(input)) {
+        targetYear = parseInt(input, 10);
+      }
+
+      const filteredData = targetYear
+        ? allattendataextac.filter((item) => item.schoolYear === targetYear)
+        : [];
+
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
       const startIndex = (1 - 1) * perPage;
-
       setAllattendata(filteredData.slice(startIndex, startIndex + perPage));
       setPageNo(1);
-
-
     }
-    if (searchBy == 'loaction') {
+    if (searchBy == 'location') {
       const filteredData = allattendataextac.filter((item) =>
-        item.EMLOC.toString().padStart(3, '0').includes(searchValue.toLowerCase())
+        item.location.toString().padStart(3, '0').includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -176,7 +190,7 @@ const Salaries = () => {
   }
   const handleClearFilter = () => {
     setSearchPlaceholder('School Year');
-    setSearchBy('school_year');
+    setSearchBy('schoolYear');
     setSearchValue('');
     setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / perPage);
@@ -189,18 +203,46 @@ const Salaries = () => {
     setFirstLoading(false);
 
   }
-  
+
   const exportTopdf = (e) => {
 
-    localStorage.setItem("allprintsalarynew", JSON.stringify(allattendataextac));
-    window.open('printslary/', '_blank', 'noopener,noreferrer');
+    localStorage.setItem("allprintsalarysystemnew", JSON.stringify(allattendataextac));
+    window.open('printslarystem/', '_blank', 'noopener,noreferrer');
+
+  };
+  const padValue = (value) => {
+    if (value !== null && value !== undefined && value !== 0 && value !== '') {
+      return value.toString().padStart(3, '0');
+    }
+  };
+  const padschholValue = (value) => {
+    if (value !== null && value !== undefined && value !== 0 && value !== '') {
+
+      const formattedYear = `${parseInt(value) - 1}-${parseInt(value)}`;
+
+      return formattedYear;
+    }
+  };
+
+   let dollarUS = Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+function formatCurrency(value) {
+  if (!value) return "$0.00";
+
+  // Remove commas and convert to number
+  let num = Number(String(value).replace(/,/g, ""));
   
-  };
-    const padValue = (value) => {
-       if(value!== null && value !== undefined && value !== 0 && value !== '') {
-    return value.toString().padStart(3, '0');
-       }
-  };
+  // If invalid, return as is
+  if (isNaN(num)) return value;
+
+  return dollarUS.format(num);
+}
+
   return (
     <>
       {/* <Header />
@@ -213,8 +255,8 @@ const Salaries = () => {
               <div className='emp-serach emp-data-head emp-another-sec'>
                 {employeeData != null &&
                   <>
-                    <h2>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM} </h2>
-                    <h3>Emp Id:- <span> {employeeData.EMSSAN}</span></h3>
+                    <h2>{employeeData.lastName}, {employeeData.firstName} {employeeData.middleInitial} </h2>
+                    <h3>Emp Id:- <span> {employeeData.employee}</span></h3>
                   </>
                 }
                 {/* <div className='print-sec-inner'>
@@ -233,7 +275,7 @@ const Salaries = () => {
               <div class="head-inner">
                 <h2>Salaries</h2>
                 <div class="head-right">
-                <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                  <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
@@ -248,7 +290,7 @@ const Salaries = () => {
             <div className='row'>
 
               <div className='col-md-12 emp-serch-main' >
-                 <div className='show-entreies-sec'>
+                <div className='show-entreies-sec'>
                   <div className='show-entries'>
                     <p className='show-content'>Show</p>
                     <select className='select-sec' onChange={perPageChange} value={perPage} >
@@ -279,15 +321,17 @@ const Salaries = () => {
                           <FormControlLabel control={<Checkbox />} label="" />
                         </FormGroup>
                       </th> */}
-                      <th className='job-width schol-yr-width cursorjob' onClick={() => handleColumnClick('school_year')}>School Year <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='job-width schol-yr-width cursorjob' onClick={() => handleColumnClick('schoolYear')}>School Year <span className='filt-icon'><img src={filticon} /></span></th>
 
-                      <th className='abse-type-width loc-width cursorjob' onClick={() => handleColumnClick('loaction')}>Location <span className='filt-icon'><img src={filticon} /></span> </th>
+                      <th className='abse-type-width loc-width cursorjob' onClick={() => handleColumnClick('location')}>Location <span className='filt-icon'><img src={filticon} /></span> </th>
+                      <th className='used-width salary-width'>Job Title </th>
                       <th className='used-width salary-width'>Salary </th>
+                      <th className='used-width salary-width'>Total Salary </th>
                     </tr>
                   </thead>
                   <tbody class="tbody-light">
                     {
-                      firstLoading ? <tr ><td colSpan={4}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
+                      firstLoading ? <tr ><td colSpan={5}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
                         {allattendata.length > 0 ?
                           allattendata.map((entry, index) => (
 
@@ -298,13 +342,19 @@ const Salaries = () => {
                                 </FormGroup>
                               </td> */}
                               <td class="value-table">
-                                <p>{(entry.SCHYEAR)}</p>
+                                <p>{padschholValue(entry.schoolYear)}</p>
                               </td>
                               <td class="value-table">
-                                <p>{padValue(entry.EMLOC)}</p>
+                                <p>{padValue(entry.location)}</p>
                               </td>
                               <td class="value-table">
-                                <p>$ {entry.SALARY} </p>
+                                <p> {entry.scname} </p>
+                              </td>
+                              <td class="value-table">
+                                <p> {formatCurrency(entry.salary)} </p>
+                              </td>
+                              <td class="value-table">
+                                <p> {formatCurrency(parseFloat(entry.salary) + parseFloat(entry.long))} </p>
                               </td>
 
 
@@ -312,7 +362,7 @@ const Salaries = () => {
 
                           ))
 
-                          : <tr><td colSpan={3}>No Data Found</td></tr>}
+                          : <tr><td colSpan={5}>No Data Found</td></tr>}
                       </>
                     }
 

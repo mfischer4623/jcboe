@@ -66,19 +66,20 @@ function Pdf() {
   const [employeeData, setEmployeeData] = useState(null);
   useEffect(() => {
 
-    var userid = secureLocalStorage.getItem('employeeData');
+    var userid = secureLocalStorage.getItem('employeeSystemData');
 
 
 
     if (Object.keys(userid).length === 0) {
 
 
-      navigate(`/employeedata`);
+
+      navigate(`/employeesystemdata`);
 
     } else {
-      var allprintnew = JSON.parse(window.localStorage.getItem('allattendeatnew'));;
+      var allprintnew = JSON.parse(window.localStorage.getItem('allprintchekcregisdata'));;
       console.log(allprintnew);
-      setEmployeeData(userid);
+      setEmployeeData(userid.data);
       setViewDataForm(allprintnew);
     }
 
@@ -90,7 +91,7 @@ function Pdf() {
 
 
 
-    document.title = 'Attendance  Details';
+    document.title = 'Check Register List  Details';
 
 
     setTimeout(function () {
@@ -112,18 +113,37 @@ function Pdf() {
     pageBreak: {
       pageBreakAfter: "always",
     },
-  };const formatDate = (dateString) => {
+  }; const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const year = dateString.substring(0, 4);
     const month = dateString.substring(4, 6);
     const day = dateString.substring(6, 8);
     return `${month}/${day}/${year}`;
   };
-    const padValue = (value) => {
-       if(value!== null && value !== undefined && value !== 0 && value !== '') {
-    return value.toString().padStart(3, '0');
-       }
+  const padValue = (value) => {
+    if (value !== null && value !== undefined && value !== 0 && value !== '') {
+      return value.toString().padStart(3, '0');
+    }
   };
+  let dollarUS = Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+function formatCurrency(value) {
+  if (!value) return "$0.00";
+
+  // Remove commas and convert to number
+  let num = Number(String(value).replace(/,/g, ""));
+  
+  // If invalid, return as is
+  if (isNaN(num)) return value;
+
+  return dollarUS.format(num);
+}
+
   return (
     <>
       <div style={styles.body}>
@@ -143,19 +163,19 @@ function Pdf() {
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-top-pdf" >
 
-                    Attendance Details
+                      Check Register List
                     </td>
 
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf">
-                      Employee Name: {employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM}
+                      Employee Name:{employeeData.lastName}, {employeeData.firstName} {employeeData.middleInitial}
                     </td>
 
                   </tr>
                   <tr>
                     <td colSpan="2" className="reqid-sec reqid-sec-pdf padding-bottom-pdf">
-                      Emp Id:  {employeeData.EMSSAN}
+                      Emp Id:  {employeeData.employee}
                     </td>
 
                   </tr>
@@ -167,11 +187,12 @@ function Pdf() {
                     {viewDataForm.length > 0 ?
                       <><thead>
                         <tr>
-                          <th className='pf-sl pdf-job-cde'>Location Code	</th>
-                          <th className='pf-wl pdf-absne'>Absence Date </th>
-                          <th className='pf-date pdf-begn-bal'>Absence Code </th>
-                          <th className='pf-date pdf-begn-bal'>Unit </th>
-                          
+                          <th className='pf-sl pdf-job-cde new-prnt-chek-num'>Check Number 	</th>
+                          <th className='pf-wl pdf-absne new-prnt-chek-date'>Check Date   </th>
+                          <th className='pf-date pdf-begn-bal new-prnt-gross-pay'>Current Gross Pay </th>
+                          <th className='pf-date pdf-begn-bal new-prnt-net-curr-pay'>Current Net Pay  </th>
+                          <th className='pf-date pdf-begn-bal new-prnt-curr-yera'>Year </th>
+
 
                         </tr>
                       </thead>
@@ -183,11 +204,13 @@ function Pdf() {
 
                       viewDataForm.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {padValue(item.TMLLOC)} </td>
-                          <td class="border-right">  {formatDate(item.TMLDAT)}</td>
-                          <td class="border-right">  {item?.TMLABS}</td>
-                          <td class="border-right">  {item?.TMLQTY} </td>
-                       
+                          <td class="border-right">  {(item.chkno)} </td>
+                          <td class="border-right">  {(item.checkDate)} </td>
+                          <td class="border-right">   {formatCurrency(item.cgwages)}
+                          </td>
+                          <td class="border-right">   {formatCurrency(item.cnetwages)}
+                          </td>
+                          <td class="border-right">  {(item.year)} </td>
 
                         </tr>
                       ) : ""}

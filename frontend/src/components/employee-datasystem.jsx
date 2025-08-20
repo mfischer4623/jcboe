@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from './sidebar';
-import Header from './header';
+import Sidebar from './systemsidebar';
+import Header from './headersystem';
 import {
     Accordion,
     AccordionSummary,
@@ -14,6 +14,8 @@ import secureLocalStorage from "react-secure-storage";
 import {
     useNavigate
 } from "react-router-dom";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const EmployeeData = () => {
 
     const [expandedPanels, setExpandedPanels] = useState({
@@ -26,6 +28,9 @@ const EmployeeData = () => {
         panel7: true,
     });
     const [employeeData, setEmployeeData] = useState(null);
+    const [employeeDatassn, setEmployeeDatassn] = useState(null);
+    const [employeeDatapay, setEmployeeDatapay] = useState(null);
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const handleChange = (panel) => (event, isExpanded) => {
         setExpandedPanels((prev) => ({
             ...prev,
@@ -34,24 +39,28 @@ const EmployeeData = () => {
     };
     let navigate = useNavigate();
     useEffect(() => {
-        var userid = secureLocalStorage.getItem('employeeData');
+        var userid = secureLocalStorage.getItem('employeeSystemData');
+        console.log('userid', userid);
 
 
 
         if (Object.keys(userid).length === 0) {
 
 
-            navigate(`/employeedata`);
+            navigate(`/employee-search`);
 
         } else {
             console.log(userid);
-            setEmployeeData(userid);
+            setEmployeeData(userid.data);
+            setEmployeeDatassn(userid.datawe.ssn);
+            setEmployeeDatapay(userid.datapay);
 
         }
 
     }, []);
     const formatDate = (date, format = null) => {
-        const hasSlash = date.includes("/");
+        if(date!="" && date!=null & date!=undefined){
+               const hasSlash = date.includes("/");
         const hasDash = date.includes("-");
         if (hasDash == true) {
             const myArray = date.split("-");
@@ -60,7 +69,7 @@ const EmployeeData = () => {
             var day = myArray[2];
             var year = myArray[0];
             var daten = month + '/' + day + '/' + year;
-            if (month === "00" || day === "00") {
+            if (month === "00" || day === "00" || day == "") {
                 return ""; // Return blank if invalid
             } else {
                 return daten;
@@ -70,10 +79,28 @@ const EmployeeData = () => {
             if (date === '00/00/0000' || date === '00/00/1900' || date === '00/00/2000') {
                 return ""; // Return blank if invalid
             } else {
-                return date;
+                const myArray = date.split("/");
+
+                var month = myArray[0];
+                var day = myArray[1];
+                var year = myArray[2];
+                var daten = month + '/' + day + '/' + year;
+                if (month === "00" || day === "00" || day == "") {
+                    return ""; // Return blank if invalid
+                } else {
+                    if (month.length < 2) month = '0' + month;
+                    if (day.length < 2) day = '0' + day;
+                    var datenb = month + '/' + day + '/' + year;
+                    return datenb;
+                }
+
             }
 
+        }  
+        }else{
+           return ""; 
         }
+   
         // if (month.length < 2) month = '0' + month;
         // if (day.length < 2) day = '0' + day;
 
@@ -82,12 +109,17 @@ const EmployeeData = () => {
 
     }
     function normalize(phoneStr) {
+        if(phoneStr!='' && phoneStr!=null && phoneStr!=undefined){
         if (typeof phoneStr !== 'string') phoneStr = String(phoneStr || "");
         phoneStr = phoneStr.replace(/[^\d]/g, "");
         if (phoneStr.length === 7) {
             return phoneStr.replace(/(\d{3})(\d{4})/, "$1-$2");
         }
         return ""; // Or return original if not 7 digits, depending on desired behavior
+    }else{
+        return ""; // Or return original if not 7 digits, depending on desired behavior
+    }
+        
     }
     function normalizeophone(EMOTL2) {
         var ophone = "";
@@ -96,7 +128,21 @@ const EmployeeData = () => {
         }
         return ophone;
     }
+    function phoneformatch(number) {
+        if(number!="" && number!=null && number!=undefined){
+        const cleaned = number.toString().replace(/\D/g, ''); // remove non-digit characters
 
+        if (cleaned.length !== 10) return 'Invalid number';
+
+        const areaCode = cleaned.slice(0, 3);
+        const middle = cleaned.slice(3, 6);
+        const last = cleaned.slice(6);
+
+        return `(${areaCode}) ${middle}-${last}`;
+        }else{
+            return "";
+        }
+    }
 
     function normalizehphone(EMHTL2) {
         var hphone = "";
@@ -108,6 +154,7 @@ const EmployeeData = () => {
 
 
     function normalizezip(EMZIP1) {
+          if(EMZIP1!="" && EMZIP1!=null && EMZIP1!=undefined){
         var zipCode = "";
         if (EMZIP1 !== null && EMZIP1 !== undefined) {
             zipCode = EMZIP1.toString();
@@ -118,6 +165,9 @@ const EmployeeData = () => {
             }
         }
         return zipCode;
+    }else{
+        return "";
+    }
 
 
     }
@@ -169,7 +219,24 @@ const EmployeeData = () => {
         return EMADAT;
 
     }
+     let dollarUS = Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
+function formatCurrency(value) {
+  if (!value) return "$0.00";
+
+  // Remove commas and convert to number
+  let num = Number(String(value).replace(/,/g, ""));
+  
+  // If invalid, return as is
+  if (isNaN(num)) return value;
+
+  return dollarUS.format(num);
+}
 
     const exportTopdf = (e) => {
 
@@ -177,7 +244,7 @@ const EmployeeData = () => {
 
 
 
-        window.open('printemployee/', '_blank', 'noopener,noreferrer');
+        window.open('printemployeesystem/', '_blank', 'noopener,noreferrer');
 
 
 
@@ -222,7 +289,9 @@ const EmployeeData = () => {
 
     }
     const padValue = (value) => {
-        return value.toString().padStart(4, '0');
+        if (value !== null && value !== undefined && value !== 0 && value !== '') {
+            return value.toString().padStart(4, '0');
+        }
     };
     ;
 
@@ -284,8 +353,8 @@ const EmployeeData = () => {
                             <div className='emp-serach emp-data-head'>
                                 {employeeData != null &&
                                     <>
-                                        <h2>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM} </h2>
-                                        <h3>Emp Id:- <span> {employeeData.EMSSAN}</span></h3>
+                                        <h2>{employeeData.lastName}, {employeeData.firstName} {employeeData.middleInitial} </h2>
+                                        <h3>Emp Id:- <span> {employeeData.employee}</span></h3>
                                     </>
                                 }
 
@@ -325,14 +394,14 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Employee Number</h3>
+                                                                            <h3>Employee Id</h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMSSAN}</p>
+                                                                            <p>{employeeData.employee}</p>
                                                                         </div>
 
                                                                     </div>
@@ -348,7 +417,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMLNAM}, {employeeData.EMFNAM} {employeeData.EMMNAM} </p>
+                                                                            <p>{employeeData.lastName}, {employeeData.firstName} {employeeData.middleInitial} </p>
                                                                         </div>
 
                                                                     </div>
@@ -364,7 +433,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMSEX}, {employeeData.EMSEX == 'F' && 'FEMALE'} {employeeData.EMSEX == 'M' && 'MALE'}  {(employeeData.EMSEX != 'F' && employeeData.EMSEX != 'M') && 'OTHER'} </p>
+                                                                            <p>{employeeData.gender}, {employeeData.gender == 'F' && 'FEMALE'} {employeeData.gender == 'M' && 'MALE'}  {(employeeData.gender != 'F' && employeeData.gender != 'M') && 'OTHER'} </p>
                                                                         </div>
 
                                                                     </div>
@@ -373,7 +442,7 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner last-right-data'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Ethnic Description
+                                                                            <h3>Birth Date
                                                                             </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
@@ -381,7 +450,10 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.ETDESC}</p>
+                                                                            <p>
+                                                                                {employeeData.birthDate != '' && employeeData.birthDate != null && formatDate(employeeData.birthDate)}
+                                                                            </p>
+
                                                                         </div>
 
                                                                     </div>
@@ -402,8 +474,24 @@ const EmployeeData = () => {
 
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
-                                                                        <div className='form-details-value'>
-                                                                            <p>{employeeData.EMPSSN}</p>
+                                                                        <div className='form-details-value secured-wrapper'>
+                                                                            <p>
+                                                                               <span className="ssn-text"> {passwordVisible ? employeeDatassn : 'XXX-XX-XXXX'}    </span>
+
+                                                                               <span class="visi-secs" ><a className='visi-icon'>    <span  className={passwordVisible ? 'visi-icon visibledark' : 'visi-icon'} onClick={() => setPasswordVisible(!passwordVisible)}>
+                                                                                    {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                                                                </span></a></span>
+                                                                                
+                                                                               
+                                                                                
+                                                                             
+                                                                            </p>
+
+                                                                           
+                                                                            
+                                                                                
+                                                                           
+
                                                                         </div>
 
                                                                     </div>
@@ -419,7 +507,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMSTAT}</p>
+                                                                            <p>{employeeData.active == 'TRUE' ? 'Y' : 'N'}</p>
                                                                         </div>
 
                                                                     </div>
@@ -436,7 +524,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMETH}</p>
+                                                                            <p>{employeeData.race}</p>
                                                                         </div>
 
                                                                     </div>
@@ -444,8 +532,8 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-innerss last-right-data'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Birth Date
-
+                                                                            <h3>
+                                                                                Ethnic Description
                                                                             </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
@@ -453,9 +541,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>
-                                                                                {employeeData.DOB != '' && employeeData.DOB != null && formatDate(employeeData.DOB)}
-                                                                            </p>
+                                                                            <p>{employeeData.racedesc}</p>
                                                                         </div>
 
                                                                     </div>
@@ -496,35 +582,50 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Office Phone</h3>
+                                                                            <h3>Address </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p> ({employeeData.EMOTL0}) {normalizeophone(employeeData.EMOTL2)} ext. {employeeData.EMEXTN ? `${employeeData.EMEXTN}` : ''} {employeeData.EMOTLS ? `${employeeData.EMOTLS}` : ''} </p>
+                                                                            <p>{employeeData.addressLine1}, {employeeData.addressLine2} </p>
+
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
-
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Address</h3>
+                                                                            <h3>City/State/Zip</h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMADD1}</p>
+                                                                            <p>   {employeeData.city}, {employeeData.state} {normalizezip(employeeData.zip)}</p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
                                                                 <div className='row'>
+                                                                    <div className='form-detail-left-inner'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Permanent Address</h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-inner'>
+                                                                        <div className='form-details-value'>
+                                                                            <p>Y</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Country
@@ -539,9 +640,9 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner '>
                                                                         <div className='form-details-label'>
                                                                             <h3>Location
@@ -552,13 +653,13 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>    {employeeData.EMLOC && employeeData.LCNAME && <>{employeeData.EMLOC} {employeeData.LCNAME}</>}</p>
+                                                                            <p>    {employeeData.loccode && employeeData.locdesc && <>{employeeData.loccode} {employeeData.locdesc}</>}</p>
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner last-right-data'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Sub Location
@@ -573,7 +674,7 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
                                                             </div>
                                                             <div className='form-detail-midle'>
@@ -591,23 +692,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>({employeeData.EMHTL0}) {normalizehphone(employeeData.EMHTL2)} {employeeData.EMHTLS ? `${employeeData.EMHTLS}` : ''}</p>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-
-                                                                <div className='row'>
-                                                                    <div className='form-detail-left-innerss'>
-                                                                        <div className='form-details-label'>
-                                                                            <h3>Address Security</h3>
-                                                                            <p className='semicolon'>:</p>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div className='form-detail-right-innerss'>
-                                                                        <div className='form-details-value'>
-                                                                            <p>{employeeData.EMADSC}</p>
+                                                                            <p> {phoneformatch(employeeData.phone1)} </p>
                                                                         </div>
 
                                                                     </div>
@@ -615,7 +700,8 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Permanent Address
+                                                                            <h3>
+                                                                                Work Email
                                                                             </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
@@ -623,12 +709,45 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>Y</p>
+                                                                            <p>{employeeData.emEmail}</p>
+
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
+                                                                {/* 
                                                                 <div className='row'>
+                                                                    <div className='form-detail-left-innerss'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Permanent Address</h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-innerss'>
+                                                                        <div className='form-details-value'>
+                                                                            <p><p>Y</p></p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div> */}
+                                                                {/* <div className='row'>
+                                                                    <div className='form-detail-left-innerss'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Location
+                                                                            </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-innerss'>
+                                                                        <div className='form-details-value'>
+                                                                            <p>   {employeeData.loccode && employeeData.locdesc && <>{employeeData.loccode} {employeeData.locdesc}</>}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div> */}
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
                                                                             <h3>District
@@ -644,9 +763,9 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss last-right-data'>
                                                                         <div className='form-details-label'>
                                                                             <h3>City/State/Zip
@@ -658,11 +777,11 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMCITY}, {employeeData.EMST} {normalizezip(employeeData.EMZIP1)}</p>
+                                                                            <p>{employeeData.city}, {employeeData.state} {normalizezip(employeeData.zip)}</p>
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
                                                             </div>
 
@@ -687,7 +806,7 @@ const EmployeeData = () => {
                                         aria-controls="panel3-content"
                                         id="panel3-header"
                                     >
-                                        <Typography component="span">Employment Information</Typography>
+                                        <Typography component="span">Employee Work Information</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <Typography className='form-detail-main'>
@@ -699,14 +818,14 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Department</h3>
+                                                                            <h3>Department/Location</h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMDEPT}</p>
+                                                                            <p> {employeeData.location}  {employeeData.loccode && employeeData.locdesc && <> {employeeData.locdesc}</>}</p>
                                                                         </div>
 
                                                                     </div>
@@ -722,7 +841,22 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMLOCP}, {employeeData.LPNAME}</p>
+                                                                            <p> {employeeData.location}  {employeeData.loccode && employeeData.locdesc && <> {employeeData.locdesc}</>}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-inner'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Status Code</h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-inner'>
+                                                                        <div className='form-details-value'>
+                                                                            <p> {employeeData.emStatus}  </p>
                                                                         </div>
 
                                                                     </div>
@@ -730,9 +864,9 @@ const EmployeeData = () => {
 
 
                                                                 <div className='row'>
-                                                                    <div className='form-detail-left-inner last-right-data'>
+                                                                    <div className='form-detail-left-inner '>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Termination Date
+                                                                            <h3>District Experience
                                                                             </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
@@ -740,7 +874,47 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.TRD != null && employeeData.TRD != '' && formatDate(employeeData.TRD)}</p>
+                                                                            <p>
+                                                                                {employeeData.districtExperience}
+                                                                            </p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-inner '>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Seniority Number
+                                                                            </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-inner'>
+                                                                        <div className='form-details-value'>
+                                                                            <p>
+                                                                                {employeeData.emSeniori != null && employeeData.emSeniori != '' && (employeeData.emSeniori)}
+                                                                            </p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-inner last-right-data'>
+                                                                        <div className='form-details-label'>
+
+                                                                            <h3>UPC Code
+                                                                            </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-inner'>
+                                                                        <div className='form-details-value'>
+                                                                            <p>
+                                                                                {employeeData.primUcode}
+                                                                            </p>
+
                                                                         </div>
 
                                                                     </div>
@@ -755,36 +929,113 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Assignment</h3>
+                                                                            <h3>Hire Date</h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMPASN}, {employeeData.JDTITL}</p>
+                                                                            <p>{employeeDatapay.hiredate}</p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-innerss'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Re-hire Date </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-innerss'>
+                                                                        <div className='form-details-value'>
+                                                                            <p>{employeeData.emRehire != null && employeeData.emRehire != '' && (employeeData.emRehire)}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-innerss'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Termination Date
+                                                                            </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-innerss'>
+                                                                        <div className='form-details-value'>
+                                                                            <p>    {employeeDatapay.termdate != null && employeeDatapay.termdate != '' && formatDate(employeeData.termdate)}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-innerss'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Job Code </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-innerss'>
+                                                                        <div className='form-details-value'>
+                                                                            <p> {employeeData.code != null && employeeData.code != '' && (employeeData.code)}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-innerss last-right-data'>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>Job Title </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-innerss'>
+                                                                        <div className='form-details-value'>
+                                                                            <p> {employeeData.jobTitle4 != null && employeeData.jobTitle4 != '' && (employeeData.jobTitle4)}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='form-detail-left-innerss '>
+                                                                        <div className='form-details-label'>
+                                                                            <h3>UPC Description </h3>
+                                                                            <p className='semicolon'>:</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div className='form-detail-right-innerss'>
+                                                                        <div className='form-details-value'>
+                                                                            <p> {employeeData.primUdesc != null && employeeData.primUdesc != '' && (employeeData.primUdesc)}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                {/* 
 
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-innerss last-right-data'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Seniority Date</h3>
+                                                                            <h3>Seniority </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p> {employeeData.EMSRDT != null && employeeData.EMSRDT != '' && formatDateemdtsenior(employeeData.EMSRDT)}</p>
+                                                                            <p> {employeeData.emSeniori != null && employeeData.emSeniori != '' && (employeeData.emSeniori)}</p>
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
-
-
+                                                                </div> */}
 
                                                             </div>
 
@@ -797,7 +1048,7 @@ const EmployeeData = () => {
                                 </Accordion>
 
                                 {/* Emp School Information section */}
-                                <Accordion
+                                {/* <Accordion
                                     expanded={expandedPanels.panel4}
                                     onChange={handleChange('panel4')}
                                 >
@@ -916,7 +1167,7 @@ const EmployeeData = () => {
                                             }
                                         </Typography>
                                     </AccordionDetails>
-                                </Accordion>
+                                </Accordion> */}
 
 
                                 {/* Service Details section */}
@@ -931,7 +1182,7 @@ const EmployeeData = () => {
                                         aria-controls="panel5-content"
                                         id="panel5-header"
                                     >
-                                        <Typography component="span">Service Details</Typography>
+                                        <Typography component="span">Employee Salary Information</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <Typography className='form-detail-main'>
@@ -940,38 +1191,45 @@ const EmployeeData = () => {
                                                     <div className='emp-data-value-sec form-detail-inner'>
                                                         <div className='row'>
                                                             <div className=' form-detail-left'>
+
+
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Previous Service Credit</h3>
+                                                                            <h3>Calculated Salary
+
+                                                                            </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMPREV}</p>
+                                                                            <p>
+                                                                                {formatCurrency(employeeData.calculatedSalary)}
+
+                                                                                {/* {employeeData.emSeniori != null && employeeData.emSeniori != '' && (employeeData.emSeniori)} */}
+                                                                            </p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
-
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>State </h3>
+                                                                            <h3> Job Title</h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EMSST}</p>
+                                                                            <p>{employeeDatapay.scname}</p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Full Time Hire Date
@@ -986,9 +1244,9 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Original Hire Date
@@ -1003,9 +1261,9 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Termination Date
@@ -1016,13 +1274,13 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p> {employeeData.TRD != '' && employeeData.TRD != null && formatDate(employeeData.TRD)}</p>
+                                                                            <p> {employeeDatapay.termdate != null && employeeDatapay.termdate != '' && formatDate(employeeData.termdate)}</p>
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Title Change Date
@@ -1037,8 +1295,8 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
-
+                                                                </div> */}
+                                                                {/* 
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner last-right-data'>
                                                                         <div className='form-details-label'>
@@ -1054,7 +1312,7 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
                                                             </div>
                                                             <div className='form-detail-midle'>
@@ -1062,7 +1320,7 @@ const EmployeeData = () => {
                                                             </div>
                                                             <div className=' form-detail-right'>
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
                                                                             <h3>District </h3>
@@ -1092,11 +1350,11 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
-                                                                <div className='row'>
+                                                                </div> */}
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Seniority Date
+                                                                            <h3>Calculated Salary
 
                                                                             </h3>
                                                                             <p className='semicolon'>:</p>
@@ -1106,14 +1364,15 @@ const EmployeeData = () => {
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
                                                                             <p>
+                                                                                {dollarUS.format(employeeData.calculatedSalary)}
 
-                                                                                {employeeData.EMSRDT != '' && employeeData.EMSRDT != null && formatDateemdtsenior(employeeData.EMSRDT)}
+                                                                              
                                                                             </p>
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
-                                                                <div className='row'>
+                                                                </div> */}
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss '>
                                                                         <div className='form-details-label'>
                                                                             <h3>Seniority Number
@@ -1129,12 +1388,12 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Salary Change Date
+                                                                            <h3>Salary
 
                                                                             </h3>
                                                                             <p className='semicolon'>:</p>
@@ -1144,14 +1403,14 @@ const EmployeeData = () => {
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
                                                                             <p>
-                                                                                {employeeData.SCD != '' && employeeData.SCD != null && formatDate(employeeData.SCD)}
+                                                                                {formatCurrency(employeeDatapay.salary)}
                                                                             </p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Last Update for Longevity
@@ -1163,13 +1422,13 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{(employeeData.EMMSC1)}</p>
+                                                                            <p>{(employeeDatapay.long)}</p>
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss last-right-data'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Total Year of Longevity
@@ -1185,7 +1444,7 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
                                                             </div>
 
@@ -1223,19 +1482,19 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>Pension Number</h3>
+                                                                            <h3>Pension Code</h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EXPENS}</p>
+                                                                            <p>{employeeData.pensionCode}</p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
-
+                                                                {/* 
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
@@ -1250,8 +1509,8 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
-                                                                <div className='row'>
+                                                                </div> */}
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Job Code for GTL Addenda
@@ -1266,8 +1525,8 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
-
+                                                                </div> */}
+                                                                {/* 
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
@@ -1283,9 +1542,9 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
                                                                             <h3>State
@@ -1300,9 +1559,9 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-inner last-right-data'>
                                                                         <div className='form-details-label'>
                                                                             <h3>Out-of-State
@@ -1317,7 +1576,7 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
 
 
@@ -1330,20 +1589,20 @@ const EmployeeData = () => {
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
-                                                                            <h3>10/12 Column Value </h3>
+                                                                            <h3>Pension Number </h3>
                                                                             <p className='semicolon'>:</p>
                                                                         </div>
 
                                                                     </div>
                                                                     <div className='form-detail-right-innerss'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{employeeData.EX1012}</p>
+                                                                            <p>{employeeData.pension}</p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
 
-                                                                <div className='row'>
+                                                                {/* <div className='row'>
                                                                     <div className='form-detail-left-innerss'>
                                                                         <div className='form-details-label'>
                                                                             <h3>TPAF,PERS, CNTY or NOPP</h3>
@@ -1391,8 +1650,8 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
-
+                                                                </div> */}
+                                                                {/* 
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-innerss last-right-data'>
                                                                         <div className='form-details-label'>
@@ -1409,7 +1668,7 @@ const EmployeeData = () => {
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
 
 
@@ -1418,7 +1677,7 @@ const EmployeeData = () => {
                                                             </div>
                                                         </div>
 
-                                                        <div className='form-large-data-sec form-large-fill'>
+                                                        {/* <div className='form-large-data-sec form-large-fill'>
                                                             <div className='row'>
                                                                 <div className='form-detail-left-inner form-neww-details-se form-newsss-pure'>
                                                                     <div className='form-details-label'>
@@ -1434,7 +1693,7 @@ const EmployeeData = () => {
 
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
 
                                                     </div>
                                                 </>
@@ -1477,13 +1736,13 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p> {employeeData.ETMDAT != '' && employeeData.ETMDAT != null && formatDateemdttermisinfor(employeeData.ETMDAT)}
-                                                                               </p>
+                                                                            <p> {employeeDatapay.termdate != null && employeeDatapay.termdate != '' && formatDate(employeeData.termdate)}
+                                                                            </p>
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
-                                                                {(employeeData.ETMCDE && employeeData.TRMTTL) &&
+                                                                {/* {(employeeData.ETMCDE && employeeData.TRMTTL) &&
                                                                     <div className='row'>
                                                                         <div className='form-detail-left-inner'>
                                                                             <div className='form-details-label'>
@@ -1494,13 +1753,13 @@ const EmployeeData = () => {
                                                                         </div>
                                                                         <div className='form-detail-right-inner'>
                                                                             <div className='form-details-value'>
-                                                                                <p> 
-                                                                                   {employeeData.ETMCDE} {employeeData.TRMTTL}</p>
+                                                                                <p>
+                                                                                    {employeeData.ETMCDE} {employeeData.TRMTTL}</p>
                                                                             </div>
 
                                                                         </div>
                                                                     </div>
-                                                                }
+                                                                } */}
                                                                 <div className='row'>
                                                                     <div className='form-detail-left-inner'>
                                                                         <div className='form-details-label'>
@@ -1511,7 +1770,7 @@ const EmployeeData = () => {
                                                                     </div>
                                                                     <div className='form-detail-right-inner'>
                                                                         <div className='form-details-value'>
-                                                                            <p>{(employeeData.ETMDS1 === null || employeeData.ETMDS1 === undefined) ? '-' : employeeData.ETMDS1}
+                                                                            <p>-
 
 
 
@@ -1540,9 +1799,9 @@ const EmployeeData = () => {
                                                                                  {employeeData.ETMDS4}  
                                                                                  {employeeData.ETMDS5} 
                                                                                   {employeeData.ETMDS6} */}
-                                                                                 {(employeeData.ETMDS2 === null || employeeData.ETMDS2 === undefined) ? '-' : employeeData.ETMDS2}  {(employeeData.ETMDS3 === null || employeeData.ETMDS3 === undefined) ? '-' : employeeData.ETMDS3} {(employeeData.ETMDS4 === null || employeeData.ETMDS4 === undefined) ? '-' : employeeData.ETMDS4} {(employeeData.ETMDS5 === null || employeeData.ETMDS5 === undefined) ? '-' : employeeData.ETMDS5} {(employeeData.ETMDS6 === null || employeeData.ETMDS6 === undefined) ? '-' : employeeData.ETMDS6}
-                                                                                
-                                                                                </p>
+                                                                                ----
+
+                                                                            </p>
                                                                         </div>
 
                                                                     </div>

@@ -94,7 +94,7 @@ function Pdf() {
     } else {
       PODAT = pPODAT;
     }
-
+    if(pPODAT!=null && pPODAT != undefined && pPODAT != ''){
     var ddd = PODAT.substring(2, 5);
     var m = Math.floor(Number(ddd) / 30) + 1;
     var d = Number(ddd) - 30 * (m - 1);
@@ -106,6 +106,7 @@ function Pdf() {
     }
 
     PODAT = String(m) + "/" + String(d) + "/" + String(y);
+  }
     return PODAT;
   };
 

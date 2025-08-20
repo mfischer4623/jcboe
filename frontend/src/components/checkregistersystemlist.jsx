@@ -21,6 +21,32 @@ import { AppContext } from '../context';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+function formatDate(date) {
+  if (!date) return '';
+
+  let d;
+
+  // Check if format is YYYY-MM-DD
+  if (date.includes('-')) {
+    d = new Date(date);
+  }
+  // Check if format is M/D/YYYY or MM/DD/YYYY
+  else if (date.includes('/')) {
+    let parts = date.split('/');
+    let month = parts[0].padStart(2, '0');
+    let day = parts[1].padStart(2, '0');
+    let year = parts[2];
+    return `${month}/${day}/${year}`;
+  }
+
+  if (isNaN(d)) return '';
+
+  let month = String(d.getMonth() + 1).padStart(2, '0');
+  let day = String(d.getDate()).padStart(2, '0');
+  let year = d.getFullYear();
+
+  return `${month}/${day}/${year}`;
+}
 const Checksearchlist = () => {
   const [allattendata, setAllattendata] = useState([]);
   const [allattendataextac, setAllattendataexta] = useState([]);
@@ -32,8 +58,8 @@ const Checksearchlist = () => {
   const [loader, setLoader] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [searchPlaceholder, setSearchPlaceholder] = useState('Bank');
-  const [searchBy, setSearchBy] = useState('APHBNK');
+  const [searchPlaceholder, setSearchPlaceholder] = useState('Receipt#');
+  const [searchBy, setSearchBy] = useState('receipt');
   const [searchValue, setSearchValue] = useState('');
   const [actionallCsv, setActionallCsv] = useState(Array(0));
   const [actionbulkallCsv, setActionbulkallCsv] = useState(Array(0));
@@ -44,7 +70,7 @@ const Checksearchlist = () => {
   const handleClosedraft = () => setOpendraft(false);
   let navigate = useNavigate();
   useEffect(() => {
-    var userid = secureLocalStorage.getItem('bankDetailsData');
+    var userid = secureLocalStorage.getItem('bankDetailssystemData');
 
 
     if ((userid) == null || (userid) == undefined) {
@@ -53,6 +79,7 @@ const Checksearchlist = () => {
       navigate(`/vendorsearch`);
 
     } else {
+      console.log(userid);
       setFirstLoading(true);
       const totalPages = Math.ceil(userid.length / perPage);
       setTotalPage(totalPages);
@@ -94,28 +121,26 @@ const Checksearchlist = () => {
   const handleColumnClick = (type) => {
     let placeholder = '';
     switch (type) {
-      case 'APHBNK':
-        placeholder = 'Bank';
+      case 'receipt':
+        placeholder = 'Receipt#';
         break;
-      case 'APHBAC':
-        placeholder = 'Bank Account';
+      case 'checkNumber':
+        placeholder = 'Check#';
         break;
-      case 'APHFRM':
-        placeholder = 'Form';
+      case 'invoice':
+        placeholder = 'Invoice#';
         break;
-      case 'APHVEN':
+      case 'vendorNumber':
         placeholder = 'Vendor No';
         break;
-      case 'APHCHK':
-        placeholder = 'Check Number';
-        break;
 
-      case 'APHCDT':
+
+      case 'chkDate':
         placeholder = 'Check Date';
         break;
 
       default:
-        placeholder = 'Bank';
+        placeholder = 'Receipt#';
         break;
     }
     setSearchPlaceholder(placeholder);
@@ -135,11 +160,11 @@ const Checksearchlist = () => {
     setSearchValue(e.target.value);
 
   }
-    const perPageChange = (e) => {
+  const perPageChange = (e) => {
     setPerPage(e.target.value);
-    
-   
-     setFirstLoading(true);
+
+
+    setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / e.target.value);
     setTotalPage(totalPages);
     const startIndex = (1 - 1) * e.target.value;
@@ -156,8 +181,8 @@ const Checksearchlist = () => {
   const gosubmit = (e) => {
 
     setFirstLoading(true);
-    if (searchBy == 'APHBNK') {
-      const filteredData = allattendataextac.filter(item => item.APHBNK.toString().includes(searchValue));
+    if (searchBy == 'receipt') {
+      const filteredData = allattendataextac.filter(item => item.receipt.toString().includes(searchValue));
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
       const startIndex = (1 - 1) * perPage;
@@ -169,9 +194,9 @@ const Checksearchlist = () => {
 
 
     }
-    if (searchBy == 'APHBAC') {
+    if (searchBy == 'checkNumber') {
       const filteredData = allattendataextac.filter((item) =>
-        item.APHBAC.toLowerCase().includes(searchValue.toLowerCase())
+        item.checkNumber.toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -184,9 +209,9 @@ const Checksearchlist = () => {
 
 
     }
-    if (searchBy == 'APHFRM') {
+    if (searchBy == 'invoice') {
       const filteredData = allattendataextac.filter((item) =>
-        item.APHFRM.toLowerCase().includes(searchValue.toLowerCase())
+        item.invoice.toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -201,9 +226,9 @@ const Checksearchlist = () => {
 
     }
 
-    if (searchBy == 'APHVEN') {
+    if (searchBy == 'vendorNumber') {
       const filteredData = allattendataextac.filter((item) =>
-        item.APHVEN.toString().toLowerCase().includes(searchValue.toLowerCase())
+        item.vendorNumber.toString().toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -235,16 +260,30 @@ const Checksearchlist = () => {
 
 
     }
-    if (searchBy == 'APHCDT') {
-      const filteredData = allattendataextac.filter((item) =>
-        item.APHCDT.toLowerCase().includes(searchValue.toLowerCase())
-      );
+    if (searchBy == 'chkDate') {
+      const filteredData = allattendataextac.filter((item) => {
+        if (!item.chkDate) return false;
+
+        // Normalize both to MM/DD/YYYY
+        const dateStr = new Date(item.chkDate).toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        });
+
+        return dateStr.includes(searchValue);
+      });
+
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
-      const startIndex = (1 - 1) * perPage;
 
-      var customerList_temp = filteredData.slice(startIndex, startIndex + perPage);
-      for (let i = 0; i < customerList_temp.length; i++) { customerList_temp[i].check_status = false; }
+      const startIndex = (1 - 1) * perPage;
+      let customerList_temp = filteredData.slice(startIndex, startIndex + perPage);
+
+      for (let i = 0; i < customerList_temp.length; i++) {
+        customerList_temp[i].check_status = false;
+      }
+
       console.log(customerList_temp);
       setAllattendata(customerList_temp);
       setPageNo(1);
@@ -260,8 +299,8 @@ const Checksearchlist = () => {
 
   }
   const handleClearFilter = () => {
-    setSearchPlaceholder('Bank');
-    setSearchBy('APHBNK');
+    setSearchPlaceholder('Receipt#');
+    setSearchBy('receipt');
     setSearchValue('');
     setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / perPage);
@@ -278,63 +317,37 @@ const Checksearchlist = () => {
 
   }
   let dollarUS = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
-  const chcekdate = (APHCDT) => {
-    if (APHCDT.length === 1) {
-      var APHCDT = '00000' + APHCDT
-    } else if (APHCDT.length === 2) {
-      APHCDT = '0000' + APHCDT
-    } else if (APHCDT.length === 3) {
-      APHCDT = '000' + APHCDT
-    } else if (APHCDT.length === 4) {
-      APHCDT = '00' + APHCDT
-    } else if (APHCDT.length === 5) {
-      APHCDT = '0' + APHCDT
-    } else {
-      APHCDT = APHCDT
-    }
-    
-    if(APHCDT!== null && APHCDT !== undefined && APHCDT !== 0 && APHCDT !== ''){
- var m = Number(APHCDT.substring(0, 2))
-    var d = Number(APHCDT.substring(2, 4))
-    var y = Number(APHCDT.substring(4, 6))
-    if (y <= 50) {
-      y = 2000 + y
-    } else {
-      y = 1900 + y
-    }
+function formatCurrency(value) {
+  if (!value) return "$0.00";
 
-    APHCDT = String(m) + '/' + String(d) + '/' + String(y)
+  // Remove commas and convert to number
+  let num = Number(String(value).replace(/,/g, ""));
+  
+  // If invalid, return as is
+  if (isNaN(num)) return value;
 
-    }
-   
-    return APHCDT;
-  }
-  const chcekam = (APHCAM, index) => {
+  return dollarUS.format(num);
+}
 
-    var checkAmt = Number(APHCAM);
-    var totAmt = 0;
-    if (index === 0) {
-      totAmt = checkAmt
-    } else {
-      totAmt = checkAmt + totAmt
-    }
 
-    return totAmt;
-  }
+
+
   const exportTopdf = (e) => {
 
 
-    window.open('printshowBank/', '_blank', 'noopener,noreferrer');
+    window.open('printsystemvendorregister/', '_blank', 'noopener,noreferrer');
 
 
 
 
 
-};
+  };
   return (
     <>
       {/* <Header />
@@ -358,14 +371,14 @@ const Checksearchlist = () => {
           <div class="main-heading-sec ">
             <div class="col-md-12">
               <div class="head-inner">
-                <h2>Check Search</h2>
+                <h2>Check Register</h2>
                 <div class="head-right">
                   <span className='print-icon print-check-icon' onClick={(e) => exportTopdf()} ><PrintIcon /></span>
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
               <div className='back-sec'>
-                <Link to="/vendordetails" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
+                <Link to="/vendorsystemdetails" className="back-btn-sec"><KeyboardDoubleArrowLeftIcon />Back</Link>
               </div>
             </div>
           </div>
@@ -378,7 +391,7 @@ const Checksearchlist = () => {
             <div className='row'>
 
               <div className='col-md-12 emp-serch-main' >
-                 <div className='show-entreies-sec'>
+                <div className='show-entreies-sec'>
                   <div className='show-entries'>
                     <p className='show-content'>Show</p>
                     <select className='select-sec' onChange={perPageChange} value={perPage} >
@@ -408,22 +421,22 @@ const Checksearchlist = () => {
                          
                            #
                          </th> */}
-                      <th className='job-width check-bank-widh cursorjob' onClick={() => handleColumnClick('APHBNK')}>Bank<span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width bank-accont-widh bank-accont-widhss cursorjob' onClick={() => handleColumnClick('APHBAC')}>Bank Account <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className=' sys-check-widhss' onClick={() => handleColumnClick('receipt')}>Receipt#<span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='sys-ven-widhss' onClick={() => handleColumnClick('vendorNumber')}>Vendor Name <span className='filt-icon'><img src={filticon} /></span></th>
 
-                      <th className='beg-bal-width addrss-widh chk-form-widh cursorjob' onClick={() => handleColumnClick('APHFRM')}>Form <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='earnd-width city-widh chk-ven-widh cursorjob' onClick={() => handleColumnClick('APHVEN')}>Vendor No <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='beg-bal-width addrss-widh chk-no-widh cursorjob' onClick={() => handleColumnClick('APHCHK')} >Check Number <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='earnd-width chk-date-widh cursorjob' onClick={() => handleColumnClick('APHCDT')}>Check Date <span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='earnd-width chk-recon-widh'>Reconciled?</th>
-                      <th className='earnd-width  chk-recon-date-widh'>Reconciled Date </th>
-                      <th className='earnd-width  chek-amt-widh'>Check Amount </th>
+                      <th className=' sys-check-widhss' onClick={() => handleColumnClick('checkNumber')}>Check# <span className='filt-icon'><img src={filticon} /></span></th>
+
+                      <th className='sys-check-date-widhss' onClick={() => handleColumnClick('chkDate')}>Check Date <span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='sys-trans-amt-widh'>Transaction Amount </th>
+                      <th className='sys-invoice-widhss' onClick={() => handleColumnClick('invoice')}>Invoice# <span className='filt-icon'><img src={filticon} /></span></th>
+
+
                     </tr>
                   </thead>
                   <tbody class="tbody-light">
 
                     {
-                      firstLoading ? <tr ><td colSpan={9}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
+                      firstLoading ? <tr ><td colSpan={6}><div className="spinner-border" role="status" style={{ width: "1rem", height: "1rem", marginLeft: "6px" }}></div></td></tr> : <>
                         {allattendata.length > 0 ?
 
                           allattendata.map((entry, index) => (
@@ -431,36 +444,29 @@ const Checksearchlist = () => {
                             <tr>
 
                               <td class="value-table">
-                                <p>{entry.APHBNK} </p>
+                                <p>{entry.receipt} </p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.APHBAC}</p>
+                                <p>{entry.vendor} ({entry.vendorNumber}) </p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.APHFRM} </p>
+                                <p>{entry.checkNumber} </p>
+                              </td>
+
+                              <td class="value-table">
+                                <p>{formatDate(entry.chkDate)}  </p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.APHVEN} {entry.APHNAM}  </p>
+                                <p>{formatCurrency((entry.transAmt))}  </p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.APHCHK}  </p>
+                                <p>{(entry.invoice)}  </p>
                               </td>
-                              <td class="value-table">
-                                <p>{chcekdate(entry.APHCDT)}  </p>
-                              </td>
-                              <td class="value-table">
-                                <p>Y </p>
-                              </td>
-                              <td class="value-table">
-                                <p>{chcekdate(entry.APHCDT)} </p>
-                              </td>
-                              <td class="value-table">
-                                <p>{dollarUS.format(chcekam(entry.APHCAM, index))} </p>
-                              </td>
+
                             </tr>
 
                           ))
-                          : <tr><td colSpan={9}>No Data Found</td></tr>}
+                          : <tr><td colSpan={6}>No Data Found</td></tr>}
                       </>
                     }
 

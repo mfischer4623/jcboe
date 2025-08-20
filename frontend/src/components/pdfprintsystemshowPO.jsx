@@ -11,19 +11,39 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import { AppContext } from '../context';
-function formatDate(date, format = null) {
-  const myArray = date.split("-");
-  var d = new Date(date);
-  var month = myArray[1];
-  var day = myArray[2];
-  var year = myArray[0];
-  var daten = month + '/' + day + '/' + year;
-  // if (month.length < 2) month = '0' + month;
-  // if (day.length < 2) day = '0' + day;
+function formatDate(date) {
+  if (!date) return '';
 
-  // if (format && format == 'Y-m-d') return [month, day, year].join('-');
-  // else return [month, day, year].join('-');
-  return daten;
+  let d;
+
+  // Check if format is YYYY-MM-DD
+  if (date.includes('-')) {
+    d = new Date(date);
+  }
+  // Check if format is M/D/YYYY or MM/DD/YYYY
+  else if (date.includes('/')) {
+    let parts = date.split('/');
+    let month = parts[0].padStart(2, '0');
+    let day = parts[1].padStart(2, '0');
+    let year = parts[2];
+    return `${month}/${day}/${year}`;
+  }
+
+  if (isNaN(d)) return '';
+
+  let month = String(d.getMonth() + 1).padStart(2, '0');
+  let day = String(d.getDate()).padStart(2, '0');
+  let year = d.getFullYear();
+
+  return `${month}/${day}/${year}`;
+}
+function formatYearRange(yearStr) {
+  if (!yearStr || yearStr.length !== 8) return yearStr; // safety check
+
+  let startYear = yearStr.substring(0, 4);
+  let endYear = yearStr.substring(4, 8);
+
+  return `${startYear}-${endYear}`;
 }
 
 const formatDateTime = (dateString) => {
@@ -66,13 +86,13 @@ function Pdf() {
   const [employeeData, setEmployeeData] = useState(null);
   useEffect(() => {
 
-    var userid = secureLocalStorage.getItem('bankDetailsData');
+    var userid = secureLocalStorage.getItem('showsystemPOData');
 
 
     if ((userid) == null || (userid) == undefined) {
 
 
-      navigate(`/vendorsearch`);
+      navigate(`/systemshowPO`);
 
     } else {
 
@@ -88,7 +108,7 @@ function Pdf() {
 
 
 
-    document.title = 'Bank Details';
+    document.title = 'PO Details';
 
 
     setTimeout(function () {
@@ -98,51 +118,12 @@ function Pdf() {
     }, 500);
     ;
   }
-  let dollarUS = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
 
-  const chcekdate = (APHCDT) => {
-    if (APHCDT.length === 1) {
-      var APHCDT = '00000' + APHCDT
-    } else if (APHCDT.length === 2) {
-      APHCDT = '0000' + APHCDT
-    } else if (APHCDT.length === 3) {
-      APHCDT = '000' + APHCDT
-    } else if (APHCDT.length === 4) {
-      APHCDT = '00' + APHCDT
-    } else if (APHCDT.length === 5) {
-      APHCDT = '0' + APHCDT
-    } else {
-      APHCDT = APHCDT
-    }
-    if (APHCDT !== undefined && APHCDT != null && APHCDT != '') {
-      var m = Number(APHCDT.substring(0, 2))
-      var d = Number(APHCDT.substring(2, 4))
-      var y = Number(APHCDT.substring(4, 6))
-      if (y <= 50) {
-        y = 2000 + y
-      } else {
-        y = 1900 + y
-      }
 
-      APHCDT = String(m) + '/' + String(d) + '/' + String(y)
-    }
-    return APHCDT;
-  }
-  const chcekam = (APHCAM, index) => {
 
-    var checkAmt = Number(APHCAM);
-    var totAmt = 0;
-    if (index === 0) {
-      totAmt = checkAmt
-    } else {
-      totAmt = checkAmt + totAmt
-    }
 
-    return totAmt;
-  }
+ 
+
 
   const styles = {
     body: {
@@ -152,6 +133,25 @@ function Pdf() {
       pageBreakAfter: "always",
     },
   };
+    let dollarUS = Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+function formatCurrency(value) {
+  if (!value) return "$0.00";
+
+  // Remove commas and convert to number
+  let num = Number(String(value).replace(/,/g, ""));
+  
+  // If invalid, return as is
+  if (isNaN(num)) return value;
+
+  return dollarUS.format(num);
+}
+
   return (
     <>
       <div style={styles.body}>
@@ -177,8 +177,8 @@ function Pdf() {
                         {viewData.length > 0 &&
                           <>
                             {/* <h2>Purchase Order Search</h2> */}
-                            <h2 className='po-doc-pdf'>Check Search</h2>
-                            <h3 className='po-num-pdf'>Vendor Number: {viewData[0].APHVEN}</h3>
+                            <h2 className='po-doc-pdf'>Purchase Orders</h2>
+                            <h3 className='po-num-pdf'>Vendor Number: {viewData[0].vendorNumber}</h3>
 
                           </>
                         }
@@ -196,34 +196,24 @@ function Pdf() {
                     {viewData.length > 0 ?
                       <><thead>
                         <tr>
-                          <th className='pf-sl pdf-job-cde'>Bank</th>
-                          <th className='pf-wl pdf-absne'>Bank Account</th>
-                          <th className='pf-date pdf-begn-bal'>Form </th>
-                          <th className='pf-time pdf-earn pdf-ven-no'>Vendor No  </th>
-                          <th className='pf-time pdf-earn'>Check Number </th>
-                          <th className='pf-time pdf-earn'>Check Date </th>
-                          <th className='pf-time pdf-earn'>Reconciled?</th>
-                          <th className='pf-time pdf-earn'>Reconciled Date</th>
-                          <th className='pf-time pdf-earn'>Check Amount</th>
+                          <th className='pf-sl pdf-job-cde pdf-po-sys'>PO</th>
+                          <th className='pf-wl pdf-absne pdf-pay-sys'>PAYMENTS</th>
+                          <th className='pf-date pdf-begn-bal pdf-sys-date'>DATE </th>
+                          <th className='pf-time pdf-earn pdf-sys-year'>YEAR </th>
+                         
                         </tr>
-                      </thead>
-                      </>
+                      </thead></>
                       :
                       null}
                     {viewData.length > 0 ?
 
                       viewData.map((item, index) =>
                         <tr>
-                          <td class="border-right">  {item?.APHBNK} </td>
-                          <td class="border-right">  {item?.APHBAC}</td>
-                          <td class="border-right">  {item?.APHFRM}</td>
-
-                          <td class="border-right">  {item?.APHVEN}  {item?.APHNAM}</td>
-                          <td class="border-right">  {item?.APHCHK}</td>
-                          <td class="border-right">  {chcekdate(item.APHCDT)}</td>
-                          <td class="border-right">  Y</td>
-                          <td class="border-right">  {chcekdate(item.APHCDT)}</td>
-                          <td class="border-right">  {dollarUS.format(chcekam(item.APHCAM, index))} </td>
+                          <td class="border-right">  {item?.poNumber} </td>
+                          <td class="border-right"> {formatCurrency(item.payments)}</td>
+                          <td class="border-right">  {formatDate(item.date)}</td>
+                          <td class="border-right">  {formatYearRange(item.year)}</td>
+                        
 
                         </tr>
                       ) : ""}
