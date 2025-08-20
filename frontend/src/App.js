@@ -95,7 +95,7 @@ function App() {
   var baseName = '/';
   var data = [];
   data.tabName = 'Learnbyrole';
-  // data.imageUrl = process.env.REACT_APP_IMAGE_URL;
+ 
   data.backEndUrl = process.env.REACT_APP_BACKEND_URL + 'api/';
  
 

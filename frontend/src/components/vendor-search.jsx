@@ -215,6 +215,9 @@ const Vendorsearch = () => {
         const handleSubmitsystem = (e) => {
         setFormerror("");
         setLoader(false);
+        // console.log(empnumsearsystem.vendorName);
+        //  console.log(empnumsearsystem.vendorNumber);
+        // return false;
         if (validateFormsystem()) {
             setLoader(true);
 

@@ -16,7 +16,7 @@ import {
 } from "react-router-dom";
 
 
-import { vendorNumberSearch, vendorNameSearch } from '../actions/admin.actions';
+import { systemvendornumber, systemvendornamesearch } from '../actions/systemadmin.actions';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 // modal code start here
@@ -51,7 +51,7 @@ const Vendorsearchlist = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [searchPlaceholder, setSearchPlaceholder] = useState('Vendor #');
-  const [searchBy, setSearchBy] = useState('VNNO');
+  const [searchBy, setSearchBy] = useState('vendorNumber');
   const [searchValue, setSearchValue] = useState('');
   const [actionallCsv, setActionallCsv] = useState(Array(0));
   const [actionbulkallCsv, setActionbulkallCsv] = useState(Array(0));
@@ -112,10 +112,10 @@ const Vendorsearchlist = () => {
   const handleColumnClick = (type) => {
     let placeholder = '';
     switch (type) {
-      case 'VNNO':
+      case 'vendorNumber':
         placeholder = 'Vendor #';
         break;
-      case 'VNNAME':
+      case 'indexName':
         placeholder = 'Vendor Name';
         break;
       case 'VNADDR':
@@ -146,11 +146,11 @@ const Vendorsearchlist = () => {
     setSearchValue(e.target.value);
 
   }
-   const perPageChange = (e) => {
+  const perPageChange = (e) => {
     setPerPage(e.target.value);
-    
-   
-     setFirstLoading(true);
+
+
+    setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / e.target.value);
     setTotalPage(totalPages);
     const startIndex = (1 - 1) * e.target.value;
@@ -167,8 +167,8 @@ const Vendorsearchlist = () => {
   const gosubmit = (e) => {
 
     setFirstLoading(true);
-    if (searchBy == 'VNNO') {
-      const filteredData =allattendataextac.filter(item => item.VNNO.toString().includes(searchValue));
+    if (searchBy == 'vendorNumber') {
+      const filteredData = allattendataextac.filter(item => item.vendorNumber.toString().includes(searchValue));
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
       const startIndex = (1 - 1) * perPage;
@@ -180,9 +180,9 @@ const Vendorsearchlist = () => {
 
 
     }
-    if (searchBy == 'VNNAME') {
+    if (searchBy == 'indexName') {
       const filteredData = allattendataextac.filter((item) =>
-        item.VNNAME.toLowerCase().includes(searchValue.toLowerCase())
+        item.indexName.toLowerCase().includes(searchValue.toLowerCase())
       );
       const totalPages = Math.ceil(filteredData.length / perPage);
       setTotalPage(totalPages);
@@ -222,7 +222,7 @@ const Vendorsearchlist = () => {
   }
   const handleClearFilter = () => {
     setSearchPlaceholder('Vendor #');
-    setSearchBy('VNNO');
+    setSearchBy('vendorNumber');
     setSearchValue('');
     setFirstLoading(true);
     const totalPages = Math.ceil(allattendataextac.length / perPage);
@@ -288,7 +288,7 @@ const Vendorsearchlist = () => {
         let text = actionbulkallCsv;
         console.log(actionbulkallCsv);
         secureLocalStorage.setItem("allprintsystemvendoename", (actionbulkallCsv));
-        
+
         window.open('printvendornamre/', '_blank', 'noopener,noreferrer');
       } else {
         setErrorMsgForm('Maximum Limit of 25 forms reached!');
@@ -305,21 +305,20 @@ const Vendorsearchlist = () => {
 
   };
 
-  const checkSelected = (VNNO) => {
-    vendorNumberSearch(VNNO).then((res) => {
+  const checkSelected = (vendorNumber) => {
+    systemvendornumber(vendorNumber).then((res) => {
       console.log('add-user res=====>>>>', res.data);
+
       if (res.data == '' || res.data == null) {
 
-
-        return;
       } else {
-
         secureLocalStorage.setItem("vendorSystemNumberData", res.data);
 
 
 
-        navigate("/vendordetails");
+        navigate("/vendorsystemdetails");
       }
+
 
     }).catch((error) => {
 
@@ -351,7 +350,7 @@ const Vendorsearchlist = () => {
               <div class="head-inner">
                 <h2>Vendor Name Search</h2>
                 <div class="head-right">
-                  <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span>
+                  {/* <span className='print-icon' onClick={(e) => exportTopdf()}><PrintIcon /></span> */}
                   <button class="btn btn-submit btn-clear" onClick={(e) => handleClearFilter()}>Clear Filter</button>
                 </div>
               </div>
@@ -366,7 +365,7 @@ const Vendorsearchlist = () => {
             <div className='row'>
 
               <div className='col-md-12 emp-serch-main' >
-                     <div className='show-entreies-sec'>
+                <div className='show-entreies-sec'>
                   <div className='show-entries'>
                     <p className='show-content'>Show</p>
                     <select className='select-sec' onChange={perPageChange} value={perPage} >
@@ -392,14 +391,12 @@ const Vendorsearchlist = () => {
                 <table class="table table-sec">
                   <thead class="thead-before-sec thaed-colaps-sec">
                     <tr>
-                      <th className='check-width'>
-                        {/* <FormGroup>
-                          <FormControlLabel control={<Checkbox />} label="" />
-                        </FormGroup> */}
+                      {/* <th className='check-width'>
+                        
                         #
-                      </th>
-                      <th className='job-width vendor-widh cursorjob' onClick={() => handleColumnClick('VNNO')}>Vendor #<span className='filt-icon'><img src={filticon} /></span></th>
-                      <th className='abse-type-width vendo-name-width cursorjob' onClick={() => handleColumnClick('VNNAME')}>Vendor Name <span className='filt-icon'><img src={filticon} /></span></th>
+                      </th> */}
+                      <th className='job-width vendor-widh cursorjob' onClick={() => handleColumnClick('vendorNumber')}>Vendor #<span className='filt-icon'><img src={filticon} /></span></th>
+                      <th className='abse-type-width vendo-name-width cursorjob' onClick={() => handleColumnClick('indexName')}>Vendor Name <span className='filt-icon'><img src={filticon} /></span></th>
 
                       <th className='beg-bal-width addrss-widh cursorjob' onClick={() => handleColumnClick('VNADDR')} >Address <span className='filt-icon'><img src={filticon} /></span></th>
                       <th className='earnd-width city-widh cursorjob' onClick={() => handleColumnClick('VNCITY')}>City, State Zip <span className='filt-icon'><img src={filticon} /></span></th>
@@ -416,31 +413,31 @@ const Vendorsearchlist = () => {
                           allattendata.map((entry, index) => (
 
                             <tr>
-                              <td class="check-width">
+                              {/* <td class="check-width">
                                 <FormGroup>
                                   <FormControlLabel control={<Checkbox />} label=""
 
                                     name="prev_all"
                                     checked={entry.check_status}
-                                    onClick={(e) => entry.VNNO && createCsv(e, entry, index)}
+                                    onClick={(e) => entry.vendorNumber && createCsv(e, entry, index)}
                                   />
                                 </FormGroup>
+                              </td> */}
+                              <td class="value-table">
+                                <p>{entry.vendorNumber} </p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.VNNO} </p>
+                                <p>{entry.indexName}</p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.VNNAME}</p>
+                                <p>{entry.remitToAddressLine1} {entry.remitToAddressLine2}  </p>
                               </td>
                               <td class="value-table">
-                                <p>{entry.VNADDR} </p>
-                              </td>
-                              <td class="value-table">
-                                <p>{entry.VNCITY}, {entry.VNST} {entry.VNZIP}</p>
+                                <p>  {entry.remitToCity}, {entry.remitToState} {entry.remitToZip}</p>
                               </td>
                               <td class="value-table view-sec">
                                 <Link to="#"
-                                  onClick={(e) => { e.preventDefault(); checkSelected(entry.VNNO); }}
+                                  onClick={(e) => { e.preventDefault(); checkSelected(entry.vendorNumber); }}
 
                                 >  <img src={viewicon} className='view-icon' alt="view" /></Link>
                               </td>
