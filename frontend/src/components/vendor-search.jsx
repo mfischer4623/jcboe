@@ -79,6 +79,8 @@ const Vendorsearch = () => {
     useEffect(() => {
         secureLocalStorage.removeItem('vendorNameData');
         secureLocalStorage.removeItem('vendorNumberData');
+        secureLocalStorage.removeItem('vendorSystemNumberData');
+        secureLocalStorage.removeItem('vendorSystemNameData');
         secureLocalStorage.removeItem('showPOData');
         secureLocalStorage.removeItem('checkforsh');
         secureLocalStorage.removeItem('bankDetailsData');
