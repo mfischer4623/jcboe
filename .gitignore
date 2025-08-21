@@ -7,4 +7,5 @@ node_modules
 *.crt 
 *.key
 
-.claude
+/.claude
+AAA.txt
