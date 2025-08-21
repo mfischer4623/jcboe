@@ -9,3 +9,8 @@ node_modules
 
 /.claude
 AAA.txt
+/staging
+/xold auth-server
+/xold backend
+/xold frontend
+/xold react-sidebar
