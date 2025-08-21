@@ -1,5 +1,7 @@
 # jcboe
 
+Production
+
 (1) cd backend
     node server.js
 
@@ -8,6 +10,20 @@
 (2) cd frontend
     HOST=10.0.0.42 PORT=443 HTTPS=true SSL_CRT_FILE=wildcard_jcboe_org.crt SSL_KEY_FILE=wildcard_jcboe_org.key npm start
 
+Test
+
+(1) cd testbackend
+    node server.js
+
+    Server is running on port 10.0.0.43:8081
+
+(2) cd testfrontend
+    HOST=10.0.0.43 PORT=3001 HTTPS=true SSL_CRT_FILE=wildcard_jcboe_org.crt SSL_KEY_FILE=wildcard_jcboe_org.key npm start
+
+
+__________________________________________________________________________________________________________________
+- Production: https://as400.jcboe.org/ (10.0.0.42:443 frontend, :8080 backend)
+- Test: https://testas400.jcboe.org:3001/ (10.0.0.43:3001 frontend, :8081 backend)
 __________________________________________________________________________________________________________________
 
     website URL:    https://as400.jcboe.org/

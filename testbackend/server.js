@@ -10,7 +10,7 @@ const app = express()
 
 const cors = require("cors");
 var corsOptions = {
-    origin: "http://localhost:3000"
+    origin: "https://testas400.jcboe.org"
 };
 
 //app.use(cors(corsOptions));
@@ -34,8 +34,8 @@ require("./app/routes/app.routes")(app);
 // set port, listen for requests
 
 var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(8080, '10.0.0.42', () => {
-    console.log('Server is running on https://10.0.0.42:8080');
+httpsServer.listen(8081, '10.0.0.43', () => {
+    console.log('Server is running on https://10.0.0.43:8081');
 });
 
 // app.listen(8080, () => {
