@@ -33,10 +33,10 @@ exports.findAll = (req, res) => {
 // Find a single dbo.employees with an id
 exports.findDetails = (req, res) => {
     var ssn = req.query.SSN
-    
+      const sortOrder = [["year", "ASC"]];
     var year = req.query.year
     var condition = { year: (year), ssn: (ssn) };
-    S3_W2.findAll({ where: condition })
+    S3_W2.findAll({ where: condition, order: sortOrder })
         .then(data => {
             res.send(data);
         })

@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
+
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('S3_W2', {
-  ssn: {
+  const S3_W2 = sequelize.define(
+    'S3_W2',
+    {
+     ssn: {
     type: DataTypes.STRING(50),
     allowNull: true,
     field: 'SSN'
@@ -381,19 +384,24 @@ module.exports = function (sequelize, DataTypes) {
     allowNull: true,
     field: 'year'
   }
-}, {
-    sequelize,
-    tableName: 'S3_W2',
-    schema: 'dbo',
+    },
+    {
+      sequelize,
+      tableName: 'S3_W2',
+      schema: 'dbo',
     timestamps: false,
-    underscored: true,
-    hasPrimaryKeys: false,         // not required but helps readability
-    createdAt: false,
-    updatedAt: false,
-    defaultScope: {
-      attributes: {
-        exclude: ['id'] // prevent Sequelize from looking for 'id'
+      underscored: true,
+      freezeTableName: true,
+      createdAt: false,
+      updatedAt: false,
+      defaultScope: {
+        order: [] 
       }
     }
-  });
+  );
+
+  
+  S3_W2.removeAttribute('id');
+
+  return S3_W2;
 };

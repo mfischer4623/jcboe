@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('S3_ProfileReport', {
-    employee: {
+
+module.exports = function (sequelize, DataTypes) {
+  const S3_ProfileReport = sequelize.define(
+    'S3_ProfileReport',
+    {
+     employee: {
     type: DataTypes.STRING(50),
     allowNull: true,
     field: 'Employee#'
@@ -956,19 +959,25 @@ module.exports = function(sequelize, DataTypes) {
     allowNull: true,
     field: 'PRIM_UDESC'
   }
-  }, {
-    sequelize,
-    tableName: 'S3_ProfileReport',
-    schema: 'dbo',
-    timestamps: false,
-    underscored: true,
-    hasPrimaryKeys: false,         // not required but helps readability
-    createdAt: false,
-    updatedAt: false,
-    defaultScope: {
-      attributes: {
-        exclude: ['id'] // prevent Sequelize from looking for 'id'
+    },
+    {
+      sequelize,
+      tableName: 'S3_ProfileReport',
+      schema: 'dbo',
+      timestamps: false,
+      underscored: true,
+      freezeTableName: true,
+      primaryKey: false,
+      createdAt: false,
+      updatedAt: false,
+      defaultScope: {
+        order: [] 
       }
     }
-  });
+  );
+
+  
+  S3_ProfileReport.removeAttribute('id');
+
+  return S3_ProfileReport;
 };

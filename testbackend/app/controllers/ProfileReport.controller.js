@@ -29,9 +29,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
     var condition = { 'Employee#': id };
-
+    var sortOrder = [
+        ['Last Name', 'ASC'],
+        ['First Name', 'ASC'],
+    ];
+    const sortOrderpay = [["empNum", "ASC"]];
     console.log(req.params);
-    S3_ProfileReport.findOne({ where: condition })
+    S3_ProfileReport.findOne({ where: condition, order: sortOrder })
         .then(data => {
 
             S3_W2.findAll({ where: { idn: (id) }, order: [["year", "ASC"]] })
@@ -41,32 +45,28 @@ exports.findOne = (req, res) => {
                             data: data
                         });
                     }
-                       S3_EmpPayOutput.findAll({ where: { empNum: (id) }})
-                .then((datapay) => {
-                    if (!datapay.length) {
-                        return res.status(404).send({
-                            data: data,
-                            datawe: datawe[0],
+                    S3_EmpPayOutput.findAll({ where: { empNum: (id) }, order: sortOrderpay })
+                        .then((datapay) => {
+                            if (!datapay.length) {
+                                return res.status(404).send({
+                                    data: data,
+                                    datawe: datawe[0],
+                                });
+                            }
+                            res.send({
+                                data: data,
+                                datawe: datawe[0],
+                                datapay: datapay[0],
+
+                            });
+                        })
+                        .catch((err) => {
+                            console.error("❌ Database error:", err);
+                            res.status(500).send({
+                                message: "Error retrieving emppay data.",
+                            });
                         });
-                    }
-                    res.send({
-                        data: data,
-                        datawe: datawe[0],
-                        datapay: datapay[0],
 
-                    });
-                })
-                .catch((err) => {
-                    console.error("❌ Database error:", err);
-                    res.status(500).send({
-                        message: "Error retrieving W2 data.",
-                    });
-                });
-                    // res.send({
-                    //     data: data,
-                    //     datawe: datawe[0]
-
-                    // });
                 })
                 .catch((err) => {
                     console.error("❌ Database error:", err);

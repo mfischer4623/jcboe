@@ -17,7 +17,7 @@ exports.findAll = (req, res) => {
   S3_EmpPayoutputHistory.findAll({ where: condition, order: sortOrder })
     .then((data) => {
       if (!data.length) {
-        return res.status(404).send({ message: "No W2 data found for this employee." });
+        return res.status(404).send({ message: "No emppay data found for this employee." });
       }
       res.send(data);
     })

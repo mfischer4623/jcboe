@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('S3_VendorMaster', {
+
+module.exports = function (sequelize, DataTypes) {
+  const S3_VendorMaster = sequelize.define(
+    'S3_VendorMaster',
+    {
    vendorNumber: {
       type: DataTypes.STRING(50),
       allowNull: true,
@@ -302,21 +305,24 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       field: 'FYTD Exp (Jan - Dec)'
     }
-  }, {
-
+    },
+    {
       sequelize,
-    tableName: 'S3_VendorMaster',
-    schema: 'dbo',
-    timestamps: false,
-    underscored: true,
-     hasPrimaryKeys: false,         // not required but helps readability
-    createdAt: false,
-    updatedAt: false,
-    defaultScope: {
-      attributes: {
-        exclude: ['id'] // prevent Sequelize from looking for 'id'
+      tableName: 'S3_VendorMaster',
+      schema: 'dbo',
+       timestamps: false,
+      underscored: true,
+      freezeTableName: true,
+      createdAt: false,
+      updatedAt: false,
+      defaultScope: {
+        order: [] 
       }
     }
- 
-  });
+  );
+
+  
+  S3_VendorMaster.removeAttribute('id');
+
+  return S3_VendorMaster;
 };

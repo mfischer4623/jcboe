@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
+
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('S3_VendorCheckRegister', {
-    horder: { type: DataTypes.STRING(50), allowNull: true, field: 'HORDER' },
+  const S3_VendorCheckRegister = sequelize.define(
+    'S3_VendorCheckRegister',
+    {
+       horder: { type: DataTypes.STRING(50), allowNull: true, field: 'HORDER' },
     transCode: { type: DataTypes.STRING(50), allowNull: true, field: 'Trans Code' },
     crGlAcct: { type: DataTypes.STRING(50), allowNull: true, field: 'CR GL Acct#' },
     dbGlAcct: { type: DataTypes.STRING(50), allowNull: true, field: 'DB GL Acct#' },
@@ -69,21 +72,24 @@ module.exports = function (sequelize, DataTypes) {
     zipcode: { type: DataTypes.STRING(50), allowNull: true, field: 'ZIPCODE' },
     remitToName2: { type: DataTypes.STRING(50), allowNull: true, field: 'Remit to Name 2' },
     year: { type: DataTypes.STRING(50), allowNull: true, field: 'Year' }
-  }, {
-       
+    },
+    {
       sequelize,
-    tableName: 'S3_VendorCheckRegister',
-    schema: 'dbo',
-    timestamps: false,
-    underscored: true,
-    hasPrimaryKeys: false,         // not required but helps readability
-    createdAt: false,
-    updatedAt: false,
-    defaultScope: {
-      attributes: {
-        exclude: ['id'] // prevent Sequelize from looking for 'id'
+      tableName: 'S3_VendorCheckRegister',
+      schema: 'dbo',
+      timestamps: false,
+      underscored: true,
+      freezeTableName: true,
+      createdAt: false,
+      updatedAt: false,
+      defaultScope: {
+        order: [] 
       }
     }
-   
-  });
+  );
+
+  
+  S3_VendorCheckRegister.removeAttribute('id');
+
+  return S3_VendorCheckRegister;
 };

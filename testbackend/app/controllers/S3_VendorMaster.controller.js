@@ -6,11 +6,12 @@ const Op = db.Sequelize.Op;
 // Find a single vendor by vendorNumber
 exports.findByVendorNumber = (req, res) => {
     const vendorNumber = req.params.vendorNumber;
-
+    const sortOrder = [['indexName', 'ASC']];
     S3_VendorMaster.findOne({
         where: {
             vendorNumber: vendorNumber
-        }
+        },
+        order: sortOrder
     })
         .then(data => {
             res.send(data);
