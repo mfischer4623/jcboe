@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
+
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('S3_PurchaseOrders', {
-    accnoD: { type: DataTypes.STRING(50), allowNull: true, field: 'ACCNO_D' },
+  const S3_PurchaseOrders = sequelize.define(
+    'S3_PurchaseOrders',
+    {
+       accnoD: { type: DataTypes.STRING(50), allowNull: true, field: 'ACCNO_D' },
     poNumber: { type: DataTypes.STRING(50), allowNull: true, primaryKey: true, field: 'PO#' },
     openpo: { type: DataTypes.STRING(50), allowNull: true, field: 'OPENPO' },
     vendorNumber: { type: DataTypes.STRING(50), allowNull: true, field: 'Vendor #' },
@@ -70,21 +73,24 @@ module.exports = function (sequelize, DataTypes) {
     vendorCode: { type: DataTypes.STRING(50), allowNull: true, field: 'Vendor Code' },
     poContNo: { type: DataTypes.STRING(50), allowNull: true, field: 'PO_CONTNO' },
     year: { type: DataTypes.STRING(50), allowNull: true, field: 'Year' }
-  }, {
-    
+    },
+    {
       sequelize,
-    tableName: 'S3_PurchaseOrders',
-    schema: 'dbo',
-    timestamps: false,
-    underscored: true,
-    hasPrimaryKeys: false,         // not required but helps readability
-    createdAt: false,
-    updatedAt: false,
-    defaultScope: {
-      attributes: {
-        exclude: ['id'] // prevent Sequelize from looking for 'id'
+      tableName: 'S3_PurchaseOrders',
+      schema: 'dbo',
+     timestamps: false,
+      underscored: true,
+      freezeTableName: true,
+      createdAt: false,
+      updatedAt: false,
+      defaultScope: {
+        order: [] 
       }
     }
+  );
+
   
-  });
+  S3_PurchaseOrders.removeAttribute('id');
+
+  return S3_PurchaseOrders;
 };

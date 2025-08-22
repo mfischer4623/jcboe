@@ -1,3 +1,10 @@
+// const db = require("../models");
+// const S3_CheckRegister = db.S3_CheckRegister;
+// const Op = db.Sequelize.Op;
+// const { Sequelize, col,QueryTypes  } = require("sequelize");
+// Retrieve all employees from the database.
+
+
 const { Op, Sequelize,QueryTypes } = require("sequelize");
 const db = require("../models");
 const S3_CheckRegister = db.S3_CheckRegister;
@@ -14,7 +21,8 @@ exports.findAll = async (req, res) => {
       where: {
         employee: empNum
       },
-      raw: true
+      raw: true,
+      order: [["year", "ASC"]]
     });
 
     if (!allRecords.length) {
@@ -51,7 +59,7 @@ exports.findDetails = (req, res) => {
 
   var CHKNO = req.query.CHKNO
   var condition = { chkno: (CHKNO) };
-  S3_CheckRegister.findAll({ where: condition })
+  S3_CheckRegister.findAll({ where: condition ,order: [["year", "ASC"]]})
     .then(data => {
       res.send(data);
     })

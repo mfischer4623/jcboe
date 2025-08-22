@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
+
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('S3_EmpPayoutputHistory', {
-  empNum: {
+  const S3_EmpPayoutputHistory = sequelize.define(
+    'S3_EmpPayoutputHistory',
+    {
+      empNum: {
     type: DataTypes.STRING(50),
     allowNull: true,
     field: 'emp_num'
@@ -276,19 +279,23 @@ module.exports = function (sequelize, DataTypes) {
     allowNull: true,
     field: 'SchoolYear'
   }
-}, {
-    sequelize,
-    tableName: 'S3_EmpPayoutputHistory',
-    schema: 'dbo',
-    timestamps: false,
-    underscored: true,
-    hasPrimaryKeys: false,         // not required but helps readability
-    createdAt: false,
-    updatedAt: false,
-    defaultScope: {
-      attributes: {
-        exclude: ['id'] // prevent Sequelize from looking for 'id'
+    },
+    {
+      sequelize,
+      tableName: 'S3_EmpPayoutputHistory',
+      schema: 'dbo',
+       timestamps: false,
+      underscored: true,
+      freezeTableName: true,
+      createdAt: false,
+      updatedAt: false,
+      defaultScope: {
+        order: [] 
       }
     }
-  });
+  );
+
+  S3_EmpPayoutputHistory.removeAttribute('id');
+
+  return S3_EmpPayoutputHistory;
 };
